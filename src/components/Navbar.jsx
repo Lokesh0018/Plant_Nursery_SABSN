@@ -67,22 +67,24 @@ export default function Navbar() {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       document.documentElement.style.setProperty('--nav-progress', `${max > 0 ? (y / max) * 100 : 0}%`);
 
-      const potsElement = document.getElementById('pots');
-      const featuredElement = document.getElementById('collection');
-      const aboutElement = document.getElementById('about');
-      const contactElement = document.getElementById('contact');
-      
-      if (contactElement && contactElement.getBoundingClientRect().top <= window.innerHeight - 100) {
-        setActiveSection('contact');
-      } else if (aboutElement && aboutElement.getBoundingClientRect().top <= window.innerHeight / 2) {
-        setActiveSection('about');
-      } else if (potsElement && potsElement.getBoundingClientRect().top <= window.innerHeight / 2) {
-        setActiveSection('pots');
-      } else if (featuredElement && featuredElement.getBoundingClientRect().top <= window.innerHeight / 2) {
-        setActiveSection('plants');
-      } else {
-        setActiveSection('home');
+      // Active section = the last section whose top has passed the navbar line.
+      // Measured against the same point for every section, so the highlight flips exactly
+      // when a section's top reaches the bar, not at a different height for each one.
+      const line = 96; // navbar height + a little breathing room
+      const order = [
+        ['collection', 'plants'],
+        ['pots-collection', 'pots'],
+        ['about', 'about'],
+        ['contact', 'contact'],
+      ];
+      let active = 'home';
+      for (const [id, key] of order) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) active = key;
       }
+      // at the very bottom of the page the last section is active even if its top never reaches the line
+      if (y >= max - 2) active = 'contact';
+      setActiveSection(active);
     };
     window.addEventListener('scroll', handleScroll);
     handleScroll();
@@ -187,7 +189,7 @@ export default function Navbar() {
                 if (item === 'Plants') {
                   document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
                 } else if (item === 'Pots') {
-                  document.getElementById('pots')?.scrollIntoView({ behavior: 'smooth' });
+                  document.getElementById('pots-collection')?.scrollIntoView({ behavior: 'smooth' });
                 } else if (item === 'About') {
                   document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
                 } else if (item === 'Contact') {

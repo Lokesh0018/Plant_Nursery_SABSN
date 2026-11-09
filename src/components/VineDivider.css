@@ -1,4 +1,29 @@
-/* Divider vines on the seam between the hero and the collection */
+/* Divider vines: between the hero and the plants (top), and between the plants and the pots (bottom) */
+
+.vine-divider--top {
+  --leaf-fill: url(#vine-leaf-fill-top);
+  --leaf-fill-2: url(#vine-leaf-fill-2-top);
+  --bloom-fill: url(#vine-bloom-fill-top);
+  --berry-fill: url(#vine-berry-fill-top);
+  --bud-fill: url(#vine-bud-fill-top);
+}
+.vine-divider--bottom {
+  --leaf-fill: url(#vine-leaf-fill-bottom);
+  --leaf-fill-2: url(#vine-leaf-fill-2-bottom);
+  --bloom-fill: url(#vine-bloom-fill-bottom);
+  --berry-fill: url(#vine-berry-fill-bottom);
+  --bud-fill: url(#vine-bud-fill-bottom);
+}
+/* between the plants and the pots: the plants gradient ends on #edf2e3, the pots section opens on
+   #eef3e4 with its lime glow at the top, so the band runs that exact tone and anchors its glow to
+   the bottom edge to continue straight into the next section */
+.vine-divider.vine-divider--bottom {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(201, 217, 138, 0.35), transparent 60%),
+    linear-gradient(180deg, #edf2e3 0%, #eef3e4 100%);
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
 
 .vine-divider {
   position: relative;
@@ -71,12 +96,12 @@
 
 /* leaves: gradient blade, dark edge, pale midrib */
 .vine-leaf-blade {
-  fill: url(#vine-leaf-fill);
+  fill: var(--leaf-fill);
   stroke: #2f5a28;
   stroke-width: 0.55;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
 }
-.vine-growth g:nth-child(4n) .vine-leaf-blade { fill: url(#vine-leaf-fill-2); } /* a few lighter leaves for variety */
+.vine-growth g:nth-child(4n) .vine-leaf-blade { fill: var(--leaf-fill-2); } /* a few lighter leaves for variety */
 .vine-leaf-vein {
   fill: none;
   stroke: rgba(236, 245, 210, 0.7);
@@ -102,7 +127,7 @@
 }
 .blossom-eye { fill: #f1c94a; }
 .vine-bud-body {
-  fill: url(#vine-bud-fill);
+  fill: var(--bud-fill);
   stroke: #5a8a3a;
   stroke-width: 0.5;
 }
@@ -121,7 +146,7 @@
 }
 
 .vine-berries circle {
-  fill: url(#vine-berry-fill);
+  fill: var(--berry-fill);
   stroke: #7a2742;
   stroke-width: 0.4;
   filter: drop-shadow(0 1px 1px rgba(22, 54, 36, 0.25));
@@ -134,7 +159,7 @@
 }
 
 .vine-bloom .petal {
-  fill: url(#vine-bloom-fill);
+  fill: var(--bloom-fill);
   stroke: #c9607a;
   stroke-width: 0.5;
   filter: drop-shadow(0 1px 1px rgba(120, 40, 60, 0.25));

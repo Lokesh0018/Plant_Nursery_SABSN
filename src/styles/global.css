@@ -121,3 +121,8 @@ html.lenis, html.lenis body {
 ::-webkit-scrollbar-thumb:horizontal:hover {
   background: rgba(201, 217, 138, 0.8);
 }
+
+/* Anchored sections stop just below the fixed navbar instead of sliding under it */
+section[id] {
+  scroll-margin-top: 88px;
+}

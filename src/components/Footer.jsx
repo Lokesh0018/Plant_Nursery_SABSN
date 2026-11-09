@@ -52,7 +52,7 @@ export default function Footer() {
             <h4 className="footer-col-header">Shop</h4>
             <a href="#collection" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' }); }}>All Plants</a>
             <a href="#collection" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' }); }}>Collections</a>
-            <a href="#pots" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('pots')?.scrollIntoView({ behavior: 'smooth' }); }}>Planters</a>
+            <a href="#pots-collection" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('pots-collection')?.scrollIntoView({ behavior: 'smooth' }); }}>Planters</a>
             <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('care')?.scrollIntoView({ behavior: 'smooth' }); }}>Care Tools</a>
           </div>
 

@@ -7,7 +7,6 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import VineDivider from './components/VineDivider';
 import Collection from './components/Collection';
-import PotsHero from './components/PotsHero';
 import PotsCollection from './components/PotsCollection';
 import StorySection from './components/StorySection';
 import PlantCare from './components/PlantCare';
@@ -32,7 +31,7 @@ function App() {
       <Hero />
       <VineDivider />
       <Collection />
-      <PotsHero />
+      <VineDivider variant="bottom" />
       <PotsCollection />
       <StorySection />
       <PlantCare />

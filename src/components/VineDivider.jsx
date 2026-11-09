@@ -112,8 +112,9 @@ function decorate(svg, stem, mirror, { density = 95, size = 1.35, tendrils = tru
   return items;
 }
 
-export default function VineDivider() {
+export default function VineDivider({ variant = 'top' }) {
   const ref = useRef(null);
+  const uid = variant; // one instance per variant
 
   useLayoutEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -223,28 +224,28 @@ export default function VineDivider() {
   }, []);
 
   return (
-    <div ref={ref} className="vine-divider" aria-hidden="true">
+    <div ref={ref} className={`vine-divider vine-divider--${variant}`} aria-hidden="true">
       <div className="vine-divider-line" />
       <svg className="vine-svg" preserveAspectRatio="none" height={H}>
         <defs>
-          <linearGradient id="vine-leaf-fill" x1="0" y1="0" x2="1" y2="1">
+          <linearGradient id={`vine-leaf-fill-${uid}`} x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="#9fcf74" />
             <stop offset="0.6" stopColor="#6fa551" />
             <stop offset="1" stopColor="#3f6f33" />
           </linearGradient>
-          <linearGradient id="vine-leaf-fill-2" x1="0" y1="0" x2="1" y2="1">
+          <linearGradient id={`vine-leaf-fill-2-${uid}`} x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="#c9d98a" />
             <stop offset="1" stopColor="#7fa84a" />
           </linearGradient>
-          <radialGradient id="vine-bloom-fill" cx="0.4" cy="0.35" r="0.8">
+          <radialGradient id={`vine-bloom-fill-${uid}`} cx="0.4" cy="0.35" r="0.8">
             <stop offset="0" stopColor="#ffd3dc" />
             <stop offset="1" stopColor="#e2879c" />
           </radialGradient>
-          <linearGradient id="vine-bud-fill" x1="0" y1="1" x2="0" y2="0">
+          <linearGradient id={`vine-bud-fill-${uid}`} x1="0" y1="1" x2="0" y2="0">
             <stop offset="0" stopColor="#7fb069" />
             <stop offset="1" stopColor="#f5c6d0" />
           </linearGradient>
-          <radialGradient id="vine-berry-fill" cx="0.35" cy="0.3" r="0.8">
+          <radialGradient id={`vine-berry-fill-${uid}`} cx="0.35" cy="0.3" r="0.8">
             <stop offset="0" stopColor="#f5a6b4" />
             <stop offset="1" stopColor="#b03a5a" />
           </radialGradient>
