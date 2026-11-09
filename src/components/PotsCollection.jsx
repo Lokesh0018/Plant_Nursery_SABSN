@@ -4,11 +4,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { pots } from '../data/pots';
 import { Plus, Sun, Droplets } from 'lucide-react';
 import VineOrnament from './VineOrnament';
+import PlantModal from './PlantModal';
 import './Collection.css'; // Reusing the same responsive grid layout classes
 
 gsap.registerPlugin(ScrollTrigger);
 
-function PotCard({ pot }) {
+function PotCard({ pot, onOpen }) {
   const [isHovered, React_useState] = React.useState(false);
   const setIsHovered = React_useState;
 
@@ -66,7 +67,7 @@ function PotCard({ pot }) {
           if (badge) {
             // pulse only: flash to pale lime and back to the badge's own green, never to forest (invisible on the dark bar)
             gsap.fromTo(badge, { scale: 1 }, { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1 });
-            gsap.fromTo(badge, { backgroundColor: '#c9d98a' }, { backgroundColor: '#25d366', duration: 0.5, delay: 0.3 });
+            gsap.fromTo(badge, { backgroundColor: '#f4ecd9' }, { backgroundColor: '#c9d98a', duration: 0.5, delay: 0.3 });
           }
         }, 50);
       }
@@ -74,139 +75,47 @@ function PotCard({ pot }) {
   };
 
   return (
-    <div 
-      id={`product-${pot.id}`}
-      className="pot-card"
-      style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', position: 'relative' }}
+    <article
+      id={`pot-${pot.id}`}
+      className={`product-card pot-card${isHovered ? ' is-hovered' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={(e) => onOpen(pot, e.currentTarget)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(pot, e.currentTarget); } }}
+      role="button"
+      tabIndex={0}
+      aria-haspopup="dialog"
     >
-      <div style={{
-        backgroundColor: 'transparent',
-        padding: '1rem',
-        aspectRatio: '3/4',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '1.5rem',
-        position: 'relative'
-      }}>
-        {/* Soft shadow that shrinks when the pot lifts */}
-        <div style={{
-          position: 'absolute',
-          bottom: '10%',
-          width: '50%',
-          height: '20px',
-          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 70%)',
-          borderRadius: '50%',
-          transform: isHovered ? 'scale(0.85)' : 'scale(1)',
-          opacity: isHovered ? 0.4 : 0.8,
-          transition: 'all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'
-        }} />
-        
-        {/* Pot Image */}
-        <img 
-          src={pot.image} 
-          alt={pot.name} 
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-            transform: isHovered ? 'scale(1.08) translateY(-10px)' : 'scale(1) translateY(0)',
-            transition: 'all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)',
-            zIndex: 2,
-            filter: 'drop-shadow(0 15px 15px rgba(0,0,0,0.08))'
-          }}
-        />
-
-        {/* Quick Add Button */}
-        <button style={{
-          position: 'absolute',
-          bottom: '10%',
-          right: '10%',
-          width: '45px',
-          height: '45px',
-          borderRadius: '50%',
-          backgroundColor: '#163624',
-          color: '#ffffff',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: 'none',
-          cursor: 'pointer',
-          opacity: isHovered ? 1 : 0,
-          transform: isHovered ? 'translateY(0) scale(1)' : 'translateY(15px) scale(0.9)',
-          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          boxShadow: '0 8px 20px rgba(22, 54, 36, 0.25)',
-          zIndex: 3
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(0) scale(1.1)'}
-        onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0) scale(1)'}
-        onClick={handleAddToCart}
-        >
+      <div className="product-stage">
+        <span className="product-stage-glow" aria-hidden="true" />
+        <span className="product-stage-shadow" aria-hidden="true" />
+        <img src={pot.image} alt={pot.name} className="product-img" loading="lazy" />
+        <button className="product-add" onClick={handleAddToCart} aria-label={`Add ${pot.name} to cart`}>
           <Plus size={20} strokeWidth={2.5} />
         </button>
       </div>
 
-      <div style={{ padding: '0 0.5rem', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <p style={{ 
-            color: '#7a8c7c', 
-            fontSize: '0.7rem', 
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            fontWeight: '600'
-          }}>
-            {pot.scientificName}
-          </p>
-          
+      <div className="product-body">
+        <p className="product-latin">{pot.scientificName}</p>
+        <h3 className="product-name">{pot.name}</h3>
+        <div className="product-foot">
+          <p className="product-price">₹{pot.price.toLocaleString()}</p>
           {pot.care && (
-            <div style={{ display: 'flex', gap: '0.4rem', opacity: isHovered ? 1 : 0.6, transition: 'opacity 0.3s ease' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.65rem', color: '#4a5b4c', background: 'rgba(22, 54, 36, 0.06)', padding: '0.25rem 0.5rem', borderRadius: '100px', fontWeight: '600' }}>
-                <Sun size={11} strokeWidth={2.5} />
-                {pot.care.light}
-              </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.65rem', color: '#4a5b4c', background: 'rgba(22, 54, 36, 0.06)', padding: '0.25rem 0.5rem', borderRadius: '100px', fontWeight: '600' }}>
-                <Droplets size={11} strokeWidth={2.5} />
-                {pot.care.water}
-              </span>
+            <div className="product-care">
+              <span><Sun size={11} strokeWidth={2.5} />{pot.care.light}</span>
+              <span><Droplets size={11} strokeWidth={2.5} />{pot.care.water}</span>
             </div>
           )}
         </div>
-
-        <h3 style={{ 
-          fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
-          marginBottom: '0.5rem',
-          fontFamily: 'var(--font-serif)',
-          color: '#163624',
-          fontWeight: '500',
-          lineHeight: '1.2'
-        }}>
-          {pot.name}
-        </h3>
-        
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.25rem' }}>
-          <p style={{ 
-            fontSize: '1.15rem', 
-            fontWeight: '600',
-            color: '#2a3a2d'
-          }}>
-            ₹{pot.price.toLocaleString()}
-          </p>
-          <div style={{
-             width: isHovered ? '32px' : '0px',
-             height: '2px',
-             backgroundColor: '#163624',
-             transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-             opacity: isHovered ? 1 : 0
-          }} />
-        </div>
       </div>
-    </div>
+    </article>
   );
 }
 
 export default function PotsCollection() {
+  const [selected, setSelected] = React.useState(null);
+  const openPot = (pot, card) => setSelected({ product: pot, rect: card.getBoundingClientRect(), card });
+  const closePot = () => { const card = selected?.card; setSelected(null); card?.focus({ preventScroll: true }); };
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const bgTextRef = useRef(null);
@@ -294,9 +203,11 @@ export default function PotsCollection() {
 
       <div ref={gridRef} className="collection-grid">
         {pots.map(pot => (
-          <PotCard key={pot.id} pot={pot} />
+          <PotCard key={pot.id} pot={pot} onOpen={openPot} />
         ))}
       </div>
+
+      {selected && <PlantModal product={selected.product} originRect={selected.rect} onClose={closePot} />}
     </section>
   );
 }

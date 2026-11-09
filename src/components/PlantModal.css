@@ -21,7 +21,8 @@
 .pm-panel {
   position: relative;
   width: min(960px, 100%);
-  max-height: calc(100vh - 3rem);
+  /* one fixed size for every product: the details column scrolls inside if it needs more room */
+  height: min(640px, calc(100vh - 3rem));
   display: grid;
   grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
   border-radius: 28px;
@@ -55,7 +56,8 @@
 /* ---------- stage ---------- */
 .pm-stage {
   position: relative;
-  min-height: 420px;
+  height: 100%;
+  min-height: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -99,7 +101,8 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-height: 440px; /* keeps the panel compact so the details column has no dead space */
+  height: 100%;
+  max-height: 100%;
   object-fit: contain;
   object-position: bottom center;
   filter: drop-shadow(0 24px 24px rgba(22, 54, 36, 0.22));
@@ -111,8 +114,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.95rem;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
+  scrollbar-color: rgba(22, 54, 36, 0.25) transparent;
   color: var(--color-text-dark);
 }
 .pm-latin {
@@ -219,6 +225,43 @@
   color: #4f7f3a;
 }
 
+/* materials (pots) */
+.pm-materials { display: grid; gap: 0.55rem; margin-top: 0.2rem; }
+.pm-materials ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.pm-materials li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.7rem 0.85rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(22, 54, 36, 0.08);
+  border-left: 3px solid #a9b89a;
+}
+.pm-materials li strong { font-size: 0.86rem; color: #163624; font-weight: 600; }
+.pm-materials li span { font-size: 0.78rem; line-height: 1.4; color: #4a5b4c; }
+.pm-finish {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #2a3a2d;
+}
+.pm-finish span {
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #7a8c7c;
+}
+
 .pm-foot {
   margin-top: auto;
   padding-top: 1.4rem;
@@ -269,14 +312,17 @@
   .pm-root { padding: 0; align-items: end; }
   .pm-panel {
     grid-template-columns: 1fr;
+    grid-template-rows: 280px minmax(0, 1fr);
     width: 100%;
-    max-height: 100vh;
+    height: 92vh;
+    height: 92svh;
     border-radius: 28px 28px 0 0;
     transform-origin: bottom center;
   }
-  .pm-stage { min-height: 0; height: 300px; padding: 2.5rem 2rem 2rem; }
+  .pm-stage { height: 100%; padding: 2.25rem 2rem 1.75rem; }
   .pm-body { padding: 1.6rem 1.5rem 1.6rem; gap: 0.85rem; }
   .pm-care { grid-template-columns: 1fr 1fr; }
+  .pm-materials ul { grid-template-columns: 1fr; }
   .pm-foot { flex-direction: column; align-items: stretch; }
   .pm-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .pm-btn { justify-content: center; }

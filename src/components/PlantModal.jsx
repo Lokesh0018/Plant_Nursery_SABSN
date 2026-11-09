@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import gsap from 'gsap';
-import { X, Sun, Droplets, ShoppingBag, MessageCircle, Leaf, Check, Home, Sparkles } from 'lucide-react';
+import { X, Sun, Droplets, ShoppingBag, MessageCircle, Leaf, Check, Home, Sparkles, Layers, MapPin, Waves } from 'lucide-react';
 import './PlantModal.css';
 
 const WA_NUMBER = '919849936169';
@@ -134,7 +134,8 @@ export default function PlantModal({ product, originRect, onClose }) {
     setTimeout(() => setAdded(false), 1800);
   };
 
-  const waText = encodeURIComponent(`Hello SABSN, I’d like to enquire about the ${product.name} (${product.scientificName}).`);
+  const isPot = Array.isArray(product.materials) && product.materials.length > 0;
+  const waText = encodeURIComponent(isPot ? `Hello SABSN, I’d like to enquire about the ${product.name} pot (${product.scientificName}).` : `Hello SABSN, I’d like to enquire about the ${product.name} (${product.scientificName}).`);
 
   return createPortal(
     <div className="pm-root" role="dialog" aria-modal="true" aria-labelledby="pm-title">
@@ -162,16 +163,31 @@ export default function PlantModal({ product, originRect, onClose }) {
           <p className="pm-desc pm-reveal">{product.description}</p>
 
           {product.care && (
-            <ul className="pm-care pm-reveal" aria-label="Care guide">
+            <ul className="pm-care pm-reveal" aria-label={isPot ? 'Pot details' : 'Care guide'}>
               <li>
-                <span className="pm-care-icon"><Sun size={18} strokeWidth={2} /></span>
-                <span className="pm-care-text"><small>Light</small><strong>{product.care.light}</strong></span>
+                <span className="pm-care-icon">{isPot ? <MapPin size={18} strokeWidth={2} /> : <Sun size={18} strokeWidth={2} />}</span>
+                <span className="pm-care-text"><small>{isPot ? 'Placement' : 'Light'}</small><strong>{product.care.light}</strong></span>
               </li>
               <li>
-                <span className="pm-care-icon"><Droplets size={18} strokeWidth={2} /></span>
-                <span className="pm-care-text"><small>Water</small><strong>{product.care.water}</strong></span>
+                <span className="pm-care-icon">{isPot ? <Waves size={18} strokeWidth={2} /> : <Droplets size={18} strokeWidth={2} />}</span>
+                <span className="pm-care-text"><small>{isPot ? 'Drainage' : 'Water'}</small><strong>{product.care.water}</strong></span>
               </li>
             </ul>
+          )}
+
+          {isPot && (
+            <div className="pm-materials pm-reveal">
+              <span className="pm-more-label"><Layers size={13} strokeWidth={2.2} /> Made from</span>
+              <ul aria-label="Materials">
+                {product.materials.map((m) => (
+                  <li key={m.name}>
+                    <strong>{m.name}</strong>
+                    <span>{m.note}</span>
+                  </li>
+                ))}
+              </ul>
+              {product.finish && <p className="pm-finish"><span>Finish</span> {product.finish}</p>}
+            </div>
           )}
 
           {(product.uses || product.positives) && (

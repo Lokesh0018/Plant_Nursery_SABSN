@@ -69,7 +69,7 @@ function ProductCard({ product, onOpen }) {
           if (badge) {
             // pulse only: flash to pale lime and back to the badge's own green, never to forest (invisible on the dark bar)
             gsap.fromTo(badge, { scale: 1 }, { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1 });
-            gsap.fromTo(badge, { backgroundColor: '#c9d98a' }, { backgroundColor: '#25d366', duration: 0.5, delay: 0.3 });
+            gsap.fromTo(badge, { backgroundColor: '#f4ecd9' }, { backgroundColor: '#c9d98a', duration: 0.5, delay: 0.3 });
           }
         }, 50);
       }

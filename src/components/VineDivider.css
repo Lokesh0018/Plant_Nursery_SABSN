@@ -18,11 +18,16 @@
    #eef3e4 with its lime glow at the top, so the band runs that exact tone and anchors its glow to
    the bottom edge to continue straight into the next section */
 .vine-divider.vine-divider--bottom {
+  /* plants' light sage warms into the pots' clay cream; the pots section's own top highlight is
+     anchored to this band's bottom edge so the two surfaces share one continuous light */
   background:
-    radial-gradient(ellipse at 50% 100%, rgba(201, 217, 138, 0.35), transparent 60%),
-    linear-gradient(180deg, #edf2e3 0%, #eef3e4 100%);
+    radial-gradient(ellipse at 50% 100%, rgba(255, 248, 232, 0.7), transparent 55%),
+    linear-gradient(180deg, #edf2e3 0%, #f0eee0 45%, #f3ecde 100%);
   margin-top: -1px;
   margin-bottom: -1px;
+}
+.vine-divider.vine-divider--bottom .vine-divider-line {
+  background: linear-gradient(90deg, transparent, rgba(120, 85, 50, 0.16) 15%, rgba(120, 85, 50, 0.16) 85%, transparent);
 }
 
 .vine-divider {

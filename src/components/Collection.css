@@ -73,6 +73,28 @@
   margin: 0 auto;
 }
 
+/* Pots grid: one step deeper than the plants, so the two grids read as distinct rooms of the
+   same house, and it hands off cleanly to the sage story section that follows */
+#pots-collection.collection-section {
+  /* warm clay cream for the ceramics: earth tones against the plants' green, drawn from the site's warm cream */
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 248, 232, 0.7), transparent 55%),
+    radial-gradient(ellipse at 85% 100%, rgba(201, 150, 110, 0.18), transparent 55%),
+    linear-gradient(180deg, #f3ecde 0%, #ece1cf 55%, #e6d9c4 100%);
+}
+#pots-collection .collection-bg-text { color: rgba(255, 255, 255, 0.55); }
+#pots-collection .product-card {
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(255, 253, 248, 0.66));
+  border-color: rgba(120, 85, 50, 0.1);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 10px 30px rgba(120, 85, 50, 0.08);
+}
+#pots-collection .product-stage-glow {
+  background: radial-gradient(ellipse at 50% 100%, rgba(222, 190, 150, 0.5), rgba(222, 190, 150, 0) 70%);
+}
+#pots-collection .collection-subtitle,
+#pots-collection .product-latin,
+#pots-collection .product-care svg { color: #a3663f; }
+
 /* ---------- card ---------- */
 .product-card {
   position: relative;

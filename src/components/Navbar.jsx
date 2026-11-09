@@ -318,21 +318,24 @@ export default function Navbar() {
           {cartCount > 0 && (
             <span className="cart-badge" style={{
               position: 'absolute',
-              top: '-2px',
-              right: '-4px',
-              backgroundColor: '#25d366',
+              top: '-6px',
+              right: '-8px',
+              /* lime accent from the theme (progress line, chips) with forest text; cream rim lifts it off the dark bar */
+              background: 'linear-gradient(180deg, #d7e59c, #c9d98a)',
               color: '#0d2a18',
+              fontFamily: 'var(--font-sans)',
               fontSize: '0.64rem',
               lineHeight: 1,
-              minWidth: '17px',
-              height: '17px',
-              padding: '0 4px',
+              minWidth: '18px',
+              height: '18px',
+              padding: '0 5px',
               borderRadius: '999px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: '700',
-              boxShadow: '0 0 0 2px rgba(8, 30, 17, 0.9), 0 2px 6px rgba(0, 0, 0, 0.35)', /* dark ring keeps it legible on the cream Shop button and pale sections */
+              letterSpacing: '0.01em',
+              boxShadow: '0 0 0 2px #0d2a18, 0 0 0 3px rgba(244, 236, 217, 0.35), 0 3px 8px rgba(0, 0, 0, 0.35)',
               zIndex: 2,
               pointerEvents: 'none'
             }}
