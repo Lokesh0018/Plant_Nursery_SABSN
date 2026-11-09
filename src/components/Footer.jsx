@@ -39,7 +39,10 @@ export default function Footer() {
         
         <div className="footer-top-grid footer-reveal">
           <div className="footer-brand-col">
-            <h3 className="footer-brand-name">SABSN</h3>
+            <div className="footer-brand-row">
+              <img src="/logo/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery logo" className="footer-brand-logo" width="64" height="64" />
+              <h3 className="footer-brand-name">SABSN</h3>
+            </div>
             <p className="footer-brand-desc">
               Sri Ayyappa Bala Sai Nursery — hybrid flowering plants, fruit saplings, ornamental, revenue and lawn plants, grown with care.
             </p>

@@ -238,3 +238,20 @@
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+
+/* Brand row: round logo beside the wordmark */
+.footer-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+.footer-brand-row .footer-brand-name { margin-bottom: 0; }
+.footer-brand-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #f8f6ee;
+  box-shadow: 0 0 0 2px rgba(22, 54, 36, 0.12), 0 8px 20px rgba(22, 54, 36, 0.15);
+  flex: none;
+}

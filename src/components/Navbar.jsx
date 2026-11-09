@@ -105,18 +105,21 @@ export default function Navbar() {
       
       {/* Brand Logo */}
       <div className="nav-brand">
-        <div style={{
-          width: '24px',
-          height: '24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: darkGreen
-        }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill={darkGreen}>
-            <path d="M12 2C6.5 2 2 6.5 2 12c0 3.5 2 6.5 5 8 .5-2.5 2-6.5 5-9 3-2.5 6.5-4 9-4.5C20.5 4 16.5 2 12 2z"/>
-          </svg>
-        </div>
+        <img
+          src="/logo/logo-256.webp"
+          alt="Sri Ayyappa Bala Sai Nursery logo"
+          width="44"
+          height="44"
+          style={{
+            width: '44px',
+            height: '44px',
+            borderRadius: '50%',
+            background: '#f8f6ee',
+            boxShadow: isScrolled ? '0 2px 8px rgba(22, 54, 36, 0.15)' : '0 0 0 2px rgba(244, 236, 217, 0.35), 0 6px 16px rgba(0, 0, 0, 0.35)',
+            transition: 'box-shadow 0.3s ease',
+            flex: 'none',
+          }}
+        />
         <div className="nav-brand-text" style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{
             fontFamily: 'var(--font-serif)',
