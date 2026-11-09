@@ -1,0 +1,36 @@
+/* Hero entrance motion: fade + rise, staggered. Respects prefers-reduced-motion via the global rule in index.css. */
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-rise,
+.animate-fade-rise-delay,
+.animate-fade-rise-delay-2,
+.animate-fade-rise-delay-3 {
+  animation: fade-rise 0.8s ease-out both;
+}
+
+.animate-fade-rise-delay {
+  animation-delay: 0.2s;
+}
+
+.animate-fade-rise-delay-2 {
+  animation-delay: 0.4s;
+}
+
+.animate-fade-rise-delay-3 {
+  animation-delay: 0.6s;
+}
+
+/* Video opacity is driven from JS (requestAnimationFrame); keep a short transition so the ended/reset jump stays soft. */
+.hero-video {
+  transition: opacity 0.1s linear;
+  will-change: opacity;
+}

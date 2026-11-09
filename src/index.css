@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* keep anchored sections clear of the fixed 5rem header */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply m-0 bg-surface font-body-md text-body-md text-on-surface antialiased;
+    overscroll-behavior: none;
+  }
+
+  ::selection {
+    @apply bg-secondary-container text-on-secondary-container;
+  }
+
+  /* Two-tone ring so focus stays visible on both ivory and forest-green sections */
+  :focus-visible {
+    outline: 2px solid #00321b;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px #c6efa7;
+  }
+
+  a,
+  button,
+  select {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .container-page {
+    @apply mx-auto max-w-[1440px] px-margin-mobile md:px-margin;
+  }
+
+  .eyebrow {
+    @apply font-label-caps text-label-caps uppercase tracking-widest text-secondary;
+  }
+
+  .section-title {
+    @apply font-headline-lg text-headline-lg-mobile text-primary md:text-headline-lg;
+  }
+
+  .btn {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-space-sm rounded-full px-space-xl font-label-caps text-label-caps uppercase tracking-wider transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-container py-space-md text-surface shadow-md hover:bg-tertiary hover:shadow-lg;
+  }
+
+  .btn-soft {
+    @apply btn bg-surface-container py-space-md text-primary shadow-sm hover:bg-surface-container-high;
+  }
+
+  .field {
+    @apply w-full rounded-lg bg-surface-container-low px-space-md py-space-sm font-body-md text-body-md text-on-surface ring-1 ring-outline-variant transition-colors placeholder:text-outline focus:bg-surface-container focus:outline-none focus:ring-2 focus:ring-secondary;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Footer valley: slow bird drift */
+@keyframes ls-drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(14px, -8px);
+  }
+}
+.ls-birds {
+  animation: ls-drift 9s ease-in-out infinite;
+}
