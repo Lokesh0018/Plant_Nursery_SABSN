@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sprout, ArrowRight, Leaf, MessageCircle, Flower2, Apple, TreeDeciduous, Shrub } from 'lucide-react';
+import { Sprout, ArrowRight, Leaf, Flower2, Apple, TreeDeciduous, Shrub } from 'lucide-react';
 import FallingLeaves from './FallingLeaves';
 import './Hero.css';
 
@@ -201,21 +201,6 @@ export default function Hero() {
         </ul>
       </div>
 
-      {/* Direct enquiry: the one action a nursery visitor most often wants */}
-      <a
-        className="tree-hero-whatsapp"
-        href="https://wa.me/919849936169?text=Hello%20SABSN%2C%20I%27d%20like%20to%20enquire%20about%20your%20plants."
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with SABSN on WhatsApp"
-      >
-        <span className="tree-hero-whatsapp-dot" aria-hidden="true" />
-        <MessageCircle size={18} strokeWidth={2} />
-        <span className="tree-hero-whatsapp-text">
-          <strong>Chat on WhatsApp</strong>
-          <small>+91 98499 36169</small>
-        </span>
-      </a>
 
       <div className="tree-hero-fade" />
     </section>

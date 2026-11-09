@@ -256,51 +256,6 @@
 }
 .tree-hero-tags li svg { color: #c9d98a; flex: none; }
 
-/* WhatsApp quick enquiry */
-.tree-hero-whatsapp {
-  position: absolute;
-  right: 5vw;
-  bottom: 2.2rem;
-  z-index: 30;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.65rem 1.1rem 0.65rem 0.85rem;
-  border-radius: 9999px;
-  text-decoration: none;
-  color: #f4ecd9;
-  background: rgba(8, 30, 17, 0.55);
-  border: 1px solid rgba(244, 236, 217, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.tree-hero-whatsapp:hover {
-  background: rgba(37, 211, 102, 0.18);
-  border-color: rgba(37, 211, 102, 0.6);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
-}
-.tree-hero-whatsapp:focus-visible { outline: 2px solid #25d366; outline-offset: 3px; }
-.tree-hero-whatsapp svg { color: #25d366; flex: none; }
-.tree-hero-whatsapp-dot {
-  position: absolute;
-  top: 8px;
-  left: 10px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #25d366;
-  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
-  animation: tree-wa-pulse 2s ease-out infinite;
-}
-@keyframes tree-wa-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
-  100% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
-}
-.tree-hero-whatsapp-text { display: flex; flex-direction: column; line-height: 1.15; }
-.tree-hero-whatsapp-text strong { font-size: 0.86rem; font-weight: 600; }
-.tree-hero-whatsapp-text small { font-size: 0.7rem; color: rgba(244, 236, 217, 0.7); letter-spacing: 0.04em; }
 
 
 .tree-hero-actions {
@@ -391,17 +346,6 @@
   .tree-hero-eyebrow-rule { display: none; }
   .tree-hero-tags { justify-content: center; }
   .tree-hero-tags li { font-size: 0.68rem; padding: 0.4rem 0.7rem; }
-  .tree-hero-whatsapp {
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
-    padding: 0.7rem;
-    border-radius: 50%;
-    background: #1f4a2f;
-  }
-  .tree-hero-whatsapp-text,
-  .tree-hero-whatsapp-dot { display: none; }
-  .tree-hero-whatsapp svg { width: 24px; height: 24px; }
   .tree-hero-haze { bottom: 36%; }
   .tree-hero { padding-bottom: 7vh; }
   .tree-hero-actions { justify-content: center; }
@@ -410,6 +354,5 @@
 @media (prefers-reduced-motion: reduce) {
   .tree-layer { will-change: auto; }
   .tree-hero-pollen i,
-  .tree-hero-whatsapp-dot { animation: none; }
   .tree-hero-pollen i { opacity: 0.5; }
 }

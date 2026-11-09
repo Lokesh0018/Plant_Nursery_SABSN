@@ -1,0 +1,192 @@
+/* Floating WhatsApp enquiry: frosted forest glass, icon-only at rest, expands to a pill on hover / focus */
+
+.wa-fab {
+  --wa: #25d366;
+  --size: 56px;
+  --spring: cubic-bezier(0.34, 1.4, 0.44, 1); /* slight overshoot, reads as a spring */
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  height: var(--size);
+  width: var(--size);
+  padding: 0;
+  border-radius: 9999px;
+  color: #f4ecd9;
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  background: rgba(8, 30, 17, 0.58);
+  border: 1px solid rgba(244, 236, 217, 0.25);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.35),
+    0 0 0 0 rgba(37, 211, 102, 0),
+    inset 0 1px 0 rgba(244, 236, 217, 0.12);
+  cursor: pointer;
+  transform-origin: 100% 100%;
+  animation: wa-enter 0.7s var(--spring) 0.9s both, wa-nudge 7s ease-in-out 5s infinite;
+  transition:
+    width 0.45s var(--spring),
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+/* pop in from the corner after the page settles */
+@keyframes wa-enter {
+  from { opacity: 0; transform: scale(0.4) translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+/* every few seconds a small tilt draws the eye without being a loop of motion */
+@keyframes wa-nudge {
+  0%, 88%, 100% { rotate: 0deg; }
+  90%  { rotate: -10deg; }
+  92%  { rotate: 8deg; }
+  94%  { rotate: -5deg; }
+  96%  { rotate: 2deg; }
+}
+.wa-fab:hover,
+.wa-fab:focus-visible {
+  width: 236px;
+  background: rgba(10, 44, 24, 0.78);
+  border-color: rgba(37, 211, 102, 0.65);
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.42),
+    0 0 0 6px rgba(37, 211, 102, 0.12),
+    inset 0 1px 0 rgba(244, 236, 217, 0.16);
+  animation-play-state: paused, paused; /* no nudge while the user is on it */
+}
+.wa-fab:active { transform: scale(0.97); }
+.wa-fab:focus-visible {
+  outline: 2px solid var(--wa);
+  outline-offset: 3px;
+}
+
+/* Light sweep across the pill as it opens */
+.wa-fab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(244, 236, 217, 0.16) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0s linear 0.4s; /* reset instantly once hidden */
+  pointer-events: none;
+}
+.wa-fab:hover::before,
+.wa-fab:focus-visible::before {
+  transform: translateX(120%);
+  transition: transform 0.7s ease 0.1s;
+}
+
+/* Icon sits in a fixed round slot so it never shifts while the pill grows */
+.wa-fab-icon {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: calc(var(--size) - 2px);
+  height: calc(var(--size) - 2px);
+  display: grid;
+  place-items: center;
+  color: var(--wa);
+}
+.wa-fab-icon svg {
+  display: block;
+  filter: drop-shadow(0 0 6px rgba(37, 211, 102, 0.35));
+  transition: transform 0.45s var(--spring);
+}
+.wa-fab:hover .wa-fab-icon svg,
+.wa-fab:focus-visible .wa-fab-icon svg {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+/* Live green dot with a breathing ring, pinned to the top-right of the icon */
+.wa-fab-dot {
+  position: absolute;
+  top: 8px;
+  left: calc(var(--size) - 18px);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--wa);
+  border: 1.5px solid rgba(8, 30, 17, 0.9);
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  animation: wa-pulse 2.2s ease-out infinite;
+  z-index: 2;
+}
+@keyframes wa-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.65); }
+  70%  { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* Label: title then number slide in, staggered */
+.wa-fab-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  white-space: nowrap;
+  padding-right: 1.3rem;
+}
+.wa-fab-text strong,
+.wa-fab-text small {
+  display: block;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.25s ease, transform 0.45s var(--spring);
+}
+.wa-fab-text strong {
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.wa-fab-text small {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: rgba(244, 236, 217, 0.7);
+  margin-top: 1px;
+}
+.wa-fab:hover .wa-fab-text strong,
+.wa-fab:focus-visible .wa-fab-text strong {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.1s;
+}
+.wa-fab:hover .wa-fab-text small,
+.wa-fab:focus-visible .wa-fab-text small {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.18s;
+}
+
+/* Touch devices have no hover: keep it a clean round button in the thumb zone */
+@media (hover: none) {
+  .wa-fab:hover {
+    width: var(--size);
+    background: rgba(8, 30, 17, 0.58);
+    border-color: rgba(244, 236, 217, 0.25);
+  }
+  .wa-fab:hover .wa-fab-text strong,
+  .wa-fab:hover .wa-fab-text small { opacity: 0; }
+  .wa-fab:hover::before { transform: translateX(-120%); transition: none; }
+}
+@media (max-width: 900px) {
+  .wa-fab { right: 1rem; bottom: 1rem; background: rgba(8, 30, 17, 0.82); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-fab { animation: none; }
+  .wa-fab,
+  .wa-fab::before,
+  .wa-fab-text strong,
+  .wa-fab-text small,
+  .wa-fab-icon svg { transition: none; }
+  .wa-fab-dot { animation: none; }
+  .wa-fab::before { display: none; }
+}

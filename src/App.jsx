@@ -12,6 +12,7 @@ import StorySection from './components/StorySection';
 import PlantCare from './components/PlantCare';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,6 +36,7 @@ function App() {
       <PlantCare />
       <Contact />
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
