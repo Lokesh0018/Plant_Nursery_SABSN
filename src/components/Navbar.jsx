@@ -7,9 +7,10 @@ import { pots } from '../data/pots';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  // Hero is dark: light nav text until the bar picks up its frosted background on scroll
-  const darkGreen = isScrolled ? '#163624' : '#f4ecd9';
-  const textMuted = isScrolled ? '#4a5b4c' : 'rgba(244, 236, 217, 0.78)';
+  // One theme throughout: forest glass with cream text, matching the hero, scrollbar and WhatsApp button
+  const light = true;
+  const darkGreen = '#f4ecd9';
+  const textMuted = 'rgba(244, 236, 217, 0.78)';
 
   const [activeSection, setActiveSection] = useState('home');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -60,8 +61,12 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-      
+      const y = window.scrollY;
+      setIsScrolled(y > 30);
+      // progress hairline along the bar's bottom edge
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      document.documentElement.style.setProperty('--nav-progress', `${max > 0 ? (y / max) * 100 : 0}%`);
+
       const potsElement = document.getElementById('pots');
       const featuredElement = document.getElementById('collection');
       const aboutElement = document.getElementById('about');
@@ -101,7 +106,7 @@ export default function Navbar() {
 
   return (
     <>
-    <nav className={`navbar-container ${isScrolled ? 'scrolled' : ''} ${isSearchOpen ? 'search-open' : ''}`}>
+    <nav className={`navbar-container ${isScrolled ? 'scrolled' : ''} on-dark ${isSearchOpen ? 'search-open' : ''}`}>
       
       {/* Brand Logo */}
       <div className="nav-brand">
@@ -115,7 +120,7 @@ export default function Navbar() {
             height: '44px',
             borderRadius: '50%',
             background: '#f8f6ee',
-            boxShadow: isScrolled ? '0 2px 8px rgba(22, 54, 36, 0.15)' : '0 0 0 2px rgba(244, 236, 217, 0.35), 0 6px 16px rgba(0, 0, 0, 0.35)',
+            boxShadow: '0 0 0 2px rgba(244, 236, 217, 0.35), 0 6px 16px rgba(0, 0, 0, 0.35)',
             transition: 'box-shadow 0.3s ease',
             flex: 'none',
           }}
@@ -207,7 +212,7 @@ export default function Navbar() {
             right: 0,
             display: 'flex',
             alignItems: 'center',
-            background: isSearchOpen ? 'rgba(22, 54, 36, 0.06)' : 'transparent',
+            background: isSearchOpen ? 'rgba(244, 236, 217, 0.12)' : 'transparent',
             borderRadius: '100px',
             padding: isSearchOpen ? '0.4rem 0.8rem' : '4px',
             transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -300,8 +305,8 @@ export default function Navbar() {
               position: 'absolute',
               top: '-2px',
               right: '-4px',
-              backgroundColor: darkGreen,
-              color: '#ffffff',
+              backgroundColor: '#25d366',
+              color: '#0d2a18',
               fontSize: '0.62rem',
               width: '15px',
               height: '15px',
@@ -318,7 +323,7 @@ export default function Navbar() {
 
         <button className="shop-now-btn" style={{
           backgroundColor: darkGreen,
-          color: isScrolled ? '#ffffff' : '#163624',
+          color: light ? '#163624' : '#ffffff',
           padding: '0.65rem 1.3rem',
           borderRadius: '100px',
           display: 'flex',
