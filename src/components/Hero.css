@@ -1,0 +1,415 @@
+/* Layered parallax hero — ancient banyan centre subject (#featured) */
+
+.tree-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 14vh 6vw 10vh;
+  overflow: hidden;
+  background: #0d2a18;
+  color: #f4efe3;
+}
+
+/* ---------- layer stage ---------- */
+.tree-hero-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tree-layer {
+  position: absolute;
+  will-change: transform;
+}
+.tree-layer img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  will-change: transform; /* cursor parallax moves the image inside the scroll-driven wrapper */
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Blurred forest, slightly oversized so parallax never shows an edge */
+.tl-bg { inset: -18% -8%; }
+.tl-bg img { object-fit: cover; }
+
+/* God rays from the top-right, pure CSS */
+.tl-rays { inset: -10% -10% -10% 20%; }
+.tree-rays {
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  background:
+    linear-gradient(118deg, transparent 40%, rgba(214, 232, 150, 0.08) 43%, transparent 47%),
+    linear-gradient(118deg, transparent 56%, rgba(214, 232, 150, 0.06) 59%, transparent 63%),
+    radial-gradient(ellipse at 90% 0%, rgba(230, 240, 170, 0.22), transparent 45%);
+}
+
+/* Grass strip, feathered at the top */
+.tl-ground { left: -4%; right: -4%; bottom: -2%; height: 24%; }
+.tl-ground img { object-fit: cover; object-position: top; }
+
+/* The banyan — sharp subject, centred, roots meeting the grass */
+.tl-banyan {
+  left: 50%;
+  bottom: 9%;
+  width: min(78vw, 1150px);
+  height: 86%;
+  transform: translateX(-42%);
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
+}
+.tl-banyan img { object-fit: contain; object-position: bottom; }
+
+/* Foreground foliage cut from the reference corners */
+.tl-fol-tr { top: -2%; right: -2%; width: 22%; height: 46%; }
+.tl-fol-tr img { object-position: top right; }
+.tl-fol-tl { top: -2%; left: -2%; width: 24%; height: 36%; }
+.tl-fol-tl img { object-position: top left; }
+.tl-flw-br { bottom: -2%; right: -2%; width: 28%; height: 42%; }
+.tl-flw-br img { object-position: bottom right; }
+.tl-flw-bl { bottom: -2%; left: -2%; width: 30%; height: 42%; }
+.tl-flw-bl img { object-position: bottom left; }
+.tl-fol-tr img,
+.tl-fol-tl img,
+.tl-flw-br img,
+.tl-flw-bl img {
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.4));
+}
+
+/* Scroll-driven dusk: fades in as the hero leaves */
+.tree-hero-dusk {
+  position: absolute;
+  inset: 0;
+  z-index: 19;
+  background: #06180e;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Edge darkening so copy stays readable and the scene feels enclosed */
+.tree-hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background:
+    linear-gradient(90deg, rgba(8, 30, 17, 0.78) 0%, rgba(8, 30, 17, 0.4) 30%, transparent 52%),
+    linear-gradient(180deg, rgba(8, 30, 17, 0.55) 0%, transparent 25%, transparent 80%, rgba(8, 30, 17, 0.45) 100%);
+}
+
+/* ---------- atmosphere ---------- */
+/* Low mist hugging the lawn */
+.tree-hero-haze {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 4%;
+  height: 26%;
+  z-index: 12;
+  background: radial-gradient(ellipse at 50% 100%, rgba(214, 232, 170, 0.28), rgba(214, 232, 170, 0.06) 50%, transparent 75%);
+}
+
+/* Drifting pollen / fireflies */
+.tree-hero-pollen {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  overflow: hidden;
+}
+.tree-hero-pollen i {
+  --size: calc(3px + (var(--i) * 7 % 5) * 1px);
+  position: absolute;
+  left: calc(6% + (var(--i) * 29 % 88) * 1%);
+  top: calc(20% + (var(--i) * 17 % 60) * 1%);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: #f1efb8;
+  box-shadow: 0 0 10px 2px rgba(241, 239, 184, 0.55);
+  opacity: 0;
+  animation: tree-pollen calc(9s + (var(--i) * 3 % 7) * 1s) ease-in-out infinite;
+  animation-delay: calc((var(--i) * 5 % 9) * -1s);
+}
+@keyframes tree-pollen {
+  0%   { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
+  15%  { opacity: 0.9; }
+  50%  { transform: translate3d(18px, -46px, 0) scale(1); opacity: 0.6; }
+  85%  { opacity: 0.8; }
+  100% { transform: translate3d(-10px, -96px, 0) scale(0.5); opacity: 0; }
+}
+
+/* Falling leaves canvas: above the tree and foliage, below the vignette so they pick up the edge darkening */
+.tree-hero-leaves {
+  position: absolute;
+  inset: 0;
+  z-index: 18;
+  pointer-events: none;
+}
+
+/* Fine film grain keeps the big gradients from banding */
+.tree-hero-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 21;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Blend into the next section */
+.tree-hero-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 14vh;
+  z-index: 25;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, var(--color-sage-green));
+}
+
+/* ---------- copy ---------- */
+.tree-hero-content {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 600px;
+}
+
+.tree-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #d9d2b8;
+}
+.tree-hero-eyebrow svg { color: #c9d98a; flex: none; }
+.tree-hero-eyebrow-rule {
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(217, 210, 184, 0.7), transparent);
+}
+
+.tree-hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6.2vw, 6.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  color: #faf6ea;
+  text-wrap: balance;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.35), 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.tree-hero-title em {
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(100deg, #f1e6b9 0%, #cfe08a 55%, #a9d47a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  padding-right: 0.08em; /* keep the italic tail from clipping */
+}
+
+.tree-hero-description {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  font-weight: 400;
+  color: #ece6d6;
+  max-width: 470px;
+  padding-left: 1.1rem;
+  border-left: 2px solid #c9d98a;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Category chips */
+.tree-hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tree-hero-tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #e9e3cf;
+  background: rgba(8, 30, 17, 0.38);
+  border: 1px solid rgba(244, 236, 217, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.tree-hero-tags li svg { color: #c9d98a; flex: none; }
+
+/* WhatsApp quick enquiry */
+.tree-hero-whatsapp {
+  position: absolute;
+  right: 5vw;
+  bottom: 2.2rem;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 1.1rem 0.65rem 0.85rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  color: #f4ecd9;
+  background: rgba(8, 30, 17, 0.55);
+  border: 1px solid rgba(244, 236, 217, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.tree-hero-whatsapp:hover {
+  background: rgba(37, 211, 102, 0.18);
+  border-color: rgba(37, 211, 102, 0.6);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+}
+.tree-hero-whatsapp:focus-visible { outline: 2px solid #25d366; outline-offset: 3px; }
+.tree-hero-whatsapp svg { color: #25d366; flex: none; }
+.tree-hero-whatsapp-dot {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  animation: tree-wa-pulse 2s ease-out infinite;
+}
+@keyframes tree-wa-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  100% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+}
+.tree-hero-whatsapp-text { display: flex; flex-direction: column; line-height: 1.15; }
+.tree-hero-whatsapp-text strong { font-size: 0.86rem; font-weight: 600; }
+.tree-hero-whatsapp-text small { font-size: 0.7rem; color: rgba(244, 236, 217, 0.7); letter-spacing: 0.04em; }
+
+
+.tree-hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  margin-top: 0.4rem;
+}
+
+.tree-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.8rem;
+  border-radius: 9999px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.tree-btn-solid {
+  background: linear-gradient(180deg, #fbf5e6, #efe4c9);
+  color: #1f4a2f;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.tree-btn-solid:hover {
+  background: linear-gradient(180deg, #ffffff, #f6eedb);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 #ffffff;
+}
+.tree-btn-solid svg { color: #4f7a3a; }
+.tree-btn-outline {
+  background: rgba(8, 30, 17, 0.28);
+  color: #f4ecd9;
+  border: 1px solid rgba(244, 236, 217, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.tree-btn-outline:hover {
+  background: rgba(244, 236, 217, 0.14);
+  border-color: #f4ecd9;
+}
+.tree-btn-arrow { transition: transform 0.25s ease; }
+.tree-btn-outline:hover .tree-btn-arrow { transform: translateX(4px); }
+.tree-btn:focus-visible {
+  outline: 2px solid #f4ecd9;
+  outline-offset: 3px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .tree-hero {
+    align-items: flex-end;
+    padding: 16vh 6vw 9vh;
+    min-height: 100svh;
+  }
+  .tl-banyan {
+    bottom: 42%;
+    width: 130vw;
+    height: 48%;
+    transform: translateX(-50%);
+  }
+  .tl-ground { height: 28%; bottom: 34%; }
+  .tl-fol-tl, .tl-fol-tr { height: 26%; width: 34%; }
+  .tl-flw-bl, .tl-flw-br { height: 30%; width: 40%; }
+  .tree-hero-vignette {
+    background:
+      linear-gradient(180deg, rgba(8, 30, 17, 0.5) 0%, transparent 20%, transparent 40%, rgba(8, 30, 17, 0.88) 62%, rgba(8, 30, 17, 0.96) 100%);
+  }
+  .tree-hero-content {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+    gap: 1.1rem;
+  }
+  .tree-hero-title { font-size: 2.7rem; width: 100%; }
+  .tree-hero-description {
+    font-size: 1rem;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .tree-hero-eyebrow-rule { display: none; }
+  .tree-hero-tags { justify-content: center; }
+  .tree-hero-tags li { font-size: 0.68rem; padding: 0.4rem 0.7rem; }
+  .tree-hero-whatsapp {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.7rem;
+    border-radius: 50%;
+    background: #1f4a2f;
+  }
+  .tree-hero-whatsapp-text,
+  .tree-hero-whatsapp-dot { display: none; }
+  .tree-hero-whatsapp svg { width: 24px; height: 24px; }
+  .tree-hero-haze { bottom: 36%; }
+  .tree-hero { padding-bottom: 7vh; }
+  .tree-hero-actions { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-layer { will-change: auto; }
+  .tree-hero-pollen i,
+  .tree-hero-whatsapp-dot { animation: none; }
+  .tree-hero-pollen i { opacity: 0.5; }
+}
