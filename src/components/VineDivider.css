@@ -1,0 +1,142 @@
+/* Divider vines on the seam between the hero and the collection */
+
+.vine-divider {
+  position: relative;
+  z-index: 2;
+  height: 170px;
+  background:
+    radial-gradient(ellipse at 50% 55%, rgba(201, 217, 138, 0.22), transparent 55%),
+    var(--color-warm-cream);
+  overflow: hidden;
+  line-height: 0;
+}
+
+/* hairline along the seam the vines grow across */
+.vine-divider-line {
+  position: absolute;
+  left: 5vw;
+  right: 5vw;
+  top: calc(55% - 0.5px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(22, 54, 36, 0.18) 15%, rgba(22, 54, 36, 0.18) 85%, transparent);
+}
+
+.vine-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* stems: a dark body with a thin pale highlight running along the top edge */
+.vine-stem {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.vine-stem.main {
+  stroke: #4a7a37;
+  stroke-width: 4.2;
+  filter: drop-shadow(0 2px 2px rgba(22, 54, 36, 0.22));
+}
+.vine-stem.sub {
+  stroke: #7fa84a;
+  stroke-width: 2.2;
+  opacity: 0.9;
+}
+.vine-stem.wisp {
+  stroke: #9bbf6a;
+  stroke-width: 1.3;
+  opacity: 0.8;
+}
+.vine-stem-highlight {
+  fill: none;
+  stroke: rgba(201, 217, 138, 0.55);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  transform: translateY(-1.1px);
+  pointer-events: none;
+}
+
+/* leaves: gradient blade, dark edge, pale midrib */
+.vine-leaf-blade {
+  fill: url(#vine-leaf-fill);
+  stroke: #355f2c;
+  stroke-width: 0.55;
+  filter: drop-shadow(0 2px 2px rgba(22, 54, 36, 0.22));
+}
+.vine-growth g:nth-child(4n) .vine-leaf-blade { fill: url(#vine-leaf-fill-2); } /* a few lighter leaves for variety */
+.vine-leaf-vein {
+  fill: none;
+  stroke: rgba(236, 245, 210, 0.7);
+  stroke-width: 0.6;
+  stroke-linecap: round;
+}
+.vine-leaf-vein.side {
+  stroke: rgba(236, 245, 210, 0.45);
+  stroke-width: 0.4;
+}
+.vine-dew {
+  fill: rgba(255, 255, 255, 0.85);
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.9));
+}
+
+/* small white blossoms and closed buds */
+.blossom-petal {
+  fill: #fff7f0;
+  stroke: #e3b8a0;
+  stroke-width: 0.35;
+}
+.blossom-eye { fill: #f1c94a; }
+.vine-bud-body {
+  fill: url(#vine-bud-fill);
+  stroke: #5a8a3a;
+  stroke-width: 0.5;
+}
+.vine-bud-sepal {
+  fill: none;
+  stroke: #4a7a37;
+  stroke-width: 0.6;
+  stroke-linecap: round;
+}
+
+.vine-tendril {
+  fill: none;
+  stroke: #6a994e;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.vine-berries circle {
+  fill: url(#vine-berry-fill);
+  stroke: #7a2742;
+  stroke-width: 0.4;
+  filter: drop-shadow(0 1px 1px rgba(22, 54, 36, 0.25));
+}
+.vine-berry-stalk {
+  fill: none;
+  stroke: #6a994e;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.vine-bloom .petal {
+  fill: url(#vine-bloom-fill);
+  stroke: #c9607a;
+  stroke-width: 0.5;
+  filter: drop-shadow(0 1px 1px rgba(120, 40, 60, 0.25));
+}
+.vine-bloom .bud {
+  fill: #f1e6b9;
+  stroke: #b58b2a;
+  stroke-width: 0.8;
+}
+
+@media (max-width: 900px) {
+  .vine-divider { height: 110px; }
+  .vine-stem.main { stroke-width: 3.4; }
+  .vine-stem.sub, .vine-stem.wisp { display: none; } /* keep phones to one stem per side */
+}

@@ -5,6 +5,7 @@ import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import VineDivider from './components/VineDivider';
 import Collection from './components/Collection';
 import PotsHero from './components/PotsHero';
 import PotsCollection from './components/PotsCollection';
@@ -26,9 +27,10 @@ function App() {
   }, []);
 
   return (
-    <div className="app-container" style={{ backgroundColor: 'var(--color-sage-green)' }}>
+    <div className="app-container" style={{ backgroundColor: 'var(--color-sage-green)', position: 'relative' }}>
       <Navbar />
       <Hero />
+      <VineDivider />
       <Collection />
       <PotsHero />
       <PotsCollection />
