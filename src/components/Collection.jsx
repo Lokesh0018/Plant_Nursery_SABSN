@@ -2,12 +2,13 @@ import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { products } from '../data/products';
+import PlantModal from './PlantModal';
 import { Plus, Sun, Droplets } from 'lucide-react';
 import './Collection.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function ProductCard({ product }) {
+function ProductCard({ product, onOpen }) {
   const [isHovered, React_useState] = React.useState(false);
   const setIsHovered = React_useState;
 
@@ -79,6 +80,11 @@ function ProductCard({ product }) {
       className={`product-card${isHovered ? ' is-hovered' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={(e) => onOpen(product, e.currentTarget)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(product, e.currentTarget); } }}
+      role="button"
+      tabIndex={0}
+      aria-haspopup="dialog"
     >
       {/* Stage: every plant stands on the same ground line, whatever its height */}
       <div className="product-stage">
@@ -112,6 +118,16 @@ export default function Collection() {
   const headingRef = useRef(null);
   const bgTextRef = useRef(null);
   const gridRef = useRef(null);
+  const [selected, setSelected] = React.useState(null); // { product, rect, card }
+
+  const openProduct = (product, card) => {
+    setSelected({ product, rect: card.getBoundingClientRect(), card });
+  };
+  const closeProduct = () => {
+    const card = selected?.card;
+    setSelected(null);
+    card?.focus({ preventScroll: true }); // return focus to where the user was
+  };
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
@@ -198,9 +214,11 @@ export default function Collection() {
 
       <div ref={gridRef} className="collection-grid">
         {products.map(product => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} onOpen={openProduct} />
         ))}
       </div>
+
+      {selected && <PlantModal product={selected.product} originRect={selected.rect} onClose={closeProduct} />}
     </section>
   );
 }
