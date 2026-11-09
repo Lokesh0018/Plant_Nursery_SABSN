@@ -70,7 +70,9 @@ export default function Navbar() {
       // Active section = the last section whose top has passed the navbar line.
       // Measured against the same point for every section, so the highlight flips exactly
       // when a section's top reaches the bar, not at a different height for each one.
-      const line = 96; // navbar height + a little breathing room
+      // The reference point sits a third of the way down the viewport: a section becomes active
+      // once it covers that point, which is robust to smooth-scroll easing landing a few pixels off.
+      const line = Math.max(160, window.innerHeight * 0.34);
       const order = [
         ['collection', 'plants'],
         ['pots-collection', 'pots'],
@@ -86,9 +88,19 @@ export default function Navbar() {
       if (y >= max - 2) active = 'contact';
       setActiveSection(active);
     };
-    window.addEventListener('scroll', handleScroll);
+    // Poll the scroll position each frame instead of relying on scroll events: with Lenis smooth
+    // scrolling and programmatic jumps, events can be coalesced or arrive before layout settles.
+    let last = -1;
+    let raf = 0;
+    const tick = () => {
+      const y = window.scrollY;
+      if (y !== last) { last = y; handleScroll(); }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    window.addEventListener('resize', handleScroll);
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', handleScroll); };
   }, []);
 
   useEffect(() => {
@@ -186,6 +198,7 @@ export default function Navbar() {
               onMouseLeave={(e) => { if(!isActive && !isMobileOpen) e.currentTarget.style.color = textMuted }}
               onClick={() => {
                 setIsMobileOpen(false);
+                setActiveSection(item.toLowerCase());
                 if (item === 'Plants') {
                   document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
                 } else if (item === 'Pots') {
@@ -309,16 +322,22 @@ export default function Navbar() {
               right: '-4px',
               backgroundColor: '#25d366',
               color: '#0d2a18',
-              fontSize: '0.62rem',
-              width: '15px',
-              height: '15px',
-              borderRadius: '50%',
+              fontSize: '0.64rem',
+              lineHeight: 1,
+              minWidth: '17px',
+              height: '17px',
+              padding: '0 4px',
+              borderRadius: '999px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontWeight: '600'
-            }}>
-              {cartCount}
+              fontWeight: '700',
+              boxShadow: '0 0 0 2px rgba(8, 30, 17, 0.9), 0 2px 6px rgba(0, 0, 0, 0.35)', /* dark ring keeps it legible on the cream Shop button and pale sections */
+              zIndex: 2,
+              pointerEvents: 'none'
+            }}
+            aria-live="polite" aria-label={`${cartCount} item${cartCount === 1 ? '' : 's'} in cart`}>
+              {cartCount > 99 ? '99+' : cartCount}
             </span>
           )}
         </div>

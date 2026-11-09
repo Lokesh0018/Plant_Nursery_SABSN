@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { pots } from '../data/pots';
 import { Plus, Sun, Droplets } from 'lucide-react';
+import VineOrnament from './VineOrnament';
 import './Collection.css'; // Reusing the same responsive grid layout classes
 
 gsap.registerPlugin(ScrollTrigger);
@@ -63,8 +64,9 @@ function PotCard({ pot }) {
         setTimeout(() => {
           const badge = document.querySelector('.cart-badge');
           if (badge) {
-            gsap.fromTo(badge, { scale: 1 }, { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1, backgroundColor: '#3a7d44' });
-            gsap.to(badge, { backgroundColor: '#163624', delay: 0.3 });
+            // pulse only: flash to pale lime and back to the badge's own green, never to forest (invisible on the dark bar)
+            gsap.fromTo(badge, { scale: 1 }, { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1 });
+            gsap.fromTo(badge, { backgroundColor: '#c9d98a' }, { backgroundColor: '#25d366', duration: 0.5, delay: 0.3 });
           }
         }, 50);
       }
@@ -287,7 +289,7 @@ export default function PotsCollection() {
         <h2 className="collection-title">
           Ceramics
         </h2>
-        <div className="collection-divider" />
+        <VineOrnament />
       </div>
 
       <div ref={gridRef} className="collection-grid">

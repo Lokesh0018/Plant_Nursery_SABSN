@@ -1,0 +1,48 @@
+/* Vine flourish under section headings */
+
+.vine-ornament {
+  display: block;
+  margin: 1.4rem auto 0;
+  overflow: visible;
+}
+
+.vo-stem {
+  fill: none;
+  stroke: #4f7f3a;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+.vine-ornament.is-in .vo-stem {
+  animation: vo-draw 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes vo-draw { to { stroke-dashoffset: 0; } }
+
+.vo-leaf path {
+  fill: url(#vo-leaf);
+  stroke: #355f2c;
+  stroke-width: 0.4;
+}
+.vo-leaf {
+  transform-box: fill-box;
+  transform-origin: 0 50%;
+  scale: 0;
+}
+.vine-ornament.is-in .vo-leaf {
+  animation: vo-unfurl 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: var(--d, 0.4s);
+}
+@keyframes vo-unfurl { to { scale: 1; } }
+
+.vo-bud { transform-box: fill-box; transform-origin: center; scale: 0; }
+.vine-ornament.is-in .vo-bud {
+  animation: vo-unfurl 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.75s forwards;
+}
+.vo-bud-ring { fill: rgba(201, 217, 138, 0.5); stroke: #4f7f3a; stroke-width: 0.8; }
+.vo-bud-eye { fill: #e2879c; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vo-stem { stroke-dashoffset: 0; animation: none; }
+  .vo-leaf, .vo-bud { scale: 1; animation: none; }
+}

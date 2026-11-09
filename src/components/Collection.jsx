@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { products } from '../data/products';
 import PlantModal from './PlantModal';
 import { Plus, Sun, Droplets } from 'lucide-react';
+import VineOrnament from './VineOrnament';
 import './Collection.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -66,8 +67,9 @@ function ProductCard({ product, onOpen }) {
         setTimeout(() => {
           const badge = document.querySelector('.cart-badge');
           if (badge) {
-            gsap.fromTo(badge, { scale: 1 }, { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1, backgroundColor: '#3a7d44' });
-            gsap.to(badge, { backgroundColor: '#163624', delay: 0.3 });
+            // pulse only: flash to pale lime and back to the badge's own green, never to forest (invisible on the dark bar)
+            gsap.fromTo(badge, { scale: 1 }, { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1 });
+            gsap.fromTo(badge, { backgroundColor: '#c9d98a' }, { backgroundColor: '#25d366', duration: 0.5, delay: 0.3 });
           }
         }, 50);
       }
@@ -206,7 +208,7 @@ export default function Collection() {
         <h2 className="collection-title">
           Select
         </h2>
-        <div className="collection-divider" />
+        <VineOrnament />
         <p className="collection-lede">
           Healthy, nursery-raised plants chosen for homes and gardens, each with its light and water needs at a glance.
         </p>

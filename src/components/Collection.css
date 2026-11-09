@@ -54,13 +54,6 @@
   margin: 0;
 }
 
-.collection-divider {
-  width: 40px;
-  height: 2px;
-  background-color: #4f7f3a;
-  margin-top: 1.5rem;
-  opacity: 0.5;
-}
 
 .collection-lede {
   max-width: 520px;
