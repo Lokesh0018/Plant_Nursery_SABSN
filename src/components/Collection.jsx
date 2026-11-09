@@ -74,135 +74,36 @@ function ProductCard({ product }) {
   };
 
   return (
-    <div 
+    <article
       id={`product-${product.id}`}
-      className="product-card"
-      style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', position: 'relative' }}
+      className={`product-card${isHovered ? ' is-hovered' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div style={{
-        backgroundColor: 'transparent',
-        padding: '1rem',
-        aspectRatio: '3/4',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '1.5rem',
-        position: 'relative'
-      }}>
-        {/* Soft shadow that shrinks when the plant lifts */}
-        <div style={{
-          position: 'absolute',
-          bottom: '10%',
-          width: '50%',
-          height: '20px',
-          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 70%)',
-          borderRadius: '50%',
-          transform: isHovered ? 'scale(0.85)' : 'scale(1)',
-          opacity: isHovered ? 0.4 : 0.8,
-          transition: 'all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'
-        }} />
-        
-        {/* Plant Image */}
-        <img 
-          src={product.image} 
-          alt={product.name} 
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-            transform: isHovered ? 'scale(1.08) translateY(-10px)' : 'scale(1) translateY(0)',
-            transition: 'all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)',
-            zIndex: 2,
-            filter: 'drop-shadow(0 15px 15px rgba(0,0,0,0.08))'
-          }}
-        />
-
-        {/* Quick Add Button */}
-        <button style={{
-          position: 'absolute',
-          bottom: '10%',
-          right: '10%',
-          width: '45px',
-          height: '45px',
-          borderRadius: '50%',
-          backgroundColor: '#163624',
-          color: '#ffffff',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: 'none',
-          cursor: 'pointer',
-          opacity: isHovered ? 1 : 0,
-          transform: isHovered ? 'translateY(0) scale(1)' : 'translateY(15px) scale(0.9)',
-          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          boxShadow: '0 8px 20px rgba(22, 54, 36, 0.25)',
-          zIndex: 3
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(0) scale(1.1)'}
-        onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0) scale(1)'}
-        onClick={handleAddToCart}
-        >
+      {/* Stage: every plant stands on the same ground line, whatever its height */}
+      <div className="product-stage">
+        <span className="product-stage-glow" aria-hidden="true" />
+        <span className="product-stage-shadow" aria-hidden="true" />
+        <img src={product.image} alt={product.name} className="product-img" loading="lazy" />
+        <button className="product-add" onClick={handleAddToCart} aria-label={`Add ${product.name} to cart`}>
           <Plus size={20} strokeWidth={2.5} />
         </button>
       </div>
 
-      <div style={{ padding: '0 0.5rem', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <p style={{ 
-            color: '#7a8c7c', 
-            fontSize: '0.7rem', 
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            fontWeight: '600'
-          }}>
-            {product.scientificName}
-          </p>
-          
+      <div className="product-body">
+        <p className="product-latin">{product.scientificName}</p>
+        <h3 className="product-name">{product.name}</h3>
+        <div className="product-foot">
+          <p className="product-price">₹{product.price.toLocaleString()}</p>
           {product.care && (
-            <div style={{ display: 'flex', gap: '0.4rem', opacity: isHovered ? 1 : 0.6, transition: 'opacity 0.3s ease' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.65rem', color: '#4a5b4c', background: 'rgba(22, 54, 36, 0.06)', padding: '0.25rem 0.5rem', borderRadius: '100px', fontWeight: '600' }}>
-                <Sun size={11} strokeWidth={2.5} />
-                {product.care.light}
-              </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.65rem', color: '#4a5b4c', background: 'rgba(22, 54, 36, 0.06)', padding: '0.25rem 0.5rem', borderRadius: '100px', fontWeight: '600' }}>
-                <Droplets size={11} strokeWidth={2.5} />
-                {product.care.water}
-              </span>
+            <div className="product-care">
+              <span><Sun size={11} strokeWidth={2.5} />{product.care.light}</span>
+              <span><Droplets size={11} strokeWidth={2.5} />{product.care.water}</span>
             </div>
           )}
         </div>
-
-        <h3 style={{ 
-          fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
-          marginBottom: '0.5rem',
-          fontFamily: 'var(--font-serif)',
-          color: '#163624',
-          fontWeight: '500',
-          lineHeight: '1.2'
-        }}>
-          {product.name}
-        </h3>
-        
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.25rem' }}>
-          <p style={{ 
-            fontSize: '1.15rem', 
-            fontWeight: '600',
-            color: '#2a3a2d'
-          }}>
-            ₹{product.price.toLocaleString()}
-          </p>
-          <div style={{
-             width: isHovered ? '32px' : '0px',
-             height: '2px',
-             backgroundColor: '#163624',
-             transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-             opacity: isHovered ? 1 : 0
-          }} />
-        </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -290,6 +191,9 @@ export default function Collection() {
           Select
         </h2>
         <div className="collection-divider" />
+        <p className="collection-lede">
+          Healthy, nursery-raised plants chosen for homes and gardens, each with its light and water needs at a glance.
+        </p>
       </div>
 
       <div ref={gridRef} className="collection-grid">
