@@ -6,16 +6,22 @@
   position: relative;
   overflow: hidden;
   padding: clamp(5.5rem, 9.5vh, 8.5rem) 5vw;
-  /* Fluid multi-stop gradient bridging About section into Living Archive */
+  /* same botanical gradient family as the founder section: opens on the founder's exact end tone
+     (#bed3b3) and carries its bottom-right sage glow in from this section's top-right, then lifts
+     through the founder's sage steps and settles onto the warm cream the Living Archive opens on */
+  /* a vertical mirror of the founder background: founder runs #e4ecdc -> #bed3b3 top to bottom
+     with a lime glow top-left, a sage glow bottom-right and a white light in the centre; this
+     section runs #bed3b3 -> #e4ecdc with the same glows flipped, so the shared edge is the
+     darkest line of one continuous surface. Only the last stretch warms toward the archive. */
   background:
-    radial-gradient(ellipse at 15% 15%, rgba(201, 217, 138, 0.42), transparent 50%),
-    radial-gradient(ellipse at 85% 85%, rgba(223, 204, 182, 0.45), transparent 55%),
-    linear-gradient(180deg, #bed3b3 0%, #dbe6d3 14%, #edebe1 40%, #f6f3eb 70%, #ebdcc9 100%);
+    radial-gradient(ellipse at 85% 15%, rgba(120, 155, 115, 0.38), transparent 55%),
+    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.45), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
+    radial-gradient(ellipse at 85% 100%, rgba(223, 204, 182, 0.45), transparent 50%),
+    linear-gradient(180deg, #bed3b3 0%, #cbdcc1 30%, #d8e5ce 65%, #e4ecdc 88%, #e4d8c8 100%);
   color: var(--color-text-dark, #17271d);
-  border-top: 1px solid rgba(22, 54, 36, 0.08);
-  border-bottom: 1px solid rgba(22, 54, 36, 0.08);
+  margin-top: -1px; /* no sub-pixel hairline at the seam with the founder section */
 }
-
 /* Background Atmosphere */
 .plantcare-watermark {
   position: absolute;
@@ -61,6 +67,28 @@
   background: radial-gradient(circle, rgba(223, 204, 182, 0.5) 0%, transparent 70%);
 }
 
+/* Botanical Corner Leaf Decor, same shape and weight as the About and founder sections */
+.plantcare-corner-leaf {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  color: rgba(22, 54, 36, 0.045);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.plantcare-corner-leaf-top {
+  top: 1rem;
+  left: 1.5rem;
+  transform: rotate(-15deg);
+}
+
+.plantcare-corner-leaf-bottom {
+  bottom: 1rem;
+  right: 1.5rem;
+  transform: rotate(165deg);
+}
+
 .plantcare-container {
   position: relative;
   z-index: 2;
@@ -96,6 +124,12 @@
   align-items: center;
   gap: 0.5rem;
   color: #163624;
+  width: fit-content;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(235, 244, 222, 0.95) 0%, rgba(216, 234, 198, 0.85) 100%);
+  border: 1px solid rgba(79, 127, 58, 0.25);
+  box-shadow: 0 2px 8px -2px rgba(22, 54, 36, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .plantcare-tag-icon {
@@ -118,6 +152,19 @@
   letter-spacing: -0.025em;
   line-height: 1.15;
   margin: 0;
+  position: relative;
+  padding-bottom: 0.9rem;
+}
+/* short lime-to-forest rule under the title */
+.plantcare-main-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #c9d98a, #163624);
 }
 
 .plantcare-header-right {
@@ -125,6 +172,18 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  position: relative;
+  padding-left: 1.15rem;
+}
+.plantcare-header-right::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #c9d98a, rgba(22, 54, 36, 0.5));
 }
 
 .plantcare-quote-text {
@@ -166,38 +225,145 @@
 @media (min-width: 1080px) {
   .plantcare-protocol-grid {
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 }
 
 /* Individual Protocol Card */
 .plantcare-protocol-card {
+  --accent: #4f7f3a; /* overridden per card inline */
   position: relative;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  padding: 1.85rem 1.65rem 1.5rem;
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.84));
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
+  border: 1px solid transparent;
+  border-radius: 24px;
+  padding: 0 0 1.5rem;
   min-height: 340px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  cursor: default;
   box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 10px 25px -10px rgba(22, 54, 36, 0.08),
-    0 20px 40px -20px rgba(22, 54, 36, 0.05),
-    inset 0 1px 2px rgba(255, 255, 255, 0.95);
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, background 0.4s ease;
+    0 20px 40px -20px rgba(22, 54, 36, 0.05);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
   overflow: hidden;
+  isolation: isolate;
+}
+
+/* gradient hairline border: white at the top, the card's accent toward the bottom */
+.plantcare-protocol-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.95) 0%, rgba(201, 217, 138, 0.5) 40%, color-mix(in srgb, var(--accent) 35%, transparent) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 3;
 }
 
 .plantcare-protocol-card:hover {
   transform: translateY(-6px);
-  background: rgba(255, 255, 255, 0.94);
   box-shadow:
+    0 1px 0 rgba(255, 255, 255, 1) inset,
     0 20px 45px -12px rgba(22, 54, 36, 0.16),
     0 35px 70px -25px rgba(22, 54, 36, 0.1),
-    inset 0 1px 2px rgba(255, 255, 255, 1);
+    0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* oversized ghosted step numeral behind the card content */
+.plantcare-card-numeral {
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 3.6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 14px rgba(22, 54, 36, 0.45);
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.plantcare-protocol-card:hover .plantcare-card-numeral {
+  transform: translateY(3px);
+}
+.plantcare-card-top,
+.plantcare-card-bottom {
+  position: relative;
+  z-index: 1;
+  padding-left: 1.65rem;
+  padding-right: 1.65rem;
+}
+.plantcare-card-top {
+  padding-top: 0;
+  flex: 1;
+}
+.plantcare-card-bottom {
+  margin-left: 1.65rem;
+  margin-right: 1.65rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ---------- photo header ---------- */
+/* a full-bleed photograph across the top of the card, tinted toward the card's accent and
+   fading into the card surface so the text block reads as one piece with the image */
+.plantcare-card-stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 24px 24px 0 0;
+  background: color-mix(in srgb, var(--accent) 12%, #ffffff);
+  isolation: isolate;
+}
+.plantcare-card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform: scale(1.02);
+  filter: saturate(1.05);
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
+  will-change: transform;
+}
+/* accent tint plus a fade into the card surface along the bottom */
+.plantcare-stage-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* no fade: the photo runs at full strength to the seam; only a light accent tint at the very
+     top so the code chip sits on calm ground */
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 30%);
+  z-index: 1;
+}
+/* thin accent line where the photo meets the text */
+.plantcare-stage-fade::after {
+  content: '';
+  position: absolute;
+  left: 1.65rem;
+  right: 1.65rem;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 45%, transparent), transparent);
+}
+.plantcare-protocol-card:hover .plantcare-card-image {
+  transform: scale(1.08);
+  filter: saturate(1.15);
 }
 
 .plantcare-card-top {
@@ -207,39 +373,65 @@
 
 .plantcare-code-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
+  justify-content: flex-end;
+  margin-top: -1.35rem; /* lifts the badge half over the photo edge */
+  margin-bottom: 0.9rem;
+  position: relative;
+  z-index: 2;
 }
 
 .plantcare-code-label {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  z-index: 2;
   font-family: var(--font-mono, monospace, sans-serif);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--color-forest-dark, #163624);
   text-transform: uppercase;
+  color: #163624;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(22, 54, 36, 0.15);
 }
 
+/* icon sits in a tinted tile in the card's accent colour */
 .plantcare-card-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  outline: 4px solid #ffffff;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 4px 10px -4px color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
 }
 
 .plantcare-protocol-card:hover .plantcare-card-icon {
-  transform: scale(1.15);
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 8px 18px -6px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 .plantcare-card-heading {
   font-family: var(--font-serif, 'Playfair Display', serif);
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 600;
   color: #17271d;
   letter-spacing: -0.015em;
-  line-height: 1.28;
-  margin-bottom: 0.75rem;
+  line-height: 1.22;
+  margin: -0.35rem 0 0.65rem; /* pulls up beside the badge */
+  max-width: 11ch;
+  text-wrap: balance;
   transition: color 0.3s ease;
 }
 
@@ -248,10 +440,11 @@
 }
 
 .plantcare-card-description {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.65;
-  color: rgba(23, 39, 29, 0.75);
+  color: rgba(23, 39, 29, 0.78);
   margin: 0;
+  max-width: 34ch;
 }
 
 .plantcare-card-bottom {
@@ -264,32 +457,74 @@
 }
 
 .plantcare-card-tag {
-  font-size: 0.72rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.68rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: rgba(23, 39, 29, 0.65);
+  color: color-mix(in srgb, var(--accent) 80%, #17271d);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 8%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.plantcare-card-tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .plantcare-card-subicon {
-  display: flex;
-  align-items: center;
-  color: #4f7f3a;
-  opacity: 0.75;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  background: rgba(22, 54, 36, 0.05);
+  border: 1px solid rgba(22, 54, 36, 0.08);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.plantcare-protocol-card:hover .plantcare-card-subicon {
+  background: color-mix(in srgb, var(--accent) 12%, #ffffff);
+  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 /* Vitality Standard Bottom Assurance Banner */
 .plantcare-assurance-banner {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  padding: 1.25rem 1.75rem;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 0% 50%, rgba(201, 217, 138, 0.28), transparent 45%),
+    radial-gradient(ellipse at 100% 50%, rgba(243, 236, 222, 0.7), transparent 50%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.86));
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
+  border: 1px solid transparent;
+  border-radius: 22px;
+  padding: 1.35rem 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  box-shadow: 0 10px 30px -10px rgba(22, 54, 36, 0.1);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 14px 34px -12px rgba(22, 54, 36, 0.14);
+  overflow: hidden;
+}
+.plantcare-assurance-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(201, 217, 138, 0.55) 35%, rgba(22, 54, 36, 0.18) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 @media (min-width: 680px) {
@@ -310,11 +545,12 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(79, 127, 58, 0.12);
-  color: #2b593b;
+  background: linear-gradient(145deg, #254d33 0%, #163624 60%, #0d2a18 100%);
+  color: #c9d98a;
   display: grid;
   place-items: center;
   flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(22, 54, 36, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .plantcare-assurance-title {
@@ -351,11 +587,21 @@
   flex-shrink: 0;
 }
 
+.plantcare-cta-btn svg {
+  transition: transform 0.3s ease;
+}
 .plantcare-cta-btn:hover {
   background: #244e34;
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(22, 54, 36, 0.25);
   color: #ffffff;
+}
+.plantcare-cta-btn:hover svg {
+  transform: translateX(3px);
+}
+.plantcare-cta-btn:focus-visible {
+  outline: 2px solid #c9d98a;
+  outline-offset: 3px;
 }
 
 @media (max-width: 640px) {
@@ -365,7 +611,31 @@
 
   .plantcare-protocol-card {
     min-height: auto;
-    padding: 1.5rem 1.25rem;
+    padding: 0 0 1.25rem;
+  }
+  .plantcare-card-top {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .plantcare-card-bottom {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+  .plantcare-card-stage {
+    aspect-ratio: 16 / 9;
+  }
+  .plantcare-card-heading {
+    max-width: none;
+  }
+  .plantcare-card-numeral {
+    font-size: 3rem;
+    right: 0.85rem;
+  }
+  .plantcare-card-description {
+    max-width: none;
+  }
+  .plantcare-header-right {
+    padding-left: 1rem;
   }
 
   .plantcare-assurance-banner {
@@ -375,7 +645,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .plantcare-protocol-card,
+  .plantcare-card-numeral,
+  .plantcare-card-image,
   .plantcare-cta-btn,
+  .plantcare-cta-btn svg,
   .plantcare-card-icon {
     transition: none !important;
     transform: none !important;

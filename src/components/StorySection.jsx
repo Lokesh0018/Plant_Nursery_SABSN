@@ -1,7 +1,7 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Quote, Sparkles, Award, MapPin, Trees, Sprout, CheckCircle2 } from 'lucide-react';
+import { Quote, Sparkles, Award, MapPin, Trees, Sprout, CheckCircle2, Leaf } from 'lucide-react';
 import VineOrnament from './VineOrnament';
 import './StorySection.css';
 
@@ -108,7 +108,7 @@ export default function StorySection() {
         </svg>
       </div>
 
-      <div className="founder-card">
+      <div className="founder-card founder-card--split">
         {/* Plant Theme: Botanical Vine & Flower Corner Flourishes */}
         <div className="founder-card-vine-top-left" aria-hidden="true">
           <svg viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -151,54 +151,25 @@ export default function StorySection() {
           </svg>
         </div>
 
-        {/* Subtle top heritage ribbon */}
-        <div className="founder-card-topbar">
-          <div className="founder-card-pill">
-            <Sparkles size={13} className="founder-pill-icon" />
-            <span>Honoring 35+ Years of Botanical Legacy</span>
+        {/* Portrait panel: edge-to-edge photo with the caption and badges overlaid */}
+        <div className="founder-photo-panel" ref={portraitCardRef}>
+          <img
+            ref={imageRef}
+            alt="Sri Uppada Kumaraswamy, Master Horticulturist and Founder holding a blooming Jasmine sapling"
+            className="founder-portrait-img"
+            src="/sabsn-founder.webp"
+            loading="lazy"
+          />
+          <div className="founder-photo-shade" aria-hidden="true" />
+
+          <div className="founder-image-seal">
+            <Award size={18} />
+            <span>Est. 1980s</span>
           </div>
-          <div className="founder-location-pill">
-            <MapPin size={13} />
-            <span>Kadiam, Godavari Delta • Andhra Pradesh</span>
-          </div>
-        </div>
 
-        <div className="founder-grid">
-          {/* Founder Portrait */}
-          <div className="founder-portrait-col" ref={portraitCardRef}>
-            <div className="founder-portrait-outer-ring">
-              {/* Botanical Leaf Tendril on Frame */}
-              <div className="founder-frame-leaf-accent" aria-hidden="true">
-                <svg viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 40 C 15 25, 25 15, 40 5" stroke="#4f7f3a" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M22 24 C 18 16, 28 14, 30 22 Z" fill="#7fa868" />
-                  <circle cx="39" cy="6" r="3.5" fill="#fcd34d" stroke="#163624" strokeWidth="0.8" />
-                </svg>
-              </div>
-
-              <div className="founder-portrait-frame">
-                <div className="founder-image-aspect">
-                  <img
-                    ref={imageRef}
-                    alt="Sri Uppada Kumaraswamy, Master Horticulturist and Founder holding a blooming Jasmine sapling"
-                    className="founder-portrait-img"
-                    src="/sabsn-founder.webp"
-                    loading="lazy"
-                  />
-                  <div className="founder-image-seal">
-                    <Award size={18} />
-                    <span>Est. 1980s</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="founder-caption">
-              <span className="founder-tag">Kadiam Heritage Master</span>
-              <p className="founder-subtext">35+ Years Horticultural Stewardship</p>
-            </div>
-
-            {/* Quick Botanical Badges */}
+          <div className="founder-photo-caption">
+            <span className="founder-tag">Kadiam Heritage Master</span>
+            <p className="founder-subtext">35+ Years Horticultural Stewardship</p>
             <div className="founder-badges-row">
               <div className="founder-mini-badge">
                 <Sprout size={13} className="founder-mini-badge-icon" />
@@ -210,6 +181,21 @@ export default function StorySection() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Content panel */}
+        <div className="founder-content-panel">
+        {/* Subtle top heritage ribbon */}
+        <div className="founder-card-topbar">
+          <div className="founder-card-pill">
+            <Sparkles size={13} className="founder-pill-icon" />
+            <span>Honoring 35+ Years of Botanical Legacy</span>
+          </div>
+          <div className="founder-location-pill">
+            <MapPin size={13} />
+            <span>Kadiam, Godavari Delta • Andhra Pradesh</span>
+          </div>
+        </div>
 
           {/* Founder Narrative & Quote */}
           <div className="founder-narrative-col" ref={contentRef}>
@@ -227,7 +213,7 @@ export default function StorySection() {
                 Rooted in Kadiam’s generational agricultural ethos, Sri Uppada Kumaraswamy has devoted over three decades to the art of plant propagation. Under his discerning eye, SABSN has transformed from a revered local botanical nursery into an authoritative national destination for rare specimens, monumental avenues, and architectural flora.
               </p>
               <div className="founder-quote-card">
-                <span className="founder-quote-card-leaf" aria-hidden="true">🌿</span>
+                <span className="founder-quote-card-leaf" aria-hidden="true"><Leaf size={14} /></span>
                 <p className="founder-prose-secondary">
                   “We do not merely supply foliage; we ensure that the genetic vigor, the root architecture, and the spirit of the plant flourish in its final home, whether that is a private sanctuary in Bengaluru or an estate in the Himalayan foothills.”
                 </p>

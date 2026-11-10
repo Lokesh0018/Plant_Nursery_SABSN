@@ -28,7 +28,9 @@ const protocolCards = [
     tag: 'Adaptive Hardening',
     icon: Repeat,
     accentIcon: Flower2,
-    badgeColor: '#4f7f3a'
+    badgeColor: '#4f7f3a',
+    image: '/care-microclimate.webp',
+    imageAlt: 'Nursery beds of young plants hardening off under green shade netting'
   },
   {
     num: '02',
@@ -38,7 +40,9 @@ const protocolCards = [
     tag: 'Rich River Loam',
     icon: Sprout,
     accentIcon: Layers,
-    badgeColor: '#7a6348'
+    badgeColor: '#7a6348',
+    image: '/care-soil.webp',
+    imageAlt: 'Rows of seedlings emerging from dark, crumbly compost-rich soil'
   },
   {
     num: '03',
@@ -48,7 +52,9 @@ const protocolCards = [
     tag: 'Zero Transit Shock',
     icon: Droplets,
     accentIcon: Wind,
-    badgeColor: '#367a8f'
+    badgeColor: '#367a8f',
+    image: '/care-aeration.webp',
+    imageAlt: 'Fine-mist sprinklers irrigating a lawn at the nursery'
   },
   {
     num: '04',
@@ -58,7 +64,9 @@ const protocolCards = [
     tag: 'Ongoing Curation',
     icon: Handshake,
     accentIcon: Headphones,
-    badgeColor: '#2b5a38'
+    badgeColor: '#2b5a38',
+    image: '/care-guidance.webp',
+    imageAlt: 'A horticulturist advising a client over a planting plan in a garden bed'
   }
 ];
 
@@ -133,6 +141,18 @@ export default function PlantCare() {
       <div className="plantcare-ambient-orb plantcare-ambient-orb--left" aria-hidden="true" />
       <div className="plantcare-ambient-orb plantcare-ambient-orb--right" aria-hidden="true" />
 
+      {/* Decorative Botanical Corner Leaves, matching the About and founder sections */}
+      <div className="plantcare-corner-leaf plantcare-corner-leaf-top" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0C40 20 80 60 120 120C60 100 20 60 0 0Z" fill="currentColor" />
+        </svg>
+      </div>
+      <div className="plantcare-corner-leaf plantcare-corner-leaf-bottom" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0C40 20 80 60 120 120C60 100 20 60 0 0Z" fill="currentColor" />
+        </svg>
+      </div>
+
       <div className="plantcare-container">
         {/* Header Block: Title & Narrative Quote */}
         <div className="plantcare-header-block">
@@ -163,11 +183,24 @@ export default function PlantCare() {
             const Icon = card.icon;
             const AccentIcon = card.accentIcon;
             return (
-              <div key={idx} className="plantcare-protocol-card">
+              <div key={idx} className="plantcare-protocol-card" style={{ '--accent': card.badgeColor }}>
+                <div className="plantcare-card-stage">
+                  <img
+                    src={card.image}
+                    alt={card.imageAlt}
+                    className="plantcare-card-image"
+                    loading="lazy"
+                    decoding="async"
+                    width="1000"
+                    height="700"
+                  />
+                  <span className="plantcare-stage-fade" aria-hidden="true" />
+                  <span className="plantcare-code-label">{card.num} // {card.code}</span>
+                  <span className="plantcare-card-numeral" aria-hidden="true">{card.num}</span>
+                </div>
                 <div className="plantcare-card-top">
                   <div className="plantcare-code-row">
-                    <span className="plantcare-code-label">{card.num} // {card.code}</span>
-                    <span className="plantcare-card-icon" style={{ color: card.badgeColor }}>
+                    <span className="plantcare-card-icon">
                       <Icon size={20} />
                     </span>
                   </div>
