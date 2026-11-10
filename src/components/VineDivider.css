@@ -94,6 +94,35 @@
   background: linear-gradient(90deg, transparent, rgba(120, 85, 50, 0.18) 15%, rgba(120, 85, 50, 0.18) 85%, transparent);
 }
 
+.vine-divider--contact {
+  --leaf-fill: url(#vine-leaf-fill-contact);
+  --leaf-fill-2: url(#vine-leaf-fill-2-contact);
+  --bloom-fill: url(#vine-bloom-fill-contact);
+  --berry-fill: url(#vine-berry-fill-contact);
+  --bud-fill: url(#vine-bud-fill-contact);
+}
+/* between the gallery and the contact form:
+   both sections meet on the light sage token (#b4cdb0). The gallery ends with a lime glow in its
+   bottom-left; the contact section opens with that lime glow top-left and a sage light top-right.
+   The band runs the one tone and carries both lights straight through */
+.vine-divider.vine-divider--contact {
+  /* the gallery's gradient is still cooling as it reaches the seam, so the band keeps that motion
+     going (#bbd0b4 -> #b4cdb0) rather than sitting as a flat slab, and the gallery's bottom-right
+     sage orb is continued in from the band's top-right */
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.35), transparent 50%),
+    radial-gradient(ellipse at 85% 0%, rgba(180, 205, 176, 0.5), transparent 50%),
+    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.35), transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(180, 205, 176, 0.55), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.22), transparent 60%),
+    linear-gradient(180deg, #bbd0b4 0%, #b4cdb0 100%);
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+.vine-divider.vine-divider--contact .vine-divider-line {
+  background: linear-gradient(90deg, transparent, rgba(22, 54, 36, 0.2) 15%, rgba(22, 54, 36, 0.2) 85%, transparent);
+}
+
 .vine-divider {
   position: relative;
   z-index: 2;

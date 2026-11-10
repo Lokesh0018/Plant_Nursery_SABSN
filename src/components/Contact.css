@@ -1,10 +1,94 @@
 .contact-premium-section {
   position: relative;
-  padding: 15vh 5vw;
-  background-color: var(--color-light-sage);
+  padding: clamp(6rem, 13vh, 9rem) 5vw;
+  /* opens on the light sage the gallery ends on (#b4cdb0) and carries the gallery's bottom-left
+     lime glow in from this section's top-left; a sage light sits top-right; the base warms through
+     a pale linen into the warm cream the footer opens on (#dfccb6), with the footer's clay glow
+     anchored to this section's bottom-right */
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.35), transparent 50%),
+    radial-gradient(ellipse at 85% 0%, rgba(180, 205, 176, 0.55), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
+    radial-gradient(ellipse at 85% 100%, rgba(223, 204, 182, 0.5), transparent 50%),
+    linear-gradient(180deg, #b4cdb0 0%, #c4d6bb 30%, #d6dcc6 62%, #dfd6c0 86%, #dfccb6 100%);
   color: var(--color-text-dark);
-  border-top: 1px solid rgba(23, 39, 29, 0.05);
   overflow: hidden;
+  margin-top: -1px; /* no sub-pixel hairline at the seam with the gallery */
+}
+
+/* Background Atmosphere */
+.contact-watermark {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(6rem, 15vw, 17rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: rgba(22, 54, 36, 0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+}
+
+.contact-ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(60px);
+}
+.contact-ambient-orb--left {
+  width: 44vw;
+  height: 44vw;
+  max-width: 520px;
+  max-height: 520px;
+  top: 5%;
+  left: -6%;
+  background: radial-gradient(circle, rgba(201, 217, 138, 0.42) 0%, transparent 70%);
+}
+.contact-ambient-orb--right {
+  width: 40vw;
+  height: 40vw;
+  max-width: 480px;
+  max-height: 480px;
+  bottom: 0%;
+  right: -6%;
+  background: radial-gradient(circle, rgba(223, 204, 182, 0.6) 0%, transparent 70%);
+}
+
+/* Botanical Corner Leaf Decor, same shape and weight as the other sections */
+.contact-corner-leaf {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  color: rgba(22, 54, 36, 0.045);
+  pointer-events: none;
+  z-index: 1;
+}
+.contact-corner-leaf-top {
+  top: 1rem;
+  left: 1.5rem;
+  transform: rotate(-15deg);
+}
+.contact-corner-leaf-bottom {
+  bottom: 1rem;
+  right: 1.5rem;
+  transform: rotate(165deg);
+}
+
+.contact-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .contact-premium-container {
@@ -47,7 +131,29 @@
   left: -1.5rem;
   z-index: -1;
   transform: rotate(-5deg);
-  opacity: 0.15;
+  opacity: 0.22;
+}
+
+/* eyebrow pill, matching the other sections */
+.contact-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #163624;
+  background: linear-gradient(135deg, rgba(235, 244, 222, 0.95) 0%, rgba(216, 234, 198, 0.85) 100%);
+  border: 1px solid rgba(79, 127, 58, 0.25);
+  box-shadow: 0 2px 8px -2px rgba(22, 54, 36, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.contact-eyebrow-icon {
+  color: #3b753a;
 }
 
 @media (max-width: 900px) {
@@ -59,18 +165,69 @@
 
 .contact-title {
   font-family: var(--font-serif);
-  font-size: clamp(3rem, 4.5vw, 4rem);
-  font-weight: 400;
+  font-size: clamp(2.6rem, 4.5vw, 4rem);
+  font-weight: 500;
   margin-bottom: 1.2rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   line-height: 1.1;
-  color: var(--color-text-dark);
+  color: var(--color-forest-dark, #163624);
+  position: relative;
+  padding-bottom: 1rem;
+  text-wrap: balance;
+}
+/* short lime-to-forest rule under the title */
+.contact-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #c9d98a, #163624);
+}
+@media (max-width: 900px) {
+  .contact-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .contact-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.7;
-  color: var(--color-text-muted);
+  color: rgba(23, 39, 29, 0.78);
+  max-width: 48ch;
+}
+
+/* three short reassurances under the copy */
+.contact-perks {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.25rem;
+}
+.contact-perks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #2b4a33;
+}
+.contact-perks li svg {
+  color: #3b753a;
+  flex-shrink: 0;
+}
+@media (max-width: 900px) {
+  .contact-perks {
+    justify-content: center;
+  }
+  .contact-subtitle {
+    margin: 0 auto;
+  }
 }
 
 .contact-form-col {
@@ -78,19 +235,54 @@
 }
 
 .form-glass-wrapper {
+  position: relative;
   padding: 8px;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(201, 217, 138, 0.25), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.78));
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
   border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 20px 40px rgba(23, 39, 29, 0.04);
+  border: 1px solid transparent;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 20px 40px -14px rgba(22, 54, 36, 0.18),
+    0 36px 70px -30px rgba(22, 54, 36, 0.12);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+/* gradient hairline border: white at the top, lime, then forest at the bottom */
+.form-glass-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(201, 217, 138, 0.55) 35%, rgba(22, 54, 36, 0.22) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .form-glass-wrapper:focus-within {
   transform: translateY(-2px);
-  box-shadow: 0 25px 50px rgba(23, 39, 29, 0.08), 0 0 0 4px rgba(180, 205, 176, 0.3);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 25px 50px -14px rgba(22, 54, 36, 0.24),
+    0 0 0 4px rgba(201, 217, 138, 0.35);
+}
+
+.contact-form-note {
+  margin: 0.9rem 0 0 1.5rem;
+  font-size: 0.82rem;
+  color: rgba(23, 39, 29, 0.65);
+}
+@media (max-width: 900px) {
+  .contact-form-note {
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
 .premium-form {
@@ -121,6 +313,9 @@
   color: var(--color-text-muted);
   opacity: 0.6;
 }
+.premium-input:focus-visible {
+  outline: none; /* the wrapper's focus-within ring carries focus for the whole control */
+}
 
 .premium-submit {
   display: flex;
@@ -143,6 +338,10 @@
 .premium-submit:hover:not(:disabled) {
   background: var(--color-forest-dark);
   box-shadow: 0 10px 20px rgba(23, 39, 29, 0.15);
+}
+.premium-submit:focus-visible {
+  outline: 2px solid #c9d98a;
+  outline-offset: 3px;
 }
 
 .premium-submit.submitting {
@@ -187,25 +386,35 @@
     border-radius: 24px;
     padding: 8px;
   }
-  
+
   .premium-form {
     border-radius: 18px;
     padding: 0.5rem;
   }
-  
+
   .premium-input-group {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .premium-input {
     width: 100%;
     text-align: center;
     padding: 1rem;
   }
-  
+
   .premium-submit {
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-glass-wrapper,
+  .submit-icon-wrapper,
+  .success-icon {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
   }
 }

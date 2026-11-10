@@ -13,7 +13,7 @@
     radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.28), transparent 50%),
     radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.35), transparent 50%),
     radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.35), transparent 60%),
-    linear-gradient(180deg, #dfccb6 0%, #e6dccb 28%, #dfe0cc 62%, #c9d6bd 86%, #b4cdb0 100%);
+    linear-gradient(180deg, #dfccb6 0%, #e6dccb 28%, #dfe0cc 62%, #c9d6bd 86%, #bbd0b4 100%);
   color: var(--color-text-dark, #17271d);
   margin-top: -1px; /* no sub-pixel hairline at the seam with the divider */
 }

@@ -41,6 +41,7 @@ function App() {
       <PlantCare />
       <VineDivider variant="care" />
       <LivingArchive />
+      <VineDivider variant="contact" />
       <Contact />
       <Footer />
       <WhatsAppButton />
