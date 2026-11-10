@@ -7,6 +7,22 @@
   --berry-fill: url(#vine-berry-fill-top);
   --bud-fill: url(#vine-bud-fill-top);
 }
+/* between the hero and the plants collection:
+   the hero's bottom fade lands on the site sage (#9BB896) with its lawn mist glowing up from the
+   centre, so the band opens on that exact tone and carries the mist in from its top edge, then
+   lightens into the airy sage (#eef3e4) the plants grid opens on, with the grid's own lime glow
+   anchored to the band's bottom edge */
+.vine-divider.vine-divider--top {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(214, 232, 170, 0.28), transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(201, 217, 138, 0.35), transparent 60%),
+    linear-gradient(180deg, #9bb896 0%, #c3d6b8 45%, #eef3e4 100%);
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+.vine-divider.vine-divider--top .vine-divider-line {
+  background: linear-gradient(90deg, transparent, rgba(201, 217, 138, 0.35) 15%, rgba(201, 217, 138, 0.35) 85%, transparent);
+}
 .vine-divider--bottom {
   --leaf-fill: url(#vine-leaf-fill-bottom);
   --leaf-fill-2: url(#vine-leaf-fill-2-bottom);
@@ -14,13 +30,35 @@
   --berry-fill: url(#vine-berry-fill-bottom);
   --bud-fill: url(#vine-bud-fill-bottom);
 }
-/* between the plants and the pots: the plants gradient ends on #edf2e3, the pots section opens on
-   #eef3e4 with its lime glow at the top, so the band runs that exact tone and anchors its glow to
-   the bottom edge to continue straight into the next section */
-.vine-divider.vine-divider--bottom {
-  /* plants' light sage warms into the pots' clay cream; the pots section's own top highlight is
-     anchored to this band's bottom edge so the two surfaces share one continuous light */
+.vine-divider--about {
+  --leaf-fill: url(#vine-leaf-fill-about);
+  --leaf-fill-2: url(#vine-leaf-fill-2-about);
+  --bloom-fill: url(#vine-bloom-fill-about);
+  --berry-fill: url(#vine-berry-fill-about);
+  --bud-fill: url(#vine-bud-fill-about);
+}
+/* between the ceramics/pots and the about section:
+   the pots grid ends on its deep clay (#e6d9c4, with a clay glow in the bottom-right), so the band
+   opens on that exact tone and carries the glow in from its top edge, then warms back up to the
+   cream (#f3ecde) that About opens on, with About's own lime glow anchored to the bottom-left */
+.vine-divider.vine-divider--about {
   background:
+    radial-gradient(ellipse at 85% 0%, rgba(201, 150, 110, 0.18), transparent 55%),
+    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.45), transparent 50%),
+    linear-gradient(180deg, #e6d9c4 0%, #ebe0cc 40%, #f3ecde 100%);
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+.vine-divider.vine-divider--about .vine-divider-line {
+  background: linear-gradient(90deg, transparent, rgba(22, 54, 36, 0.16) 15%, rgba(22, 54, 36, 0.16) 85%, transparent);
+}
+/* between the plants and the pots:
+   the plants grid ends on #edf2e3 with a sage glow in the bottom-right, so the band opens on that
+   tone and carries the glow in from its top-right, then warms into the clay cream (#f3ecde) the
+   pots grid opens on, with the pots' own cream highlight anchored to the band's bottom edge */
+.vine-divider.vine-divider--bottom {
+  background:
+    radial-gradient(ellipse at 90% 0%, rgba(155, 184, 150, 0.35), transparent 50%),
     radial-gradient(ellipse at 50% 100%, rgba(255, 248, 232, 0.7), transparent 55%),
     linear-gradient(180deg, #edf2e3 0%, #f0eee0 45%, #f3ecde 100%);
   margin-top: -1px;

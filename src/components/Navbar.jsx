@@ -77,6 +77,7 @@ export default function Navbar() {
         ['collection', 'plants'],
         ['pots-collection', 'pots'],
         ['about', 'about'],
+        ['gallery', 'gallery'],
         ['contact', 'contact'],
       ];
       let active = 'home';
@@ -98,9 +99,15 @@ export default function Navbar() {
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
+    // scroll events as well: animation frames pause in background tabs, events do not
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
     handleScroll();
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', handleScroll); };
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -178,7 +185,7 @@ export default function Navbar() {
           ...indicatorStyle
         }} />
 
-        {['Home', 'Plants', 'Pots', 'About', 'Contact'].map((item) => {
+        {['Home', 'Plants', 'Pots', 'About', 'Gallery'].map((item) => {
           const isActive = activeSection === item.toLowerCase();
           return (
             <li 
@@ -205,8 +212,8 @@ export default function Navbar() {
                   document.getElementById('pots-collection')?.scrollIntoView({ behavior: 'smooth' });
                 } else if (item === 'About') {
                   document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                } else if (item === 'Contact') {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                } else if (item === 'Gallery') {
+                  document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
                 } else if (item === 'Home') {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
@@ -369,9 +376,9 @@ export default function Navbar() {
           e.currentTarget.style.opacity = '1';
         }}
         onClick={() => {
-          document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         }}>
-          <span>Shop Now</span>
+          <span>Contact</span>
           <ArrowRight size={14} />
         </button>
 

@@ -197,18 +197,6 @@ export default function VineDivider({ variant = 'top' }) {
         gsap.set('.vine-bloom .bud', { scale: 0, transformOrigin: 'center' });
         tl.to('.vine-bloom .bud', { scale: 1, duration: 0.08, ease: 'back.out(2)' }, 0.84)
           .to('.vine-bloom .petal', { scale: 1, duration: 0.12, stagger: 0.015, ease: 'back.out(1.8)' }, 0.88);
-
-        const leaves = growth.flat().filter((w) => w.dataset.kind === 'leaf');
-        gsap.to(leaves, {
-          rotation: '+=4',
-          duration: 2.4,
-          yoyo: true,
-          repeat: -1,
-          ease: 'sine.inOut',
-          stagger: { each: 0.1, from: 'random' },
-          transformOrigin: '0 0',
-          scrollTrigger: { trigger: host, start: 'top bottom', toggleActions: 'play pause resume pause' },
-        });
       }, host);
     };
 

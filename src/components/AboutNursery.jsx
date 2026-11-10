@@ -1,0 +1,214 @@
+import React, { useRef, useLayoutEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Sprout, Shovel, Trees, Flower2, PhoneCall, Mail, Sparkles, MapPin } from 'lucide-react';
+import VineOrnament from './VineOrnament';
+import './AboutNursery.css';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const services = [
+  {
+    icon: Flower2,
+    title: 'Hybrid Flowering Plants',
+    desc: 'Exotic bougainvilleas, hibiscus, jasmine & fragrant ornamental cultivars'
+  },
+  {
+    icon: Trees,
+    title: 'Green Field & Avenue Trees',
+    desc: 'Monumental avenue trees, royal palms & landscape canopy foliage'
+  },
+  {
+    icon: Shovel,
+    title: 'Landscaping & Garden Design',
+    desc: 'Bespoke residential sanctuaries, farmhouses & commercial greening'
+  },
+  {
+    icon: Sprout,
+    title: 'Grafted Fruit & Revenue Flora',
+    desc: 'High-yield mango, guava, coconut & commercial agricultural saplings'
+  }
+];
+
+export default function AboutNursery() {
+  const containerRef = useRef(null);
+  const imageFrameRef = useRef(null);
+  const imageRef = useRef(null);
+  const textColRef = useRef(null);
+
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      // Image Parallax
+      if (imageRef.current) {
+        gsap.to(imageRef.current, {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          },
+          y: '8%',
+          ease: 'none'
+        });
+      }
+
+      // Entrance animation: Image frame
+      if (imageFrameRef.current) {
+        gsap.fromTo(imageFrameRef.current,
+          { y: 50, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 78%',
+              toggleActions: 'play reverse play reverse'
+            },
+            y: 0,
+            opacity: 1,
+            duration: 1.1,
+            ease: 'power3.out'
+          }
+        );
+      }
+
+      // Entrance animation: Text & services
+      if (textColRef.current) {
+        gsap.fromTo(textColRef.current.children,
+          { y: 35, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 78%',
+              toggleActions: 'play reverse play reverse'
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.95,
+            stagger: 0.12,
+            ease: 'power3.out',
+            delay: 0.1
+          }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={containerRef} className="about-nursery-section" id="about">
+      {/* Background Ambience */}
+      <div className="about-nursery-watermark" aria-hidden="true">KADIAM</div>
+      <div className="about-nursery-glow-1" aria-hidden="true" />
+      <div className="about-nursery-glow-2" aria-hidden="true" />
+
+      <div className="about-nursery-container">
+        {/* Editorial Top Bar */}
+        <div className="about-nursery-topbar">
+          <div className="about-nursery-pill">
+            <Sparkles size={13} className="about-nursery-pill-icon" />
+            <span>Sri Ayyappa Bala Sai Nursery • Est. In Andhra Pradesh</span>
+          </div>
+          <div className="about-nursery-location">
+            <MapPin size={13} />
+            <span>Kadiapulanka, East Godavari</span>
+          </div>
+        </div>
+
+        <div className="about-nursery-grid">
+          {/* Left Column: Image with Glass Frame and Organic Floating Badge */}
+          <div className="about-nursery-image-col" ref={imageFrameRef}>
+            <div className="about-nursery-frame-outer">
+              <div className="about-nursery-frame-inner">
+                <div className="about-nursery-img-wrapper">
+                  <img
+                    ref={imageRef}
+                    src="/nursery.webp"
+                    alt="Lush botanical acreage at Sri Ayyappa Bala Sai Nursery in Kadiam"
+                    className="about-nursery-img"
+                    loading="lazy"
+                  />
+                  <div className="about-nursery-img-overlay" />
+                  
+                  {/* Floating Acreage Badge */}
+                  <div className="about-nursery-floating-badge">
+                    <span className="about-badge-val">50+</span>
+                    <span className="about-badge-lbl">Acres of Acclimatized Stock</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sub-tag row below image */}
+            <div className="about-nursery-tags">
+              <span className="about-tag-item">Hybrid</span>
+              <span className="about-tag-dot">•</span>
+              <span className="about-tag-item">Grafted Fruits</span>
+              <span className="about-tag-dot">•</span>
+              <span className="about-tag-item">Avenue Trees</span>
+              <span className="about-tag-dot">•</span>
+              <span className="about-tag-item">Lawn Turf</span>
+            </div>
+          </div>
+
+          {/* Right Column: Narrative & Service Cards */}
+          <div className="about-nursery-text-col" ref={textColRef}>
+            <div className="about-nursery-headings">
+              <span className="about-eyebrow">Botanical Legacy &amp; Infrastructure</span>
+              <h2 className="about-title">
+                Grown with care, <br />
+                <span className="about-title-italic">planted with purpose.</span>
+              </h2>
+            </div>
+
+            <p className="about-lead">
+              Nestled in the lush alluvial soil of the Godavari delta, Sri Ayyappa Bala Sai Nursery (SABSN) is one of Kadiam’s premier botanical destinations. We raise rare hybrid flowering varieties, grafted fruit saplings, exotic foliage, and commercial plantation flora nurtured to flourish across diverse Indian climates.
+            </p>
+
+            <p className="about-secondary">
+              Beyond saplings, our skilled field teams execute turnkey green projects—from residential landscape design and farmhouse lawns to monumental avenue greening and large-scale agricultural plantation.
+            </p>
+
+            {/* Service Pillars */}
+            <div className="about-services-grid">
+              {services.map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <div key={idx} className="about-service-card">
+                    <div className="about-service-icon-box">
+                      <Icon size={18} />
+                    </div>
+                    <div className="about-service-info">
+                      <strong className="about-service-title">{item.title}</strong>
+                      <p className="about-service-desc">{item.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Direct Contacts & Actions */}
+            <div className="about-actions-row">
+              <a 
+                href="https://wa.me/919849936169" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="about-contact-btn about-contact-btn--primary"
+              >
+                <PhoneCall size={15} />
+                <span>+91 98499 36169</span>
+              </a>
+              <a 
+                href="mailto:uppadakumaraswamy@gmail.com" 
+                className="about-contact-btn about-contact-btn--secondary"
+              >
+                <Mail size={15} />
+                <span>uppadakumaraswamy@gmail.com</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+

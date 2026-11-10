@@ -8,8 +8,10 @@ import Hero from './components/Hero';
 import VineDivider from './components/VineDivider';
 import Collection from './components/Collection';
 import PotsCollection from './components/PotsCollection';
+import AboutNursery from './components/AboutNursery';
 import StorySection from './components/StorySection';
 import PlantCare from './components/PlantCare';
+import LivingArchive from './components/LivingArchive';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -33,8 +35,11 @@ function App() {
       <Collection />
       <VineDivider variant="bottom" />
       <PotsCollection />
+      <VineDivider variant="about" />
+      <AboutNursery />
       <StorySection />
       <PlantCare />
+      <LivingArchive />
       <Contact />
       <Footer />
       <WhatsAppButton />

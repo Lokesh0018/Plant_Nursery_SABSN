@@ -1,237 +1,599 @@
-.story-section {
-  display: flex;
-  align-items: center;
-  padding: 15vh 8vw;
-  background-color: var(--color-sage-green);
+/* FOUNDER & MASTER HORTICULTURIST TRIBUTE - SCREEN-FIT & NOISE-FREE */
+
+.founder-section {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  /* Screen-fit viewport sizing */
   min-height: 100vh;
-  gap: 8vw;
-  position: relative;
-  overflow: hidden;
-}
-
-.story-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  opacity: 0.25;
-  z-index: 1;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-.story-image-wrapper {
-  flex: 1;
-  position: relative;
-  z-index: 2;
-  perspective: 1000px;
-}
-
-.story-image-container {
-  width: 100%;
-  height: 75vh;
-  overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0 25px 50px -12px rgba(23, 39, 29, 0.25);
-  position: relative;
-  z-index: 2;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.story-image {
-  width: 100%;
-  height: 120%;
-  object-fit: cover;
-  transform: translateY(-10%);
-}
-
-.story-content {
-  flex: 1.2;
+  box-sizing: border-box;
+  padding: clamp(2rem, 5vh, 4rem) 4vw;
+  /* Smooth botanical gradient matching the vine divider's base */
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.45), transparent 50%),
+    radial-gradient(ellipse at 85% 85%, rgba(120, 155, 115, 0.38), transparent 55%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
+    linear-gradient(180deg, #e4ecdc 0%, #d8e5ce 35%, #cbdcc1 70%, #bed3b3 100%);
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  z-index: 3;
-}
-
-.story-eyebrow {
-  font-size: 0.85rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(23, 39, 29, 0.7);
-  font-weight: 600;
-  margin-bottom: 2rem;
-  display: flex;
   align-items: center;
-  gap: 1rem;
 }
 
-.story-eyebrow::after {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 1px;
-  background-color: rgba(23, 39, 29, 0.3);
+/* Big Atmospheric Background Typography watermark */
+.founder-bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(6rem, 16vw, 18rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(22, 54, 36, 0.035);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
 }
 
-.story-heading {
-  font-size: clamp(3rem, 4vw, 4.5rem);
-  line-height: 1.1;
-  margin-bottom: 2.5rem;
-  font-family: var(--font-serif, serif);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  color: var(--color-text-dark);
+/* Atmospheric Ambient Glowing Orbs */
+.founder-ambient-glow {
+  position: absolute;
+  width: 42vw;
+  height: 42vw;
+  max-width: 500px;
+  max-height: 500px;
+  top: 5%;
+  left: 5%;
+  background: radial-gradient(circle, rgba(201, 217, 138, 0.4) 0%, rgba(201, 217, 138, 0) 70%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 50%;
 }
 
-.story-heading-line {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.1em; /* Prevent clipping descenders */
-  margin-bottom: -0.1em;
+.founder-ambient-glow-secondary {
+  position: absolute;
+  width: 38vw;
+  height: 38vw;
+  max-width: 440px;
+  max-height: 440px;
+  bottom: 5%;
+  right: 5%;
+  background: radial-gradient(circle, rgba(162, 195, 150, 0.3) 0%, rgba(162, 195, 150, 0) 70%);
+  filter: blur(55px);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 50%;
 }
 
-.story-heading-text {
-  display: block;
-  will-change: transform;
+/* Botanical Corner Leaf Decor */
+.founder-corner-leaf {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  color: rgba(22, 54, 36, 0.045);
+  pointer-events: none;
+  z-index: 1;
 }
 
-.story-italic {
-  font-style: italic;
-  /* Darker/Lighter variation of sage green for contrast */
-  color: #6a8c65; 
-  font-weight: 400;
+.founder-corner-leaf-top {
+  top: 1rem;
+  left: 1.5rem;
+  transform: rotate(-15deg);
 }
 
-.story-paragraph {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: rgba(23, 39, 29, 0.85); /* High contrast */
-  font-weight: 400;
-  margin-bottom: 2rem;
-  max-width: 540px;
-}
-
-.story-paragraph:last-of-type {
-  margin-bottom: 3.5rem;
-}
-
-.story-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--color-text-dark);
-  text-decoration: none;
-  padding-bottom: 4px;
-  width: max-content;
-  transition: gap 0.3s ease;
+/* Glassmorphic Luxury Editorial Card - Compact Screen Fit */
+.founder-card {
   position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  /* Compact vertical padding to fit cleanly within one screen view */
+  padding: clamp(1.75rem, 3.2vh, 2.75rem) clamp(1.5rem, 3.5vw, 3.25rem);
+  box-shadow:
+    0 20px 45px -12px rgba(22, 54, 36, 0.16),
+    0 35px 70px -25px rgba(22, 54, 36, 0.09),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  overflow: hidden;
 }
 
-.story-link::after {
-  content: '';
+/* Botanical Vine & Flower Corner Overlays on the Card */
+.founder-card-vine-top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 170px;
+  height: 110px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.founder-card-vine-bottom-right {
   position: absolute;
   bottom: 0;
-  left: 0;
+  right: 0;
+  width: 170px;
+  height: 110px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.founder-card-vine-top-left svg,
+.founder-card-vine-bottom-right svg {
   width: 100%;
-  height: 1px;
-  background-color: var(--color-text-dark);
-  transform: scaleX(0.3);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: block;
 }
 
-.story-link:hover {
-  gap: 1.25rem;
+.founder-ornament-wrap {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -0.25rem;
 }
 
-.story-link:hover::after {
-  transform: scaleX(1);
+.founder-vine-divider {
+  margin: 0 !important;
+  opacity: 0.75;
 }
 
-/* 1. Leaf Animation */
-@keyframes leafSway {
-  0% { transform: rotate(-10deg); }
-  100% { transform: rotate(15deg); }
+/* Top metadata bar */
+.founder-card-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: clamp(1.25rem, 2.2vh, 1.85rem);
+  padding-bottom: clamp(0.75rem, 1.4vh, 1.15rem);
+  border-bottom: 1px solid rgba(22, 54, 36, 0.08);
+  position: relative;
+  z-index: 2;
 }
 
-.story-leaf-icon {
-  transform-origin: bottom center;
-  animation: leafSway 3.5s ease-in-out infinite alternate;
-  color: var(--color-text-dark);
+.founder-card-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(235, 244, 222, 0.95) 0%, rgba(216, 234, 198, 0.85) 100%);
+  border: 1px solid rgba(79, 127, 58, 0.25);
+  box-shadow: 0 2px 8px -2px rgba(22, 54, 36, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  font-size: 0.77rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #163624;
 }
 
-/* 2. Floating Badge */
-@keyframes badgeFloat {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
+.founder-pill-icon {
+  color: #2e6628;
 }
 
-.story-badge {
+.founder-location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(22, 54, 36, 0.1);
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #3f5e3e;
+}
+
+/* Main Grid */
+.founder-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 992px) {
+  .founder-grid {
+    grid-template-columns: 4.2fr 7.8fr;
+    gap: 3.25rem;
+  }
+}
+
+/* Portrait Column */
+.founder-portrait-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.founder-portrait-outer-ring {
+  position: relative;
+  padding: 6px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(201, 217, 138, 0.7) 0%, rgba(22, 54, 36, 0.15) 100%);
+  box-shadow: 0 10px 24px -8px rgba(22, 54, 36, 0.16);
+  max-width: 320px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Botanical Frame Leaf Accent */
+.founder-frame-leaf-accent {
   position: absolute;
-  bottom: -15px;
-  right: -15px;
-  background-color: rgba(248, 246, 240, 0.85); /* Glassmorphic cream */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--color-text-dark);
-  padding: 0.8rem 1.4rem;
-  border-radius: 100px;
-  box-shadow: 0 10px 25px rgba(23, 39, 29, 0.15);
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
+  top: -12px;
+  right: -12px;
+  width: 38px;
+  height: 38px;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 6px rgba(22, 54, 36, 0.15));
+}
+
+.founder-portrait-frame {
+  position: relative;
+  background: #ffffff;
+  padding: 0.65rem;
+  border-radius: 18px;
+  box-shadow:
+    0 18px 40px -10px rgba(22, 54, 36, 0.2),
+    0 8px 16px -6px rgba(22, 54, 36, 0.08);
+  border: 1px solid rgba(22, 54, 36, 0.06);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.founder-portrait-outer-ring:hover .founder-portrait-frame {
+  transform: translateY(-3px);
+  box-shadow:
+    0 25px 50px -12px rgba(22, 54, 36, 0.24),
+    0 10px 20px -6px rgba(22, 54, 36, 0.1);
+}
+
+.founder-image-aspect {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 3.8;
+  max-height: 38vh;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #163624;
+}
+
+.founder-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.founder-portrait-outer-ring:hover .founder-portrait-img {
+  transform: scale(1.03);
+}
+
+/* Vintage Botanical Seal */
+.founder-image-seal {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(18, 44, 27, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(201, 217, 138, 0.4);
+  color: #edf2e3;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.founder-image-seal svg {
+  color: #c9d98a;
+}
+
+.founder-caption {
+  padding-top: 0.85rem;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .founder-caption {
+    text-align: left;
+  }
+}
+
+.founder-tag {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-forest-dark, #163624);
+}
+
+.founder-subtext {
+  font-size: 0.86rem;
+  color: rgba(23, 39, 29, 0.75);
+  margin-top: 0.2rem;
   font-weight: 500;
+}
+
+/* Mini Botanical Badges */
+.founder-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+@media (min-width: 992px) {
+  .founder-badges-row {
+    justify-content: flex-start;
+  }
+}
+
+.founder-mini-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(22, 54, 36, 0.08);
+  border-radius: 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #17271d;
+  width: fit-content;
+}
+
+.founder-mini-badge-icon {
+  color: #2b593b;
+}
+
+/* Narrative & Quote Column */
+.founder-narrative-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.8vh, 1.5rem);
+}
+
+.founder-quote-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.founder-quote-badge {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #163624;
+  color: #c9d98a;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 16px rgba(22, 54, 36, 0.18);
+  margin-top: 2px;
+}
+
+.founder-quote-icon-svg {
+  transform: rotate(180deg);
+}
+
+.founder-quote-text {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(1.25rem, 1.9vw, 1.75rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.32;
+  color: var(--color-text-dark, #17271d);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.founder-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+  line-height: 1.65;
+  color: rgba(23, 39, 29, 0.85);
+  font-weight: 400;
+}
+
+.founder-quote-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.72);
+  border-left: 3px solid #163624;
+  padding: 0.85rem 1.15rem 0.85rem 2.2rem;
+  border-radius: 0 12px 12px 0;
+  border-top: 1px solid rgba(22, 54, 36, 0.05);
+  border-right: 1px solid rgba(22, 54, 36, 0.05);
+  border-bottom: 1px solid rgba(22, 54, 36, 0.05);
+  box-shadow: 0 3px 10px rgba(22, 54, 36, 0.03);
+}
+
+.founder-quote-card-leaf {
+  position: absolute;
+  left: 0.65rem;
+  top: 0.85rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1;
+}
+
+.founder-prose-secondary {
+  font-size: clamp(0.85rem, 1vw, 0.92rem);
+  line-height: 1.55;
+  color: rgba(23, 39, 29, 0.82);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Horticultural Milestones */
+.founder-milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  background: rgba(22, 54, 36, 0.04);
+  padding: 0.85rem 1.15rem;
+  border-radius: 14px;
+  border: 1px solid rgba(22, 54, 36, 0.08);
+}
+
+.founder-milestone-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.founder-milestone-val {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(1.35rem, 1.8vw, 1.6rem);
+  font-weight: 700;
+  color: var(--color-forest-dark, #163624);
+  line-height: 1.1;
+}
+
+.founder-milestone-lbl {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #17271d;
+  margin-top: 0.15rem;
+}
+
+.founder-milestone-sub {
+  font-size: 0.68rem;
+  color: rgba(23, 39, 29, 0.65);
+}
+
+/* Footer: Signature & Trust Pill */
+.founder-footer-block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.25rem;
+}
+
+.founder-signature-block {
   display: flex;
   align-items: center;
-  z-index: 3;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  animation: badgeFloat 6s ease-in-out infinite;
+  gap: 1.15rem;
 }
 
-/* 3. Organic Background Shape */
-.story-organic-shape {
-  position: absolute;
-  top: -5%;
-  left: -5%;
-  width: 90%;
-  height: 110%;
-  background-color: rgba(23, 39, 29, 0.04); /* Subtle darker green overlay */
-  border-radius: 50% 50% 60% 40% / 40% 60% 50% 60%;
-  z-index: 0;
-  transform-origin: center;
-  transition: border-radius 8s ease-in-out infinite alternate;
+.founder-signature-line {
+  width: 36px;
+  height: 2px;
+  background: #163624;
+  opacity: 0.35;
+  border-radius: 2px;
 }
 
-@keyframes shapeMorph {
-  0% { border-radius: 50% 50% 60% 40% / 40% 60% 50% 60%; }
-  100% { border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%; }
+.founder-signature-details {
+  display: flex;
+  flex-direction: column;
 }
 
-.story-organic-shape {
-  animation: shapeMorph 8s ease-in-out infinite alternate;
+.founder-name {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(1.2rem, 1.6vw, 1.35rem);
+  font-weight: 700;
+  color: var(--color-forest-dark, #163624);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.1rem;
 }
 
-@media (max-width: 968px) {
-  .story-section {
+.founder-title {
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #4b6754;
+}
+
+.founder-trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: #163624;
+  color: #f0f7ea;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  box-shadow: 0 6px 14px rgba(22, 54, 36, 0.15);
+}
+
+.founder-trust-pill svg {
+  color: #c9d98a;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 900px) {
+  .founder-section {
+    min-height: auto;
+    padding: 3.5rem 1.25rem;
+  }
+
+  .founder-milestones-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding: 0.75rem 0.9rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .founder-milestones-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .founder-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .founder-card-topbar {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .founder-grid {
+    gap: 1.75rem;
+  }
+
+  .founder-footer-block {
     flex-direction: column;
-    padding: 12vh 5vw;
-    gap: 4rem;
-  }
-  
-  .story-image-container {
-    height: 55vh;
-  }
-  
-  .story-content {
     align-items: flex-start;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
-  .story-badge, .story-leaf-icon {
-    animation: none;
+  .founder-portrait-frame,
+  .founder-portrait-img,
+  .founder-ambient-glow {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
   }
 }
+
+
+
+

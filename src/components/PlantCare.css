@@ -1,208 +1,386 @@
+/* ==========================================================================
+   EXPERT CARE PROTOCOL — HIGH-END BOTANICAL EDITORIAL 4-CARD SYSTEM
+   ========================================================================== */
+
 .plantcare-section {
-  padding: 15vh 8vw;
-  background-color: var(--color-warm-cream); /* Light brown used in top sections */
-  color: var(--color-text-dark);
   position: relative;
   overflow: hidden;
+  padding: clamp(5.5rem, 9.5vh, 8.5rem) 5vw;
+  /* Fluid multi-stop gradient bridging About section into Living Archive */
+  background:
+    radial-gradient(ellipse at 15% 15%, rgba(201, 217, 138, 0.42), transparent 50%),
+    radial-gradient(ellipse at 85% 85%, rgba(223, 204, 182, 0.45), transparent 55%),
+    linear-gradient(180deg, #bed3b3 0%, #dbe6d3 14%, #edebe1 40%, #f6f3eb 70%, #ebdcc9 100%);
+  color: var(--color-text-dark, #17271d);
+  border-top: 1px solid rgba(22, 54, 36, 0.08);
+  border-bottom: 1px solid rgba(22, 54, 36, 0.08);
 }
 
-/* Subtle texture overlay */
-.plantcare-section::before {
-  content: '';
+/* Background Atmosphere */
+.plantcare-watermark {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  opacity: 0.25;
-  z-index: 1;
+  top: 32%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(6rem, 15vw, 17rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: rgba(22, 54, 36, 0.03);
+  white-space: nowrap;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 1;
+  user-select: none;
+}
+
+.plantcare-ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(60px);
+}
+
+.plantcare-ambient-orb--left {
+  width: 44vw;
+  height: 44vw;
+  max-width: 520px;
+  max-height: 520px;
+  top: 10%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(201, 217, 138, 0.4) 0%, transparent 70%);
+}
+
+.plantcare-ambient-orb--right {
+  width: 40vw;
+  height: 40vw;
+  max-width: 480px;
+  max-height: 480px;
+  bottom: 8%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(223, 204, 182, 0.5) 0%, transparent 70%);
 }
 
 .plantcare-container {
   position: relative;
   z-index: 2;
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
 }
 
-.plantcare-badge-wrapper {
-  text-align: center;
-  margin-bottom: 2rem;
-  overflow: hidden;
+/* Header Block: Asymmetrical Editorial Balance */
+.plantcare-header-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 1rem;
 }
 
-.plantcare-badge {
-  display: inline-block;
-  font-size: 0.85rem;
+@media (min-width: 860px) {
+  .plantcare-header-block {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.plantcare-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.plantcare-tag-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #163624;
+}
+
+.plantcare-tag-icon {
+  color: #3b753a;
+}
+
+.plantcare-tag-text {
+  font-size: 0.78rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
+  color: #163624;
+}
+
+.plantcare-main-title {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(2.3rem, 4.2vw, 3.8rem);
   font-weight: 600;
-  color: var(--color-sage-green);
-  padding: 0.5rem 1.2rem;
-  border: 1px solid rgba(58, 125, 68, 0.3);
-  border-radius: 50px;
-  background: rgba(58, 125, 68, 0.05);
-  will-change: transform;
+  color: var(--color-forest-dark, #163624);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0;
 }
 
-.plantcare-heading {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  text-align: center;
-  margin-bottom: 5rem;
-  font-family: var(--font-serif, serif);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: #0F172A;
-  line-height: 1.1;
+.plantcare-header-right {
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-.plantcare-italic {
+.plantcare-quote-text {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
   font-style: italic;
-  font-weight: 400;
-  color: var(--color-sage-green);
+  font-weight: 500;
+  color: var(--color-forest-dark, #163624);
+  line-height: 1.35;
+  margin: 0;
 }
 
-.plantcare-heading-line {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
+.plantcare-quote-subtext {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: rgba(23, 39, 29, 0.72);
+  margin: 0;
 }
 
-.plantcare-heading-text {
-  display: block;
-  will-change: transform;
+.plantcare-vine-flourish {
+  margin: 1.5rem 0 3rem 0 !important;
+  opacity: 0.85;
 }
 
-.plantcare-grid {
+/* 4-Column Protocol Grid */
+.plantcare-protocol-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 3rem;
-  position: relative;
-  z-index: 2;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.75rem;
 }
 
-.plantcare-card {
-  text-align: center;
-  padding: 2.5rem 2rem;
-  background: linear-gradient(145deg, rgba(253, 251, 247, 0.95) 0%, rgba(246, 243, 235, 0.95) 100%);
-  border: 1px solid rgba(138, 163, 146, 0.2);
+@media (min-width: 640px) {
+  .plantcare-protocol-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1080px) {
+  .plantcare-protocol-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Individual Protocol Card */
+.plantcare-protocol-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  box-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.02),
-    0 8px 16px rgba(0, 0, 0, 0.02),
-    0 16px 32px rgba(0, 0, 0, 0.02),
-    0 32px 64px rgba(0, 0, 0, 0.02);
+  padding: 1.85rem 1.65rem 1.5rem;
+  min-height: 340px;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  position: relative;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-  cursor: pointer;
+  justify-content: space-between;
+  box-shadow:
+    0 10px 25px -10px rgba(22, 54, 36, 0.08),
+    0 20px 40px -20px rgba(22, 54, 36, 0.05),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, background 0.4s ease;
   overflow: hidden;
 }
 
-.plantcare-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.03),
-    0 12px 24px rgba(0, 0, 0, 0.03),
-    0 24px 48px rgba(0, 0, 0, 0.04),
-    0 48px 96px rgba(0, 0, 0, 0.04);
+.plantcare-protocol-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 20px 45px -12px rgba(22, 54, 36, 0.16),
+    0 35px 70px -25px rgba(22, 54, 36, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 1);
 }
 
-.plantcare-card-glare {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background: radial-gradient(
-    600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px), 
-    rgba(255, 255, 255, 0.6),
-    transparent 40%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 1;
-  mix-blend-mode: overlay;
-}
-
-.plantcare-card:hover .plantcare-card-glare {
-  opacity: 1;
-}
-
-.plantcare-card-content {
-  position: relative;
-  z-index: 2;
+.plantcare-card-top {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 }
 
-.plantcare-card-number-wrapper {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
+.plantcare-code-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  z-index: 2;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
 }
 
-.plantcare-card-number {
-  font-family: var(--font-serif, serif);
-  font-size: 0.95rem;
-  color: var(--color-sage-green);
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  opacity: 0.9;
+.plantcare-code-label {
+  font-family: var(--font-mono, monospace, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-forest-dark, #163624);
+  text-transform: uppercase;
 }
 
-.plantcare-card-line {
-  width: 24px;
-  height: 1px;
-  background-color: var(--color-sage-green);
-  opacity: 0.4;
-  transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.plantcare-card:hover .plantcare-card-line {
-  width: 40px;
-}
-
-.plantcare-image-wrapper {
-  margin: 1rem auto 1.5rem auto;
-  width: 140px;
-  height: 140px;
+.plantcare-card-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.3s ease;
 }
 
-.plantcare-card:hover .plantcare-image-wrapper {
-  transform: translateY(-6px) scale(1.05);
+.plantcare-protocol-card:hover .plantcare-card-icon {
+  transform: scale(1.15);
 }
 
-.plantcare-illustration {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.plantcare-card-title {
-  font-size: 1.4rem;
+.plantcare-card-heading {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #17271d;
+  letter-spacing: -0.015em;
+  line-height: 1.28;
   margin-bottom: 0.75rem;
-  font-family: var(--font-serif, serif);
-  font-weight: 500;
-  color: #1a2421;
+  transition: color 0.3s ease;
 }
 
-.plantcare-card-desc {
-  color: #4a5c54;
-  line-height: 1.6;
-  font-weight: 400;
-  font-size: 0.95rem;
-  flex-grow: 1;
+.plantcare-protocol-card:hover .plantcare-card-heading {
+  color: #163624;
 }
+
+.plantcare-card-description {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: rgba(23, 39, 29, 0.75);
+  margin: 0;
+}
+
+.plantcare-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(22, 54, 36, 0.08);
+}
+
+.plantcare-card-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(23, 39, 29, 0.65);
+}
+
+.plantcare-card-subicon {
+  display: flex;
+  align-items: center;
+  color: #4f7f3a;
+  opacity: 0.75;
+}
+
+/* Vitality Standard Bottom Assurance Banner */
+.plantcare-assurance-banner {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 10px 30px -10px rgba(22, 54, 36, 0.1);
+}
+
+@media (min-width: 680px) {
+  .plantcare-assurance-banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.plantcare-assurance-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.plantcare-assurance-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(79, 127, 58, 0.12);
+  color: #2b593b;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.plantcare-assurance-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-forest-dark, #163624);
+  margin-bottom: 0.2rem;
+}
+
+.plantcare-assurance-subtitle {
+  font-size: 0.86rem;
+  color: rgba(23, 39, 29, 0.72);
+  margin: 0;
+}
+
+.plantcare-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.35rem;
+  border-radius: 999px;
+  background: #163624;
+  color: #f7f6f0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(22, 54, 36, 0.2);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.plantcare-cta-btn:hover {
+  background: #244e34;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(22, 54, 36, 0.25);
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .plantcare-section {
+    padding: 4rem 1.25rem;
+  }
+
+  .plantcare-protocol-card {
+    min-height: auto;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .plantcare-assurance-banner {
+    padding: 1.25rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plantcare-protocol-card,
+  .plantcare-cta-btn,
+  .plantcare-card-icon {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+
+
