@@ -8,12 +8,15 @@
   min-height: 100vh;
   box-sizing: border-box;
   padding: clamp(2rem, 5vh, 4rem) 4vw;
-  /* Smooth botanical gradient matching the vine divider's base */
+  /* opens on #e4ecdc, the exact tone About ends on. About's sage glow (bottom-right) is carried in
+     from this section's top-right edge so there is no visible seam between the two */
   background:
     radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.45), transparent 50%),
+    radial-gradient(ellipse at 85% 0%, rgba(120, 155, 115, 0.35), transparent 55%),
     radial-gradient(ellipse at 85% 85%, rgba(120, 155, 115, 0.38), transparent 55%),
     radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
     linear-gradient(180deg, #e4ecdc 0%, #d8e5ce 35%, #cbdcc1 70%, #bed3b3 100%);
+  margin-top: -1px; /* no sub-pixel hairline at the seam with About */
   display: flex;
   justify-content: center;
   align-items: center;

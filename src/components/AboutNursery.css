@@ -6,10 +6,13 @@
   position: relative;
   overflow: hidden;
   padding: clamp(5.5rem, 9.5vh, 8.5rem) 5vw;
-  /* Harmonious background blending from Vine Divider (#f3ecde) to Founder section (#e4ecdc) */
+  /* opens on the cream the About divider ends on (#f3ecde) and settles onto #e4ecdc, the exact tone
+     the founder section opens on. The founder's lime glow (top-left) is anchored to this section's
+     bottom-left edge, so the two surfaces share one continuous light across the seam */
   background:
     radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.45), transparent 50%),
     radial-gradient(ellipse at 85% 100%, rgba(120, 155, 115, 0.35), transparent 55%),
+    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.45), transparent 50%),
     linear-gradient(180deg, #f3ecde 0%, #ebf1e4 40%, #e4ecdc 100%);
   color: var(--color-text-dark, #17271d);
   box-sizing: border-box;
@@ -58,6 +61,28 @@
   filter: blur(60px);
   pointer-events: none;
   z-index: 1;
+}
+
+/* Botanical Corner Leaf Decor, same shape and weight as the founder section */
+.about-corner-leaf {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  color: rgba(22, 54, 36, 0.045);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.about-corner-leaf-top {
+  top: 1rem;
+  left: 1.5rem;
+  transform: rotate(-15deg);
+}
+
+.about-corner-leaf-bottom {
+  bottom: 1rem;
+  right: 1.5rem;
+  transform: rotate(165deg);
 }
 
 .about-nursery-container {

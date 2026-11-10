@@ -101,6 +101,18 @@ export default function AboutNursery() {
       <div className="about-nursery-glow-1" aria-hidden="true" />
       <div className="about-nursery-glow-2" aria-hidden="true" />
 
+      {/* Decorative Botanical Corner Leaves, matching the founder section */}
+      <div className="about-corner-leaf about-corner-leaf-top" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0C40 20 80 60 120 120C60 100 20 60 0 0Z" fill="currentColor" />
+        </svg>
+      </div>
+      <div className="about-corner-leaf about-corner-leaf-bottom" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0C40 20 80 60 120 120C60 100 20 60 0 0Z" fill="currentColor" />
+        </svg>
+      </div>
+
       <div className="about-nursery-container">
         {/* Editorial Top Bar */}
         <div className="about-nursery-topbar">
