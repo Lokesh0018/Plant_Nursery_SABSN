@@ -39,6 +39,7 @@ function App() {
       <AboutNursery />
       <StorySection />
       <PlantCare />
+      <VineDivider variant="care" />
       <LivingArchive />
       <Contact />
       <Footer />

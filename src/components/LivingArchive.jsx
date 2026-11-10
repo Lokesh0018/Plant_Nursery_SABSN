@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image as ImageIcon } from 'lucide-react';
+import { Image as ImageIcon, Camera } from 'lucide-react';
 import './LivingArchive.css';
 
 const galleryItems = [
@@ -43,11 +43,31 @@ const galleryItems = [
 export default function LivingArchive() {
   return (
     <section className="archive-section" id="gallery">
+      {/* Editorial Watermark & Ambient Atmosphere */}
+      <div className="archive-watermark" aria-hidden="true">ARCHIVE</div>
+      <div className="archive-ambient-orb archive-ambient-orb--left" aria-hidden="true" />
+      <div className="archive-ambient-orb archive-ambient-orb--right" aria-hidden="true" />
+
+      {/* Decorative Botanical Corner Leaves, matching the About, founder and care sections */}
+      <div className="archive-corner-leaf archive-corner-leaf-top" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0C40 20 80 60 120 120C60 100 20 60 0 0Z" fill="currentColor" />
+        </svg>
+      </div>
+      <div className="archive-corner-leaf archive-corner-leaf-bottom" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0C40 20 80 60 120 120C60 100 20 60 0 0Z" fill="currentColor" />
+        </svg>
+      </div>
+
       <div className="archive-container">
         {/* Header */}
         <div className="archive-header">
           <div>
-            <span className="archive-tagline">The Living Archive</span>
+            <span className="archive-tagline">
+              <Camera size={14} className="archive-tagline-icon" />
+              The Living Archive
+            </span>
             <h2 className="archive-heading">Glimpses of Greenery</h2>
             <p className="archive-subtext">
               A window into our everyday cultivation, greenhouse sunlight, and acclimatized field stock.
@@ -64,7 +84,7 @@ export default function LivingArchive() {
         {/* Asymmetrical Editorial Collage */}
         <div className="archive-grid">
           {galleryItems.map((item, index) => (
-            <div key={index} className={`archive-item ${item.spanClass}`}>
+            <figure key={index} className={`archive-item ${item.spanClass}`}>
               <img
                 src={item.src}
                 alt={item.alt}
@@ -72,11 +92,12 @@ export default function LivingArchive() {
                 className="archive-img"
               />
               <div className="archive-overlay" />
-              <div className="archive-caption">
+              <figcaption className="archive-caption">
                 <span className="archive-item-tag">{item.tag}</span>
                 <p className="archive-item-title">{item.title}</p>
-              </div>
-            </div>
+              </figcaption>
+              <span className="archive-item-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            </figure>
           ))}
         </div>
       </div>

@@ -2,14 +2,89 @@
 
 .archive-section {
   width: 100%;
-  background-color: var(--color-warm-cream, #e4d8c8);
-  padding: 6rem 5vw;
+  padding: clamp(5.5rem, 9.5vh, 8.5rem) 5vw;
   position: relative;
   overflow: hidden;
+  /* opens on the warm cream the care divider ends on (#dfccb6) and carries its clay glow in from
+     the top-right; a lime light rises bottom-left; the base cools through a pale linen into the
+     light sage (#b4cdb0) the contact section opens on, so both seams are continuous */
+  background:
+    radial-gradient(ellipse at 85% 0%, rgba(223, 204, 182, 0.5), transparent 50%),
+    radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.28), transparent 50%),
+    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.35), transparent 50%),
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.35), transparent 60%),
+    linear-gradient(180deg, #dfccb6 0%, #e6dccb 28%, #dfe0cc 62%, #c9d6bd 86%, #b4cdb0 100%);
+  color: var(--color-text-dark, #17271d);
+  margin-top: -1px; /* no sub-pixel hairline at the seam with the divider */
+}
+
+/* Background Atmosphere */
+.archive-watermark {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(6rem, 15vw, 17rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: rgba(22, 54, 36, 0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+}
+
+.archive-ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(60px);
+}
+.archive-ambient-orb--left {
+  width: 44vw;
+  height: 44vw;
+  max-width: 520px;
+  max-height: 520px;
+  top: 8%;
+  left: -6%;
+  background: radial-gradient(circle, rgba(223, 204, 182, 0.55) 0%, transparent 70%);
+}
+.archive-ambient-orb--right {
+  width: 40vw;
+  height: 40vw;
+  max-width: 480px;
+  max-height: 480px;
+  bottom: 6%;
+  right: -6%;
+  background: radial-gradient(circle, rgba(180, 205, 176, 0.55) 0%, transparent 70%);
+}
+
+/* Botanical Corner Leaf Decor, same shape and weight as the other sections */
+.archive-corner-leaf {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  color: rgba(22, 54, 36, 0.045);
+  pointer-events: none;
+  z-index: 1;
+}
+.archive-corner-leaf-top {
+  top: 1rem;
+  left: 1.5rem;
+  transform: rotate(-15deg);
+}
+.archive-corner-leaf-bottom {
+  bottom: 1rem;
+  right: 1.5rem;
+  transform: rotate(165deg);
 }
 
 .archive-container {
-  max-width: 1440px;
+  position: relative;
+  z-index: 2;
+  max-width: 1360px;
   margin: 0 auto;
 }
 
@@ -29,21 +104,48 @@
   }
 }
 
+/* eyebrow as a pill, matching the founder and care sections */
 .archive-tagline {
-  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #3b5a41;
-  display: block;
+  letter-spacing: 0.18em;
+  color: #163624;
+  background: linear-gradient(135deg, rgba(235, 244, 222, 0.95) 0%, rgba(216, 234, 198, 0.85) 100%);
+  border: 1px solid rgba(79, 127, 58, 0.25);
+  box-shadow: 0 2px 8px -2px rgba(22, 54, 36, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.archive-tagline-icon {
+  color: #3b753a;
 }
 
 .archive-heading {
   font-family: var(--font-serif, 'Playfair Display', serif);
-  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-size: clamp(2.3rem, 4.2vw, 3.8rem);
+  font-weight: 600;
   color: var(--color-forest-dark, #163624);
-  margin-top: 0.4rem;
+  letter-spacing: -0.025em;
+  margin-top: 0.75rem;
   line-height: 1.15;
+  position: relative;
+  padding-bottom: 0.9rem;
+}
+/* short lime-to-forest rule under the title */
+.archive-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #c9d98a, #163624);
 }
 
 .archive-subtext {
@@ -62,13 +164,18 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: #3b5a41;
-  background: rgba(255, 255, 255, 0.45);
+  color: #3f5e3e;
+  background: rgba(255, 255, 255, 0.65);
   padding: 0.5rem 1rem;
   border-radius: 999px;
-  border: 1px solid rgba(23, 39, 29, 0.1);
+  border: 1px solid rgba(22, 54, 36, 0.1);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.archive-location:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(22, 54, 36, 0.2);
 }
 
 .archive-location-icon {
@@ -115,11 +222,57 @@
 .archive-item {
   position: relative;
   height: 18rem;
+  margin: 0;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 22px;
   background-color: #163624;
-  box-shadow: 0 10px 30px -10px rgba(22, 54, 36, 0.18);
-  cursor: pointer;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 12px 30px -12px rgba(22, 54, 36, 0.22),
+    0 24px 50px -24px rgba(22, 54, 36, 0.12);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s ease;
+  isolation: isolate;
+}
+.archive-item:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 22px 48px -14px rgba(22, 54, 36, 0.3),
+    0 36px 70px -28px rgba(22, 54, 36, 0.16);
+}
+/* gradient hairline border: white at the top, lime, then forest at the bottom */
+.archive-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9) 0%, rgba(201, 217, 138, 0.5) 40%, rgba(22, 54, 36, 0.35) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 3;
+}
+/* small index numeral, top-right, in a frosted chip */
+.archive-item-index {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 2;
+  font-family: var(--font-mono, monospace, sans-serif);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #163624;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(22, 54, 36, 0.15);
 }
 
 @media (min-width: 1024px) {
@@ -147,10 +300,11 @@
 .archive-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(22, 54, 36, 0.82) 0%, rgba(22, 54, 36, 0.35) 45%, transparent 75%);
-  opacity: 0;
+  background: linear-gradient(to top, rgba(13, 42, 24, 0.78) 0%, rgba(13, 42, 24, 0.3) 40%, transparent 65%);
+  opacity: 0.85;
   transition: opacity 0.35s ease;
   pointer-events: none;
+  z-index: 1;
 }
 
 .archive-item:hover .archive-overlay {
@@ -162,26 +316,36 @@
   bottom: 1.25rem;
   left: 1.25rem;
   right: 1.25rem;
+  margin: 0;
   color: #f7f6f0;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: translateY(0);
+  transition: transform 0.35s ease;
   pointer-events: none;
+  z-index: 2;
 }
 
 .archive-item:hover .archive-caption {
-  opacity: 1;
-  transform: translateY(0);
+  transform: translateY(-3px);
 }
 
 .archive-item-tag {
-  display: block;
-  font-size: 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   color: #c9d98a;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.45rem;
+}
+.archive-item-tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c9d98a;
+  box-shadow: 0 0 0 3px rgba(201, 217, 138, 0.25);
 }
 
 .archive-item-title {
@@ -190,5 +354,25 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 1.3;
+  margin: 0;
+  text-shadow: 0 1px 12px rgba(13, 42, 24, 0.45);
+}
+
+@media (max-width: 640px) {
+  .archive-section {
+    padding: 4rem 1.25rem;
+  }
+  .archive-item {
+    border-radius: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-item,
+  .archive-img,
+  .archive-caption {
+    transition: none !important;
+    transform: none !important;
+  }
 }
 

@@ -68,6 +68,32 @@
   background: linear-gradient(90deg, transparent, rgba(120, 85, 50, 0.16) 15%, rgba(120, 85, 50, 0.16) 85%, transparent);
 }
 
+.vine-divider--care {
+  --leaf-fill: url(#vine-leaf-fill-care);
+  --leaf-fill-2: url(#vine-leaf-fill-2-care);
+  --bloom-fill: url(#vine-bloom-fill-care);
+  --berry-fill: url(#vine-berry-fill-care);
+  --bud-fill: url(#vine-bud-fill-care);
+}
+/* between the care protocol and the living archive:
+   the care section ends on a pale cream (#e4d8c8) with a clay glow in its bottom-right; the archive
+   opens on the site's warm cream token (#dfccb6). The band opens on the pale cream, carries the clay
+   glow in from its top-right, and deepens into the archive tone, with a soft lime light rising from
+   its bottom-left so the archive does not open on a dead-flat surface */
+.vine-divider.vine-divider--care {
+  background:
+    radial-gradient(ellipse at 85% 0%, rgba(223, 204, 182, 0.45), transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(223, 204, 182, 0.5), transparent 50%),
+    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.28), transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(255, 248, 232, 0.45), transparent 60%),
+    linear-gradient(180deg, #e4d8c8 0%, #e2d2bf 50%, #dfccb6 100%);
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+.vine-divider.vine-divider--care .vine-divider-line {
+  background: linear-gradient(90deg, transparent, rgba(120, 85, 50, 0.18) 15%, rgba(120, 85, 50, 0.18) 85%, transparent);
+}
+
 .vine-divider {
   position: relative;
   z-index: 2;
