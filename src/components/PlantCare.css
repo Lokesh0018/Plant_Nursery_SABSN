@@ -45,7 +45,6 @@
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
-  filter: blur(60px);
 }
 
 .plantcare-ambient-orb--left {
@@ -237,8 +236,6 @@
   background:
     radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 55%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.84));
-  backdrop-filter: blur(20px) saturate(1.1);
-  -webkit-backdrop-filter: blur(20px) saturate(1.1);
   border: 1px solid transparent;
   border-radius: 24px;
   padding: 0 0 1.5rem;
@@ -503,8 +500,6 @@
     radial-gradient(ellipse at 0% 50%, rgba(201, 217, 138, 0.28), transparent 45%),
     radial-gradient(ellipse at 100% 50%, rgba(243, 236, 222, 0.7), transparent 50%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.86));
-  backdrop-filter: blur(20px) saturate(1.1);
-  -webkit-backdrop-filter: blur(20px) saturate(1.1);
   border: 1px solid transparent;
   border-radius: 22px;
   padding: 1.35rem 1.75rem;

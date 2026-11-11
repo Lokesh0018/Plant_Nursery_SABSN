@@ -50,7 +50,6 @@
   top: 5%;
   left: 5%;
   background: radial-gradient(circle, rgba(201, 217, 138, 0.4) 0%, rgba(201, 217, 138, 0) 70%);
-  filter: blur(50px);
   pointer-events: none;
   z-index: 1;
   border-radius: 50%;
@@ -65,7 +64,6 @@
   bottom: 5%;
   right: 5%;
   background: radial-gradient(circle, rgba(162, 195, 150, 0.3) 0%, rgba(162, 195, 150, 0) 70%);
-  filter: blur(55px);
   pointer-events: none;
   z-index: 1;
   border-radius: 50%;
@@ -98,8 +96,6 @@
     radial-gradient(ellipse at 0% 0%, rgba(201, 217, 138, 0.22), transparent 55%),
     radial-gradient(ellipse at 100% 100%, rgba(243, 236, 222, 0.6), transparent 55%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.84));
-  backdrop-filter: blur(20px) saturate(1.15);
-  -webkit-backdrop-filter: blur(20px) saturate(1.15);
   border: 1px solid transparent;
   border-radius: 28px;
   /* Compact vertical padding to fit cleanly within one screen view */

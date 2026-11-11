@@ -59,7 +59,6 @@
   width: min(78vw, 1150px);
   height: 86%;
   transform: translateX(-42%);
-  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
 }
 .tl-banyan img { object-fit: contain; object-position: bottom; }
 
@@ -76,7 +75,6 @@
 .tl-fol-tl img,
 .tl-flw-br img,
 .tl-flw-bl img {
-  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.4));
 }
 
 /* Scroll-driven dusk: fades in as the hero leaves */

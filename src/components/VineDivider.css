@@ -171,7 +171,6 @@
 .vine-stem.main {
   stroke: #4a7a37;
   stroke-width: 4.2;
-  filter: drop-shadow(0 2px 3px rgba(22, 54, 36, 0.3));
 }
 .vine-stem.sub {
   stroke: #7fa84a;
@@ -196,8 +195,7 @@
 .vine-leaf-blade {
   fill: var(--leaf-fill);
   stroke: #2f5a28;
-  stroke-width: 0.55;
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+  stroke-width: 0.8; /* a touch heavier edge stands in for the removed per-leaf drop shadow */
 }
 .vine-growth g:nth-child(4n) .vine-leaf-blade { fill: var(--leaf-fill-2); } /* a few lighter leaves for variety */
 .vine-leaf-vein {
@@ -214,7 +212,6 @@
   fill: rgba(255, 255, 255, 0.85);
   stroke: rgba(255, 255, 255, 0.4);
   stroke-width: 1;
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.9));
 }
 
 /* small white blossoms and closed buds */
@@ -247,7 +244,6 @@
   fill: var(--berry-fill);
   stroke: #7a2742;
   stroke-width: 0.4;
-  filter: drop-shadow(0 1px 1px rgba(22, 54, 36, 0.25));
 }
 .vine-berry-stalk {
   fill: none;
@@ -260,7 +256,6 @@
   fill: var(--bloom-fill);
   stroke: #c9607a;
   stroke-width: 0.5;
-  filter: drop-shadow(0 1px 1px rgba(120, 40, 60, 0.25));
 }
 .vine-bloom .bud {
   fill: #f1e6b9;

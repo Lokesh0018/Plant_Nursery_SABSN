@@ -38,7 +38,6 @@
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
-  filter: blur(60px);
 }
 .contact-ambient-orb--left {
   width: 44vw;
@@ -240,8 +239,6 @@
   background:
     radial-gradient(ellipse at 0% 0%, rgba(201, 217, 138, 0.25), transparent 55%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.78));
-  backdrop-filter: blur(20px) saturate(1.1);
-  -webkit-backdrop-filter: blur(20px) saturate(1.1);
   border-radius: 100px;
   border: 1px solid transparent;
   box-shadow:

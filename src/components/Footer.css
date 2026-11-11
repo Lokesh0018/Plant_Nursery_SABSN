@@ -34,7 +34,6 @@
 .footer-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(70px);
   /* the glows breathe slowly, like light moving through a canopy */
   animation: footer-breathe 14s ease-in-out infinite;
   will-change: transform, opacity;
@@ -92,7 +91,6 @@
     radial-gradient(ellipse 12% 8%  at 88% 14%, rgba(201, 217, 138, 0.11), transparent 70%),
     radial-gradient(ellipse 16% 10% at 36% 44%, rgba(201, 217, 138, 0.1),  transparent 70%),
     radial-gradient(ellipse 14% 9%  at 62% 48%, rgba(201, 217, 138, 0.1),  transparent 70%);
-  filter: blur(22px);
   mix-blend-mode: screen;
   animation: footer-dapple 28s ease-in-out infinite;
   will-change: transform;
@@ -125,7 +123,6 @@
     radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.2), transparent 55%),
     radial-gradient(ellipse at 85% 100%, rgba(201, 217, 138, 0.2), transparent 55%),
     linear-gradient(180deg, transparent, rgba(74, 122, 55, 0.26));
-  filter: blur(20px);
   animation: footer-mist 16s ease-in-out infinite;
 }
 @keyframes footer-mist {
@@ -246,7 +243,6 @@
   animation-delay: var(--d, 0s);
 }
 /* front blades carry a soft rim light so the tips read against the dark */
-.meadow-blade--front { filter: drop-shadow(0 0 3px rgba(201, 217, 138, 0.18)); }
 @keyframes meadow-sway {
   0%, 100% { transform: rotate(calc(var(--amp, 3deg) * -1)) skewX(-2.5deg); }
   50%      { transform: rotate(var(--amp, 3deg)) skewX(2.5deg); }
@@ -517,6 +513,10 @@
 }
 
 /* ---------- footer finale: seed rolls in and becomes the nursery stamp ---------- */
+.footer-stamp-anchor {
+  display: inline-block;
+  line-height: 0;
+}
 .footer-stamp-spot {
   position: relative;
   display: inline-block;
@@ -535,12 +535,7 @@
   transform-origin: 50% 50%;
   will-change: transform, opacity;
 }
-.footer-stamp-layer {
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
-}
-.footer-stamp-face {
-  filter: drop-shadow(0 0 14px rgba(201, 217, 138, 0.25));
-}
+/* no filters here: both layers transform every frame during the finale */
 /* the lettered ring turns slowly via an SVG animateTransform pinned to the stamp centre;
    a CSS rotation here would pivot on the text's own bounding box and drift off-centre */
 @media (max-width: 600px) {

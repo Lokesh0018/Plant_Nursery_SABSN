@@ -19,19 +19,50 @@ export default function useOffscreenPause(ref, { margin = '12%', onChange } = {}
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || typeof IntersectionObserver === 'undefined') return undefined;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        const visible = entry.isIntersecting;
-        inView.current = visible;
-        el.classList.toggle('is-offscreen', !visible);
-        cb.current?.(visible);
-      },
-      { rootMargin: margin, threshold: 0 }
-    );
-    io.observe(el);
+    if (!el) return undefined;
+    let current = null;
+    const set = (visible) => {
+      if (visible === current) return;
+      current = visible;
+      inView.current = visible;
+      el.classList.toggle('is-offscreen', !visible);
+      cb.current?.(visible);
+    };
+
+    // Primary: IntersectionObserver, which costs nothing between changes.
+    let io = null;
+    if (typeof IntersectionObserver !== 'undefined') {
+      io = new IntersectionObserver(([entry]) => set(entry.isIntersecting), { rootMargin: margin, threshold: 0 });
+      io.observe(el);
+    }
+
+    // Fallback: watch the scroll position each frame and re-measure only when it has changed, so
+    // the state is right even where observer notifications or scroll events lag (programmatic
+    // jumps, some embedded or headless contexts). One rect read per change is negligible.
+    const pct = parseFloat(margin) || 0;
+    let raf = 0;
+    let lastY = -1;
+    let lastH = -1;
+    const check = () => {
+      const r = el.getBoundingClientRect();
+      const m = (window.innerHeight * pct) / 100;
+      set(r.bottom > -m && r.top < window.innerHeight + m);
+    };
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      const y = window.scrollY;
+      const h = window.innerHeight;
+      if (y !== lastY || h !== lastH) {
+        lastY = y;
+        lastH = h;
+        check();
+      }
+    };
+    loop();
+
     return () => {
-      io.disconnect();
+      io?.disconnect();
+      cancelAnimationFrame(raf);
       el.classList.remove('is-offscreen');
     };
   }, [ref, margin]);

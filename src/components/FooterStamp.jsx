@@ -19,7 +19,10 @@ const smooth = (a, b, p) => {
  */
 export default function FooterStamp() {
   const root = useRef(null);
-  const inView = useOffscreenPause(root, { margin: '40%' });
+  // Observe a static anchor, not the moving spot: while rolling in, the seed sits 380px to the
+  // right of its spot, outside the viewport, which would read as "off screen" and stall the loop.
+  const anchor = useRef(null);
+  const inView = useOffscreenPause(anchor, { margin: '40%' });
   const reduceMotion =
     typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -66,7 +69,8 @@ export default function FooterStamp() {
   }, []);
 
   return (
-    <span ref={root} className="footer-stamp-spot" aria-hidden="true">
+    <span ref={anchor} className="footer-stamp-anchor" aria-hidden="true">
+    <span ref={root} className="footer-stamp-spot">
       {/* the seed: a warm brown pod with a pale crease so the spin reads */}
       <svg data-fs="whole" className="footer-stamp-layer" viewBox="0 0 200 200" style={{ opacity: 0 }}>
         <defs>
@@ -114,6 +118,7 @@ export default function FooterStamp() {
           <path d="M0 -8 C 4 -18, 16 -20, 18 -12 C 12 -6, 4 -6, 0 -8 Z" fill="#c9d98a" />
         </g>
       </svg>
+    </span>
     </span>
   );
 }
