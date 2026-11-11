@@ -66,7 +66,7 @@ export default function FooterStamp() {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [inView]);
 
   return (
     <span ref={anchor} className="footer-stamp-anchor" aria-hidden="true">

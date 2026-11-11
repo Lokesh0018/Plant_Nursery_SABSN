@@ -10,7 +10,8 @@
      (#bed3b3) and carries its bottom-right sage glow in from this section's top-right, then lifts
      through the founder's sage steps and settles onto the warm cream the Living Archive opens on */
   /* a vertical mirror of the founder background: founder runs #e4ecdc -> #bed3b3 top to bottom
-     with a lime glow top-left, a sage glow bottom-right and a white light in the centre; this
+     with a lime glow top-left, a sage glow bottom-right and a white light in the centre;
+  this
      section runs #bed3b3 -> #e4ecdc with the same glows flipped, so the shared edge is the
      darkest line of one continuous surface. Only the last stretch warms toward the archive. */
   background:
@@ -21,10 +22,9 @@
     radial-gradient(ellipse at 50% 100%, rgba(255, 248, 232, 0.45), transparent 60%),
     linear-gradient(180deg, #bed3b3 0%, #cbdcc1 30%, #d8e5ce 65%, #e4ecdc 88%, #e4d8c8 100%);
   color: var(--color-text-dark, #17271d);
-  margin-top: -1px; /* no sub-pixel hairline at the seam with the founder section */
-}
-/* Background Atmosphere */
-.plantcare-watermark {
+  margin-top: -1px;
+  /* no sub-pixel hairline at the seam with the founder section */;
+}/* Background Atmosphere */ .plantcare-watermark {
   position: absolute;
   top: 32%;
   left: 50%;
@@ -66,9 +66,7 @@
   right: -5%;
   background: radial-gradient(circle, rgba(223, 204, 182, 0.5) 0%, transparent 70%);
 }
-
-/* Botanical Corner Leaf Decor, same shape and weight as the About and founder sections */
-.plantcare-corner-leaf {
+/* Botanical Corner Leaf Decor, same shape and weight as the About and founder sections */ .plantcare-corner-leaf {
   position: absolute;
   width: 110px;
   height: 110px;
@@ -95,9 +93,7 @@
   max-width: 1360px;
   margin: 0 auto;
 }
-
-/* Header Block: Asymmetrical Editorial Balance */
-.plantcare-header-block {
+/* Header Block: Asymmetrical Editorial Balance */ .plantcare-header-block {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -154,9 +150,7 @@
   margin: 0;
   position: relative;
   padding-bottom: 0.9rem;
-}
-/* short lime-to-forest rule under the title */
-.plantcare-main-title::after {
+}/* short lime-to-forest rule under the title */ .plantcare-main-title::after {
   content: '';
   position: absolute;
   left: 0;
@@ -207,9 +201,7 @@
   margin: 1.5rem 0 3rem 0 !important;
   opacity: 0.85;
 }
-
-/* 4-Column Protocol Grid */
-.plantcare-protocol-grid {
+/* 4-Column Protocol Grid */ .plantcare-protocol-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 1.5rem;
@@ -228,10 +220,9 @@
     gap: 1.75rem;
   }
 }
-
-/* Individual Protocol Card */
-.plantcare-protocol-card {
-  --accent: #4f7f3a; /* overridden per card inline */
+/* Individual Protocol Card */ .plantcare-protocol-card {
+  --accent: #4f7f3a;
+  /* overridden per card inline */
   position: relative;
   background:
     radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 55%),
@@ -251,9 +242,7 @@
   overflow: hidden;
   isolation: isolate;
 }
-
-/* gradient hairline border: white at the top, the card's accent toward the bottom */
-.plantcare-protocol-card::before {
+/* gradient hairline border: white at the top, the card's accent toward the bottom */ .plantcare-protocol-card::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -276,9 +265,7 @@
     0 35px 70px -25px rgba(22, 54, 36, 0.1),
     0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent);
 }
-
-/* oversized ghosted step numeral behind the card content */
-.plantcare-card-numeral {
+/* oversized ghosted step numeral behind the card content */ .plantcare-card-numeral {
   position: absolute;
   right: 1rem;
   top: 0.5rem;
@@ -297,8 +284,7 @@
 .plantcare-protocol-card:hover .plantcare-card-numeral {
   transform: translateY(3px);
 }
-.plantcare-card-top,
-.plantcare-card-bottom {
+.plantcare-card-top, .plantcare-card-bottom {
   position: relative;
   z-index: 1;
   padding-left: 1.65rem;
@@ -307,18 +293,22 @@
 .plantcare-card-top {
   padding-top: 0;
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .plantcare-card-bottom {
   margin-left: 1.65rem;
   margin-right: 1.65rem;
   padding-left: 0;
   padding-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(22, 54, 36, 0.08);
 }
-
-/* ---------- photo header ---------- */
-/* a full-bleed photograph across the top of the card, tinted toward the card's accent and
-   fading into the card surface so the text block reads as one piece with the image */
-.plantcare-card-stage {
+/* ---------- photo header ---------- */ /* a full-bleed photograph across the top of the card, tinted toward the card's accent and fading into the card surface so the text block reads as one piece with the image */ .plantcare-card-stage {
   position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
@@ -338,19 +328,16 @@
   filter: saturate(1.05);
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
   will-change: transform;
-}
-/* accent tint plus a fade into the card surface along the bottom */
-.plantcare-stage-fade {
+}/* accent tint plus a fade into the card surface along the bottom */ .plantcare-stage-fade {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  /* no fade: the photo runs at full strength to the seam; only a light accent tint at the very
+  /* no fade: the photo runs at full strength to the seam;
+  only a light accent tint at the very
      top so the code chip sits on calm ground */
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 30%);
   z-index: 1;
-}
-/* thin accent line where the photo meets the text */
-.plantcare-stage-fade::after {
+}/* thin accent line where the photo meets the text */ .plantcare-stage-fade::after {
   content: '';
   position: absolute;
   left: 1.65rem;
@@ -364,15 +351,11 @@
   filter: saturate(1.15);
 }
 
-.plantcare-card-top {
-  display: flex;
-  flex-direction: column;
-}
-
 .plantcare-code-row {
   display: flex;
   justify-content: flex-end;
-  margin-top: -1.35rem; /* lifts the badge half over the photo edge */
+  margin-top: -1.35rem;
+  /* lifts the badge half over the photo edge */
   margin-bottom: 0.9rem;
   position: relative;
   z-index: 2;
@@ -397,9 +380,7 @@
   border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 8px rgba(22, 54, 36, 0.15);
 }
-
-/* icon sits in a tinted tile in the card's accent colour */
-.plantcare-card-icon {
+/* icon sits in a tinted tile in the card's accent colour */ .plantcare-card-icon {
   width: 48px;
   height: 48px;
   border-radius: 14px;
@@ -427,7 +408,8 @@
   color: #17271d;
   letter-spacing: -0.015em;
   line-height: 1.22;
-  margin: -0.35rem 0 0.65rem; /* pulls up beside the badge */
+  margin: -0.35rem 0 0.65rem;
+  /* pulls up beside the badge */
   max-width: 11ch;
   text-wrap: balance;
   transition: color 0.3s ease;
@@ -443,15 +425,6 @@
   color: rgba(23, 39, 29, 0.78);
   margin: 0;
   max-width: 34ch;
-}
-
-.plantcare-card-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 1rem;
-  margin-top: 1.5rem;
-  border-top: 1px solid rgba(22, 54, 36, 0.08);
 }
 
 .plantcare-card-tag {
@@ -492,9 +465,7 @@
   background: color-mix(in srgb, var(--accent) 12%, #ffffff);
   border-color: color-mix(in srgb, var(--accent) 25%, transparent);
 }
-
-/* Vitality Standard Bottom Assurance Banner */
-.plantcare-assurance-banner {
+/* Vitality Standard Bottom Assurance Banner */ .plantcare-assurance-banner {
   position: relative;
   background:
     radial-gradient(ellipse at 0% 50%, rgba(201, 217, 138, 0.28), transparent 45%),
@@ -650,6 +621,4 @@
     transform: none !important;
   }
 }
-
-
 

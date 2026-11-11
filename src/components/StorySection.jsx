@@ -22,7 +22,7 @@ export default function StorySection() {
   const glowRef = useRef(null);
   const glowTween = useRef(null);
   useOffscreenPause(containerRef, {
-    onChange: (visible) => { const t = glowTween.current; if (t) (visible ? t.play() : t.pause()); },
+    onChange: (visible) => { const t = glowTween.current; if (!t) return; if (visible) t.play(); else t.pause(); },
   });
 
   useLayoutEffect(() => {

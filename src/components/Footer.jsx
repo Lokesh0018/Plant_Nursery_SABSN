@@ -11,6 +11,7 @@ const BLOTS = [
   [6, 55], [17, 38], [28, 62], [39, 44], [50, 58], [61, 40], [72, 60], [83, 42], [94, 56],
 ];
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
+const YEAR = new Date().getFullYear();
 
 export default function Footer() {
   const footerRef = useRef(null);
@@ -44,7 +45,7 @@ export default function Footer() {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [footerInView]);
 
 
   return (
@@ -143,7 +144,7 @@ export default function Footer() {
         <div className="footer-divider footer-reveal" />
 
         <div className="footer-bottom footer-reveal">
-          <p className="footer-copyright">&copy; {new Date().getFullYear()} Sri Ayyappa Bala Sai Nursery. All rights reserved.</p>
+          <p className="footer-copyright">&copy; {YEAR} Sri Ayyappa Bala Sai Nursery. All rights reserved.</p>
 
           <div className="footer-socials">
             <a href="https://wa.me/919849936169" target="_blank" rel="noopener noreferrer" className="social-link">

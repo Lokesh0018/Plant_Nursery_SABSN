@@ -2,6 +2,15 @@ import React, { useMemo } from 'react';
 
 const H = 96; // viewBox height, matches .footer-meadow height
 
+// small deterministic PRNG so the meadow is identical on every render
+function lcg(seed) {
+  let state = seed;
+  return () => {
+    state = (state * 9301 + 49297) % 233280;
+    return state / 233280;
+  };
+}
+
 /**
  * Wind-blown meadow along the footer's bottom edge.
  * - Tapered grass blades in three depths, each lightening toward its tip.
@@ -12,11 +21,7 @@ const H = 96; // viewBox height, matches .footer-meadow height
  */
 export default function Meadow({ className = '', blades = 96 }) {
   const { grass, flowers, seeds } = useMemo(() => {
-    let seed = 11;
-    const rnd = () => {
-      seed = (seed * 9301 + 49297) % 233280;
-      return seed / 233280;
-    };
+    const rnd = lcg(11);
     const grass = [];
     for (let i = 0; i < blades; i++) {
       const x = (i / blades) * 1440 + rnd() * 16;

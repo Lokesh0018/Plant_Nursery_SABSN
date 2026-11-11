@@ -15,7 +15,7 @@ import { useEffect, useRef } from 'react';
 export default function useOffscreenPause(ref, { margin = '12%', onChange } = {}) {
   const inView = useRef(true);
   const cb = useRef(onChange);
-  cb.current = onChange;
+  useEffect(() => { cb.current = onChange; });
 
   useEffect(() => {
     const el = ref.current;

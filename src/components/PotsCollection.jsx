@@ -19,7 +19,6 @@ function PotCard({ pot, onOpen }) {
     const card = e.currentTarget.closest('.pot-card');
     const img = card.querySelector('img');
     const cartIcon = document.querySelector('.cart-icon-target');
-    const cartBadge = document.querySelector('.cart-badge');
 
     if (!img || !cartIcon) return;
 

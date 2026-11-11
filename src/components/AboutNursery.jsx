@@ -2,7 +2,6 @@ import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Sprout, Shovel, Trees, Flower2, PhoneCall, Mail, Sparkles, MapPin } from 'lucide-react';
-import VineOrnament from './VineOrnament';
 import './AboutNursery.css';
 
 gsap.registerPlugin(ScrollTrigger);

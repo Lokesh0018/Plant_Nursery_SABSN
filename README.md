@@ -1,16 +1,24 @@
-# React + Vite
+# SABSN — Sri Ayyappa Bala Sai Nursery
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Single-page marketing site for a plant nursery in Kadiam, Andhra Pradesh. Built with React 19, Vite and GSAP.
 
-Currently, two official plugins are available:
+## Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev       # local dev server
+npm run build     # production build into dist/
+npm run preview   # serve the production build
+npm run lint      # oxlint
+```
 
-## React Compiler
+## Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `src/App.jsx` — page composition: hero, plants, pots, about, founder, care, gallery, contact, footer, joined by `VineDivider` bands.
+- `src/components/` — one `.jsx` + `.css` pair per section.
+- `src/hooks/useSmoothScroll.js` — Lenis smooth scrolling driven by GSAP's ticker.
+- `src/hooks/useOffscreenPause.js` — pauses a section's looping animations while it is off screen.
+- `src/styles/global.css` — design tokens (colors, fonts) and global rules.
+- `public/` — static assets (WebP images, icons, manifest).
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+See `OPTIMIZATIONS.md` for the performance plan.

@@ -20,10 +20,7 @@
     box-shadow 0.4s ease,
     border-color 0.4s ease;
 }
-
-/* After the first scroll the bar lifts off the edge and becomes a floating island:
-   a forest-glass capsule, centred, with the scroll progress drawn along its lower rim. */
-.navbar-container.scrolled {
+/* After the first scroll the bar lifts off the edge and becomes a floating island: a forest-glass capsule, centred, with the scroll progress drawn along its lower rim. */ .navbar-container.scrolled {
   top: 14px;
   width: min(1180px, calc(100% - 2rem));
   padding: 0.55rem 0.7rem 0.55rem 0.7rem;
@@ -40,11 +37,9 @@
     0 2px 0 rgba(255, 255, 255, 0.04) inset,
     0 0 0 1px rgba(0, 0, 0, 0.25);
 }
-
-/* inside the capsule the brand and actions tuck in from the rounded ends */
-.navbar-container.scrolled .nav-brand { padding-left: 0.25rem; }
-/* the brand is a link to the hero: no link styling, a pointer, and a visible keyboard focus ring */
-.nav-brand {
+/* inside the capsule the brand and actions tuck in from the rounded ends */ .navbar-container.scrolled .nav-brand {
+  padding-left: 0.25rem;
+}/* the brand is a link to the hero: no link styling, a pointer, and a visible keyboard focus ring */ .nav-brand {
   color: inherit;
   text-decoration: none;
   cursor: pointer;
@@ -57,15 +52,18 @@
 .nav-brand:hover img {
   box-shadow: 0 0 0 2px rgba(201, 217, 138, 0.7), 0 6px 16px rgba(0, 0, 0, 0.35) !important;
 }
-.navbar-container.scrolled .nav-right { padding-right: 0.15rem; }
-.navbar-container.scrolled .nav-brand-text span:last-child { display: none; } /* tagline hides in the compact pill */
-
-/* Logo settles smaller once the bar is compact */
-.navbar-container.scrolled .nav-brand img {
+.navbar-container.scrolled .nav-right {
+  padding-right: 0.15rem;
+}
+.navbar-container.scrolled .nav-brand-text span:last-child {
+  display: none;
+}/* tagline hides in the compact pill */ /* Logo settles smaller once the bar is compact */ .navbar-container.scrolled .nav-brand img {
   width: 36px !important;
   height: 36px !important;
 }
-.nav-brand img { transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), height 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease; }
+.nav-brand img {
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), height 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+}
 
 @media (max-width: 900px) {
   .navbar-container.scrolled {
