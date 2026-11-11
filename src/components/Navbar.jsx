@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { ShoppingBag, Search, ArrowRight, Menu, X } from 'lucide-react';
 import './Navbar.css';
-import CartDrawer from './CartDrawer';
+const CartDrawer = lazy(() => import('./CartDrawer')); // only fetched the first time the cart opens
 import { products } from '../data/products';
 import { pots } from '../data/pots';
 
@@ -18,6 +18,7 @@ export default function Navbar() {
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartMounted, setCartMounted] = useState(false); // stays true after the first open so the close animation still plays
 
   const clearCart = () => {
     setCartItems([]);
@@ -330,7 +331,7 @@ export default function Navbar() {
             alignItems: 'center',
             padding: '4px'
           }} aria-label="Cart"
-          onClick={() => setIsCartOpen(true)}>
+          onClick={() => { setCartMounted(true); setIsCartOpen(true); }}>
             <ShoppingBag size={19} strokeWidth={1.8} />
           </button>
           {cartCount > 0 && (
@@ -404,13 +405,17 @@ export default function Navbar() {
 
       </div>
     </nav>
-    <CartDrawer
-      isOpen={isCartOpen}
-      onClose={() => setIsCartOpen(false)}
-      cartItems={cartItems}
-      updateQuantity={updateQuantity}
-      clearCart={clearCart}
-    />
+    {cartMounted && (
+      <Suspense fallback={null}>
+        <CartDrawer
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cartItems={cartItems}
+          updateQuantity={updateQuantity}
+          clearCart={clearCart}
+        />
+      </Suspense>
+    )}
     </>
   );
 }

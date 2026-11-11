@@ -1,8 +1,8 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { products } from '../data/products';
-import PlantModal from './PlantModal';
+const PlantModal = lazy(() => import('./PlantModal')); // only fetched when a product is opened
 import { Plus, Sun, Droplets } from 'lucide-react';
 import VineOrnament from './VineOrnament';
 import './Collection.css';
@@ -181,7 +181,7 @@ export default function Collection() {
         ))}
       </div>
 
-      {selected && <PlantModal product={selected.product} originRect={selected.rect} onClose={closeProduct} />}
+      {selected && <Suspense fallback={null}><PlantModal product={selected.product} originRect={selected.rect} onClose={closeProduct} /></Suspense>}
     </section>
   );
 }

@@ -1,10 +1,10 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { pots } from '../data/pots';
 import { Plus, Sun, Droplets } from 'lucide-react';
 import VineOrnament from './VineOrnament';
-import PlantModal from './PlantModal';
+const PlantModal = lazy(() => import('./PlantModal')); // only fetched when a product is opened
 import './Collection.css'; // Reusing the same responsive grid layout classes
 
 gsap.registerPlugin(ScrollTrigger);
@@ -168,7 +168,7 @@ export default function PotsCollection() {
         ))}
       </div>
 
-      {selected && <PlantModal product={selected.product} originRect={selected.rect} onClose={closePot} />}
+      {selected && <Suspense fallback={null}><PlantModal product={selected.product} originRect={selected.rect} onClose={closePot} /></Suspense>}
     </section>
   );
 }

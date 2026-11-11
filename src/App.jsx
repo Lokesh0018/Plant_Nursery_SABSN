@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
@@ -10,11 +10,31 @@ import Collection from './components/Collection';
 import PotsCollection from './components/PotsCollection';
 import AboutNursery from './components/AboutNursery';
 import StorySection from './components/StorySection';
-import PlantCare from './components/PlantCare';
-import LivingArchive from './components/LivingArchive';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+
+// Below-the-fold sections load in their own chunks so the first paint only needs the navbar,
+// hero, plant grid and the sections just beneath it.
+const PlantCare = lazy(() => import('./components/PlantCare'));
+const LivingArchive = lazy(() => import('./components/LivingArchive'));
+const Contact = lazy(() => import('./components/Contact'));
+const Footer = lazy(() => import('./components/Footer'));
+
+// Once a lazy section mounts, scroll-trigger positions of everything below it have moved.
+function RefreshTriggers() {
+  useEffect(() => { ScrollTrigger.refresh(); }, []);
+  return null;
+}
+
+// Reserve roughly the section's height in its own base colour while the chunk loads, so the page
+// neither jumps nor flashes.
+function LazySection({ height, color, children }) {
+  return (
+    <Suspense fallback={<div style={{ minHeight: height, background: color }} aria-hidden="true" />}>
+      {children}
+      <RefreshTriggers />
+    </Suspense>
+  );
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,12 +58,12 @@ function App() {
       <VineDivider variant="about" />
       <AboutNursery />
       <StorySection />
-      <PlantCare />
+      <LazySection height="110vh" color="#cbdcc1"><PlantCare /></LazySection>
       <VineDivider variant="care" />
-      <LivingArchive />
+      <LazySection height="120vh" color="#e6dccb"><LivingArchive /></LazySection>
       <VineDivider variant="contact" />
-      <Contact />
-      <Footer />
+      <LazySection height="70vh" color="#c4d6bb"><Contact /></LazySection>
+      <LazySection height="560px" color="#0f2d1b"><Footer /></LazySection>
       <WhatsAppButton />
     </div>
   );
