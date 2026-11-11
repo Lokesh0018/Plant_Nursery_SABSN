@@ -126,7 +126,10 @@ export default function StorySection() {
             alt="Sri Uppada Kumaraswamy, Master Horticulturist and Founder holding a blooming Jasmine sapling"
             className="founder-portrait-img"
             src="/sabsn-founder.webp"
+            width="800"
+            height="1073"
             loading="lazy"
+            decoding="async"
           />
           <div className="founder-photo-shade" aria-hidden="true" />
 

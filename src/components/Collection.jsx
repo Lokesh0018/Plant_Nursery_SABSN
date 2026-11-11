@@ -91,7 +91,7 @@ function ProductCard({ product, onOpen }) {
       <div className="product-stage">
         <span className="product-stage-glow" aria-hidden="true" />
         <span className="product-stage-shadow" aria-hidden="true" />
-        <img src={product.image} alt={product.name} className="product-img" loading="lazy" />
+        <img src={product.image} alt={product.name} className="product-img" loading="lazy" decoding="async" />
         <button className="product-add" onClick={handleAddToCart} aria-label={`Add ${product.name} to cart`}>
           <Plus size={20} strokeWidth={2.5} />
         </button>

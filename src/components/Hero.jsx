@@ -16,10 +16,13 @@ gsap.registerPlugin(ScrollTrigger);
  * `depth` drives scroll parallax, mouse parallax and the idle sway.
  */
 const LAYERS = [
-  { id: 'bg',      src: '/hero-tree/background.webp', depth: 0,    cls: 'tl-bg' },
+  { id: 'bg',      src: '/hero-tree/background.webp', depth: 0,    cls: 'tl-bg', priority: true },
   { id: 'rays',    src: null,                         depth: 0.12, cls: 'tl-rays' },
   { id: 'ground',  src: '/hero-tree/ground.webp',     depth: 0.3,  cls: 'tl-ground' },
-  { id: 'banyan',  src: '/hero-tree/banyan.webp',     depth: 0.42, cls: 'tl-banyan' },
+  // the banyan is the LCP element: three widths, highest fetch priority, and a preload in index.html
+  { id: 'banyan',  src: '/hero-tree/banyan.webp',     depth: 0.42, cls: 'tl-banyan', priority: true,
+    srcSet: '/hero-tree/banyan-800.webp 800w, /hero-tree/banyan-1200.webp 1200w, /hero-tree/banyan.webp 1534w',
+    sizes: '(max-width: 900px) 130vw, min(78vw, 1150px)' },
   { id: 'fol-tr',  src: '/hero-tree/foliage-tr.webp', depth: 0.7,  cls: 'tl-fol-tr' },
   { id: 'fol-tl',  src: '/hero-tree/foliage-tl.webp', depth: 0.8,  cls: 'tl-fol-tl' },
   { id: 'flw-br',  src: '/hero-tree/flowers-br.webp', depth: 0.92, cls: 'tl-flw-br' },
@@ -166,7 +169,18 @@ export default function Hero() {
       <div className="tree-hero-stage" aria-hidden="true">
         {LAYERS.map((l, i) => (
           <div key={l.id} className={`tree-layer ${l.cls}`} data-depth={l.depth} style={{ zIndex: i + 1 }}>
-            {l.src ? <img src={l.src} alt="" draggable="false" loading={i < 4 ? 'eager' : 'lazy'} /> : <div className="tree-rays" />}
+            {l.src ? (
+              <img
+                src={l.src}
+                srcSet={l.srcSet}
+                sizes={l.sizes}
+                alt=""
+                draggable="false"
+                loading={i < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+                fetchPriority={l.priority ? 'high' : undefined}
+              />
+            ) : <div className="tree-rays" />}
           </div>
         ))}
         <div className="tree-hero-haze" />

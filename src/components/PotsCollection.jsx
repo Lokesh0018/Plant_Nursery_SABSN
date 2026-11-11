@@ -88,7 +88,7 @@ function PotCard({ pot, onOpen }) {
       <div className="product-stage">
         <span className="product-stage-glow" aria-hidden="true" />
         <span className="product-stage-shadow" aria-hidden="true" />
-        <img src={pot.image} alt={pot.name} className="product-img" loading="lazy" />
+        <img src={pot.image} alt={pot.name} className="product-img" loading="lazy" decoding="async" />
         <button className="product-add" onClick={handleAddToCart} aria-label={`Add ${pot.name} to cart`}>
           <Plus size={20} strokeWidth={2.5} />
         </button>
