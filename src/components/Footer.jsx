@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, MessageCircle, ArrowUp, Clock } from 'lucide-react
 import FallingLeaves from './FallingLeaves';
 import FooterStamp from './FooterStamp';
 import Meadow from './Meadow';
+import useOffscreenPause from '../hooks/useOffscreenPause';
 import './Footer.css';
 
 // ink blots stamped along the wordmark (x %, y %), in stamping order
@@ -13,6 +14,7 @@ const clamp01 = (v) => Math.max(0, Math.min(1, v));
 
 export default function Footer() {
   const footerRef = useRef(null);
+  const footerInView = useOffscreenPause(footerRef);
 
   // wordmark ink reveal: blot radii follow the footer's progress into the viewport, so the mark is
   // fully inked exactly at the page bottom and un-inks on the way back up
@@ -29,9 +31,9 @@ export default function Footer() {
     let last = -1;
     const tick = () => {
       raf = requestAnimationFrame(tick);
+      if (!footerInView.current) return; // nothing to ink while the footer is off screen
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      if (r.top > vh + 50 || r.bottom < -50) return;
       const p = clamp01((vh - r.top) / r.height); // 1 exactly at the page bottom
       if (p === last) return;
       last = p;

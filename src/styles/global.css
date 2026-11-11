@@ -6,12 +6,12 @@
   --color-warm-cream: #DFCCB6;
   --color-off-white: #FAF9F5;
   --color-hero-bg: #f7f6f0;
-  
+
   --color-forest-dark: #163624;
   --color-text-dark: #17271D;
   --color-text-muted: #647565;
   --color-text-secondary: #777C71;
-  
+
   --color-accent-terracotta: #C87E58;
   --color-accent-peach: #E7B99B;
 
@@ -125,4 +125,11 @@ html.lenis, html.lenis body {
 /* Anchored sections stop just below the fixed navbar instead of sliding under it */
 section[id] {
   scroll-margin-top: 88px;
+}
+
+/* Performance: sections toggle this class (useOffscreenPause) while out of the viewport so their
+   looping background animations stop costing frames. Transitions are unaffected. */
+.is-offscreen,
+.is-offscreen * {
+  animation-play-state: paused !important;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import useOffscreenPause from '../hooks/useOffscreenPause';
 
 const ROLL = 380;  // px the seed rolls in from (to the right of its spot)
 const RANGE = 260; // px of scroll at the very bottom of the page that drive the whole animation
@@ -18,6 +19,7 @@ const smooth = (a, b, p) => {
  */
 export default function FooterStamp() {
   const root = useRef(null);
+  const inView = useOffscreenPause(root, { margin: '40%' });
   const reduceMotion =
     typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -37,6 +39,7 @@ export default function FooterStamp() {
     let last = -1;
     const tick = () => {
       raf = requestAnimationFrame(tick);
+      if (!inView.current) return; // skip the scroll maths while the stamp is off screen
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = clamp((window.scrollY - (max - RANGE)) / RANGE); // 0 -> 1 over the last RANGE px
       if (p === last) return; // nothing moved

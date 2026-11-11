@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Quote, Sparkles, Award, MapPin, Trees, Sprout, CheckCircle2, Leaf } from 'lucide-react';
 import VineOrnament from './VineOrnament';
+import useOffscreenPause from '../hooks/useOffscreenPause';
 import './StorySection.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,12 +20,16 @@ export default function StorySection() {
   const imageRef = useRef(null);
   const contentRef = useRef(null);
   const glowRef = useRef(null);
+  const glowTween = useRef(null);
+  useOffscreenPause(containerRef, {
+    onChange: (visible) => { const t = glowTween.current; if (t) (visible ? t.play() : t.pause()); },
+  });
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
       // Ambient atmospheric glow breathing animation
       if (glowRef.current) {
-        gsap.to(glowRef.current, {
+        glowTween.current = gsap.to(glowRef.current, {
           scale: 1.15,
           opacity: 0.75,
           duration: 5,

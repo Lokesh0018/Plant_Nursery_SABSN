@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Sprout, ArrowRight, Leaf, Flower2, Apple, TreeDeciduous, Shrub } from 'lucide-react';
 import FallingLeaves from './FallingLeaves';
+import useOffscreenPause from '../hooks/useOffscreenPause';
 import './Hero.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -28,6 +29,8 @@ const LAYERS = [
 export default function Hero() {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
+  // pollen and the ray/scene loops stop while the hero is scrolled out of view
+  useOffscreenPause(sectionRef);
 
   useLayoutEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
