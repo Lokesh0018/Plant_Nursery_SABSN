@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Check, Mail, ShieldCheck, Leaf, Sprout } from 'lucide-react';
 import './Contact.css';
 
@@ -11,41 +10,6 @@ export default function Contact() {
   const sectionRef = useRef(null);
   const buttonRef = useRef(null);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      // Entrance animation
-      gsap.fromTo('.contact-reveal',
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 85%',
-          }
-        }
-      );
-
-      // Handwriting accent animation (draws in)
-      gsap.fromTo('.contact-handwriting',
-        { opacity: 0, rotation: -10, scale: 0.8 },
-        {
-          opacity: 1, rotation: -5, scale: 1,
-          duration: 1.5,
-          ease: 'elastic.out(1, 0.5)',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-          }
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   // Magnetic button on mouse move
   const handleMouseMove = (e) => {

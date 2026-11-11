@@ -105,36 +105,46 @@ export default function Hero() {
             };
           });
         const node = sectionRef.current;
-        let rect = node.getBoundingClientRect();
         let frame = 0;
-        let px = 0;
-        let py = 0;
+        let cx = 0;
+        let cy = 0;
+        let hasPointer = false;
         const apply = () => {
           frame = 0;
+          // Measure the hero box now, not at mount: a refresh that lands mid-page, or a jump back
+          // to the top, would otherwise leave the layers offset by a stale position.
+          const rect = node.getBoundingClientRect();
+          const inside = hasPointer && cx >= rect.left && cx <= rect.right && cy >= rect.top && cy <= rect.bottom;
+          const px = inside ? ((cx - rect.left) / rect.width - 0.5) * 2 : 0;
+          const py = inside ? ((cy - rect.top) / rect.height - 0.5) * 2 : 0;
           movers.forEach(({ d, x, y }) => {
             x(-px * (2 + d * 16));
             y(-py * (1 + d * 8));
           });
         };
         const onMove = (e) => {
-          px = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-          py = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+          cx = e.clientX;
+          cy = e.clientY;
+          hasPointer = true;
           if (!frame) frame = requestAnimationFrame(apply);
         };
         const onLeave = () => {
-          px = 0;
-          py = 0;
+          hasPointer = false;
           if (!frame) frame = requestAnimationFrame(apply);
         };
-        const onResize = () => { rect = node.getBoundingClientRect(); };
-        node.addEventListener('mousemove', onMove, { passive: true });
-        node.addEventListener('mouseleave', onLeave);
-        window.addEventListener('resize', onResize);
+        // on scroll the hero moves under a still cursor: re-evaluate so the layers settle to
+        // centre once the hero has scrolled away, and pick up correctly when it returns
+        const onScroll = () => { if (!frame) frame = requestAnimationFrame(apply); };
+        window.addEventListener('mousemove', onMove, { passive: true });
+        document.addEventListener('mouseleave', onLeave);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
         return () => {
           if (frame) cancelAnimationFrame(frame);
-          node.removeEventListener('mousemove', onMove);
-          node.removeEventListener('mouseleave', onLeave);
-          window.removeEventListener('resize', onResize);
+          window.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseleave', onLeave);
+          window.removeEventListener('scroll', onScroll);
+          window.removeEventListener('resize', onScroll);
         };
       }
     }, sectionRef);

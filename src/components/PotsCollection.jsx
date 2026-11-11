@@ -15,7 +15,7 @@ function PotCard({ pot, onOpen }) {
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    
+
     const card = e.currentTarget.closest('.pot-card');
     const img = card.querySelector('img');
     const cartIcon = document.querySelector('.cart-icon-target');
@@ -37,7 +37,7 @@ function PotCard({ pot, onOpen }) {
     clone.style.transform = 'none';
     clone.style.transition = 'none';
     clone.style.filter = 'drop-shadow(0 15px 15px rgba(0,0,0,0.2))';
-    
+
     document.body.appendChild(clone);
 
     // Horizontal movement
@@ -54,14 +54,14 @@ function PotCard({ pot, onOpen }) {
       top: cartRect.top + cartRect.height / 2 - 15,
       opacity: 0.3,
       duration: 0.9,
-      ease: "back.in(3)", 
+      ease: "back.in(3)",
       onComplete: () => {
         clone.remove();
-        
+
         window.dispatchEvent(new CustomEvent('cart-updated', { detail: { item: pot, quantity: 1 } }));
 
         gsap.fromTo(cartIcon, { scale: 1 }, { scale: 1.3, duration: 0.15, yoyo: true, repeat: 1 });
-        
+
         setTimeout(() => {
           const badge = document.querySelector('.cart-badge');
           if (badge) {
@@ -123,9 +123,9 @@ export default function PotsCollection() {
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      
+
       // Animate background text
-      gsap.fromTo(bgTextRef.current, 
+      gsap.fromTo(bgTextRef.current,
         { y: 250, opacity: 0, scale: 0.85 },
         {
           scrollTrigger: {
@@ -141,44 +141,6 @@ export default function PotsCollection() {
         }
       );
 
-      // Animate heading
-      gsap.fromTo(headingRef.current, 
-        { y: 50, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            end: 'bottom top',
-            toggleActions: 'play reverse play reverse'
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out'
-        }
-      );
-
-      // Animate pots grid children individually
-      const cards = gsap.utils.toArray(gridRef.current.children);
-      cards.forEach((card, index) => {
-        gsap.fromTo(card, 
-          { y: 120, opacity: 0, scale: 0.95 },
-          {
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 90%', 
-              end: 'bottom top',
-              toggleActions: 'play reverse play reverse'
-            },
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 1.2,
-            ease: 'back.out(1.2)',
-            delay: (index % 4) * 0.1 
-          }
-        );
-      });
     }, sectionRef);
 
     return () => ctx.revert();

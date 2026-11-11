@@ -52,43 +52,6 @@ export default function AboutNursery() {
         });
       }
 
-      // Entrance animation: Image frame
-      if (imageFrameRef.current) {
-        gsap.fromTo(imageFrameRef.current,
-          { y: 50, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 78%',
-              toggleActions: 'play reverse play reverse'
-            },
-            y: 0,
-            opacity: 1,
-            duration: 1.1,
-            ease: 'power3.out'
-          }
-        );
-      }
-
-      // Entrance animation: Text & services
-      if (textColRef.current) {
-        gsap.fromTo(textColRef.current.children,
-          { y: 35, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 78%',
-              toggleActions: 'play reverse play reverse'
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.95,
-            stagger: 0.12,
-            ease: 'power3.out',
-            delay: 0.1
-          }
-        );
-      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -140,7 +103,7 @@ export default function AboutNursery() {
                     loading="lazy"
                   />
                   <div className="about-nursery-img-overlay" />
-                  
+
                   {/* Floating Acreage Badge */}
                   <div className="about-nursery-floating-badge">
                     <span className="about-badge-val">50+</span>
@@ -200,17 +163,17 @@ export default function AboutNursery() {
 
             {/* Direct Contacts & Actions */}
             <div className="about-actions-row">
-              <a 
-                href="https://wa.me/919849936169" 
-                target="_blank" 
+              <a
+                href="https://wa.me/919849936169"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="about-contact-btn about-contact-btn--primary"
               >
                 <PhoneCall size={15} />
                 <span>+91 98499 36169</span>
               </a>
-              <a 
-                href="mailto:uppadakumaraswamy@gmail.com" 
+              <a
+                href="mailto:uppadakumaraswamy@gmail.com"
                 className="about-contact-btn about-contact-btn--secondary"
               >
                 <Mail size={15} />

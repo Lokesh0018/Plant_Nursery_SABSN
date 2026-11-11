@@ -18,12 +18,12 @@ export default function Navbar() {
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+
   const clearCart = () => {
     setCartItems([]);
     setCartCount(0);
   };
-  
+
   const updateQuantity = (id, delta) => {
     setCartItems(prev => {
       return prev.map(item => {
@@ -128,9 +128,20 @@ export default function Navbar() {
   return (
     <>
     <nav className={`navbar-container ${isScrolled ? 'scrolled' : ''} on-dark ${isSearchOpen ? 'search-open' : ''}`}>
-      
-      {/* Brand Logo */}
-      <div className="nav-brand">
+
+      {/* Brand Logo: links back to the hero */}
+      <a
+        className="nav-brand"
+        href="#home"
+        aria-label="SABSN, back to top"
+        onClick={(e) => {
+          e.preventDefault();
+          setIsMobileOpen?.(false);
+          const hero = document.getElementById('home');
+          if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      >
         <img
           src="/logo/logo-256.webp"
           alt="Sri Ayyappa Bala Sai Nursery logo"
@@ -168,11 +179,11 @@ export default function Navbar() {
             Sri Ayyappa Bala Sai Nursery
           </span>
         </div>
-      </div>
+      </a>
 
       {/* Center Nav Links */}
       <ul ref={navRef} className={`nav-links ${isMobileOpen ? 'mobile-open' : ''}`}>
-        
+
         {/* Sliding Indicator Dot */}
         <div className="nav-indicator" style={{
           position: 'absolute',
@@ -188,7 +199,7 @@ export default function Navbar() {
         {['Home', 'Plants', 'Pots', 'About', 'Gallery'].map((item) => {
           const isActive = activeSection === item.toLowerCase();
           return (
-            <li 
+            <li
               key={item}
               className={isActive ? 'active-nav-item' : ''}
               style={{
@@ -224,7 +235,7 @@ export default function Navbar() {
           );
         })}
       </ul>
-      
+
       {/* Right Controls */}
       <div className="nav-right">
         {/* Animated Search Bar Wrapper */}
@@ -250,7 +261,7 @@ export default function Navbar() {
               alignItems: 'center',
               padding: 0,
               minWidth: '19px'
-            }} 
+            }}
             aria-label="Search"
             onClick={() => {
               if (!isSearchOpen) {
@@ -261,11 +272,11 @@ export default function Navbar() {
             >
               <Search size={19} strokeWidth={1.8} />
             </button>
-            
-            <input 
+
+            <input
               ref={searchInputRef}
-              type="text" 
-              placeholder="Find plants..." 
+              type="text"
+              placeholder="Find plants..."
               style={{
                 border: 'none',
                 background: 'transparent',
@@ -282,11 +293,11 @@ export default function Navbar() {
                 if (e.key === 'Enter' && e.target.value.trim() !== '') {
                   const query = e.target.value.toLowerCase().trim();
                   const allItems = [...products, ...pots];
-                  
+
                   // Try to find exact match first, then partial match
-                  const match = allItems.find(item => item.name.toLowerCase() === query) 
+                  const match = allItems.find(item => item.name.toLowerCase() === query)
                     || allItems.find(item => item.name.toLowerCase().includes(query));
-                    
+
                   if (match) {
                     const el = document.getElementById(`product-${match.id}`);
                     if (el) {
@@ -383,7 +394,7 @@ export default function Navbar() {
         </button>
 
         {/* Mobile Menu Toggle */}
-        <button 
+        <button
           className="mobile-menu-btn"
           style={{ color: isMobileOpen ? '#163624' : darkGreen }}
           onClick={() => setIsMobileOpen(!isMobileOpen)}
@@ -393,10 +404,10 @@ export default function Navbar() {
 
       </div>
     </nav>
-    <CartDrawer 
-      isOpen={isCartOpen} 
-      onClose={() => setIsCartOpen(false)} 
-      cartItems={cartItems} 
+    <CartDrawer
+      isOpen={isCartOpen}
+      onClose={() => setIsCartOpen(false)}
+      cartItems={cartItems}
       updateQuantity={updateQuantity}
       clearCart={clearCart}
     />

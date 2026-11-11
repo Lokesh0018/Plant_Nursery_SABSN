@@ -43,6 +43,20 @@
 
 /* inside the capsule the brand and actions tuck in from the rounded ends */
 .navbar-container.scrolled .nav-brand { padding-left: 0.25rem; }
+/* the brand is a link to the hero: no link styling, a pointer, and a visible keyboard focus ring */
+.nav-brand {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 999px;
+}
+.nav-brand:focus-visible {
+  outline: 2px solid #c9d98a;
+  outline-offset: 4px;
+}
+.nav-brand:hover img {
+  box-shadow: 0 0 0 2px rgba(201, 217, 138, 0.7), 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+}
 .navbar-container.scrolled .nav-right { padding-right: 0.15rem; }
 .navbar-container.scrolled .nav-brand-text span:last-child { display: none; } /* tagline hides in the compact pill */
 
@@ -109,7 +123,7 @@
   .nav-brand {
     flex: none;
   }
-  
+
   .nav-right {
     gap: 0.4rem;
     flex: none;
@@ -122,7 +136,7 @@
   .mobile-menu-btn {
     display: flex;
   }
-  
+
   .navbar-container.search-open .nav-search.open {
     width: 130px !important;
   }

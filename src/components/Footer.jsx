@@ -1,6 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MapPin, Phone, Mail, MessageCircle, ArrowUp, Clock } from 'lucide-react';
 import FallingLeaves from './FallingLeaves';
 import FooterStamp from './FooterStamp';
@@ -46,27 +44,6 @@ export default function Footer() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      // Staggered reveal for columns
-      gsap.fromTo('.footer-reveal',
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: 'top 90%',
-          }
-        }
-      );
-    }, footerRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <footer ref={footerRef} className="premium-footer">

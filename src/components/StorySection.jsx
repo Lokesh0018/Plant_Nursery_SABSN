@@ -48,43 +48,6 @@ export default function StorySection() {
         });
       }
 
-      // Entrance animation for portrait
-      if (portraitCardRef.current) {
-        gsap.fromTo(portraitCardRef.current,
-          { y: 45, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 80%',
-              toggleActions: 'play reverse play reverse'
-            },
-            y: 0,
-            opacity: 1,
-            duration: 1.1,
-            ease: 'power3.out'
-          }
-        );
-      }
-
-      // Entrance animation for narrative content
-      if (contentRef.current) {
-        gsap.fromTo(contentRef.current.children,
-          { y: 30, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 80%',
-              toggleActions: 'play reverse play reverse'
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.95,
-            stagger: 0.12,
-            ease: 'power3.out',
-            delay: 0.1
-          }
-        );
-      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -240,7 +203,7 @@ export default function StorySection() {
                   <p className="founder-title">Master Horticulturist &amp; Nursery Founder</p>
                 </div>
               </div>
-              
+
               <div className="founder-trust-pill">
                 <CheckCircle2 size={16} />
                 <span>Direct Farmer Cultivation</span>

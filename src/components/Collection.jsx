@@ -15,7 +15,7 @@ function ProductCard({ product, onOpen }) {
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    
+
     const card = e.currentTarget.closest('.product-card');
     const img = card.querySelector('img');
     const cartIcon = document.querySelector('.cart-icon-target');
@@ -37,7 +37,7 @@ function ProductCard({ product, onOpen }) {
     clone.style.transform = 'none';
     clone.style.transition = 'none';
     clone.style.filter = 'drop-shadow(0 15px 15px rgba(0,0,0,0.2))';
-    
+
     document.body.appendChild(clone);
 
     // Horizontal movement
@@ -57,12 +57,12 @@ function ProductCard({ product, onOpen }) {
       ease: "back.in(3)", // Causes it to move downwards first before shooting up
       onComplete: () => {
         clone.remove();
-        
+
         // Tell the Navbar to increment the cart
         window.dispatchEvent(new CustomEvent('cart-updated', { detail: { item: product, quantity: 1 } }));
 
         gsap.fromTo(cartIcon, { scale: 1 }, { scale: 1.3, duration: 0.15, yoyo: true, repeat: 1 });
-        
+
         // Wait a tiny bit for React to render the badge if it's the first item
         setTimeout(() => {
           const badge = document.querySelector('.cart-badge');
@@ -133,9 +133,9 @@ export default function Collection() {
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      
+
       // Animate background text "Plant" - scrubbed parallax effect
-      gsap.fromTo(bgTextRef.current, 
+      gsap.fromTo(bgTextRef.current,
         { y: 250, opacity: 0, scale: 0.85 },
         {
           scrollTrigger: {
@@ -151,44 +151,6 @@ export default function Collection() {
         }
       );
 
-      // Animate heading "Select"
-      gsap.fromTo(headingRef.current, 
-        { y: 50, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            end: 'bottom top',
-            toggleActions: 'play reverse play reverse'
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out'
-        }
-      );
-
-      // Animate plants grid children individually
-      const cards = gsap.utils.toArray(gridRef.current.children);
-      cards.forEach((card, index) => {
-        gsap.fromTo(card, 
-          { y: 120, opacity: 0, scale: 0.95 },
-          {
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 90%', // Triggers right as the card enters the bottom 10% of the screen
-              end: 'bottom top',
-              toggleActions: 'play reverse play reverse'
-            },
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 1.2,
-            ease: 'back.out(1.2)',
-            delay: (index % 4) * 0.1 // Stagger effect for cards on the same row
-          }
-        );
-      });
     }, sectionRef);
 
     return () => ctx.revert();

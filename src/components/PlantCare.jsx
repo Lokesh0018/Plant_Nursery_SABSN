@@ -1,13 +1,11 @@
-import React, { useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  Sparkles, 
-  Repeat, 
-  Sprout, 
-  Droplets, 
-  Handshake, 
-  CheckCircle2, 
+import React, { useRef } from 'react';
+import {
+  Sparkles,
+  Repeat,
+  Sprout,
+  Droplets,
+  Handshake,
+  CheckCircle2,
   ArrowRight,
   Flower2,
   Layers,
@@ -16,8 +14,6 @@ import {
 } from 'lucide-react';
 import VineOrnament from './VineOrnament';
 import './PlantCare.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const protocolCards = [
   {
@@ -75,64 +71,6 @@ export default function PlantCare() {
   const cardsRef = useRef(null);
   const bannerRef = useRef(null);
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      // 1. Header reveal
-      gsap.fromTo('.plantcare-header-block', 
-        { y: 35, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            toggleActions: 'play reverse play reverse'
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1.1,
-          ease: 'power3.out'
-        }
-      );
-
-      // 2. Protocol Cards stagger entrance
-      if (cardsRef.current) {
-        gsap.fromTo(cardsRef.current.children,
-          { y: 45, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: 'top 82%',
-              toggleActions: 'play reverse play reverse'
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.95,
-            stagger: 0.12,
-            ease: 'power3.out'
-          }
-        );
-      }
-
-      // 3. Bottom Assurance Banner entrance
-      if (bannerRef.current) {
-        gsap.fromTo(bannerRef.current,
-          { y: 30, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: bannerRef.current,
-              start: 'top 88%',
-              toggleActions: 'play reverse play reverse'
-            },
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: 'power3.out'
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section ref={sectionRef} className="plantcare-section" id="care">
@@ -234,8 +172,8 @@ export default function PlantCare() {
             </div>
           </div>
 
-          <a 
-            href="#contact" 
+          <a
+            href="#contact"
             className="plantcare-cta-btn"
             onClick={(e) => {
               e.preventDefault();

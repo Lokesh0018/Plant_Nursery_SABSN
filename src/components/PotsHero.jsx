@@ -10,40 +10,9 @@ export default function PotsHero() {
   const containerRef = useRef(null);
   const potRef = useRef(null);
   const contentRef = useRef(null);
-  
+
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      gsap.fromTo(contentRef.current.children, 
-        { y: 30, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 70%',
-            toggleActions: 'play reverse play reverse'
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.15,
-          ease: 'power3.out'
-        }
-      );
-
-      gsap.fromTo(potRef.current, 
-        { y: 50, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 70%',
-            toggleActions: 'play reverse play reverse'
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1.5,
-          ease: 'power2.out'
-        }
-      );
-
       // Scroll Parallax Animation
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -72,13 +41,13 @@ export default function PotsHero() {
 
       {/* Centering Wrapper */}
       <div className="pots-hero-wrapper">
-        
+
         {/* Content on the Left */}
         <div ref={contentRef} className="pots-hero-content">
           <h1 className="pots-hero-title">
             Handcrafted Ceramic
           </h1>
-          
+
           <h2 className="pots-hero-subtitle">
             Minimalist Terrazzo Collection
           </h2>
@@ -88,7 +57,7 @@ export default function PotsHero() {
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-            <button 
+            <button
               className="hero-cta-button"
               style={{ padding: '1.1rem 2.2rem', fontSize: '1rem' }}
               onClick={() => {
@@ -107,7 +76,7 @@ export default function PotsHero() {
 
         {/* Image on the Right */}
         <div className="pots-hero-image-container">
-          <img 
+          <img
             ref={potRef}
             src="/pots/pots-Photoroom.webp"
             alt="Handcrafted Ceramic Pot"
