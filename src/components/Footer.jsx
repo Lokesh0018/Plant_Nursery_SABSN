@@ -5,6 +5,7 @@ import FooterStamp from './FooterStamp';
 import Meadow from './Meadow';
 import FooterEdge from './FooterEdge';
 import useOffscreenPause from '../hooks/useOffscreenPause';
+import { subscribeScroll } from '../lib/scrollStore';
 import './Footer.css';
 
 // ink blots stamped along the wordmark (x %, y %), in stamping order
@@ -29,13 +30,10 @@ export default function Footer() {
       BLOTS.forEach((_, i) => mark.style.setProperty(`--b${i}`, '40%'));
       return undefined;
     }
-    let raf = 0;
     let last = -1;
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
+    const tick = ({ vh }) => {
       if (!footerInView.current) return; // nothing to ink while the footer is off screen
       const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
       const p = clamp01((vh - r.top) / r.height); // 1 exactly at the page bottom
       if (p === last) return;
       last = p;
@@ -44,8 +42,7 @@ export default function Footer() {
         mark.style.setProperty(`--b${i}`, `${(t * 40).toFixed(2)}%`);
       });
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return subscribeScroll(tick);
   }, [footerInView]);
 
 

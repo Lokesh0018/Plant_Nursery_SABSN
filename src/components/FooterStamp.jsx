@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import useOffscreenPause from '../hooks/useOffscreenPause';
+import { subscribeScroll } from '../lib/scrollStore';
 
 const ROLL = 380;  // px the seed rolls in from (to the right of its spot)
 const RANGE = 260; // px of scroll at the very bottom of the page that drive the whole animation
@@ -38,13 +39,10 @@ export default function FooterStamp() {
       return undefined;
     }
 
-    let raf = 0;
     let last = -1;
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
+    const tick = ({ y, max }) => {
       if (!inView.current) return; // skip the scroll maths while the stamp is off screen
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = clamp((window.scrollY - (max - RANGE)) / RANGE); // 0 -> 1 over the last RANGE px
+      const p = clamp((y - (max - RANGE)) / RANGE); // 0 -> 1 over the last RANGE px
       if (p === last) return; // nothing moved
       last = p;
 
@@ -64,8 +62,7 @@ export default function FooterStamp() {
       stamp.style.opacity = String(toStamp);
       stamp.style.transform = `scale(${1.15 - 0.15 * toStamp})`;
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return subscribeScroll(tick);
   }, [inView]);
 
   return (

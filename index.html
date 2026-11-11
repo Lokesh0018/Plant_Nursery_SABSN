@@ -8,14 +8,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <!-- LCP image: start fetching the hero banyan before the JS bundle has parsed -->
-    <link rel="preload" as="image" href="/hero-tree/banyan.webp" imagesrcset="/hero-tree/banyan-800.webp 800w, /hero-tree/banyan-1200.webp 1200w, /hero-tree/banyan.webp 1534w" imagesizes="(max-width: 900px) 130vw, min(78vw, 1150px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/hero-tree/banyan.webp" imagesrcset="/hero-tree/banyan-600.webp 600w, /hero-tree/banyan-800.webp 800w, /hero-tree/banyan-1200.webp 1200w, /hero-tree/banyan.webp 1534w" imagesizes="(max-width: 900px) 130vw, min(78vw, 1150px)" fetchpriority="high" />
     <meta name="theme-color" content="#0d2a18" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Fonts: only the weights the site uses. Preconnect so the font CSS and files start early. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts are self-hosted (src/styles/fonts.css). Preload the two faces the first screen paints with. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/playfair-display-700.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/plus-jakarta-sans-400.woff2" crossorigin />
     <link rel="dns-prefetch" href="https://wa.me" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Caveat:wght@400&display=swap" />
     <title>SABSN — Sri Ayyappa Bala Sai Nursery</title>
     <meta name="description" content="Sri Ayyappa Bala Sai Nursery (SABSN): hybrid flowering plants, fruit saplings, ornamental, revenue and lawn plants, grown with care." />
   </head>

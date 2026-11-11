@@ -238,85 +238,12 @@
   color: #3f5e3e;
 }
 
-/* Main Grid */
-.founder-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  align-items: center;
-  position: relative;
-  z-index: 2;
-}
-
-@media (min-width: 992px) {
-  .founder-grid {
-    grid-template-columns: 4.2fr 7.8fr;
-    gap: 3.25rem;
-  }
-}
-
-/* Portrait Column */
-.founder-portrait-col {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.founder-portrait-outer-ring {
-  position: relative;
-  max-width: 320px;
-  margin: 0 auto;
-  width: 100%;
-}
-/* gentle inner vignette so the portrait sits into its frame */
-.founder-image-aspect::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), inset 0 -40px 60px -30px rgba(22, 54, 36, 0.45);
-  pointer-events: none;
-}
-
-/* frame leaf accent removed with the frame */
-.founder-frame-leaf-accent { display: none; }
-
-.founder-portrait-frame {
-  position: relative;
-  border-radius: 20px;
-  box-shadow:
-    0 22px 44px -14px rgba(22, 54, 36, 0.28),
-    0 8px 18px -8px rgba(22, 54, 36, 0.12);
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
-}
-
-.founder-portrait-outer-ring:hover .founder-portrait-frame {
-  transform: translateY(-3px);
-  box-shadow:
-    0 30px 56px -16px rgba(22, 54, 36, 0.32),
-    0 12px 22px -8px rgba(22, 54, 36, 0.14);
-}
-
-.founder-image-aspect {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 3.8;
-  max-height: 38vh;
-  overflow: hidden;
-  border-radius: 20px;
-  background: #163624;
-}
-
 .founder-portrait-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.founder-portrait-outer-ring:hover .founder-portrait-img {
-  transform: scale(1.03);
 }
 
 /* Vintage Botanical Seal */
@@ -343,17 +270,6 @@
 
 .founder-image-seal svg {
   color: #c9d98a;
-}
-
-.founder-caption {
-  padding-top: 0.85rem;
-  text-align: center;
-}
-
-@media (min-width: 992px) {
-  .founder-caption {
-    text-align: left;
-  }
 }
 
 .founder-tag {
@@ -691,30 +607,11 @@
     padding-bottom: 0.85rem;
   }
 
-  .founder-grid {
-    gap: 1.75rem;
-  }
-
   .founder-footer-block {
     flex-direction: column;
     align-items: flex-start;
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .founder-portrait-frame,
-  .founder-portrait-img,
-  .founder-ambient-glow {
-    transition: none !important;
-    animation: none !important;
-    transform: none !important;
-  }
-}
-
-
-
-
-
 
 /* ==========================================================================
    SPLIT EDITORIAL LAYOUT: edge-to-edge portrait panel + content panel

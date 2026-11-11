@@ -140,9 +140,9 @@ export default function VineDivider({ variant = 'top' }) {
       svg.querySelector('.vine-bloom').setAttribute('transform', `translate(${width / 2} ${MID})`);
 
       const growth = [
-        ...mains.map((s, i) => decorate(svg, s, i === 1, { density: 72, size: 1.45 })),
-        ...subs.map((s, i) => decorate(svg, s, i === 1, { density: 105, size: 0.95, tendrils: false })),
-        ...wisps.map((s, i) => decorate(svg, s, i === 1, { density: 140, size: 0.75, tendrils: true, berries: false })),
+        ...mains.map((s, i) => decorate(svg, s, i === 1, { density: 90, size: 1.45 })),
+        ...subs.map((s, i) => decorate(svg, s, i === 1, { density: 130, size: 0.95, tendrils: false })),
+        ...wisps.map((s, i) => decorate(svg, s, i === 1, { density: 170, size: 0.75, tendrils: true, berries: false })),
       ];
       const allStems = [...mains, ...hi, ...subs, ...wisps];
 
@@ -150,6 +150,7 @@ export default function VineDivider({ variant = 'top' }) {
         if (reduce) return; // fully grown, static
 
         const tl = gsap.timeline({
+          // scrubbed both ways: the vines grow as the band enters and withdraw as it leaves
           scrollTrigger: { trigger: host, start: 'top 95%', end: 'top 30%', scrub: 0.7 },
           defaults: { ease: 'none' },
         });

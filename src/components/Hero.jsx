@@ -21,7 +21,7 @@ const LAYERS = [
   { id: 'ground',  src: '/hero-tree/ground.webp',     depth: 0.3,  cls: 'tl-ground' },
   // the banyan is the LCP element: three widths, highest fetch priority, and a preload in index.html
   { id: 'banyan',  src: '/hero-tree/banyan.webp',     depth: 0.42, cls: 'tl-banyan', priority: true,
-    srcSet: '/hero-tree/banyan-800.webp 800w, /hero-tree/banyan-1200.webp 1200w, /hero-tree/banyan.webp 1534w',
+    srcSet: '/hero-tree/banyan-600.webp 600w, /hero-tree/banyan-800.webp 800w, /hero-tree/banyan-1200.webp 1200w, /hero-tree/banyan.webp 1534w',
     sizes: '(max-width: 900px) 130vw, min(78vw, 1150px)' },
   { id: 'fol-tr',  src: '/hero-tree/foliage-tr.webp', depth: 0.7,  cls: 'tl-fol-tr' },
   { id: 'fol-tl',  src: '/hero-tree/foliage-tl.webp', depth: 0.8,  cls: 'tl-fol-tl' },

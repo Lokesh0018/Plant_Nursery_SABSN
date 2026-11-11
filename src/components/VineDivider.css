@@ -263,8 +263,10 @@
   stroke-width: 0.8;
 }
 
+@media (max-width: 1200px) {
+  .vine-stem.sub, .vine-stem.wisp { display: none; } /* tablets and phones: one stem per side */
+}
 @media (max-width: 900px) {
   .vine-divider { height: 110px; }
   .vine-stem.main { stroke-width: 3.4; }
-  .vine-stem.sub, .vine-stem.wisp { display: none; } /* keep phones to one stem per side */
 }

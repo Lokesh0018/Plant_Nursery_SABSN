@@ -7,8 +7,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function useSmoothScroll() {
   useEffect(() => {
+    // Touch devices scroll natively (Lenis only adds a per-frame tick there), and reduced-motion
+    // users get no inertia at all.
+    if (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       syncTouch: false,

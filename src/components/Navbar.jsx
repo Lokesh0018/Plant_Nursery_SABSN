@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { ShoppingBag, Search, ArrowRight, Menu, X } from 'lucide-react';
 import './Navbar.css';
+import { subscribeScroll } from '../lib/scrollStore';
 const CartDrawer = lazy(() => import('./CartDrawer')); // only fetched the first time the cart opens
 import { products } from '../data/products';
 import { pots } from '../data/pots';
@@ -61,11 +62,9 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const y = window.scrollY;
+    const handleScroll = ({ y, vh, max }) => {
       setIsScrolled(y > 30);
       // progress hairline along the bar's bottom edge
-      const max = document.documentElement.scrollHeight - window.innerHeight;
       document.documentElement.style.setProperty('--nav-progress', `${max > 0 ? (y / max) * 100 : 0}%`);
 
       // Active section = the last section whose top has passed the navbar line.
@@ -73,7 +72,7 @@ export default function Navbar() {
       // when a section's top reaches the bar, not at a different height for each one.
       // The reference point sits a third of the way down the viewport: a section becomes active
       // once it covers that point, which is robust to smooth-scroll easing landing a few pixels off.
-      const line = Math.max(160, window.innerHeight * 0.34);
+      const line = Math.max(160, vh * 0.34);
       const order = [
         ['collection', 'plants'],
         ['pots-collection', 'pots'],
@@ -90,25 +89,9 @@ export default function Navbar() {
       if (y >= max - 2) active = 'contact';
       setActiveSection(active);
     };
-    // Poll the scroll position each frame instead of relying on scroll events: with Lenis smooth
-    // scrolling and programmatic jumps, events can be coalesced or arrive before layout settles.
-    let last = -1;
-    let raf = 0;
-    const tick = () => {
-      const y = window.scrollY;
-      if (y !== last) { last = y; handleScroll(); }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    // scroll events as well: animation frames pause in background tabs, events do not
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-    handleScroll();
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
+    // The shared scroll store runs the one animation-frame loop for the whole app and only calls
+    // back when the position actually changed (it also listens to scroll events for background tabs).
+    return subscribeScroll(handleScroll);
   }, []);
 
   useEffect(() => {

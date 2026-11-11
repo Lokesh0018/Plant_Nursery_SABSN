@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { subscribeScroll } from '../lib/scrollStore';
 
 /**
  * Pause a section's continuous animations while it is off screen.
@@ -36,33 +37,18 @@ export default function useOffscreenPause(ref, { margin = '12%', onChange } = {}
       io.observe(el);
     }
 
-    // Fallback: watch the scroll position each frame and re-measure only when it has changed, so
-    // the state is right even where observer notifications or scroll events lag (programmatic
-    // jumps, some embedded or headless contexts). One rect read per change is negligible.
+    // Fallback: re-measure whenever the shared scroll store reports a change, so the state is
+    // right even where observer notifications lag (programmatic jumps, embedded contexts).
     const pct = parseFloat(margin) || 0;
-    let raf = 0;
-    let lastY = -1;
-    let lastH = -1;
-    const check = () => {
+    const unsubscribe = subscribeScroll(({ vh }) => {
       const r = el.getBoundingClientRect();
-      const m = (window.innerHeight * pct) / 100;
-      set(r.bottom > -m && r.top < window.innerHeight + m);
-    };
-    const loop = () => {
-      raf = requestAnimationFrame(loop);
-      const y = window.scrollY;
-      const h = window.innerHeight;
-      if (y !== lastY || h !== lastH) {
-        lastY = y;
-        lastH = h;
-        check();
-      }
-    };
-    loop();
+      const m = (vh * pct) / 100;
+      set(r.bottom > -m && r.top < vh + m);
+    });
 
     return () => {
       io?.disconnect();
-      cancelAnimationFrame(raf);
+      unsubscribe();
       el.classList.remove('is-offscreen');
     };
   }, [ref, margin]);

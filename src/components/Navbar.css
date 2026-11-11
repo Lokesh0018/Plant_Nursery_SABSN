@@ -26,8 +26,9 @@
   padding: 0.55rem 0.7rem 0.55rem 0.7rem;
   border-radius: 999px;
   border-color: rgba(244, 236, 217, 0.16);
-  backdrop-filter: blur(20px) saturate(1.35);
-  -webkit-backdrop-filter: blur(20px) saturate(1.35);
+  backdrop-filter: blur(10px) saturate(1.3);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+  contain: paint; /* the blur never has to consider pixels outside the capsule */
   background:
     /* progress arc: a lime line that grows along the bottom edge, clipped by the capsule radius */
     linear-gradient(90deg, #7fa84a, #c9d98a) no-repeat left bottom / var(--nav-progress, 0%) 2px,

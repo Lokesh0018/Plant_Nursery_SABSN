@@ -97,10 +97,10 @@ export default function AboutNursery() {
                   <img
                     ref={imageRef}
                     src="/nursery.webp"
-                    srcSet="/nursery-800.webp 800w, /nursery.webp 1456w"
+                    srcSet="/nursery-800.webp 800w, /nursery.webp 1200w"
                     sizes="(max-width: 768px) 92vw, min(50vw, 680px)"
-                    width="1456"
-                    height="816"
+                    width="1200"
+                    height="673"
                     alt="Lush botanical acreage at Sri Ayyappa Bala Sai Nursery in Kadiam"
                     className="about-nursery-img"
                     loading="lazy"
