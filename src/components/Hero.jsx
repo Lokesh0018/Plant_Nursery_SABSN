@@ -50,10 +50,15 @@ export default function Hero() {
       // --- Entrance: far layers settle first, foreground layers slide in from the edges
       gsap.set(layers, { opacity: 0, scale: (i, el) => 1 + depth(el) * 0.08 });
       gsap.set(content, { opacity: 0, y: 32 });
-      gsap
-        .timeline({ scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true }, defaults: { ease: 'power3.out' } })
+      // The hero is the first screen, so this is not scroll-gated. It waits for the loading
+      // screen's hand-over (window event) so the scene grows in behind the dissolve.
+      const entrance = gsap
+        .timeline({ paused: true, defaults: { ease: 'power3.out' } })
         .to(layers, { opacity: 1, scale: 1, duration: 1.6, stagger: { each: 0.1 } })
         .to(content, { opacity: 1, y: 0, duration: 1, stagger: 0.12 }, 0.5);
+      const start = () => entrance.play();
+      if (window.__sabsnLoaded) start();
+      else window.addEventListener('sabsn:loaded', start, { once: true });
 
       // --- Scroll parallax as a camera move. Each plane scrolls at its own speed relative to
       // the page: the far forest lags most, the tree + lawn linger at about 0.75× scroll speed,

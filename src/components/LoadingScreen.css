@@ -1,0 +1,103 @@
+/* Botanical loading screen: calm, minimal, transform/opacity only */
+
+.ls-root {
+  position: fixed;
+  inset: 0;
+  z-index: 10000; /* above the navbar (100) and the floating WhatsApp button (90) */
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(220, 232, 211, 0.55), transparent 60%),
+    #F7F8EF;
+  color: #174D35;
+  overflow: hidden;
+}
+
+.ls-stage {
+  position: relative;
+  width: min(92vw, 520px);
+  height: min(70vh, 520px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  will-change: transform, opacity;
+}
+
+/* the original logo, untouched: a soft paper disc behind it so it sits in the palette */
+.ls-logo-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.ls-logo {
+  width: clamp(140px, 36vw, 200px);
+  height: auto;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 6px rgba(220, 232, 211, 0.8),
+    0 18px 40px -18px rgba(23, 77, 53, 0.35);
+  will-change: transform, opacity;
+}
+
+/* seedling beneath the logo */
+.ls-seedling {
+  margin-top: 0.4rem;
+  overflow: visible;
+}
+.ls-leaf-l,
+.ls-leaf-r {
+  transform-box: fill-box;
+  will-change: transform;
+}
+
+/* floating leaves */
+.ls-floater {
+  position: absolute;
+  line-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* caption */
+.ls-caption {
+  margin: 0.2rem 0 0;
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: #174D35;
+  opacity: 0;
+}
+
+/* progress rail: a thin line whose fill scales with real progress */
+.ls-rail {
+  position: relative;
+  width: min(60vw, 220px);
+  height: 2px;
+  border-radius: 2px;
+  background: #DCE8D3;
+  overflow: hidden;
+  opacity: 0;
+}
+.ls-rail-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  background: linear-gradient(90deg, #79A66A, #174D35);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (max-width: 600px) {
+  .ls-stage { height: min(62vh, 460px); }
+  .ls-floater:nth-child(5), .ls-floater:nth-child(6) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-root, .ls-caption, .ls-rail, .ls-floater { opacity: 1 !important; }
+  .ls-stem { stroke-dashoffset: 0 !important; }
+  .ls-rail-fill { transition: none; }
+}

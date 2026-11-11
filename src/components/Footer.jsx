@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, MessageCircle, ArrowUp, Clock } from 'lucide-react
 import FallingLeaves from './FallingLeaves';
 import FooterStamp from './FooterStamp';
 import Meadow from './Meadow';
+import FooterEdge from './FooterEdge';
 import useOffscreenPause from '../hooks/useOffscreenPause';
 import './Footer.css';
 
@@ -50,6 +51,8 @@ export default function Footer() {
 
   return (
     <footer ref={footerRef} className="premium-footer">
+      {/* botanical top edge: a leafy vine replaces the plain hairline */}
+      <FooterEdge />
       {/* Theme atmosphere: forest ground like the hero, lime light, corner leaves, ghost watermark */}
       <div className="footer-atmosphere" aria-hidden="true">
         <span className="footer-glow footer-glow--left" />

@@ -1,4 +1,4 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
@@ -11,6 +11,7 @@ import PotsCollection from './components/PotsCollection';
 import AboutNursery from './components/AboutNursery';
 import StorySection from './components/StorySection';
 import WhatsAppButton from './components/WhatsAppButton';
+import LoadingScreen from './components/LoadingScreen';
 
 // Below-the-fold sections load in their own chunks so the first paint only needs the navbar,
 // hero, plant grid and the sections just beneath it.
@@ -39,6 +40,7 @@ function LazySection({ height, color, children }) {
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  const [loading, setLoading] = useState(true);
   useSmoothScroll();
 
   useEffect(() => {
@@ -63,8 +65,9 @@ function App() {
       <LazySection height="120vh" color="#e6dccb"><LivingArchive /></LazySection>
       <VineDivider variant="contact" />
       <LazySection height="70vh" color="#c4d6bb"><Contact /></LazySection>
-      <LazySection height="560px" color="#0f2d1b"><Footer /></LazySection>
+      <LazySection height="460px" color="#0f2d1b"><Footer /></LazySection>
       <WhatsAppButton />
+      {loading && <LoadingScreen onDone={() => setLoading(false)} />}
     </div>
   );
 }
