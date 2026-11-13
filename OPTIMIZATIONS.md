@@ -165,7 +165,9 @@ The loader waits for fonts, every eager hero image and the load event. On slow n
 
 ### Still open (P3)
 
-- Decide whether to remove Lenis entirely.
+- ✔ Lenis removed: native scrolling, no inertia lag, one less chunk.
+- ✔ Vine dividers grow once on entry (timed, ~1.6 s) instead of scrubbing on every scroll frame; their shadow is applied only after growth.
+- ✔ `backdrop-filter` dropped from near-opaque chips over moving images (About badge and service cards, founder seal, gallery and care tags); parallax layers carry `will-change: transform`.
 - Move the simple image parallaxes off ScrollTrigger (or to CSS scroll-driven animations).
 - Loader: wait on fonts + largest hero layers only, let the load event be informational.
 - Pick one of `_headers` / `.htaccess` for the host and delete the other.

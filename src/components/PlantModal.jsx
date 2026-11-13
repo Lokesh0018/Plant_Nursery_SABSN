@@ -140,7 +140,7 @@ export default function PlantModal({ product, originRect, onClose }) {
   return createPortal(
     <div className="pm-root" role="dialog" aria-modal="true" aria-labelledby="pm-title">
       <div ref={backdropRef} className="pm-backdrop" onClick={close} />
-      <div ref={panelRef} className="pm-panel" data-lenis-prevent>
+      <div ref={panelRef} className="pm-panel">
         <button ref={closeRef} className="pm-close" onClick={close} aria-label="Close">
           <X size={20} />
         </button>

@@ -115,7 +115,10 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-  /* one soft forest shadow under the whole vine (not per leaf) so it sits on the page */
+}
+/* one soft forest shadow under the whole vine (not per leaf) so it sits on the page. Applied only
+   once the growth animation has finished, so the filter is rasterised once instead of per frame */
+.vine-divider.is-grown .vine-svg {
   filter: drop-shadow(0 3px 3px rgba(22, 54, 36, 0.18));
 }
 

@@ -147,13 +147,17 @@ export default function VineDivider({ variant = 'top' }) {
       const allStems = [...mains, ...hi, ...subs, ...wisps];
 
       ctx = gsap.context(() => {
-        if (reduce) return; // fully grown, static
+        if (reduce) { host.classList.add('is-grown'); return; } // fully grown, static
 
+        host.classList.remove('is-grown');
         const tl = gsap.timeline({
-          // scrubbed both ways: the vines grow as the band enters and withdraw as it leaves
-          scrollTrigger: { trigger: host, start: 'top 95%', end: 'top 30%', scrub: 0.7 },
+          // plays once, on its own clock, when the band comes into view. A scroll scrub would
+          // re-render hundreds of SVG nodes on every scroll frame; this costs ~1.6 s once.
+          scrollTrigger: { trigger: host, start: 'top 85%', once: true },
           defaults: { ease: 'none' },
+          onComplete: () => host.classList.add('is-grown'),
         });
+        tl.timeScale(0.62); // the timeline is laid out in 0..1 units; this makes it ~1.6 s
 
         allStems.forEach((stem) => {
           const len = stem.getTotalLength();

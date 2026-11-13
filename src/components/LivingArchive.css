@@ -157,12 +157,10 @@
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: #3f5e3e;
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.78);
   padding: 0.5rem 1rem;
   border-radius: 999px;
   border: 1px solid rgba(22, 54, 36, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 .archive-location:hover {
@@ -260,9 +258,7 @@
   color: #163624;
   padding: 0.3rem 0.6rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 8px rgba(22, 54, 36, 0.15);
 }

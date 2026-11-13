@@ -1,7 +1,6 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -41,7 +40,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [loading, setLoading] = useState(true);
-  useSmoothScroll();
 
   useEffect(() => {
     // Recalculate scroll positions once hero images have had a moment to lay out

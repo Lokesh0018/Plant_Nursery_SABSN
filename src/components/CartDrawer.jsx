@@ -55,7 +55,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems = [], updateQuan
           </button>
         </div>
 
-        <div className={`cart-content ${cartItems.length === 0 ? 'empty-state' : ''}`} data-lenis-prevent="true">
+        <div className={`cart-content ${cartItems.length === 0 ? 'empty-state' : ''}`}>
           {cartItems.length === 0 ? (
             <>
               <div className="empty-cart-icon">

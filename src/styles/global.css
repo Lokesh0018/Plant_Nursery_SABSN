@@ -57,27 +57,6 @@ button {
   color: inherit;
 }
 
-/* Lenis Recommended */
-html.lenis, html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
 /* Custom Elegant Scrollbar */
 /* Scrollbar: deep-forest track with a lime-to-cream thumb, matching the hero */
 :root {

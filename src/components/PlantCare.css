@@ -375,9 +375,7 @@
   color: #163624;
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 8px rgba(22, 54, 36, 0.15);
 }

@@ -20,7 +20,6 @@ export default defineConfig({
             path.includes('/node_modules/scheduler/')
           ) return 'react'
           if (path.includes('/node_modules/gsap/')) return 'gsap'
-          if (path.includes('/node_modules/lenis/')) return 'lenis'
           return 'vendor'
         },
       },

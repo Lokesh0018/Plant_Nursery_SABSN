@@ -12,6 +12,7 @@
 }
 
 .collection-bg-text {
+  will-change: transform; /* scroll parallax: move it on the compositor instead of repainting */
   position: absolute;
   top: 5vh;
   left: 50%;
