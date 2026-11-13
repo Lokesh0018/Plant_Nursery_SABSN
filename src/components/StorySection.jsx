@@ -9,9 +9,9 @@ import './StorySection.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
-  { value: '35+', label: 'Years of Heritage', sub: 'Est. in Kadiam' },
-  { value: '250+', label: 'Rare Plant Varieties', sub: 'Native & Exotic' },
-  { value: '100k+', label: 'Saplings Planted', sub: 'Across India' }
+  { value: '35+', label: 'Years of Heritage', sub: 'Est. in Kadiyam' },
+  { value: '20', label: 'Acres Under Cultivation', sub: 'Combined nursery footprint' },
+  { value: '50+', label: 'Full-Time Team', sub: 'Growers & field crews' }
 ];
 
 export default function StorySection() {
@@ -139,7 +139,7 @@ export default function StorySection() {
           </div>
 
           <div className="founder-photo-caption">
-            <span className="founder-tag">Kadiam Heritage Master</span>
+            <span className="founder-tag">Kadiyam Heritage Master</span>
             <p className="founder-subtext">35+ Years Horticultural Stewardship</p>
             <div className="founder-badges-row">
               <div className="founder-mini-badge">
@@ -164,7 +164,7 @@ export default function StorySection() {
           </div>
           <div className="founder-location-pill">
             <MapPin size={13} />
-            <span>Kadiam, Godavari Delta • Andhra Pradesh</span>
+            <span>Kadiyam, Godavari Delta • Andhra Pradesh</span>
           </div>
         </div>
 
@@ -181,7 +181,7 @@ export default function StorySection() {
 
             <div className="founder-prose">
               <p>
-                Rooted in Kadiam’s generational agricultural ethos, Sri Uppada Kumaraswamy has devoted over three decades to the art of plant propagation. Under his discerning eye, SABSN has transformed from a revered local botanical nursery into an authoritative national destination for rare specimens, monumental avenues, and architectural flora.
+                Rooted in Kadiyam’s generational agricultural ethos, Sri Uppada Kumaraswamy has devoted over three decades to the art of plant propagation. Under his discerning eye, SABSN has transformed from a revered local botanical nursery into an authoritative national destination for rare specimens, monumental avenues, and architectural flora.
               </p>
               <div className="founder-quote-card">
                 <span className="founder-quote-card-leaf" aria-hidden="true"><Leaf size={14} /></span>
@@ -208,7 +208,7 @@ export default function StorySection() {
                 <div className="founder-signature-line" />
                 <div className="founder-signature-details">
                   <p className="founder-name">Sri Uppada Kumaraswamy</p>
-                  <p className="founder-title">Master Horticulturist &amp; Nursery Founder</p>
+                  <p className="founder-title">Managing Partner &amp; Master Horticulturist</p>
                 </div>
               </div>
 

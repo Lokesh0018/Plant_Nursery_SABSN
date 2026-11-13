@@ -102,7 +102,7 @@ export default function FooterStamp() {
             />
           )}
           <text fill="#c9d98a" fontFamily="var(--font-sans, sans-serif)" fontWeight="600" fontSize="16" letterSpacing="3.6">
-            <textPath href="#fs-ring">GROWN IN KADIAM · SINCE 1980s · WITH CARE ·</textPath>
+            <textPath href="#fs-ring">GROWN IN KADIYAM · SINCE 1980s · WITH CARE ·</textPath>
           </text>
         </g>
         <g transform="translate(100 100)">

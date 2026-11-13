@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import VineDivider from './components/VineDivider';
+import NurseryMarquee from './components/NurseryMarquee';
 import Collection from './components/Collection';
 import PotsCollection from './components/PotsCollection';
 import AboutNursery from './components/AboutNursery';
@@ -70,16 +71,18 @@ function App() {
     <div className="app-container" style={{ backgroundColor: 'var(--color-sage-green)', position: 'relative' }}>
       <Navbar />
       <Hero />
+      {/* sections follow the navbar: Home, About, Plants, Services, Pots, Gallery (then Contact) */}
       <VineDivider />
-      <Collection />
-      <VineDivider variant="bottom" />
-      <PotsCollection />
-      <VineDivider variant="about" />
       <AboutNursery />
       <StorySection />
+      <NurseryMarquee />
+      <Collection />
+      <VineDivider variant="bottom" />
       <LazySection height="120vh" color="#d4e2ca"><Services /></LazySection>
       <LazySection height="110vh" color="#cbdcc1"><PlantCare /></LazySection>
       <VineDivider variant="care" />
+      <PotsCollection />
+      <VineDivider variant="pots" />
       <LazySection height="120vh" color="#F7F3EA"><LivingArchive /></LazySection>
       <VineDivider variant="contact" />
       <LazySection height="70vh" color="#c4d6bb"><Contact /></LazySection>

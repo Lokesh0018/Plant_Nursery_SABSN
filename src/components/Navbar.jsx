@@ -96,9 +96,10 @@ export default function Navbar({ page = 'home' }) {
       // once it covers that point, which is robust to smooth-scroll easing landing a few pixels off.
       const line = Math.max(160, vh * 0.34);
       const order = [
-        ['pots-collection', 'pots'],
         ['about', 'about'],
+        ['collection', 'plants'],
         ['services', 'services'],
+        ['pots-collection', 'pots'],
         ['gallery', 'gallery'],
         ['contact', 'contact'],
       ];
@@ -203,7 +204,7 @@ export default function Navbar({ page = 'home' }) {
           ...indicatorStyle
         }} />
 
-        {['Home', 'Plants', 'Pots', 'About', 'Services', 'Gallery'].map((item) => {
+        {['Home', 'About', 'Plants', 'Services', 'Pots', 'Gallery'].map((item) => {
           const isActive = activeSection === item.toLowerCase();
           return (
             <li

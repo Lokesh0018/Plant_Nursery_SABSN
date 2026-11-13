@@ -142,7 +142,7 @@ export default function Contact() {
           <p className="contact-form-note" aria-live="polite">
             {status === 'success'
               ? 'Welcome to the journal. Your first issue is on its way.'
-              : 'One short letter a month from the Kadiam nursery floor.'}
+              : 'One short letter a month from the Kadiyam nursery floor.'}
           </p>
         </div>
 

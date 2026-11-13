@@ -114,10 +114,10 @@ export default function Footer() {
               <h3 className="footer-brand-name">SABSN</h3>
             </div>
             <p className="footer-brand-desc">
-              Sri Ayyappa Bala Sai Nursery — hybrid flowering plants, fruit saplings, ornamental, revenue and lawn plants, grown with care.
+              Sri Ayyappa Bala Sai Nursery — indoor, outdoor and ornamental plants, landscaping, planting and garden maintenance. Green Plants · Healthy Life · Happy Life.
             </p>
             <ul className="footer-meta">
-              <li><MapPin size={14} /> Kadiam, Godavari Delta, Andhra Pradesh</li>
+              <li><MapPin size={14} /> Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh</li>
               <li><Clock size={14} /> Open daily, 7 am to 6 pm</li>
             </ul>
           </div>
@@ -161,6 +161,9 @@ export default function Footer() {
             </a>
             <a href="tel:+919849936169" className="social-link">
               <Phone size={14} /> +91 98499 36169
+            </a>
+            <a href="tel:+919490378689" className="social-link">
+              <Phone size={14} /> +91 94903 78689
             </a>
             <a href="mailto:uppadakumaraswamy@gmail.com" className="social-link">
               <Mail size={14} /> uppadakumaraswamy@gmail.com

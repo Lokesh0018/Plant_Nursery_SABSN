@@ -1,10 +1,9 @@
 import React from 'react';
 import {
   Trees, Shovel, Scissors, Flower2, FlaskConical, Layers, Recycle, Amphora, BrickWall, LayoutGrid,
-  ArrowRight, MessageCircle,
+  ArrowRight, MessageCircle, Building, BadgeCheck,
 } from 'lucide-react';
 import VineOrnament from './VineOrnament';
-import NurseryMarquee from './NurseryMarquee';
 import './Services.css';
 
 // The nursery's ten services, in the wording the nursery chose for the website
@@ -19,6 +18,25 @@ const SERVICES = [
   { title: 'Plant Pots, Planters & Containers', text: 'Wide selection of indoor and outdoor pots, decorative planters and functional containers in different materials, designs and sizes.', Icon: Amphora },
   { title: 'Landscape Civil Works & Infrastructure', text: 'Execution of landscape-related civil works, including pathways, paving, garden edging, raised planters, site preparation and supporting infrastructure.', Icon: BrickWall },
   { title: 'Vertical Garden Design, Installation & Maintenance', text: 'Customized vertical garden planning, installation, planting arrangements, irrigation integration and ongoing maintenance.', Icon: LayoutGrid },
+];
+
+// How a project runs, as set out in the nursery's company profile
+const WORKFLOW = [
+  'Site visit and requirement collection',
+  'Plant palette and material selection',
+  'Quantity estimate and quotation',
+  'Site preparation and civil works, where required',
+  'Supply and installation',
+  'Irrigation, establishment and maintenance plan',
+  'Handover with care instructions',
+];
+
+// Organisations named in the company profile among the nursery's clients
+const CLIENTS = [
+  { name: 'Airports Authority of India', work: 'Visakhapatnam airport landscape support' },
+  { name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Balabhadrapuram' },
+  { name: 'Sri Sarvaraya Sugars Ltd.', work: 'Plant and garden requirements, Gopalapuram' },
+  { name: 'Renaatus', work: 'Plant supply, gardening and maintenance' },
 ];
 
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I’d like to discuss a landscaping / garden service.')}`;
@@ -71,7 +89,42 @@ export default function Services() {
         </ol>
       </div>
 
-      <NurseryMarquee />
+      <div className="services-process" aria-labelledby="services-process-title">
+        <div className="services-process-head">
+          <p className="services-eyebrow">How we work</p>
+          <h3 id="services-process-title" className="services-subtitle">From site visit to handover</h3>
+        </div>
+        <ol className="services-steps">
+          {WORKFLOW.map((step, i) => (
+            <li key={step} className="services-step">
+              <span className="services-step-num" aria-hidden="true">{i + 1}</span>
+              <span className="services-step-text">{step}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="services-record" aria-labelledby="services-record-title">
+        <div className="services-process-head">
+          <p className="services-eyebrow">Track record</p>
+          <h3 id="services-record-title" className="services-subtitle">Trusted by industry and the public sector</h3>
+        </div>
+        <ul className="services-clients">
+          {CLIENTS.map(({ name, work }) => (
+            <li key={name} className="services-client">
+              <Building size={20} strokeWidth={1.8} aria-hidden="true" />
+              <div>
+                <strong>{name}</strong>
+                <span>{work}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p className="services-registration">
+          <BadgeCheck size={18} strokeWidth={2} aria-hidden="true" />
+          Registered Class V Contractor, Public Health Division, Rajamahendravaram
+        </p>
+      </div>
     </section>
   );
 }

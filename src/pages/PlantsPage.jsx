@@ -5,6 +5,7 @@ import WhatsAppButton from '../components/WhatsAppButton';
 import { ProductCard } from '../components/Collection';
 import VineOrnament from '../components/VineOrnament';
 import { products } from '../data/products';
+import { landscapePalette } from '../data/landscapePalette';
 import './PlantsPage.css';
 
 const PlantModal = lazy(() => import('../components/PlantModal')); // only fetched when a plant is opened
@@ -262,6 +263,33 @@ export default function PlantsPage() {
             </div>
           </div>
         )}
+
+        <section className="pp-palette" aria-labelledby="pp-palette-title">
+          <div className="pp-palette-head">
+            <p className="pp-eyebrow pp-eyebrow--dark">For landscape projects</p>
+            <h2 id="pp-palette-title">Indian &amp; Andhra landscape plant palette</h2>
+            <p>
+              Beyond the plants above, we grow and source trees, palms and flowering shrubs for
+              avenues, campuses, factories and gardens. A planning reference from our project work:
+            </p>
+          </div>
+          <div className="pp-palette-grid">
+            {landscapePalette.map(({ group, plants }) => (
+              <div key={group} className="pp-palette-card">
+                <h3><Leaf size={16} strokeWidth={2.2} aria-hidden="true" />{group}</h3>
+                <ul>
+                  {plants.map(([name, latin]) => (
+                    <li key={name}><span>{name}</span><em>{latin}</em></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="pp-palette-note">
+            A planning palette, not a stock list. Final selection depends on soil, water, sunlight,
+            space, local suitability and availability; ask us to confirm for your site.
+          </p>
+        </section>
 
         <section className="pp-help" aria-labelledby="pp-help-title">
           <img className="pp-help-art" src="/hero-tree/flowers-br.webp" alt="" width="432" height="321" loading="lazy" aria-hidden="true" />

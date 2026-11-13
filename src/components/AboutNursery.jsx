@@ -59,7 +59,7 @@ export default function AboutNursery() {
   return (
     <section ref={containerRef} className="about-nursery-section" id="about">
       {/* Background Ambience */}
-      <div className="about-nursery-watermark" aria-hidden="true">KADIAM</div>
+      <div className="about-nursery-watermark" aria-hidden="true">KADIYAM</div>
       <div className="about-nursery-glow-1" aria-hidden="true" />
       <div className="about-nursery-glow-2" aria-hidden="true" />
 
@@ -80,11 +80,11 @@ export default function AboutNursery() {
         <div className="about-nursery-topbar">
           <div className="about-nursery-pill">
             <Sparkles size={13} className="about-nursery-pill-icon" />
-            <span>Sri Ayyappa Bala Sai Nursery • Est. In Andhra Pradesh</span>
+            <span>Green Plants • Healthy Life • Happy Life</span>
           </div>
           <div className="about-nursery-location">
             <MapPin size={13} />
-            <span>Kadiapulanka, East Godavari</span>
+            <span>Jakkampudi Nagar, Kadiyam, East Godavari</span>
           </div>
         </div>
 
@@ -101,7 +101,7 @@ export default function AboutNursery() {
                     sizes="(max-width: 768px) 92vw, min(50vw, 680px)"
                     width="1200"
                     height="673"
-                    alt="Lush botanical acreage at Sri Ayyappa Bala Sai Nursery in Kadiam"
+                    alt="Lush botanical acreage at Sri Ayyappa Bala Sai Nursery in Kadiyam"
                     className="about-nursery-img"
                     loading="lazy"
                     decoding="async"
@@ -110,8 +110,8 @@ export default function AboutNursery() {
 
                   {/* Floating Acreage Badge */}
                   <div className="about-nursery-floating-badge">
-                    <span className="about-badge-val">50+</span>
-                    <span className="about-badge-lbl">Acres of Acclimatized Stock</span>
+                    <span className="about-badge-val">20 Acres</span>
+                    <span className="about-badge-lbl">Combined nursery footprint</span>
                   </div>
                 </div>
               </div>
@@ -140,11 +140,11 @@ export default function AboutNursery() {
             </div>
 
             <p className="about-lead">
-              Nestled in the lush alluvial soil of the Godavari delta, Sri Ayyappa Bala Sai Nursery (SABSN) is one of Kadiam’s premier botanical destinations. We raise rare hybrid flowering varieties, grafted fruit saplings, exotic foliage, and commercial plantation flora nurtured to flourish across diverse Indian climates.
+              Nestled in the lush alluvial soil of the Godavari delta, Sri Ayyappa Bala Sai Nursery (SABSN) is one of Kadiyam’s premier botanical destinations. We raise rare hybrid flowering varieties, grafted fruit saplings, exotic foliage, and commercial plantation flora nurtured to flourish across diverse Indian climates.
             </p>
 
             <p className="about-secondary">
-              Beyond saplings, our skilled field teams execute turnkey green projects—from residential landscape design and farmhouse lawns to monumental avenue greening and large-scale agricultural plantation.
+              Beyond supply, our 50+ strong team handles landscaping, garden establishment, planting and ongoing maintenance for corporate, public-sector and private clients. Our mission: the right plant for every site, with coordinated service from supply through establishment and care.
             </p>
 
             {/* Service Pillars */}

@@ -1,4 +1,4 @@
-/* Divider vines: between the hero and the plants (top), and between the plants and the pots (bottom) */
+/* Divider vines: hero -> about (top), plants -> services (bottom), care -> pots (care), pots -> gallery (pots), gallery -> contact (contact) */
 
 .vine-divider--top {
   --leaf-fill: url(#vine-leaf-fill-top);
@@ -7,15 +7,15 @@
   --berry-fill: url(#vine-berry-fill-top);
   --bud-fill: url(#vine-bud-fill-top);
 }
-/* between the hero and the plants collection:
-   the hero's bottom fade lands on solid site sage (#9BB896) and the plants grid opens on #eef3e4.
+/* between the hero and the about section:
+   the hero's bottom fade lands on solid site sage (#9BB896) and About opens on cream (#f3ecde).
    Both seam rows are single flat tones, so the band is a plain eased ramp between them (held flat
    at each end so there is no change of pace at the seam) with one soft lime light in the middle
    that never reaches either edge */
 .vine-divider.vine-divider--top {
   background:
     radial-gradient(ellipse at 50% 50%, rgba(201, 217, 138, 0.28), transparent 65%),
-    linear-gradient(180deg, #9bb896 0%, #a0bb9a 10%, #c3d6b8 48%, #e7efdc 88%, #eef3e4 100%);
+    linear-gradient(180deg, #9bb896 0%, #a0bb9a 10%, #c9d6b9 48%, #eeebdc 88%, #f3ecde 100%);
   margin-top: -1px;
   margin-bottom: -1px;
 }
@@ -26,28 +26,28 @@
   --berry-fill: url(#vine-berry-fill-bottom);
   --bud-fill: url(#vine-bud-fill-bottom);
 }
-.vine-divider--about {
-  --leaf-fill: url(#vine-leaf-fill-about);
-  --leaf-fill-2: url(#vine-leaf-fill-2-about);
-  --bloom-fill: url(#vine-bloom-fill-about);
-  --berry-fill: url(#vine-berry-fill-about);
-  --bud-fill: url(#vine-bud-fill-about);
+.vine-divider--pots {
+  --leaf-fill: url(#vine-leaf-fill-pots);
+  --leaf-fill-2: url(#vine-leaf-fill-2-pots);
+  --bloom-fill: url(#vine-bloom-fill-pots);
+  --berry-fill: url(#vine-berry-fill-pots);
+  --bud-fill: url(#vine-bud-fill-pots);
 }
-/* between the ceramics/pots and the about section:
-   the pots grid is a flat warm ivory (#F7F3EA) and About opens on #f3ecde; the band is an eased
-   ramp between the two exact tones, with no glow touching either seam */
-.vine-divider.vine-divider--about {
+/* between the pots and the gallery: both are the flat warm ivory (#F7F3EA), so the band holds
+   that tone with a faint lime light in the middle that touches neither seam */
+.vine-divider.vine-divider--pots {
   background:
-    linear-gradient(180deg, #F7F3EA 0%, #f6f2e8 15%, #f5efe4 50%, #f3edde 85%, #f3ecde 100%);
+    radial-gradient(ellipse at 50% 50%, rgba(201, 217, 138, 0.22), transparent 65%),
+    #F7F3EA;
   margin-top: -1px;
   margin-bottom: -1px;
 }
-/* between the plants and the pots:
-   the plants grid ends on #edf2e3 and the pots grid is a flat warm ivory (#F7F3EA); the band is an
-   eased ramp between the two exact tones, with no glow touching either seam */
+/* between the plants and the services:
+   the plants grid ends on #edf2e3 and Services opens on flat sage (#bed3b3); the band is an eased
+   ramp between the two exact tones, with no glow touching either seam */
 .vine-divider.vine-divider--bottom {
   background:
-    linear-gradient(180deg, #edf2e3 0%, #eef2e4 12%, #f3f3e8 50%, #f6f3e9 88%, #F7F3EA 100%);
+    linear-gradient(180deg, #edf2e3 0%, #e9efdf 12%, #d5e3cb 50%, #c1d6b6 88%, #bed3b3 100%);
   margin-top: -1px;
   margin-bottom: -1px;
 }
@@ -59,8 +59,8 @@
   --berry-fill: url(#vine-berry-fill-care);
   --bud-fill: url(#vine-bud-fill-care);
 }
-/* between the care protocol and the living archive:
-   the care section ends on a pale linen (#e9eadd) and the archive is a flat warm ivory (#F7F3EA);
+/* between the care protocol and the pots:
+   the care section ends on a pale linen (#e9eadd) and the pots grid is a flat warm ivory (#F7F3EA);
    the band is an eased ramp between the two exact tones, with no glow touching either seam */
 .vine-divider.vine-divider--care {
   background:
