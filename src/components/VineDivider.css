@@ -8,20 +8,16 @@
   --bud-fill: url(#vine-bud-fill-top);
 }
 /* between the hero and the plants collection:
-   the hero's bottom fade lands on the site sage (#9BB896) with its lawn mist glowing up from the
-   centre, so the band opens on that exact tone and carries the mist in from its top edge, then
-   lightens into the airy sage (#eef3e4) the plants grid opens on, with the grid's own lime glow
-   anchored to the band's bottom edge */
+   the hero's bottom fade lands on solid site sage (#9BB896) and the plants grid opens on #eef3e4.
+   Both seam rows are single flat tones, so the band is a plain eased ramp between them (held flat
+   at each end so there is no change of pace at the seam) with one soft lime light in the middle
+   that never reaches either edge */
 .vine-divider.vine-divider--top {
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(214, 232, 170, 0.28), transparent 60%),
-    radial-gradient(ellipse at 50% 100%, rgba(201, 217, 138, 0.35), transparent 60%),
-    linear-gradient(180deg, #9bb896 0%, #c3d6b8 45%, #eef3e4 100%);
+    radial-gradient(ellipse at 50% 50%, rgba(201, 217, 138, 0.28), transparent 65%),
+    linear-gradient(180deg, #9bb896 0%, #a0bb9a 10%, #c3d6b8 48%, #e7efdc 88%, #eef3e4 100%);
   margin-top: -1px;
   margin-bottom: -1px;
-}
-.vine-divider.vine-divider--top .vine-divider-line {
-  background: linear-gradient(90deg, transparent, rgba(201, 217, 138, 0.35) 15%, rgba(201, 217, 138, 0.35) 85%, transparent);
 }
 .vine-divider--bottom {
   --leaf-fill: url(#vine-leaf-fill-bottom);
@@ -38,34 +34,22 @@
   --bud-fill: url(#vine-bud-fill-about);
 }
 /* between the ceramics/pots and the about section:
-   the pots grid ends on its deep clay (#e6d9c4, with a clay glow in the bottom-right), so the band
-   opens on that exact tone and carries the glow in from its top edge, then warms back up to the
-   cream (#f3ecde) that About opens on, with About's own lime glow anchored to the bottom-left */
+   the pots grid is a flat warm ivory (#F7F3EA) and About opens on #f3ecde; the band is an eased
+   ramp between the two exact tones, with no glow touching either seam */
 .vine-divider.vine-divider--about {
   background:
-    radial-gradient(ellipse at 85% 0%, rgba(201, 150, 110, 0.18), transparent 55%),
-    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.45), transparent 50%),
-    linear-gradient(180deg, #e6d9c4 0%, #ebe0cc 40%, #f3ecde 100%);
+    linear-gradient(180deg, #F7F3EA 0%, #f6f2e8 15%, #f5efe4 50%, #f3edde 85%, #f3ecde 100%);
   margin-top: -1px;
   margin-bottom: -1px;
-}
-.vine-divider.vine-divider--about .vine-divider-line {
-  background: linear-gradient(90deg, transparent, rgba(22, 54, 36, 0.16) 15%, rgba(22, 54, 36, 0.16) 85%, transparent);
 }
 /* between the plants and the pots:
-   the plants grid ends on #edf2e3 with a sage glow in the bottom-right, so the band opens on that
-   tone and carries the glow in from its top-right, then warms into the clay cream (#f3ecde) the
-   pots grid opens on, with the pots' own cream highlight anchored to the band's bottom edge */
+   the plants grid ends on #edf2e3 and the pots grid is a flat warm ivory (#F7F3EA); the band is an
+   eased ramp between the two exact tones, with no glow touching either seam */
 .vine-divider.vine-divider--bottom {
   background:
-    radial-gradient(ellipse at 90% 0%, rgba(155, 184, 150, 0.35), transparent 50%),
-    radial-gradient(ellipse at 50% 100%, rgba(255, 248, 232, 0.7), transparent 55%),
-    linear-gradient(180deg, #edf2e3 0%, #f0eee0 45%, #f3ecde 100%);
+    linear-gradient(180deg, #edf2e3 0%, #eef2e4 12%, #f3f3e8 50%, #f6f3e9 88%, #F7F3EA 100%);
   margin-top: -1px;
   margin-bottom: -1px;
-}
-.vine-divider.vine-divider--bottom .vine-divider-line {
-  background: linear-gradient(90deg, transparent, rgba(120, 85, 50, 0.16) 15%, rgba(120, 85, 50, 0.16) 85%, transparent);
 }
 
 .vine-divider--care {
@@ -76,22 +60,13 @@
   --bud-fill: url(#vine-bud-fill-care);
 }
 /* between the care protocol and the living archive:
-   the care section ends on a pale cream (#e4d8c8) with a clay glow in its bottom-right; the archive
-   opens on the site's warm cream token (#dfccb6). The band opens on the pale cream, carries the clay
-   glow in from its top-right, and deepens into the archive tone, with a soft lime light rising from
-   its bottom-left so the archive does not open on a dead-flat surface */
+   the care section ends on a pale linen (#e9eadd) and the archive is a flat warm ivory (#F7F3EA);
+   the band is an eased ramp between the two exact tones, with no glow touching either seam */
 .vine-divider.vine-divider--care {
   background:
-    radial-gradient(ellipse at 85% 0%, rgba(223, 204, 182, 0.45), transparent 50%),
-    radial-gradient(ellipse at 85% 100%, rgba(223, 204, 182, 0.5), transparent 50%),
-    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.28), transparent 50%),
-    radial-gradient(ellipse at 50% 0%, rgba(255, 248, 232, 0.45), transparent 60%),
-    linear-gradient(180deg, #e4d8c8 0%, #e2d2bf 50%, #dfccb6 100%);
+    linear-gradient(180deg, #e9eadd 0%, #eaebdf 12%, #f0efe4 50%, #f6f3e9 88%, #F7F3EA 100%);
   margin-top: -1px;
   margin-bottom: -1px;
-}
-.vine-divider.vine-divider--care .vine-divider-line {
-  background: linear-gradient(90deg, transparent, rgba(120, 85, 50, 0.18) 15%, rgba(120, 85, 50, 0.18) 85%, transparent);
 }
 
 .vine-divider--contact {
@@ -102,31 +77,20 @@
   --bud-fill: url(#vine-bud-fill-contact);
 }
 /* between the gallery and the contact form:
-   both sections meet on the light sage token (#b4cdb0). The gallery ends with a lime glow in its
-   bottom-left; the contact section opens with that lime glow top-left and a sage light top-right.
-   The band runs the one tone and carries both lights straight through */
+   the archive is a flat warm ivory (#F7F3EA) and the contact section opens on the light sage token
+   (#b4cdb0), easing in slowly from there. The band ramps between the two exact tones with both
+   ends held flat, so neither seam shows a change of pace, and no glow touches either seam */
 .vine-divider.vine-divider--contact {
-  /* the gallery's gradient is still cooling as it reaches the seam, so the band keeps that motion
-     going (#bbd0b4 -> #b4cdb0) rather than sitting as a flat slab, and the gallery's bottom-right
-     sage orb is continued in from the band's top-right */
   background:
-    radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.35), transparent 50%),
-    radial-gradient(ellipse at 85% 0%, rgba(180, 205, 176, 0.5), transparent 50%),
-    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.35), transparent 50%),
-    radial-gradient(ellipse at 85% 100%, rgba(180, 205, 176, 0.55), transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.22), transparent 60%),
-    linear-gradient(180deg, #bbd0b4 0%, #b4cdb0 100%);
+    linear-gradient(180deg, #F7F3EA 0%, #f2f1e5 12%, #d9e3cf 45%, #bed3b8 80%, #b6ceb1 93%, #b4cdb0 100%);
   margin-top: -1px;
   margin-bottom: -1px;
-}
-.vine-divider.vine-divider--contact .vine-divider-line {
-  background: linear-gradient(90deg, transparent, rgba(22, 54, 36, 0.2) 15%, rgba(22, 54, 36, 0.2) 85%, transparent);
 }
 
 .vine-divider {
   position: relative;
   z-index: 2;
-  height: 170px;
+  height: 130px;
   /* same light sage as the plants section; its glow is anchored to the bottom edge so it
      continues straight into the plants section's top glow with no visible seam */
   background:
@@ -144,15 +108,6 @@
   z-index: 3;
 }
 
-/* hairline along the seam the vines grow across */
-.vine-divider-line {
-  position: absolute;
-  left: 5vw;
-  right: 5vw;
-  top: calc(55% - 0.5px);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(22, 54, 36, 0.22) 15%, rgba(22, 54, 36, 0.22) 85%, transparent);
-}
 
 .vine-svg {
   position: absolute;
@@ -160,6 +115,8 @@
   width: 100%;
   height: 100%;
   overflow: visible;
+  /* one soft forest shadow under the whole vine (not per leaf) so it sits on the page */
+  filter: drop-shadow(0 3px 3px rgba(22, 54, 36, 0.18));
 }
 
 /* stems: a dark body with a thin pale highlight running along the top edge */
@@ -267,6 +224,6 @@
   .vine-stem.sub, .vine-stem.wisp { display: none; } /* tablets and phones: one stem per side */
 }
 @media (max-width: 900px) {
-  .vine-divider { height: 110px; }
+  .vine-divider { height: 100px; }
   .vine-stem.main { stroke-width: 3.4; }
 }

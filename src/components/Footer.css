@@ -10,20 +10,23 @@
   padding: clamp(0.75rem, 1.5vh, 1rem) 5vw 92px;
   overflow: hidden;
   isolation: isolate;
-}/* top edge: the leafy vine (FooterEdge) sits across the seam, centred on the footer's top line */
+}/* top edge: the leafy vine (FooterEdge) sits across the seam, its stem on the footer's top line.
+   It lives in .footer-shell (not inside the clipped footer) so the leaves above the seam are never
+   cut. The height tracks the width so the viewBox's aspect ratio (1440 x 112) is kept and "slice"
+   only ever trims the sides, never the leaf tips; the stem (58 of the 112 view units down) sits on
+   the seam */
+.footer-shell { position: relative; }
 .footer-edge {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 44px;
-  z-index: 3;
+  height: clamp(84px, 7.78vw, 160px);
+  transform: translateY(-51.8%);
+  z-index: 4; /* above the contact section, which is stacked at 3 */
   pointer-events: none;
   overflow: visible;
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25)); /* static element: one-time raster cost */
-}
-@media (max-width: 600px) {
-  .footer-edge { height: 32px; }
 }
 /* ---------- atmosphere ---------- */ .footer-atmosphere {
   position: absolute;

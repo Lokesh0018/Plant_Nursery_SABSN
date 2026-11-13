@@ -62,7 +62,7 @@ function App() {
       <StorySection />
       <LazySection height="110vh" color="#cbdcc1"><PlantCare /></LazySection>
       <VineDivider variant="care" />
-      <LazySection height="120vh" color="#e6dccb"><LivingArchive /></LazySection>
+      <LazySection height="120vh" color="#F7F3EA"><LivingArchive /></LazySection>
       <VineDivider variant="contact" />
       <LazySection height="70vh" color="#c4d6bb"><Contact /></LazySection>
       <LazySection height="460px" color="#0f2d1b"><Footer /></LazySection>

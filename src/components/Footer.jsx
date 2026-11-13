@@ -47,9 +47,11 @@ export default function Footer() {
 
 
   return (
+    <div className="footer-shell">
+    {/* botanical top edge: a leafy vine straddling the seam. It sits outside the footer so the
+        footer's overflow clipping cannot cut off the leaves that reach up over the contact section */}
+    <FooterEdge />
     <footer ref={footerRef} className="premium-footer">
-      {/* botanical top edge: a leafy vine replaces the plain hairline */}
-      <FooterEdge />
       {/* Theme atmosphere: forest ground like the hero, lime light, corner leaves, ghost watermark */}
       <div className="footer-atmosphere" aria-hidden="true">
         <span className="footer-glow footer-glow--left" />
@@ -170,5 +172,6 @@ export default function Footer() {
 
       </div>
     </footer>
+    </div>
   );
 }

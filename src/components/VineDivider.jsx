@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
  * in from the screen edge as the band scrolls into view; leaves unfurl, tendrils curl,
  * berries pop, and a bloom opens where the tips meet in the centre.
  */
-const H = 170;
+const H = 130; // slim band: the vines carry the seam, not empty space
 const MID = H * 0.55;
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -133,16 +133,16 @@ export default function VineDivider({ variant = 'top' }) {
       const subs = Array.from(svg.querySelectorAll('.vine-stem.sub'));
       const wisps = Array.from(svg.querySelectorAll('.vine-stem.wisp'));
       const hi = Array.from(svg.querySelectorAll('.vine-stem-highlight'));
-      mains.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1)));
-      hi.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1)));
-      subs.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 18, phase: 1, inset: 70, y: MID + 2 })));
-      wisps.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 34, phase: 0, inset: 150, y: MID - 6 })));
+      mains.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 20 })));
+      hi.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 20 })));
+      subs.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 15, phase: 1, inset: 70, y: MID + 2 })));
+      wisps.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 26, phase: 0, inset: 150, y: MID - 5 })));
       svg.querySelector('.vine-bloom').setAttribute('transform', `translate(${width / 2} ${MID})`);
 
       const growth = [
-        ...mains.map((s, i) => decorate(svg, s, i === 1, { density: 90, size: 1.45 })),
-        ...subs.map((s, i) => decorate(svg, s, i === 1, { density: 130, size: 0.95, tendrils: false })),
-        ...wisps.map((s, i) => decorate(svg, s, i === 1, { density: 170, size: 0.75, tendrils: true, berries: false })),
+        ...mains.map((s, i) => decorate(svg, s, i === 1, { density: 70, size: 1.5 })),
+        ...subs.map((s, i) => decorate(svg, s, i === 1, { density: 105, size: 1.05, tendrils: false })),
+        ...wisps.map((s, i) => decorate(svg, s, i === 1, { density: 140, size: 0.8, tendrils: true, berries: false })),
       ];
       const allStems = [...mains, ...hi, ...subs, ...wisps];
 
@@ -214,7 +214,6 @@ export default function VineDivider({ variant = 'top' }) {
 
   return (
     <div ref={ref} className={`vine-divider vine-divider--${variant}`} aria-hidden="true">
-      <div className="vine-divider-line" />
       <svg className="vine-svg" preserveAspectRatio="none" height={H}>
         <defs>
           <linearGradient id={`vine-leaf-fill-${uid}`} x1="0" y1="0" x2="1" y2="1">

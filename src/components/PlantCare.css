@@ -12,15 +12,16 @@
   /* a vertical mirror of the founder background: founder runs #e4ecdc -> #bed3b3 top to bottom
      with a lime glow top-left, a sage glow bottom-right and a white light in the centre;
   this
-     section runs #bed3b3 -> #e4ecdc with the same glows flipped, so the shared edge is the
-     darkest line of one continuous surface. Only the last stretch warms toward the archive. */
+     section runs #bed3b3 -> #e4ecdc with the same glows flipped. The seam row is one flat tone on
+     both sides (no glow reaches it) and both ramps ease flat into it, so the darkest line turns
+     smoothly instead of creasing. Only the last stretch warms toward the archive. */
   background:
-    radial-gradient(ellipse at 85% 15%, rgba(120, 155, 115, 0.38), transparent 55%),
-    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.45), transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
-    radial-gradient(ellipse at 85% 100%, rgba(223, 204, 182, 0.45), transparent 50%),
-    radial-gradient(ellipse at 50% 100%, rgba(255, 248, 232, 0.45), transparent 60%),
-    linear-gradient(180deg, #bed3b3 0%, #cbdcc1 30%, #d8e5ce 65%, #e4ecdc 88%, #e4d8c8 100%);
+    radial-gradient(ellipse 45% 35% at 85% 32%, rgba(120, 155, 115, 0.38), transparent 70%),
+    radial-gradient(ellipse 45% 30% at 15% 76%, rgba(201, 217, 138, 0.45), transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
+    radial-gradient(ellipse 45% 30% at 85% 76%, rgba(223, 204, 182, 0.45), transparent 70%),
+    radial-gradient(ellipse 60% 30% at 50% 76%, rgba(255, 248, 232, 0.45), transparent 70%),
+    linear-gradient(180deg, #bed3b3 0%, #c1d6b6 12%, #cbdcc1 35%, #d8e5ce 65%, #e4ecdc 84%, #e9eadd 100%);
   color: var(--color-text-dark, #17271d);
   margin-top: -1px;
   /* no sub-pixel hairline at the seam with the founder section */;

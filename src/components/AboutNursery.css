@@ -10,7 +10,7 @@
      the founder section opens on. The founder's lime glow (top-left) is anchored to this section's
      bottom-left edge, so the two surfaces share one continuous light across the seam */
   background:
-    radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.45), transparent 50%),
+    radial-gradient(ellipse 45% 30% at 15% 24%, rgba(201, 217, 138, 0.45), transparent 70%),
     radial-gradient(ellipse at 85% 100%, rgba(120, 155, 115, 0.35), transparent 55%),
     radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.45), transparent 50%),
     linear-gradient(180deg, #f3ecde 0%, #ebf1e4 40%, #e4ecdc 100%);

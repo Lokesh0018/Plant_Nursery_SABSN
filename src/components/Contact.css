@@ -2,15 +2,15 @@
   position: relative;
   padding: clamp(6rem, 13vh, 9rem) 5vw;
   /* opens on the light sage the gallery ends on (#b4cdb0) and carries the gallery's bottom-left
-     lime glow in from this section's top-left; a sage light sits top-right; the base warms through
-     a pale linen into the warm cream the footer opens on (#dfccb6), with the footer's clay glow
-     anchored to this section's bottom-right */
+     lime glow in from this section's top-left; a sage light sits top-right; the base stays green
+     the whole way down, lifting to a pale sage mid-section and settling back onto a deeper sage
+     (#a9c4a2) above the forest footer, with a sage glow in the bottom-right */
   background:
-    radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.35), transparent 50%),
-    radial-gradient(ellipse at 85% 0%, rgba(180, 205, 176, 0.55), transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
-    radial-gradient(ellipse at 85% 100%, rgba(223, 204, 182, 0.5), transparent 50%),
-    linear-gradient(180deg, #b4cdb0 0%, #c4d6bb 30%, #d6dcc6 62%, #dfd6c0 86%, #dfccb6 100%);
+    radial-gradient(ellipse 45% 30% at 15% 24%, rgba(201, 217, 138, 0.35), transparent 70%),
+    radial-gradient(ellipse 45% 30% at 85% 24%, rgba(180, 205, 176, 0.55), transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
+    radial-gradient(ellipse at 85% 100%, rgba(155, 184, 150, 0.45), transparent 50%),
+    linear-gradient(180deg, #b4cdb0 0%, #b7cfb2 10%, #c4d6bb 32%, #cfdec6 62%, #bfd3b7 86%, #a9c4a2 100%);
   color: var(--color-text-dark);
   overflow: hidden;
   margin-top: -1px; /* no sub-pixel hairline at the seam with the gallery */
@@ -55,7 +55,7 @@
   max-height: 480px;
   bottom: 0%;
   right: -6%;
-  background: radial-gradient(circle, rgba(223, 204, 182, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(180, 205, 176, 0.6) 0%, transparent 70%);
 }
 
 /* Botanical Corner Leaf Decor, same shape and weight as the other sections */

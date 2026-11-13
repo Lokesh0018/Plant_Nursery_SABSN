@@ -9,14 +9,16 @@
   box-sizing: border-box;
   padding: clamp(2rem, 5vh, 4rem) 4vw;
   /* opens on #e4ecdc, the exact tone About ends on. About's sage glow (bottom-right) is carried in
-     from this section's top-right edge so there is no visible seam between the two */
+     from this section's top-right edge so there is no visible seam between the two. At the bottom
+     it settles onto a flat #bed3b3 (the tone Plant Care opens on): the lower glows sit inside the
+     section and fade out before the edge, and the ramp eases flat into the seam so there is no crease */
   background:
     radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.45), transparent 50%),
     radial-gradient(ellipse at 85% 0%, rgba(120, 155, 115, 0.35), transparent 55%),
-    radial-gradient(ellipse at 85% 85%, rgba(120, 155, 115, 0.38), transparent 55%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
-    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.3), transparent 45%),
-    linear-gradient(180deg, #e4ecdc 0%, #d8e5ce 35%, #cbdcc1 70%, #bed3b3 100%);
+    radial-gradient(ellipse 45% 35% at 85% 68%, rgba(120, 155, 115, 0.38), transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
+    radial-gradient(ellipse 45% 30% at 15% 76%, rgba(201, 217, 138, 0.3), transparent 70%),
+    linear-gradient(180deg, #e4ecdc 0%, #d8e5ce 35%, #cbdcc1 65%, #c1d6b6 88%, #bed3b3 100%);
   margin-top: -1px; /* no sub-pixel hairline at the seam with About */
   display: flex;
   justify-content: center;

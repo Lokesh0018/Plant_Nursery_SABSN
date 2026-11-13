@@ -5,15 +5,8 @@
   padding: clamp(5.5rem, 9.5vh, 8.5rem) 5vw;
   position: relative;
   overflow: hidden;
-  /* opens on the warm cream the care divider ends on (#dfccb6) and carries its clay glow in from
-     the top-right; a lime light rises bottom-left; the base cools through a pale linen into the
-     light sage (#b4cdb0) the contact section opens on, so both seams are continuous */
-  background:
-    radial-gradient(ellipse at 85% 0%, rgba(223, 204, 182, 0.5), transparent 50%),
-    radial-gradient(ellipse at 15% 0%, rgba(201, 217, 138, 0.28), transparent 50%),
-    radial-gradient(ellipse at 15% 100%, rgba(201, 217, 138, 0.35), transparent 50%),
-    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.35), transparent 60%),
-    linear-gradient(180deg, #dfccb6 0%, #e6dccb 28%, #dfe0cc 62%, #c9d6bd 86%, #bbd0b4 100%);
+  /* flat warm ivory; the care and contact dividers blend into it at both seams */
+  background-color: #F7F3EA;
   color: var(--color-text-dark, #17271d);
   margin-top: -1px; /* no sub-pixel hairline at the seam with the divider */
 }
