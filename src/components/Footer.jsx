@@ -15,6 +15,13 @@ const BLOTS = [
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const YEAR = new Date().getFullYear();
 
+// Footer links scroll to a home-page section; on another page (e.g. /plants) they open home there
+function jumpTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  else window.location.href = `/?section=${id}`;
+}
+
 export default function Footer() {
   const footerRef = useRef(null);
   const footerInView = useOffscreenPause(footerRef);
@@ -117,24 +124,24 @@ export default function Footer() {
 
           <div className="footer-links-col">
             <h4 className="footer-col-header">Shop</h4>
-            <a href="#collection" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' }); }}>All Plants</a>
-            <a href="#collection" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' }); }}>Collections</a>
-            <a href="#pots-collection" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('pots-collection')?.scrollIntoView({ behavior: 'smooth' }); }}>Planters</a>
-            <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('care')?.scrollIntoView({ behavior: 'smooth' }); }}>Care Tools</a>
+            <a href="/plants" className="footer-link">All Plants</a>
+            <a href="#collection" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('collection'); }}>Collections</a>
+            <a href="#pots-collection" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('pots-collection'); }}>Planters</a>
+            <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('care'); }}>Care Tools</a>
           </div>
 
           <div className="footer-links-col">
             <h4 className="footer-col-header">About</h4>
-            <a href="#about" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }}>Our Story</a>
-            <a href="#about" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }}>Journal</a>
-            <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Careers</a>
+            <a href="#about" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('about'); }}>Our Story</a>
+            <a href="#services" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('services'); }}>Services</a>
+            <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('contact'); }}>Careers</a>
           </div>
 
           <div className="footer-links-col">
             <h4 className="footer-col-header">Support</h4>
-            <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('care')?.scrollIntoView({ behavior: 'smooth' }); }}>Plant Care</a>
-            <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>FAQ</a>
-            <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Contact Us</a>
+            <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('care'); }}>Plant Care</a>
+            <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('contact'); }}>FAQ</a>
+            <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('contact'); }}>Contact Us</a>
           </div>
 
           {/* finale: the seed rolls in from the page edge and becomes the nursery stamp */}

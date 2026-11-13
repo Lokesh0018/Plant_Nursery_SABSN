@@ -3,13 +3,13 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { products } from '../data/products';
 const PlantModal = lazy(() => import('./PlantModal')); // only fetched when a product is opened
-import { Plus, Sun, Droplets } from 'lucide-react';
+import { Plus, Sun, Droplets, ArrowRight, Star } from 'lucide-react';
 import VineOrnament from './VineOrnament';
 import './Collection.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function ProductCard({ product, onOpen }) {
+export function ProductCard({ product, onOpen, showRating = false }) {
   const [isHovered, React_useState] = React.useState(false);
   const setIsHovered = React_useState;
 
@@ -99,6 +99,12 @@ function ProductCard({ product, onOpen }) {
 
       <div className="product-body">
         <p className="product-latin">{product.scientificName}</p>
+        {showRating && product.rating && (
+          <p className="product-rating" aria-label={`Rated ${product.rating} out of 5 from ${product.reviews} reviews`}>
+            <Star size={12} strokeWidth={0} fill="currentColor" aria-hidden="true" />
+            {product.rating.toFixed(1)}<span>({product.reviews})</span>
+          </p>
+        )}
         <h3 className="product-name">{product.name}</h3>
         <div className="product-foot">
           <p className="product-price">₹{product.price.toLocaleString()}</p>
@@ -179,6 +185,12 @@ export default function Collection() {
         {products.map(product => (
           <ProductCard key={product.id} product={product} onOpen={openProduct} />
         ))}
+      </div>
+
+      <div className="collection-more">
+        <a className="collection-more-link" href="/plants">
+          Browse all plants <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
+        </a>
       </div>
 
       {selected && <Suspense fallback={null}><PlantModal product={selected.product} originRect={selected.rect} onClose={closeProduct} /></Suspense>}

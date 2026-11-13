@@ -6,18 +6,35 @@ const CartDrawer = lazy(() => import('./CartDrawer')); // only fetched the first
 import { products } from '../data/products';
 import { pots } from '../data/pots';
 
-export default function Navbar() {
+// The cart lives here; keep it for the browser session so it survives moving between the home
+// page and the plants page (each is a full page load)
+const CART_KEY = 'sabsn-cart';
+function loadCart() {
+  try { return JSON.parse(sessionStorage.getItem(CART_KEY)) || []; } catch { return []; }
+}
+
+// Section ids on the home page; from any other page a link reloads home and scrolls there
+function goToSection(page, id) {
+  if (page === 'home') {
+    if (id === 'home') window.scrollTo({ top: 0, behavior: 'smooth' });
+    else document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    window.location.href = id === 'home' ? '/' : `/?section=${id}`;
+  }
+}
+
+export default function Navbar({ page = 'home' }) {
   const [isScrolled, setIsScrolled] = useState(false);
   // One theme throughout: forest glass with cream text, matching the hero, scrollbar and WhatsApp button
   const light = true;
   const darkGreen = '#f4ecd9';
   const textMuted = 'rgba(244, 236, 217, 0.78)';
 
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState(page === 'plants' ? 'plants' : 'home');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(loadCart);
+  const [cartCount, setCartCount] = useState(() => cartItems.reduce((n, item) => n + item.quantity, 0));
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartMounted, setCartMounted] = useState(false); // stays true after the first open so the close animation still plays
 
@@ -62,10 +79,15 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    try { sessionStorage.setItem(CART_KEY, JSON.stringify(cartItems)); } catch { /* storage unavailable */ }
+  }, [cartItems]);
+
+  useEffect(() => {
     const handleScroll = ({ y, vh, max }) => {
       setIsScrolled(y > 30);
       // progress hairline along the bar's bottom edge
       document.documentElement.style.setProperty('--nav-progress', `${max > 0 ? (y / max) * 100 : 0}%`);
+      if (page !== 'home') return; // other pages keep their own item active
 
       // Active section = the last section whose top has passed the navbar line.
       // Measured against the same point for every section, so the highlight flips exactly
@@ -74,9 +96,9 @@ export default function Navbar() {
       // once it covers that point, which is robust to smooth-scroll easing landing a few pixels off.
       const line = Math.max(160, vh * 0.34);
       const order = [
-        ['collection', 'plants'],
         ['pots-collection', 'pots'],
         ['about', 'about'],
+        ['services', 'services'],
         ['gallery', 'gallery'],
         ['contact', 'contact'],
       ];
@@ -92,7 +114,7 @@ export default function Navbar() {
     // The shared scroll store runs the one animation-frame loop for the whole app and only calls
     // back when the position actually changed (it also listens to scroll events for background tabs).
     return subscribeScroll(handleScroll);
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     if (navRef.current && !isMobileOpen) {
@@ -116,9 +138,10 @@ export default function Navbar() {
       {/* Brand Logo: links back to the hero */}
       <a
         className="nav-brand"
-        href="#home"
-        aria-label="SABSN, back to top"
+        href={page === 'home' ? '#home' : '/'}
+        aria-label={page === 'home' ? 'SABSN, back to top' : 'SABSN home'}
         onClick={(e) => {
+          if (page !== 'home') return; // plain link back to the home page
           e.preventDefault();
           setIsMobileOpen?.(false);
           const hero = document.getElementById('home');
@@ -180,7 +203,7 @@ export default function Navbar() {
           ...indicatorStyle
         }} />
 
-        {['Home', 'Plants', 'Pots', 'About', 'Gallery'].map((item) => {
+        {['Home', 'Plants', 'Pots', 'About', 'Services', 'Gallery'].map((item) => {
           const isActive = activeSection === item.toLowerCase();
           return (
             <li
@@ -202,15 +225,13 @@ export default function Navbar() {
                 setIsMobileOpen(false);
                 setActiveSection(item.toLowerCase());
                 if (item === 'Plants') {
-                  document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
-                } else if (item === 'Pots') {
-                  document.getElementById('pots-collection')?.scrollIntoView({ behavior: 'smooth' });
-                } else if (item === 'About') {
-                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                } else if (item === 'Gallery') {
-                  document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
-                } else if (item === 'Home') {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  // Plants is its own page (/plants)
+                  if (page === 'plants') window.scrollTo({ top: 0, behavior: 'smooth' });
+                  else window.location.href = '/plants';
+                } else {
+                  goToSection(page, {
+                    Home: 'home', Pots: 'pots-collection', About: 'about', Services: 'services', Gallery: 'gallery',
+                  }[item]);
                 }
               }}
             >
@@ -274,7 +295,13 @@ export default function Navbar() {
                 transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
               }}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                if (e.key === 'Enter' && e.target.value.trim() !== '' && page === 'plants') {
+                  // the plants page filters its own grid
+                  window.dispatchEvent(new CustomEvent('plants-search', { detail: e.target.value.trim() }));
+                  setIsSearchOpen(false);
+                  e.target.blur();
+                  e.target.value = '';
+                } else if (e.key === 'Enter' && e.target.value.trim() !== '') {
                   const query = e.target.value.toLowerCase().trim();
                   const allItems = [...products, ...pots];
 
@@ -370,9 +397,7 @@ export default function Navbar() {
           e.currentTarget.style.transform = 'translateY(0)';
           e.currentTarget.style.opacity = '1';
         }}
-        onClick={() => {
-          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-        }}>
+        onClick={() => goToSection(page, 'contact')}>
           <span>Contact</span>
           <ArrowRight size={14} />
         </button>

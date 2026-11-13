@@ -74,6 +74,33 @@
   margin: 0 auto;
 }
 
+/* link from the home grid to the full plants page */
+.collection-more {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.collection-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 48px;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  background: #163624;
+  color: #f4ecd9;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(22, 54, 36, 0.18);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.collection-more-link:hover { background: #1f4a2f; box-shadow: 0 14px 30px rgba(22, 54, 36, 0.24); }
+.collection-more-link:focus-visible { outline: 2px solid #4f7f3a; outline-offset: 3px; }
+
 /* Pots grid: one step deeper than the plants, so the two grids read as distinct rooms of the
    same house, and it hands off cleanly to the sage story section that follows */
 #pots-collection.collection-section {
