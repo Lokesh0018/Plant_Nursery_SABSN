@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Trees, Shovel, Scissors, Flower2, FlaskConical, Layers, Recycle, Amphora, BrickWall, LayoutGrid,
-  ArrowRight, ArrowLeft, MessageCircle, Building, BadgeCheck, X,
+  ArrowRight, ArrowLeft, MessageCircle, BadgeCheck, X,
 } from 'lucide-react';
 import VineOrnament from './VineOrnament';
 import useServiceCarousel from '../hooks/useServiceCarousel';
@@ -46,6 +46,30 @@ const WORKFLOW = [
   'Handover with care instructions',
 ];
 
+// The seven steps grouped into phases (span = how many steps each covers)
+const PHASES = [
+  { label: 'Plan', span: 3 },
+  { label: 'Build', span: 2 },
+  { label: 'Care', span: 2 },
+];
+
+// true from the first time the element is seen (for one-off entrance animations)
+function useSeenOnce() {
+  const ref = useRef(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    if (typeof IntersectionObserver === 'undefined') { requestAnimationFrame(() => setSeen(true)); return undefined; }
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setSeen(true); io.disconnect(); }
+    }, { threshold: 0.3 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return [ref, seen];
+}
+
 // Organisations named in the company profile among the nursery's clients
 const CLIENTS = [
   { name: 'Airports Authority of India', work: 'Visakhapatnam airport landscape support' },
@@ -68,6 +92,8 @@ function ServiceImage({ media }) {
 
 export default function Services() {
   const { trackRef, ...carousel } = useServiceCarousel(SERVICES.length);
+  const [processRef, processIn] = useSeenOnce();
+  const [recordRef, recordIn] = useSeenOnce();
   const [expanded, setExpanded] = useState(null);
   const dialogRef = useRef(null);
   useEffect(() => {
@@ -170,39 +196,43 @@ export default function Services() {
           </div>}
         </dialog>
 
-        <div className="services-process" aria-labelledby="services-process-title">
+        <div ref={processRef} className={`services-process${processIn ? ' is-in' : ''}`} aria-labelledby="services-process-title">
           <div className="services-process-head">
             <p className="services-eyebrow">How we work</p>
             <h3 id="services-process-title" className="services-subtitle">From site visit to handover</h3>
           </div>
+          {/* the seven steps fall into three phases; the rail draws across and each marker
+              fills in turn the first time the timeline is seen */}
+          <div className="services-phases" aria-hidden="true">
+            {PHASES.map(({ label, span }) => (
+              <span key={label} style={{ gridColumn: `span ${span}` }}>{label}</span>
+            ))}
+          </div>
           <ol className="services-steps">
             {WORKFLOW.map((step, i) => (
-              <li key={step} className="services-step">
-                <span className="services-step-num" aria-hidden="true">{i + 1}</span>
+              <li key={step} className="services-step" style={{ '--i': i }}>
+                <span className="services-step-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span className="services-step-text">{step}</span>
               </li>
             ))}
           </ol>
         </div>
 
-        <div className="services-record" aria-labelledby="services-record-title">
+        <div ref={recordRef} className={`services-record${recordIn ? ' is-in' : ''}`} aria-labelledby="services-record-title">
           <div className="services-process-head">
             <p className="services-eyebrow">Track record</p>
             <h3 id="services-record-title" className="services-subtitle">Trusted by industry and the public sector</h3>
           </div>
           <ul className="services-clients">
-            {CLIENTS.map(({ name, work }) => (
-              <li key={name} className="services-client">
-                <Building size={20} strokeWidth={1.8} aria-hidden="true" />
-                <div>
-                  <strong>{name}</strong>
-                  <span>{work}</span>
-                </div>
+            {CLIENTS.map(({ name, work }, i) => (
+              <li key={name} className="services-client" style={{ '--i': i }}>
+                <strong>{name}</strong>
+                <span>{work}</span>
               </li>
             ))}
           </ul>
           <p className="services-registration">
-            <BadgeCheck size={18} strokeWidth={2} aria-hidden="true" />
+            <BadgeCheck size={17} strokeWidth={2} aria-hidden="true" />
             Registered Class V Contractor, Public Health Division, Rajamahendravaram
           </p>
         </div>
