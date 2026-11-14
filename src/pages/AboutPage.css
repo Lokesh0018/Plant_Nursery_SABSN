@@ -338,7 +338,8 @@
   background: radial-gradient(ellipse 60% 70% at 85% 20%, rgba(201, 217, 138, 0.16), transparent 70%), var(--ap-forest);
   box-shadow: 0 30px 70px rgba(22, 54, 36, 0.25);
 }
-.ap-contact-photo { display: block; width: 100%; height: auto; border-radius: 22px; }
+/* the portrait is tall; show it as 3:4, anchored near the top so the face and the plant stay in frame */
+.ap-contact-photo { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 22%; border-radius: 22px; }
 .ap-contact .ap-h2 { color: #f7f6f0; }
 .ap-contact .ap-h2 em { color: var(--ap-lime); }
 .ap-role { margin: 0.5rem 0 0; color: rgba(244, 236, 217, 0.72); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; }

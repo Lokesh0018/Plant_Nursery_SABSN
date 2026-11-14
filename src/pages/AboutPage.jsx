@@ -364,8 +364,8 @@ export default function AboutPage() {
 
         {/* Leadership & contact */}
         <section className="ap-section ap-contact" aria-labelledby="ap-contact">
-          <img className="ap-contact-photo" src="/sabsn-founder.webp" width="800" height="1073" loading="lazy" decoding="async"
-            alt="Uppada Kumara Swamy, Managing Partner of Sri Ayyappa Bala Sai Nursery, holding a jasmine sapling" />
+          <img className="ap-contact-photo" src="/sabsn-founder-greenhouse.webp" width="800" height="1421" loading="lazy" decoding="async"
+            alt="Uppada Kumara Swamy, Managing Partner of Sri Ayyappa Bala Sai Nursery, holding a potted succulent in a greenhouse" />
           <div className="ap-contact-body">
             <p className="ap-kicker ap-kicker--light">Let’s grow something great</p>
             <h2 id="ap-contact" className="ap-h2">Talk to <em>Uppada Kumara Swamy</em></h2>
