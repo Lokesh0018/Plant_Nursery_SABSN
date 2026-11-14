@@ -1,0 +1,70 @@
+/* About page header (AboutHero.jsx): a compact landscape band, not a full-screen hero.
+   The lawn fills it, the SABSN topiary stands centred on the grass below the navbar capsule,
+   and the ivory "Who we are" section starts straight after it. */
+
+.about-hero {
+  --hero-h: clamp(380px, 48vh, 480px);
+  /* topiary: about 60% of the width, but never so tall that it reaches the navbar (the sign is 3:1) */
+  --sign-w: min(60vw, calc((var(--hero-h) - 150px) * 3));
+  --sign-bottom: 9%;
+  position: relative;
+  height: var(--hero-h);
+  overflow: hidden;
+  isolation: isolate;
+  background: #6f9a4a;
+}
+
+.ah-layer { position: absolute; will-change: transform; }
+.ah-layer img { display: block; width: 100%; height: 100%; user-select: none; }
+
+/* the lawn, framed low so the rows of potted plants and the grass fill the band; oversized a little
+   so the parallax never shows an edge */
+.ah-bg { inset: -10% 0 -4%; }
+.ah-bg img { object-fit: cover; object-position: 50% 74%; }
+
+/* a soft dark band behind the navbar capsule for readability */
+.ah-navshade {
+  position: absolute; left: 0; right: 0; top: 0; height: 42%;
+  background: linear-gradient(180deg, rgba(8, 30, 17, 0.45), rgba(8, 30, 17, 0.12) 60%, transparent);
+  pointer-events: none;
+}
+
+/* the SABSN topiary, centred in the lower middle and grounded on the grass */
+.ah-sign {
+  left: 50%;
+  bottom: var(--sign-bottom);
+  width: var(--sign-w);
+  aspect-ratio: 1400 / 467;
+  transform: translateX(-50%);
+}
+.ah-sign img { position: relative; z-index: 1; object-fit: contain; }
+/* lawn shadows: a soft one cast away from the sun (upper left), and a tight contact line under the
+   pebble border so the bed sits in the grass instead of hovering */
+.ah-shadow { position: absolute; z-index: 0; border-radius: 50%; }
+.ah-shadow--cast {
+  left: 6%; right: -4%; bottom: -3%; height: 16%;
+  background: radial-gradient(closest-side, rgba(20, 42, 14, 0.4), rgba(20, 42, 14, 0.16) 60%, transparent);
+  transform: skewX(-24deg);
+  transform-origin: 50% 0;
+  filter: blur(10px);
+}
+.ah-shadow--contact {
+  left: 3%; right: 3%; bottom: 2%; height: 10%;
+  background: radial-gradient(closest-side, rgba(14, 32, 10, 0.6), rgba(14, 32, 10, 0.28) 55%, transparent);
+  filter: blur(3px);
+}
+
+/* ---------- tablets ---------- */
+@media (max-width: 1024px) {
+  .about-hero { --hero-h: 420px; --sign-w: min(76vw, calc((var(--hero-h) - 140px) * 3)); }
+}
+
+/* ---------- phones: the whole bed fits, with room under the navbar ---------- */
+@media (max-width: 640px) {
+  .about-hero { --hero-h: 380px; --sign-w: 92vw; --sign-bottom: 12%; }
+  .ah-bg img { object-position: 50% 78%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ah-layer { will-change: auto; }
+}

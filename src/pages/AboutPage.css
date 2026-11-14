@@ -1,0 +1,236 @@
+/* ABOUT PAGE - the company profile at /about
+   Opens on a compact landscape header with the SABSN topiary (components/AboutHero) under the navbar
+   capsule, then straight into the "who we are" introduction on warm ivory, alternating full-bleed
+   content bands and a forest contact card before the footer. */
+
+.about-page {
+  --ap-forest: #163624;
+  --ap-ink: #17271d;
+  --ap-muted: #4a5b4c;
+  --ap-lime: #c9d98a;
+  --ap-leaf: #4f7f3a;
+  --ap-accent: #315b35;
+  --ap-tint: #e8eedf;
+  --ap-ivory: #F7F4EA;
+  --ap-card: #fffdf7;
+  --ap-line: rgba(22, 54, 36, 0.12);
+  background: var(--ap-ivory);
+  color: var(--ap-ink);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+/* ================= shared ================= */
+.ap-main { position: relative; z-index: 0; isolation: isolate; padding: 0 5vw; }
+.ap-section { max-width: 1200px; margin: 0 auto; padding: clamp(3rem, 7vw, 5.5rem) 0; }
+
+/* Full-bleed section backgrounds: each band runs edge to edge behind the centred content,
+   alternating sage, cream, forest and sand so the page reads as distinct chapters. */
+.ap-bg { position: relative; isolation: isolate; }
+.ap-bg::after {
+  content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%);
+  background: var(--ap-bg-fill); pointer-events: none;
+}
+.ap-bg--sage {
+  --ap-bg-fill:
+    radial-gradient(ellipse 45% 60% at 100% 0%, rgba(201, 217, 138, 0.35), transparent 70%),
+    radial-gradient(ellipse 40% 55% at 0% 100%, rgba(79, 127, 58, 0.10), transparent 70%),
+    linear-gradient(180deg, #eef3e4, #e6eedb 55%, #edf2e3);
+}
+.ap-bg--cream {
+  --ap-bg-fill:
+    radial-gradient(circle, rgba(49, 91, 53, 0.09) 1px, transparent 1.4px) 0 0 / 22px 22px,
+    linear-gradient(180deg, #fbf8f1, #f7f3ea);
+}
+.ap-bg--sand {
+  --ap-bg-fill:
+    radial-gradient(ellipse 50% 70% at 0% 50%, rgba(201, 150, 100, 0.12), transparent 70%),
+    linear-gradient(180deg, #f6efe2, #f3ead9);
+}
+.ap-bg--forest {
+  --ap-bg-fill:
+    radial-gradient(ellipse 55% 80% at 85% 0%, rgba(201, 217, 138, 0.16), transparent 65%),
+    radial-gradient(ellipse 40% 60% at 0% 100%, rgba(127, 168, 74, 0.12), transparent 70%),
+    linear-gradient(180deg, #163624, #0f2d1b);
+}
+/* a soft hairline where a light band meets the ivory, so edges never look cut */
+.ap-bg--sage::before, .ap-bg--cream::before, .ap-bg--sand::before {
+  content: ''; position: absolute; z-index: -1; top: 0; left: 50%; width: 100vw; height: 1px; transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(22, 54, 36, 0.12), transparent);
+}
+
+/* forest band: light text on dark */
+.ap-bg--forest { color: #f4ecd9; }
+.ap-bg--forest .ap-kicker { color: var(--ap-lime); }
+.ap-bg--forest .ap-h2 { color: #f7f6f0; }
+.ap-bg--forest .ap-h2 em { color: var(--ap-lime); }
+.ap-bg--forest .ap-step-num { background: var(--ap-lime); color: var(--ap-forest); box-shadow: 0 0 0 6px rgba(201, 217, 138, 0.14); }
+.ap-bg--forest .ap-steps li { color: rgba(244, 236, 217, 0.9); }
+.ap-bg--forest .ap-steps li:not(:last-child)::after { background: repeating-linear-gradient(90deg, var(--ap-lime) 0 6px, transparent 6px 12px); opacity: 0.45; }
+
+/* cards on tinted bands lift to white so they don't melt into the background */
+.ap-bg--sage .ap-strengths { background: var(--ap-card); border: 1px solid var(--ap-line); }
+.ap-bg--sage .ap-pillars li, .ap-bg--sage .ap-palette > li { box-shadow: 0 8px 24px rgba(22, 54, 36, 0.05); }
+.ap-bg--sage .ap-chips li { background: #eef3e4; }
+.ap-bg--sand .ap-clients li { box-shadow: 0 6px 18px rgba(70, 40, 20, 0.05); }
+.ap-head { max-width: 720px; margin-bottom: 2.5rem; }
+.ap-head-text { margin: 1rem 0 0; color: var(--ap-muted); font-size: 0.95rem; line-height: 1.75; }
+.ap-kicker { margin: 0 0 0.9rem; color: var(--ap-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.ap-kicker--light { color: var(--ap-lime); }
+.ap-h2 { margin: 0; font-family: var(--font-serif); font-weight: 400; font-size: clamp(2rem, 3.8vw, 3.1rem); line-height: 1.14; }
+.ap-h2 em { color: var(--ap-accent); }
+.ap-label { margin: 0 0 1rem; color: var(--ap-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+.ap-icon { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: 16px; background: var(--ap-tint); color: var(--ap-accent); }
+.ap-icon--sm { width: 42px; height: 42px; border-radius: 50%; }
+.ap-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
+.ap-chips li { padding: 0.4rem 0.85rem; border-radius: 99px; background: var(--ap-tint); font-size: 0.8rem; font-weight: 500; }
+
+/* ================= opening: who we are ================= */
+.ap-section.ap-intro {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center;
+  padding-top: clamp(3rem, 6vw, 5rem);
+}
+/* soft lime light behind the photo */
+.ap-intro::before {
+  content: ''; position: absolute; z-index: -1; top: 4rem; right: -12vw; width: min(720px, 70vw); aspect-ratio: 1;
+  border-radius: 50%; background: radial-gradient(circle, rgba(201, 217, 138, 0.38), transparent 65%); pointer-events: none;
+}
+.ap-kicker--rule { display: flex; align-items: center; gap: 0.75rem; }
+.ap-kicker--rule::before { content: ''; width: 32px; height: 1.5px; border-radius: 2px; background: var(--ap-leaf); }
+.ap-h1 { margin: 0; font-family: var(--font-serif); font-weight: 400; font-size: clamp(2.7rem, 5.4vw, 5.2rem); line-height: 1.04; letter-spacing: -0.012em; color: #17271d; }
+.ap-h1 em { display: block; font-style: italic; color: #2f5a34; }
+.ap-intro .vine-ornament { margin-left: 0; }
+.ap-lead { margin: 1.4rem 0 0; max-width: 58ch; color: var(--ap-muted); font-size: 1.05rem; line-height: 1.8; }
+.ap-mission { margin: 1.8rem 0 0; max-width: 58ch; padding: 1.3rem 1.5rem; border-left: 3px solid var(--ap-leaf); border-radius: 0 18px 18px 0; background: var(--ap-card); box-shadow: 0 6px 20px rgba(22, 54, 36, 0.05); }
+.ap-mission-label { display: block; margin-bottom: 0.5rem; color: var(--ap-accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+.ap-mission p { margin: 0; font-family: var(--font-serif); font-size: 1.18rem; font-style: italic; line-height: 1.55; }
+
+/* photo sits on a soft tinted block, offset down and right */
+.ap-intro-media { position: relative; margin: 0 1.25rem 1.25rem 0; }
+.ap-intro-media::before { content: ''; position: absolute; z-index: -1; inset: 1.25rem -1.25rem -1.25rem 1.25rem; border-radius: 28px 28px 28px 120px; background: var(--ap-tint); }
+.ap-intro-media img { display: block; width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover; border-radius: 28px 28px 28px 120px; box-shadow: 0 30px 60px rgba(22, 54, 36, 0.2); }
+.ap-intro-badge {
+  position: absolute; left: -1.5rem; bottom: 1.75rem; display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.1rem 0.75rem 0.75rem;
+  border-radius: 18px; background: var(--ap-card); color: var(--ap-muted); font-size: 0.78rem; line-height: 1.4; box-shadow: 0 16px 36px rgba(22, 54, 36, 0.18);
+}
+.ap-intro-badge-icon { display: grid; place-items: center; width: 36px; height: 36px; flex: none; border-radius: 50%; background: var(--ap-tint); color: var(--ap-accent); }
+.ap-intro-badge strong { display: block; color: var(--ap-ink); font-size: 0.92rem; font-weight: 600; }
+
+/* at-a-glance strip across the bottom of the opening */
+.ap-stats {
+  grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.2fr); margin: 1.5rem 0 0; padding: 0; list-style: none;
+  border: 1px solid var(--ap-line); border-radius: 24px; overflow: hidden; background: var(--ap-card); box-shadow: 0 10px 30px rgba(22, 54, 36, 0.06);
+}
+.ap-stats li { display: flex; flex-direction: column; justify-content: center; gap: 0.3rem; padding: 1.6rem 1.75rem; }
+.ap-stats li + li { border-left: 1px solid var(--ap-line); }
+.ap-stats strong { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 600; line-height: 1.05; color: var(--ap-accent); }
+.ap-stats span { color: var(--ap-muted); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.ap-stats .ap-stats-motto { background: var(--ap-forest); }
+.ap-stats .ap-stats-motto span { color: #f4ecd9; font-family: var(--font-serif); font-size: 1.15rem; font-style: italic; font-weight: 400; letter-spacing: 0; text-transform: none; line-height: 1.45; }
+
+/* ================= what we do ================= */
+.ap-pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+.ap-pillars li { padding: 1.8rem 1.6rem; border: 1px solid var(--ap-line); border-radius: 22px; background: var(--ap-card); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.ap-pillars h3 { margin: 1.2rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.45rem; font-weight: 500; }
+.ap-pillars p { margin: 0; color: var(--ap-muted); font-size: 0.92rem; line-height: 1.7; }
+.ap-strengths { margin-top: 2.5rem; padding: 1.8rem; border-radius: 22px; background: var(--ap-tint); }
+.ap-strengths ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 2rem; margin: 0; padding: 0; list-style: none; }
+.ap-strengths li { display: flex; gap: 0.65rem; font-size: 0.93rem; line-height: 1.6; }
+.ap-strengths svg { flex: none; margin-top: 0.25rem; color: var(--ap-leaf); }
+
+/* ================= supply ================= */
+.ap-supply { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin: 0; padding: 0; list-style: none; border: 1px solid var(--ap-line); border-radius: 22px; overflow: hidden; background: var(--ap-line); }
+.ap-supply li { padding: 1.7rem 1.5rem; background: var(--ap-card); }
+.ap-num { display: block; color: var(--ap-leaf); font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; }
+.ap-supply h3 { margin: 0.6rem 0 0.45rem; font-size: 1.08rem; font-weight: 600; }
+.ap-supply p { margin: 0; color: var(--ap-muted); font-size: 0.88rem; line-height: 1.7; }
+.ap-note { margin: 1.1rem 0 0; color: var(--ap-muted); font-size: 0.8rem; }
+
+/* ================= workflow ================= */
+.ap-steps { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.75rem; margin: 0; padding: 0; list-style: none; counter-reset: none; }
+.ap-steps li { position: relative; display: flex; flex-direction: column; gap: 0.9rem; font-size: 0.88rem; font-weight: 500; line-height: 1.5; }
+.ap-steps li:not(:last-child)::after { content: ''; position: absolute; top: 21px; left: 52px; right: -0.4rem; height: 1px; background: repeating-linear-gradient(90deg, var(--ap-leaf) 0 6px, transparent 6px 12px); opacity: 0.5; }
+.ap-step-num { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--ap-forest); color: #f4ecd9; font-family: var(--font-serif); font-size: 1.05rem; }
+
+/* ================= track record ================= */
+.ap-record { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.ap-record-media { margin: 0; }
+.ap-clients { display: grid; gap: 0.75rem; margin: 2rem 0 0; padding: 0; list-style: none; }
+.ap-clients li { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.1rem; border: 1px solid var(--ap-line); border-radius: 18px; background: var(--ap-card); }
+.ap-clients strong { display: block; font-size: 1rem; font-weight: 600; }
+.ap-clients small { display: block; margin-top: 0.15rem; color: var(--ap-muted); font-size: 0.84rem; line-height: 1.5; }
+.ap-registration { display: flex; gap: 0.8rem; margin: 1.25rem 0 0; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--ap-forest); color: rgba(244, 236, 217, 0.86); font-size: 0.88rem; line-height: 1.6; }
+.ap-registration svg { flex: none; margin-top: 0.1rem; color: var(--ap-lime); }
+.ap-registration strong { display: block; color: #f7f6f0; font-weight: 600; }
+
+/* ================= palette ================= */
+.ap-palette { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+.ap-palette > li { padding: 1.5rem; border: 1px solid var(--ap-line); border-radius: 22px; background: var(--ap-card); }
+.ap-palette h3 { display: flex; align-items: center; gap: 0.55rem; margin: 0 0 1rem; color: var(--ap-accent); font-size: 1rem; font-weight: 600; }
+
+/* ================= contact ================= */
+.ap-section.ap-contact {
+  display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: clamp(2rem, 5vw, 4rem); align-items: center;
+  margin-top: clamp(3rem, 7vw, 5rem); margin-bottom: 5rem; padding: clamp(2rem, 4vw, 3rem); border: 0; border-radius: 32px; color: #f4ecd9;
+  background: radial-gradient(ellipse 60% 70% at 85% 20%, rgba(201, 217, 138, 0.16), transparent 70%), var(--ap-forest);
+  box-shadow: 0 30px 70px rgba(22, 54, 36, 0.25);
+}
+.ap-contact-photo { display: block; width: 100%; height: auto; border-radius: 22px; }
+.ap-contact .ap-h2 { color: #f7f6f0; }
+.ap-contact .ap-h2 em { color: var(--ap-lime); }
+.ap-role { margin: 0.5rem 0 0; color: rgba(244, 236, 217, 0.72); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.ap-contact-list { display: grid; gap: 0.9rem; margin: 1.8rem 0 0; padding: 0; list-style: none; }
+.ap-contact-list li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.95rem; line-height: 1.6; }
+.ap-contact-list svg { flex: none; margin-top: 0.2rem; color: var(--ap-lime); }
+.ap-contact-list a { color: #f7f6f0; text-decoration: underline; text-decoration-color: rgba(201, 217, 138, 0.5); text-underline-offset: 4px; }
+.ap-contact-list a:hover { text-decoration-color: var(--ap-lime); }
+.ap-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+.ap-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; min-height: 48px; padding: 0 1.4rem; border-radius: 999px; font-size: 0.9rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+.ap-btn--light { background: #f4ecd9; color: var(--ap-forest); border: 1px solid #f4ecd9; }
+.ap-btn--light:hover { background: var(--ap-lime); border-color: var(--ap-lime); }
+.ap-btn--outline { border: 1px solid rgba(244, 236, 217, 0.4); color: #f4ecd9; }
+.ap-btn--outline:hover { border-color: var(--ap-lime); color: var(--ap-lime); }
+.ap-btn:focus-visible, .ap-contact-list a:focus-visible { outline: 2px solid var(--ap-lime); outline-offset: 3px; }
+
+@media (hover: hover) {
+  .ap-pillars li:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(22, 54, 36, 0.09); }
+}
+
+/* ================= responsive ================= */
+@media (max-width: 1050px) {
+  .ap-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 1.75rem; }
+  .ap-steps li:nth-child(4)::after { display: none; }
+  .ap-supply { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .ap-section.ap-intro, .ap-record, .ap-section.ap-contact { grid-template-columns: 1fr; }
+  .ap-intro-badge { left: 1rem; bottom: 1rem; }
+  .ap-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ap-stats .ap-stats-motto { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--ap-line); }
+  .ap-record-media { order: -1; }
+  .ap-contact-photo { max-width: 280px; }
+  .ap-pillars { grid-template-columns: 1fr; }
+  .ap-strengths ul { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .ap-main { padding: 3rem 16px 0; }
+  .ap-supply { grid-template-columns: 1fr; }
+  .ap-steps { grid-template-columns: 1fr; gap: 0.9rem; }
+  .ap-steps li { flex-direction: row; align-items: center; gap: 1rem; }
+  .ap-steps li:not(:last-child)::after { display: none; }
+  .ap-stats { grid-template-columns: 1fr; }
+  .ap-stats li { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.25rem; }
+  .ap-stats li + li { border-left: 0; border-top: 1px solid var(--ap-line); }
+  .ap-stats span { text-align: right; }
+  .ap-stats .ap-stats-motto span { text-align: left; }
+  .ap-intro-media { margin: 0 0.75rem 0.75rem 0; }
+  .ap-intro-media::before { inset: 0.75rem -0.75rem -0.75rem 0.75rem; }
+  .ap-strengths { padding: 1.3rem; }
+  .ap-section.ap-contact { margin-bottom: 3rem; border-radius: 24px; }
+  .ap-actions .ap-btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ap-pillars li { transition: none; }
+  .ap-pillars li:hover { transform: none; }
+}

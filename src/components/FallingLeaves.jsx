@@ -4,7 +4,8 @@ import React, { useEffect, useRef } from 'react';
  * Falling leaves on a canvas.
  *  - Leaf sprites (3 shapes × palette) are pre-rendered once with shading and veins; per frame is drawImage only.
  *  - Each leaf has a depth: near leaves are larger, faster and brighter; far ones small, slow and dim.
- *  - Most leaves shed from the canopy band, the rest drift in from above the viewport.
+ *  - Most leaves shed from the canopy band, the rest drift in from above the viewport. `canopy` lists the
+ *    bands as fractions of the canvas, { x: [from, to], y: [from, to] }; the default is the home banyan's crown.
  *  - A slow wind that gusts over time, plus a light scatter when the cursor sweeps past.
  *  - Pauses off-screen / hidden tab; renders nothing under prefers-reduced-motion.
  */
@@ -80,7 +81,9 @@ function makeSprite(kind, [light, dark]) {
   return c;
 }
 
-export default function FallingLeaves({ count = 26, className = '' }) {
+const BANYAN_CROWN = [{ x: [0.3, 0.74], y: [0.12, 0.42] }];
+
+export default function FallingLeaves({ count = 26, className = '', canopy = BANYAN_CROWN }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -103,11 +106,12 @@ export default function FallingLeaves({ count = 26, className = '' }) {
     const spawn = (initial) => {
       const z = Math.random(); // depth 0 far → 1 near
       const fromCanopy = Math.random() < 0.7;
+      const band = canopy[(Math.random() * canopy.length) | 0];
       return {
         z,
         sprite: sprites[(Math.random() * sprites.length) | 0],
-        x: fromCanopy ? rand(0.3, 0.74) * w : rand(-0.05, 1.05) * w,
-        y: initial ? rand(0.05, 0.95) * h : fromCanopy ? rand(0.12, 0.42) * h : rand(-0.25, -0.05) * h,
+        x: fromCanopy ? rand(band.x[0], band.x[1]) * w : rand(-0.05, 1.05) * w,
+        y: initial ? rand(0.05, 0.95) * h : fromCanopy ? rand(band.y[0], band.y[1]) * h : rand(-0.25, -0.05) * h,
         size: (7 + z * 13) * (w < 900 ? 0.8 : 1), // half-height in px
         vy: 18 + z * 42,
         drift: rand(-6, 6),
@@ -223,7 +227,7 @@ export default function FallingLeaves({ count = 26, className = '' }) {
       document.removeEventListener('visibilitychange', onVis);
       window.removeEventListener('resize', resize);
     };
-  }, [count]);
+  }, [count, canopy]);
 
   return <canvas ref={canvasRef} className={className} aria-hidden="true" />;
 }

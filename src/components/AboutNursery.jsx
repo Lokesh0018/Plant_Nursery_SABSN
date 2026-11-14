@@ -1,7 +1,7 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sprout, Shovel, Trees, Flower2, PhoneCall, Mail, Sparkles, MapPin } from 'lucide-react';
+import { Sprout, Shovel, Trees, Flower2, PhoneCall, Mail, Sparkles, MapPin, ArrowRight } from 'lucide-react';
 import './AboutNursery.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -182,6 +182,10 @@ export default function AboutNursery() {
               >
                 <Mail size={15} />
                 <span>uppadakumaraswamy@gmail.com</span>
+              </a>
+              <a href="/about" className="about-contact-btn about-contact-btn--secondary">
+                <span>Read our full story</span>
+                <ArrowRight size={15} />
               </a>
             </div>
           </div>
