@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ArrowRight, Sprout, Shovel, Scissors, Check, Building2, Plane, Factory, Landmark, BadgeCheck,
-  Phone, Mail, MapPin, MessageCircle, Leaf, Trees, Apple, TreePine, Flower2,
+  Phone, Mail, MapPin, MessageCircle, Leaf, Trees, Apple, TreePine, Flower2, IndianRupee, LandPlot, Users, Quote,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
@@ -17,10 +17,12 @@ const Footer = lazy(() => import('../components/Footer'));
 
 // Everything on this page comes from the nursery's company profile (Sri_Ayyappa_Bala_Sai_Nursery_CompanyProfile.pdf).
 const STATS = [
-  { value: '₹3.9 Cr', label: 'Annual turnover' },
-  { value: '20 Acres', label: 'Combined nursery footprint' },
-  { value: '50+', label: 'Full-time team' },
+  { icon: IndianRupee, value: '₹3.9 Cr', label: 'Annual turnover' },
+  { icon: LandPlot, value: '20 Acres', label: 'Combined nursery footprint' },
+  { icon: Users, value: '50+', label: 'Full-time team' },
 ];
+
+const MOTTO = ['Green Plants', 'Healthy Life', 'Happy Life'];
 
 const PILLARS = [
   { icon: Sprout, title: 'Plant supply', text: 'Indoor, outdoor and ornamental plant selections for projects and customers.' },
@@ -83,6 +85,8 @@ export default function AboutPage() {
         { opacity: 0, clipPath: 'inset(10% 8% 10% 8% round 28px)' },
         { opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 1.3, ease: 'power3.out',
           scrollTrigger: { trigger: '.ap-intro-media', start: 'top 88%', once: true } });
+      gsap.from('.ap-stats > li, .ap-motto', { opacity: 0, y: 20, duration: 0.7, ease: 'power2.out', stagger: 0.08,
+        scrollTrigger: { trigger: '.ap-glance', start: 'top 90%', once: true } });
     }, introRef);
     return () => ctx.revert();
   }, []);
@@ -106,12 +110,12 @@ export default function AboutPage() {
               maintenance for corporate, public-sector and private clients.
             </p>
             <blockquote className="ap-mission">
-              <span className="ap-mission-label">Our mission</span>
+              <span className="ap-mission-label"><Quote size={14} strokeWidth={2.4} aria-hidden="true" />Our mission</span>
               <p>To support customers with suitable plant choices and coordinated service from supply through establishment and maintenance.</p>
             </blockquote>
           </div>
           <figure className="ap-intro-media">
-            <img src="/nursery.webp" srcSet="/nursery-800.webp 800w, /nursery.webp 1200w" sizes="(max-width: 900px) 92vw, 46vw"
+            <img src="/nursery.webp" srcSet="/nursery-800.webp 800w, /nursery.webp 1200w" sizes="(max-width: 900px) 92vw, 44vw"
               width="1200" height="673" loading="lazy" decoding="async"
               alt="Rows of nursery plants growing at Sri Ayyappa Bala Sai Nursery in Kadiyam" />
             <figcaption className="ap-intro-badge">
@@ -119,10 +123,20 @@ export default function AboutPage() {
               <span><strong>Kadiyam, East Godavari</strong>Jakkampudi Nagar, Andhra Pradesh</span>
             </figcaption>
           </figure>
-          <ul className="ap-stats" aria-label="Nursery at a glance">
-            {STATS.map(({ value, label }) => <li key={label}><strong>{value}</strong><span>{label}</span></li>)}
-            <li className="ap-stats-motto"><span>Green Plants · Healthy Life · Happy Life</span></li>
-          </ul>
+          <div className="ap-glance">
+            <ul className="ap-stats" aria-label="Nursery at a glance">
+              {STATS.map(({ icon: Icon, value, label }) => (
+                <li key={label}>
+                  <span className="ap-stat-icon"><Icon size={18} strokeWidth={1.9} aria-hidden="true" /></span>
+                  <span className="ap-stat-text"><strong>{value}</strong><span>{label}</span></span>
+                </li>
+              ))}
+            </ul>
+            <p className="ap-motto">
+              <Leaf size={16} strokeWidth={2} aria-hidden="true" />
+              {MOTTO.map((w, i) => <React.Fragment key={w}>{i > 0 && <span className="ap-motto-dot" aria-hidden="true">·</span>}<span>{w}</span></React.Fragment>)}
+            </p>
+          </div>
         </section>
 
         {/* What we do */}
