@@ -1,10 +1,9 @@
-import React, { useRef, useLayoutEffect, lazy, Suspense } from 'react';
+import React from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { products } from '../data/products';
-const PlantModal = lazy(() => import('./PlantModal')); // only fetched when a product is opened
-import { Plus, Sun, Droplets, ArrowRight, Star } from 'lucide-react';
-import VineOrnament from './VineOrnament';
+import { plantCategories } from '../data/categories';
+import CategoryCollection from './CategoryCollection';
+import { Plus, Sun, Droplets, Star } from 'lucide-react';
 import './Collection.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -121,79 +120,5 @@ export function ProductCard({ product, onOpen, showRating = false }) {
 }
 
 export default function Collection() {
-  const sectionRef = useRef(null);
-  const headingRef = useRef(null);
-  const bgTextRef = useRef(null);
-  const gridRef = useRef(null);
-  const [selected, setSelected] = React.useState(null); // { product, rect, card }
-
-  const openProduct = (product, card) => {
-    setSelected({ product, rect: card.getBoundingClientRect(), card });
-  };
-  const closeProduct = () => {
-    const card = selected?.card;
-    setSelected(null);
-    card?.focus({ preventScroll: true }); // return focus to where the user was
-  };
-
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-
-      // Animate background text "Plant" - scrubbed parallax effect
-      gsap.fromTo(bgTextRef.current,
-        { y: 250, opacity: 0, scale: 0.85 },
-        {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 95%',
-            end: 'center center',
-            scrub: 1.5
-          },
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          ease: 'none'
-        }
-      );
-
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section id="collection" ref={sectionRef} className="collection-section">
-      {/* Huge background text */}
-      <div ref={bgTextRef} className="collection-bg-text">
-        Plant
-      </div>
-
-      <div ref={headingRef} className="collection-header">
-        <span className="collection-subtitle">
-          Our Curated
-        </span>
-        <h2 className="collection-title">
-          Select
-        </h2>
-        <VineOrnament />
-        <p className="collection-lede">
-          Healthy, nursery-raised plants chosen for homes and gardens, each with its light and water needs at a glance.
-        </p>
-      </div>
-
-      <div ref={gridRef} className="collection-grid">
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} onOpen={openProduct} />
-        ))}
-      </div>
-
-      <div className="collection-more">
-        <a className="collection-more-link" href="/plants">
-          Browse all plants <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
-        </a>
-      </div>
-
-      {selected && <Suspense fallback={null}><PlantModal product={selected.product} originRect={selected.rect} onClose={closeProduct} /></Suspense>}
-    </section>
-  );
+  return <CategoryCollection kind="plants" categories={plantCategories} />;
 }
