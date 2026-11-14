@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useLayoutEffect, useRef } from 'react';
+import React, { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -72,10 +72,14 @@ const PHASES = [
 ];
 
 const CLIENTS = [
-  { icon: Building2, name: 'Renaatus', work: 'Plant supply, gardening and maintenance' },
-  { icon: Plane, name: 'Airports Authority of India', work: 'Visakhapatnam airport landscape support' },
-  { icon: Factory, name: 'Sri Sarvaraya Sugars Ltd.', work: 'Gopalapuram: plant and garden requirements' },
-  { icon: Factory, name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Baladrapuram' },
+  { icon: Building2, name: 'Renaatus', work: 'Plant supply, gardening and maintenance',
+    photo: '/clients/renaatus.webp', size: [678, 900], focus: '50% 40%', alt: 'Renaatus office building with landscaped planting at its base' },
+  { icon: Plane, name: 'Airports Authority of India', work: 'Rajahmundry airport landscape support',
+    photo: '/gallery/airport.webp', size: [1360, 1020], focus: '60% 55%', alt: 'Rajahmundry airport terminal with landscaped lawns, palms and flowering shrubs' },
+  { icon: Factory, name: 'Sri Sarvaraya Sugars Ltd.', work: 'Gopalapuram: plant and garden requirements',
+    photo: '/clients/sri-sarvaraya.webp', size: [600, 376], focus: '50% 50%', alt: 'Sri Sarvaraya Sugars building with a planted hedge and garden in front' },
+  { icon: Factory, name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Baladrapuram',
+    photo: '/clients/grasim.webp', size: [488, 600], focus: '40% 72%', alt: 'Grasim Industries plant entrance with its sign, trees and factory chimneys' },
 ];
 
 const PALETTE = [
@@ -86,10 +90,41 @@ const PALETTE = [
   { icon: Leaf, title: 'Palms, Screens & Groundcovers', plants: ['Areca Palm', 'Royal Palm', 'Foxtail Palm', 'Traveller Palm', 'Red Wax Palm', 'Triangular Palm', 'Ashoka', 'Snake Plant'] },
 ];
 
+const CLIENT_ROTATE_MS = 4500; // how long each client's photo shows before the next one
+
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I would like to discuss a plant supply or landscaping requirement.')}`;
 
 export default function AboutPage() {
   const introRef = useRef(null);
+  const [client, setClient] = useState(1); // opens on the airport, as the section always has
+  // the clients rotate on their own while the section is on screen; hover or keyboard focus holds them
+  const recordRef = useRef(null);
+  const [recordInView, setRecordInView] = useState(false);
+  const [hoverHold, setHoverHold] = useState(false);
+  const [focusHold, setFocusHold] = useState(false);
+  const [reducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const rotating = recordInView && !hoverHold && !focusHold && !reducedMotion;
+  useEffect(() => {
+    const el = recordRef.current;
+    const io = new IntersectionObserver(([e]) => setRecordInView(e.isIntersecting), { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  // restarts on every change of client, so a click gives the chosen client a full turn
+  useEffect(() => {
+    if (!rotating) return undefined;
+    const t = setTimeout(() => setClient((c) => (c + 1) % CLIENTS.length), CLIENT_ROTATE_MS);
+    return () => clearTimeout(t);
+  }, [rotating, client]);
+  // arrow keys move between client tabs (focus follows selection)
+  const onClientKey = (e) => {
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    const next = e.key === 'Home' ? 0 : e.key === 'End' ? CLIENTS.length - 1 : step ? (client + step + CLIENTS.length) % CLIENTS.length : null;
+    if (next === null) return;
+    e.preventDefault();
+    setClient(next);
+    document.getElementById(`ap-client-${next}`)?.focus();
+  };
 
   // "Who we are": the heading block reveals line by line, the photo opens up as it scrolls into view
   useLayoutEffect(() => {
@@ -260,27 +295,45 @@ export default function AboutPage() {
 
         {/* Track record */}
         <section className="ap-section ap-record ap-bg ap-bg--sand" aria-labelledby="ap-record">
-          <div className="ap-record-text">
+          <header className="ap-head">
             <p className="ap-kicker">05 · Track record</p>
-            <h2 id="ap-record" className="ap-h2">Trusted by <em>organisations we serve.</em></h2>
-            <ul className="ap-clients">
-              {CLIENTS.map(({ icon: Icon, name, work }) => (
-                <li key={name}>
-                  <span className="ap-icon ap-icon--sm"><Icon size={18} strokeWidth={1.9} aria-hidden="true" /></span>
-                  <span><strong>{name}</strong><small>{work}</small></span>
-                </li>
+            <h2 id="ap-record" className="ap-h2 ap-h2--split">Trusted by <em>organisations we serve.</em></h2>
+          </header>
+          <div ref={recordRef} className={`ap-record-grid${rotating ? ' is-rotating' : ''}`} style={{ '--rotate-ms': `${CLIENT_ROTATE_MS}ms` }}
+            onMouseEnter={() => setHoverHold(true)} onMouseLeave={() => setHoverHold(false)}
+            // only keyboard focus holds the rotation; focus left behind by a mouse click must not stop it
+            onFocus={(e) => setFocusHold(e.target.matches(':focus-visible'))}
+            onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setFocusHold(false); }}>
+            <div className="ap-record-body">
+              {/* client tabs: selecting one shows that client's site photo on the right */}
+              <div className="ap-clients" role="tablist" aria-label="Clients" onKeyDown={onClientKey}>
+                {CLIENTS.map(({ icon: Icon, name, work }, i) => (
+                  <button key={name} type="button" role="tab" id={`ap-client-${i}`} aria-controls="ap-client-photo"
+                    aria-selected={client === i} tabIndex={client === i ? 0 : -1} onClick={() => setClient(i)}>
+                    <span className="ap-client-icon"><Icon size={19} strokeWidth={1.9} aria-hidden="true" /></span>
+                    <strong>{name}</strong>
+                    <small>{work}</small>
+                    {client === i && <span key={`${client}-${rotating}`} className="ap-client-progress" aria-hidden="true" />}
+                  </button>
+                ))}
+              </div>
+              <div className="ap-registration">
+                <span className="ap-registration-badge"><BadgeCheck size={24} strokeWidth={2} aria-hidden="true" /></span>
+                <p>
+                  <span className="ap-registration-label">Public-sector registration</span>
+                  Registered as a <strong>Class V Contractor</strong> in the Public Health Division, Rajamahendravaram.
+                </p>
+              </div>
+            </div>
+            <figure className="ap-record-media" id="ap-client-photo" role="tabpanel" aria-labelledby={`ap-client-${client}`}>
+              {/* all photos stay mounted and cross-fade, so switching is instant once loaded */}
+              {CLIENTS.map(({ name, photo, size, focus, alt }, i) => (
+                <img key={name} className={client === i ? 'is-active' : undefined} src={photo} width={size[0]} height={size[1]}
+                  loading="lazy" decoding="async" alt={client === i ? alt : ''} aria-hidden={client !== i || undefined} style={{ objectPosition: focus }} />
               ))}
-            </ul>
-            <p className="ap-registration">
-              <BadgeCheck size={20} strokeWidth={2} aria-hidden="true" />
-              <span><strong>Public-sector registration</strong>Registered as a Class V Contractor in the Public Health Division, Rajamahendravaram.</span>
-            </p>
+              <figcaption><Landmark size={15} aria-hidden="true" />{CLIENTS[client].name}</figcaption>
+            </figure>
           </div>
-          <figure className="ap-record-media">
-            <img src="/gallery/airport.webp" width="1360" height="1020" loading="lazy" decoding="async"
-              alt="An airport terminal forecourt planted with rounded shrubs, flowering hedges and palms." />
-            <figcaption><Landmark size={14} aria-hidden="true" />Airport forecourt landscaping</figcaption>
-          </figure>
         </section>
 
         {/* Plant palette */}
