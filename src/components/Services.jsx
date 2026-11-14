@@ -72,7 +72,7 @@ function useSeenOnce() {
 
 // Organisations named in the company profile among the nursery's clients
 const CLIENTS = [
-  { name: 'Airports Authority of India', work: 'Visakhapatnam airport landscape support' },
+  { name: 'Airports Authority of India', work: 'Rajahmundry airport landscape support' },
   { name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Balabhadrapuram' },
   { name: 'Sri Sarvaraya Sugars Ltd.', work: 'Plant and garden requirements, Gopalapuram' },
   { name: 'Renaatus', work: 'Plant supply, gardening and maintenance' },
@@ -233,7 +233,7 @@ export default function Services() {
           </ul>
           <p className="services-registration">
             <BadgeCheck size={17} strokeWidth={2} aria-hidden="true" />
-            Registered Class V Contractor, Public Health Division, Rajamahendravaram
+            Registered Class V Contractor, Public Health Division, Rajahmundry
           </p>
         </div>
       </div>

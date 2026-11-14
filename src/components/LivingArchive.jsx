@@ -1,62 +1,14 @@
 import React from 'react';
-import { Image as ImageIcon, Camera } from 'lucide-react';
+import { Image as ImageIcon, Camera, ArrowRight } from 'lucide-react';
+import { galleryItems } from '../data/gallery';
 import './LivingArchive.css';
 
-const galleryItems = [
-  {
-    spanClass: 'archive-col-7',
-    alt: 'Abundant vibrant blooming bougainvillea climbing arches with crimson and magenta flowers in high detail natural daylight.',
-    src: '/gallery/bougainvillea-1200.webp',
-    srcSet: '/gallery/bougainvillea-640.webp 640w, /gallery/bougainvillea-1200.webp 900w',
-    width: 900,
-    height: 401,
-    tag: 'Flowering Sanctuary',
-    title: 'Hybrid Bougainvillea Cultivars'
-  },
-  {
-    spanClass: 'archive-col-5',
-    alt: 'Organized lines of young grafted fruit saplings in black polybags under green agro-shade netting with fresh morning irrigation droplets.',
-    src: '/gallery/saplings-1200.webp',
-    srcSet: '/gallery/saplings-640.webp 640w, /gallery/saplings-1200.webp 736w',
-    width: 736,
-    height: 455,
-    tag: 'Field Rows',
-    title: 'Acclimatized Grafted Fruit Saplings'
-  },
-  {
-    spanClass: 'archive-col-4',
-    alt: 'Golden late afternoon sunbeams streaming through high greenhouse glass panels highlighting tropical monsteras and palms.',
-    src: '/gallery/glasshouse-1200.webp',
-    srcSet: '/gallery/glasshouse-640.webp 640w, /gallery/glasshouse-1200.webp 844w',
-    width: 844,
-    height: 600,
-    tag: 'Microclimate',
-    title: 'Sunbeams through Glasshouse'
-  },
-  {
-    spanClass: 'archive-col-4',
-    alt: 'Expansive manicured garden lawn with perfectly trimmed green turf grass surrounded by artistic landscape borders.',
-    src: '/gallery/lawn-1200.webp',
-    srcSet: '/gallery/lawn-640.webp 640w, /gallery/lawn-1200.webp 944w',
-    width: 944,
-    height: 671,
-    tag: 'Turf Development',
-    title: 'Natural Lawn Installation'
-  },
-  {
-    spanClass: 'archive-col-4',
-    alt: 'Extreme close-up macro photograph of deep green tropical leaves with pristine crystalline morning dewdrops on delicate leaf veins.',
-    src: '/gallery/dewdrops-1200.webp',
-    srcSet: '/gallery/dewdrops-640.webp 640w, /gallery/dewdrops-1200.webp 1200w',
-    width: 1200,
-    height: 853,
-    tag: 'Macro Detail',
-    title: 'Dewdrops on Ornamental Foliage'
-  }
-];
+// The home page shows the five featured photos; the rest live on the /gallery page.
+const FEATURED = galleryItems.filter((g) => g.featured).sort((a, b) => a.featured - b.featured);
+const SPANS = [7, 5, 4, 4, 4];
 
 // how wide each tile renders, so the browser picks the right srcset candidate
-const SIZES = {"archive-col-7": "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, min(58vw, 790px)", "archive-col-5": "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, min(42vw, 570px)", "archive-col-4": "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, min(33vw, 450px)"};
+const SIZES = {"archive-col-7": "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, min(58vw, 790px)", "archive-col-5": "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, min(42vw, 570px)", "archive-col-4": "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, min(33vw, 450px)", "archive-col-12": "(max-width: 640px) 92vw, min(92vw, 1280px)"};
 
 export default function LivingArchive() {
   return (
@@ -88,7 +40,7 @@ export default function LivingArchive() {
             </span>
             <h2 className="archive-heading">Glimpses of Greenery</h2>
             <p className="archive-subtext">
-              A window into our everyday cultivation, greenhouse sunlight, and acclimatized field stock.
+              Our nursery stock, the landscapes we look after, and the clients and partners we work with.
             </p>
           </div>
           <div className="archive-location">
@@ -99,29 +51,39 @@ export default function LivingArchive() {
           </div>
         </div>
 
-        {/* Asymmetrical Editorial Collage */}
+        {/* asymmetrical editorial collage of the featured five */}
         <div className="archive-grid">
-          {galleryItems.map((item, index) => (
-            <figure key={index} className={`archive-item ${item.spanClass}`}>
-              <img
-                src={item.src}
-                srcSet={item.srcSet}
-                sizes={SIZES[item.spanClass]}
-                width={item.width}
-                height={item.height}
-                alt={item.alt}
-                loading="lazy"
-                decoding="async"
-                className="archive-img"
-              />
-              <div className="archive-overlay" />
-              <figcaption className="archive-caption">
-                <span className="archive-item-tag">{item.tag}</span>
-                <p className="archive-item-title">{item.title}</p>
-              </figcaption>
-              <span className="archive-item-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            </figure>
-          ))}
+          {FEATURED.map((item, index) => {
+            const spanClass = `archive-col-${SPANS[index]}`;
+            return (
+              <figure key={item.src} className={`archive-item ${spanClass}`} style={{ '--i': index }}>
+                <img
+                  src={item.src}
+                  sizes={SIZES[spanClass]}
+                  width={item.width}
+                  height={item.height}
+                  alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="archive-img"
+                  style={item.pos ? { objectPosition: item.pos } : undefined}
+                />
+                <div className="archive-overlay" />
+                <figcaption className="archive-caption">
+                  <span className="archive-item-tag">{item.tag}</span>
+                  <p className="archive-item-title">{item.title}</p>
+                </figcaption>
+                <span className="archive-item-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              </figure>
+            );
+          })}
+        </div>
+
+        <div className="archive-more">
+          <a className="archive-more-link" href="/gallery">
+            View the full gallery <span className="archive-more-count">{galleryItems.length} photos</span>
+            <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
+          </a>
         </div>
       </div>
     </section>

@@ -30,7 +30,8 @@ export default function Navbar({ page = 'home' }) {
   const darkGreen = '#f4ecd9';
   const textMuted = 'rgba(244, 236, 217, 0.78)';
 
-  const [activeSection, setActiveSection] = useState(page === 'plants' ? 'plants' : 'home');
+  // on the home page the active item follows the scroll; other pages light up their own item
+  const [activeSection, setActiveSection] = useState(page === 'home' ? 'home' : page);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [cartItems, setCartItems] = useState(loadCart);
@@ -225,13 +226,14 @@ export default function Navbar({ page = 'home' }) {
               onClick={() => {
                 setIsMobileOpen(false);
                 setActiveSection(item.toLowerCase());
-                if (item === 'Plants') {
-                  // Plants is its own page (/plants)
-                  if (page === 'plants') window.scrollTo({ top: 0, behavior: 'smooth' });
-                  else window.location.href = '/plants';
+                // Plants and Gallery are their own pages (/plants, /gallery)
+                const own = { Plants: 'plants', Gallery: 'gallery' }[item];
+                if (own) {
+                  if (page === own) window.scrollTo({ top: 0, behavior: 'smooth' });
+                  else window.location.href = `/${own}`;
                 } else {
                   goToSection(page, {
-                    Home: 'home', Pots: 'pots-collection', About: 'about', Services: 'services', Gallery: 'gallery',
+                    Home: 'home', Pots: 'pots-collection', About: 'about', Services: 'services',
                   }[item]);
                 }
               }}

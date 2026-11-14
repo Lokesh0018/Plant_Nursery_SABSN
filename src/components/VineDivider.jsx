@@ -150,14 +150,22 @@ export default function VineDivider({ variant = 'top' }) {
         if (reduce) { host.classList.add('is-grown'); return; } // fully grown, static
 
         host.classList.remove('is-grown');
+        // Plays on its own clock (~1.6 s) each time the band comes into view, from either direction,
+        // and resets to bare once the band is fully off screen, so it grows again next time. A scroll
+        // scrub would re-render hundreds of SVG nodes on every scroll frame instead.
         const tl = gsap.timeline({
-          // plays once, on its own clock, when the band comes into view. A scroll scrub would
-          // re-render hundreds of SVG nodes on every scroll frame; this costs ~1.6 s once.
-          scrollTrigger: { trigger: host, start: 'top 85%', once: true },
+          paused: true,
           defaults: { ease: 'none' },
           onComplete: () => host.classList.add('is-grown'),
         });
         tl.timeScale(0.62); // the timeline is laid out in 0..1 units; this makes it ~1.6 s
+        // only grow from bare: a band that never fully left the screen keeps its vines
+        const grow = () => { if (tl.progress() === 0 && !tl.isActive()) tl.play(0); };
+        const reset = () => { tl.pause(0); host.classList.remove('is-grown'); };
+        // grow once a good part of the band is on screen ...
+        ScrollTrigger.create({ trigger: host, start: 'top 88%', end: 'bottom 12%', onEnter: grow, onEnterBack: grow });
+        // ... and clear it only when it has left the screen completely, so it never vanishes in view
+        ScrollTrigger.create({ trigger: host, start: 'top bottom', end: 'bottom top', onLeave: reset, onLeaveBack: reset });
 
         allStems.forEach((stem) => {
           const len = stem.getTotalLength();
