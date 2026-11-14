@@ -33,8 +33,9 @@ export default function Navbar({ page = 'home' }) {
   useEffect(() => {
     const handleScroll = ({ y, vh, max }) => {
       setIsScrolled(y > 30);
-      // progress hairline along the bar's bottom edge
-      document.documentElement.style.setProperty('--nav-progress', `${max > 0 ? (y / max) * 100 : 0}%`);
+      // progress hairline along the bar's bottom edge (not on the About page)
+      const progress = page === 'about' || max <= 0 ? 0 : (y / max) * 100;
+      document.documentElement.style.setProperty('--nav-progress', `${progress}%`);
       if (page !== 'home') return; // other pages keep their own item active
 
       // Active section = the last section whose top has passed the navbar line.
@@ -173,14 +174,14 @@ export default function Navbar({ page = 'home' }) {
               onClick={() => {
                 setIsMobileOpen(false);
                 setActiveSection(item.toLowerCase());
-                // Plants and Gallery are their own pages (/plants, /gallery)
-                const own = { Plants: 'plants', Gallery: 'gallery' }[item];
+                // About, Plants and Gallery are their own pages (/about, /plants, /gallery)
+                const own = { About: 'about', Plants: 'plants', Gallery: 'gallery' }[item];
                 if (own) {
                   if (page === own) window.scrollTo({ top: 0, behavior: 'smooth' });
                   else window.location.href = `/${own}`;
                 } else {
                   goToSection(page, {
-                    Home: 'home', Pots: 'pots-collection', About: 'about', Services: 'services',
+                    Home: 'home', Pots: 'pots-collection', Services: 'services',
                   }[item]);
                 }
               }}
