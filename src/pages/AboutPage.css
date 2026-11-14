@@ -64,9 +64,6 @@
 .ap-bg--forest .ap-kicker { color: var(--ap-lime); }
 .ap-bg--forest .ap-h2 { color: #f7f6f0; }
 .ap-bg--forest .ap-h2 em { color: var(--ap-lime); }
-.ap-bg--forest .ap-step-num { background: var(--ap-lime); color: var(--ap-forest); box-shadow: 0 0 0 6px rgba(201, 217, 138, 0.14); }
-.ap-bg--forest .ap-steps li { color: rgba(244, 236, 217, 0.9); }
-.ap-bg--forest .ap-steps li:not(:last-child)::after { background: repeating-linear-gradient(90deg, var(--ap-lime) 0 6px, transparent 6px 12px); opacity: 0.45; }
 
 /* cards on tinted bands lift to white so they don't melt into the background */
 .ap-bg--sage .ap-pillars li, .ap-bg--sage .ap-palette > li { box-shadow: 0 8px 24px rgba(22, 54, 36, 0.05); }
@@ -244,10 +241,32 @@
 .ap-note svg { flex: none; color: var(--ap-leaf); }
 
 /* ================= workflow ================= */
-.ap-steps { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.75rem; margin: 0; padding: 0; list-style: none; counter-reset: none; }
-.ap-steps li { position: relative; display: flex; flex-direction: column; gap: 0.9rem; font-size: 0.88rem; font-weight: 500; line-height: 1.5; }
-.ap-steps li:not(:last-child)::after { content: ''; position: absolute; top: 21px; left: 52px; right: -0.4rem; height: 1px; background: repeating-linear-gradient(90deg, var(--ap-leaf) 0 6px, transparent 6px 12px); opacity: 0.5; }
-.ap-step-num { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--ap-forest); color: #f4ecd9; font-family: var(--font-serif); font-size: 1.05rem; }
+/* seven steps in three phases (Plan / Build / Care); each phase is labelled above its run of step cards */
+/* one 7-column grid shared through subgrid, so every step card has the same width and height across phases */
+.ap-phases { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); column-gap: 0.75rem; }
+.ap-phase { display: grid; grid-column: span var(--n); grid-row: span 2; grid-template-columns: subgrid; grid-template-rows: subgrid; }
+.ap-phase-label, .ap-phase .ap-steps { grid-column: 1 / -1; }
+.ap-phase-label {
+  position: relative; display: flex; align-items: baseline; gap: 0.7rem; margin: 0 0 1rem; padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(201, 217, 138, 0.22);
+}
+/* a short lime segment marks the start of each phase on its rule */
+.ap-phase-label::after { content: ''; position: absolute; left: 0; bottom: -1px; width: 48px; height: 2px; border-radius: 2px; background: var(--ap-lime); }
+.ap-phase-label strong { font-family: var(--font-serif); font-size: 1.35rem; font-style: italic; font-weight: 400; color: var(--ap-lime); }
+.ap-phase-label span { color: rgba(244, 236, 217, 0.62); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.ap-steps { display: grid; grid-template-columns: subgrid; gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+.ap-steps li {
+  display: flex; flex-direction: column; gap: 1.4rem; min-height: 188px; padding: 1.15rem 1.15rem 1.25rem;
+  border: 1px solid rgba(244, 236, 217, 0.12); border-radius: 18px; background: rgba(255, 255, 255, 0.045);
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.ap-step-top { display: flex; align-items: center; justify-content: space-between; }
+.ap-step-num { font-family: var(--font-serif); font-size: 1.9rem; font-style: italic; line-height: 1; color: var(--ap-lime); }
+.ap-step-icon { color: rgba(244, 236, 217, 0.7); }
+.ap-step-text { margin-top: auto; color: rgba(244, 236, 217, 0.92); font-size: 0.95rem; font-weight: 500; line-height: 1.5; }
+/* the final handover step is the finish line: filled lime */
+.ap-phase:last-child .ap-steps li:last-child { background: var(--ap-lime); border-color: var(--ap-lime); }
+.ap-phase:last-child .ap-steps li:last-child :is(.ap-step-num, .ap-step-icon, .ap-step-text) { color: var(--ap-forest); }
 
 /* ================= track record ================= */
 .ap-record { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
@@ -294,14 +313,18 @@
   .ap-pillars li:hover .ap-pillar-atlas { transform: scale(1.06); }
   .ap-supply > li:not(.ap-supply-all):hover { border-color: rgba(79, 127, 58, 0.32); box-shadow: 0 14px 30px rgba(22, 54, 36, 0.09); }
   .ap-supply > li:hover .ap-atlas { transform: scale(1.07); }
+  .ap-steps li:hover { transform: translateY(-3px); }
+  .ap-phase .ap-steps li:not(:last-child):hover, .ap-phase:not(:last-child) .ap-steps li:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(201, 217, 138, 0.45); }
   .ap-supply > li:not(.ap-supply-all):hover .ap-supply-icon { background: var(--ap-forest); color: var(--ap-lime); }
   .ap-pillars li:hover .ap-icon { background: var(--ap-lime); color: var(--ap-forest); }
 }
 
 /* ================= responsive ================= */
 @media (max-width: 1050px) {
-  .ap-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 1.75rem; }
-  .ap-steps li:nth-child(4)::after { display: none; }
+  .ap-phases { grid-template-columns: 1fr; gap: 1.75rem; }
+  .ap-phase { display: block; grid-column: auto; grid-row: auto; }
+  .ap-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ap-steps li { min-height: 150px; }
   .ap-supply { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
@@ -324,9 +347,11 @@
   .ap-supply-media { aspect-ratio: 16 / 9; }
   .ap-supply-body { padding: 0.9rem 0.6rem 0.7rem; }
   .ap-note { align-items: flex-start; }
-  .ap-steps { grid-template-columns: 1fr; gap: 0.9rem; }
-  .ap-steps li { flex-direction: row; align-items: center; gap: 1rem; }
-  .ap-steps li:not(:last-child)::after { display: none; }
+  .ap-steps { grid-template-columns: 1fr; gap: 0.6rem; }
+  .ap-steps li { flex-direction: row; align-items: center; gap: 1rem; min-height: 0; padding: 0.95rem 1rem; }
+  .ap-step-top { flex-direction: row-reverse; gap: 0.9rem; flex: none; }
+  .ap-step-num { font-size: 1.5rem; min-width: 2rem; }
+  .ap-step-text { margin-top: 0; }
   .ap-stats { grid-template-columns: 1fr; }
   .ap-stats li { flex-direction: row; align-items: center; gap: 1rem; padding: 1rem 0; }
   .ap-stats li + li { border-left: 0; border-top: 1px solid rgba(244, 236, 217, 0.14); }
@@ -342,7 +367,7 @@
   .ap-actions .ap-btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ap-pillars li, .ap-pillar-atlas, .ap-supply > li, .ap-atlas { transition: none; }
+  .ap-pillars li, .ap-pillar-atlas, .ap-supply > li, .ap-atlas, .ap-steps li { transition: none; }
   .ap-pillars li:hover { transform: none; }
-  .ap-pillars li:hover .ap-pillar-atlas, .ap-supply > li:hover .ap-atlas { transform: none; }
+  .ap-pillars li:hover .ap-pillar-atlas, .ap-supply > li:hover .ap-atlas, .ap-steps li:hover { transform: none; }
 }

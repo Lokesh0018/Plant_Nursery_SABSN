@@ -5,6 +5,7 @@ import {
   ArrowRight, Sprout, Shovel, Scissors, Building2, Plane, Factory, Landmark, BadgeCheck,
   Phone, Mail, MapPin, MessageCircle, Leaf, Trees, Apple, TreePine, Flower2, IndianRupee, LandPlot, Users, Quote,
   Layers, Recycle, Amphora, BrickWall, LayoutGrid, Workflow, Info,
+  ClipboardList, Palette, Calculator, HardHat, Truck, Droplets, Handshake,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
@@ -53,14 +54,21 @@ const INTEGRATED = {
 };
 const ATLAS_SRC = { four: '/services/service-atlas.webp', six: '/services/service-atlas-six.webp' };
 
-const STEPS = [
-  'Site visit and requirement collection',
-  'Plant palette and material selection',
-  'Quantity estimate and quotation',
-  'Site preparation and civil works, where required',
-  'Supply and installation',
-  'Irrigation, establishment and maintenance plan',
-  'Handover with care instructions',
+// the seven steps, grouped into the same Plan / Build / Care phases the home page uses
+const PHASES = [
+  { label: 'Plan', steps: [
+    { icon: ClipboardList, text: 'Site visit and requirement collection' },
+    { icon: Palette, text: 'Plant palette and material selection' },
+    { icon: Calculator, text: 'Quantity estimate and quotation' },
+  ] },
+  { label: 'Build', steps: [
+    { icon: HardHat, text: 'Site preparation and civil works, where required' },
+    { icon: Truck, text: 'Supply and installation' },
+  ] },
+  { label: 'Care', steps: [
+    { icon: Droplets, text: 'Irrigation, establishment and maintenance plan' },
+    { icon: Handshake, text: 'Handover with care instructions' },
+  ] },
 ];
 
 const CLIENTS = [
@@ -224,11 +232,30 @@ export default function AboutPage() {
         <section className="ap-section ap-flow ap-bg ap-bg--forest" aria-labelledby="ap-flow">
           <header className="ap-head">
             <p className="ap-kicker">04 · How a project runs</p>
-            <h2 id="ap-flow" className="ap-h2">Seven clear steps, <em>site visit to handover.</em></h2>
+            <h2 id="ap-flow" className="ap-h2 ap-h2--split">Seven clear steps, <em>site visit to handover.</em></h2>
           </header>
-          <ol className="ap-steps">
-            {STEPS.map((s, i) => <li key={s}><span className="ap-step-num" aria-hidden="true">{i + 1}</span><span>{s}</span></li>)}
-          </ol>
+          <div className="ap-phases">
+            {PHASES.map(({ label, steps }, p) => {
+              const first = PHASES.slice(0, p).reduce((n, ph) => n + ph.steps.length, 1);
+              const last = first + steps.length - 1;
+              return (
+                <div key={label} className="ap-phase" style={{ '--n': steps.length }}>
+                  <p className="ap-phase-label"><strong>{label}</strong><span>Steps {first}–{last}</span></p>
+                  <ol className="ap-steps" start={first}>
+                    {steps.map(({ icon: Icon, text }, i) => (
+                      <li key={text}>
+                        <div className="ap-step-top">
+                          <span className="ap-step-num" aria-hidden="true">{String(first + i).padStart(2, '0')}</span>
+                          <Icon className="ap-step-icon" size={20} strokeWidth={1.8} aria-hidden="true" />
+                        </div>
+                        <span className="ap-step-text">{text}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              );
+            })}
+          </div>
         </section>
 
         {/* Track record */}
