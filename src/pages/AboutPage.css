@@ -201,12 +201,47 @@
 .ap-strength-num { flex: none; min-width: 1.7rem; padding-top: 0.05rem; font-family: var(--font-serif); font-size: 1.15rem; font-style: italic; line-height: 1.35; color: var(--ap-leaf); }
 
 /* ================= supply ================= */
-.ap-supply { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin: 0; padding: 0; list-style: none; border: 1px solid var(--ap-line); border-radius: 22px; overflow: hidden; background: var(--ap-line); }
-.ap-supply li { padding: 1.7rem 1.5rem; background: var(--ap-card); }
+/* two columns of horizontal product cards (photo left, text right); the integrated offer closes the grid in forest */
+.ap-supply { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; margin: 0; padding: 0; list-style: none; }
+.ap-supply > li {
+  display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: 0.4rem; min-height: 190px; padding: 0.55rem;
+  border: 1px solid var(--ap-line); border-radius: 22px; background: var(--ap-card); box-shadow: 0 6px 20px rgba(22, 54, 36, 0.04);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ap-supply-media { position: relative; overflow: hidden; border-radius: 16px; background: var(--ap-tint); container-type: size; }
+/* one 3:2 cell of a 2-column atlas, scaled to cover the frame whatever its shape */
+.ap-atlas {
+  --cw: max(100cqw, 150cqh); --ch: calc(var(--cw) / 1.5);
+  position: absolute; max-width: none; width: calc(var(--cw) * 2); height: calc(var(--ch) * var(--rows));
+  left: calc((100cqw - var(--cw)) / 2 - var(--col) * var(--cw)); top: calc((100cqh - var(--ch)) / 2 - var(--row) * var(--ch));
+  transform-origin: calc(var(--col) * 50% + 25%) calc((var(--row) + 0.5) * 100% / var(--rows));
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ap-supply-body { display: flex; flex-direction: column; padding: 1rem 0.9rem 1rem 1rem; }
+.ap-supply-meta { display: flex; align-items: center; justify-content: space-between; }
+.ap-supply-icon { display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: 12px; background: var(--ap-tint); color: var(--ap-accent); transition: background-color 0.25s ease, color 0.25s ease; }
 .ap-num { display: block; color: var(--ap-leaf); font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; }
-.ap-supply h3 { margin: 0.6rem 0 0.45rem; font-size: 1.08rem; font-weight: 600; }
-.ap-supply p { margin: 0; color: var(--ap-muted); font-size: 0.88rem; line-height: 1.7; }
-.ap-note { margin: 1.1rem 0 0; color: var(--ap-muted); font-size: 0.8rem; }
+.ap-supply h3 { margin: 0.95rem 0 0.4rem; font-family: var(--font-serif); font-size: 1.3rem; font-weight: 500; line-height: 1.25; color: var(--ap-ink); }
+.ap-supply p { margin: 0; color: var(--ap-muted); font-size: 0.9rem; line-height: 1.65; }
+
+.ap-supply > li.ap-supply-all {
+  display: flex; flex-direction: column; align-items: flex-start; padding: 1.5rem 1.6rem; border-color: transparent; color: #f4ecd9;
+  background: radial-gradient(ellipse 60% 90% at 100% 0%, rgba(201, 217, 138, 0.18), transparent 70%), linear-gradient(160deg, #1d4a2e, var(--ap-forest));
+  box-shadow: 0 18px 40px rgba(22, 54, 36, 0.2);
+}
+.ap-supply-all .ap-supply-icon { background: var(--ap-lime); color: var(--ap-forest); }
+.ap-supply-all { position: relative; }
+.ap-supply-all .ap-num { position: absolute; top: 1.5rem; right: 1.6rem; color: var(--ap-lime); }
+.ap-supply-all h3 { color: #f7f6f0; }
+.ap-supply-all p { color: rgba(244, 236, 217, 0.82); }
+.ap-supply-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: auto 0 0; padding: 1.1rem 0 0; list-style: none; }
+.ap-supply-stack li { padding: 0.3rem 0.75rem; border: 1px solid rgba(201, 217, 138, 0.35); border-radius: 999px; color: #f4ecd9; font-size: 0.76rem; font-weight: 600; }
+
+.ap-note {
+  display: flex; align-items: center; gap: 0.6rem; width: fit-content; margin: 1.4rem 0 0; padding: 0.7rem 1rem; border-radius: 12px;
+  background: var(--ap-card); border: 1px solid var(--ap-line); color: var(--ap-muted); font-size: 0.84rem; line-height: 1.5;
+}
+.ap-note svg { flex: none; color: var(--ap-leaf); }
 
 /* ================= workflow ================= */
 .ap-steps { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.75rem; margin: 0; padding: 0; list-style: none; counter-reset: none; }
@@ -257,6 +292,9 @@
 @media (hover: hover) {
   .ap-pillars li:hover { transform: translateY(-4px); border-color: rgba(79, 127, 58, 0.32); box-shadow: 0 18px 36px rgba(22, 54, 36, 0.1); }
   .ap-pillars li:hover .ap-pillar-atlas { transform: scale(1.06); }
+  .ap-supply > li:not(.ap-supply-all):hover { border-color: rgba(79, 127, 58, 0.32); box-shadow: 0 14px 30px rgba(22, 54, 36, 0.09); }
+  .ap-supply > li:hover .ap-atlas { transform: scale(1.07); }
+  .ap-supply > li:not(.ap-supply-all):hover .ap-supply-icon { background: var(--ap-forest); color: var(--ap-lime); }
   .ap-pillars li:hover .ap-icon { background: var(--ap-lime); color: var(--ap-forest); }
 }
 
@@ -264,7 +302,7 @@
 @media (max-width: 1050px) {
   .ap-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 1.75rem; }
   .ap-steps li:nth-child(4)::after { display: none; }
-  .ap-supply { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ap-supply { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
   .ap-section.ap-intro, .ap-record, .ap-section.ap-contact { grid-template-columns: 1fr; }
@@ -281,7 +319,11 @@
 }
 @media (max-width: 640px) {
   .ap-main { padding: 3rem 16px 0; }
-  .ap-supply { grid-template-columns: 1fr; }
+  .ap-supply > li { grid-template-columns: 1fr; }
+  .ap-supply > li { min-height: 0; }
+  .ap-supply-media { aspect-ratio: 16 / 9; }
+  .ap-supply-body { padding: 0.9rem 0.6rem 0.7rem; }
+  .ap-note { align-items: flex-start; }
   .ap-steps { grid-template-columns: 1fr; gap: 0.9rem; }
   .ap-steps li { flex-direction: row; align-items: center; gap: 1rem; }
   .ap-steps li:not(:last-child)::after { display: none; }
@@ -300,7 +342,7 @@
   .ap-actions .ap-btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ap-pillars li, .ap-pillar-atlas { transition: none; }
+  .ap-pillars li, .ap-pillar-atlas, .ap-supply > li, .ap-atlas { transition: none; }
   .ap-pillars li:hover { transform: none; }
-  .ap-pillars li:hover .ap-pillar-atlas { transform: none; }
+  .ap-pillars li:hover .ap-pillar-atlas, .ap-supply > li:hover .ap-atlas { transform: none; }
 }

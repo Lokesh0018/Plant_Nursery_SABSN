@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ArrowRight, Sprout, Shovel, Scissors, Building2, Plane, Factory, Landmark, BadgeCheck,
   Phone, Mail, MapPin, MessageCircle, Leaf, Trees, Apple, TreePine, Flower2, IndianRupee, LandPlot, Users, Quote,
+  Layers, Recycle, Amphora, BrickWall, LayoutGrid, Workflow, Info,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
@@ -38,14 +39,19 @@ const STRENGTHS = [
   'Nursery supply that can be combined with planting, establishment and maintenance.',
 ];
 
+// `atlas` = [sheet, column, row] of a panel in the illustrative service atlases (public/services)
 const SUPPLY = [
-  { title: 'Cocopeat / Coco-fibre', text: 'Growing media for potting, nursery propagation and soil-mix preparation.' },
-  { title: 'Vermi Compost', text: 'Organic matter for planting beds, potting mixes and landscape soil improvement.' },
-  { title: 'Plant Pots', text: 'Different types, sizes and finishes for nursery, indoor, outdoor and project planting.' },
-  { title: 'Civil Works', text: 'Garden edging, planter construction, pathways, paving and site preparation.' },
-  { title: 'Vertical Gardens', text: 'Planning, installation and planting for suitable walls and structures.' },
-  { title: 'Integrated Delivery', text: 'Plants, media, pots, civil work, planting and maintenance, coordinated as one.' },
+  { icon: Layers, atlas: ['four', 0, 0], title: 'Cocopeat / Coco-fibre', text: 'Growing media for potting, nursery propagation and soil-mix preparation.' },
+  { icon: Recycle, atlas: ['six', 0, 2], title: 'Vermi Compost', text: 'Organic matter for planting beds, potting mixes and landscape soil improvement.' },
+  { icon: Amphora, atlas: ['six', 1, 2], title: 'Plant Pots', text: 'Different types, sizes and finishes for nursery, indoor, outdoor and project planting.' },
+  { icon: BrickWall, atlas: ['four', 0, 1], title: 'Civil Works', text: 'Garden edging, planter construction, pathways, paving and site preparation.' },
+  { icon: LayoutGrid, atlas: ['four', 1, 0], title: 'Vertical Gardens', text: 'Planning, installation and planting for suitable walls and structures.' },
 ];
+const INTEGRATED = {
+  title: 'Integrated Delivery', text: 'Plants, media, pots, civil work, planting and maintenance, coordinated as one.',
+  parts: ['Plants', 'Media', 'Pots', 'Civil work', 'Planting', 'Maintenance'],
+};
+const ATLAS_SRC = { four: '/services/service-atlas.webp', six: '/services/service-atlas-six.webp' };
 
 const STEPS = [
   'Site visit and requirement collection',
@@ -185,15 +191,33 @@ export default function AboutPage() {
             <h2 id="ap-supply" className="ap-h2">Everything a planting project needs, <em>in one place.</em></h2>
           </header>
           <ol className="ap-supply">
-            {SUPPLY.map(({ title, text }, i) => (
+            {SUPPLY.map(({ icon: Icon, atlas: [sheet, col, row], title, text }, i) => (
               <li key={title}>
-                <span className="ap-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
+                <div className="ap-supply-media" aria-hidden="true">
+                  <img className="ap-atlas" src={ATLAS_SRC[sheet]} alt="" loading="lazy" decoding="async" draggable="false"
+                    style={{ '--col': col, '--row': row, '--rows': sheet === 'six' ? 3 : 2 }} />
+                </div>
+                <div className="ap-supply-body">
+                  <div className="ap-supply-meta">
+                    <span className="ap-supply-icon"><Icon size={18} strokeWidth={1.9} aria-hidden="true" /></span>
+                    <span className="ap-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
               </li>
             ))}
+            <li className="ap-supply-all">
+              <span className="ap-supply-icon"><Workflow size={20} strokeWidth={1.9} aria-hidden="true" /></span>
+              <span className="ap-num" aria-hidden="true">06</span>
+              <h3>{INTEGRATED.title}</h3>
+              <p>{INTEGRATED.text}</p>
+              <ul className="ap-supply-stack" aria-label="Combined in one delivery">
+                {INTEGRATED.parts.map((t) => <li key={t}>{t}</li>)}
+              </ul>
+            </li>
           </ol>
-          <p className="ap-note">Exact product specifications, stock and civil-work scope are confirmed before quotation.</p>
+          <p className="ap-note"><Info size={16} strokeWidth={2} aria-hidden="true" />Exact product specifications, stock and civil-work scope are confirmed before quotation.</p>
         </section>
 
         {/* Workflow */}
