@@ -299,7 +299,6 @@
   box-shadow: 0 10px 24px rgba(22, 54, 36, 0.28);
 }
 .pm-btn-solid:hover { background: #1f4a2f; box-shadow: 0 14px 30px rgba(22, 54, 36, 0.34); }
-.pm-btn-solid.is-added { background: #3a7d44; }
 .pm-btn-wa {
   background: rgba(37, 211, 102, 0.12);
   color: #1b7a3f;
@@ -324,7 +323,7 @@
   .pm-care { grid-template-columns: 1fr 1fr; }
   .pm-materials ul { grid-template-columns: 1fr; }
   .pm-foot { flex-direction: column; align-items: stretch; }
-  .pm-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .pm-actions { display: grid; grid-template-columns: 1fr; }
   .pm-btn { justify-content: center; }
 }
 

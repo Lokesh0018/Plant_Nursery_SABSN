@@ -1,17 +1,9 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { ShoppingBag, Search, ArrowRight, Menu, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, ArrowRight, Menu, X } from 'lucide-react';
 import './Navbar.css';
 import { subscribeScroll } from '../lib/scrollStore';
-const CartDrawer = lazy(() => import('./CartDrawer')); // only fetched the first time the cart opens
 import { products } from '../data/products';
 import { pots } from '../data/pots';
-
-// The cart lives here; keep it for the browser session so it survives moving between the home
-// page and the plants page (each is a full page load)
-const CART_KEY = 'sabsn-cart';
-function loadCart() {
-  try { return JSON.parse(sessionStorage.getItem(CART_KEY)) || []; } catch { return []; }
-}
 
 // Section ids on the home page; from any other page a link reloads home and scrolls there
 function goToSection(page, id) {
@@ -34,54 +26,9 @@ export default function Navbar({ page = 'home' }) {
   const [activeSection, setActiveSection] = useState(page === 'home' ? 'home' : page);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [cartItems, setCartItems] = useState(loadCart);
-  const [cartCount, setCartCount] = useState(() => cartItems.reduce((n, item) => n + item.quantity, 0));
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartMounted, setCartMounted] = useState(false); // stays true after the first open so the close animation still plays
-
-  const clearCart = () => {
-    setCartItems([]);
-    setCartCount(0);
-  };
-
-  const updateQuantity = (id, delta) => {
-    setCartItems(prev => {
-      return prev.map(item => {
-        if (item.id === id) {
-          const newQuantity = item.quantity + delta;
-          return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
-        }
-        return item;
-      }).filter(Boolean);
-    });
-    setCartCount(c => Math.max(0, c + delta));
-  };
   const navRef = React.useRef(null);
   const searchInputRef = React.useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
-
-  useEffect(() => {
-    const handleCartUpdate = (e) => {
-      const newItem = e.detail?.item;
-      const quantity = e.detail?.quantity || 1;
-      if (newItem) {
-        setCartItems(prev => {
-          const existing = prev.find(item => item.id === newItem.id);
-          if (existing) {
-            return prev.map(item => item.id === newItem.id ? { ...item, quantity: item.quantity + quantity } : item);
-          }
-          return [...prev, { ...newItem, quantity }];
-        });
-      }
-      setCartCount(c => c + quantity);
-    };
-    window.addEventListener('cart-updated', handleCartUpdate);
-    return () => window.removeEventListener('cart-updated', handleCartUpdate);
-  }, []);
-
-  useEffect(() => {
-    try { sessionStorage.setItem(CART_KEY, JSON.stringify(cartItems)); } catch { /* storage unavailable */ }
-  }, [cartItems]);
 
   useEffect(() => {
     const handleScroll = ({ y, vh, max }) => {
@@ -334,49 +281,6 @@ export default function Navbar({ page = 'home' }) {
           </div>
         </div>
 
-        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-          <button className="cart-icon-target" style={{
-            border: 'none',
-            background: 'transparent',
-            cursor: 'pointer',
-            color: darkGreen,
-            display: 'flex',
-            alignItems: 'center',
-            padding: '4px'
-          }} aria-label="Cart"
-          onClick={() => { setCartMounted(true); setIsCartOpen(true); }}>
-            <ShoppingBag size={19} strokeWidth={1.8} />
-          </button>
-          {cartCount > 0 && (
-            <span className="cart-badge" style={{
-              position: 'absolute',
-              top: '-6px',
-              right: '-8px',
-              /* lime accent from the theme (progress line, chips) with forest text; cream rim lifts it off the dark bar */
-              background: 'linear-gradient(180deg, #d7e59c, #c9d98a)',
-              color: '#0d2a18',
-              fontFamily: 'var(--font-sans)',
-              fontSize: '0.64rem',
-              lineHeight: 1,
-              minWidth: '18px',
-              height: '18px',
-              padding: '0 5px',
-              borderRadius: '999px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: '700',
-              letterSpacing: '0.01em',
-              boxShadow: '0 0 0 2px #0d2a18, 0 0 0 3px rgba(244, 236, 217, 0.35), 0 3px 8px rgba(0, 0, 0, 0.35)',
-              zIndex: 2,
-              pointerEvents: 'none'
-            }}
-            aria-live="polite" aria-label={`${cartCount} item${cartCount === 1 ? '' : 's'} in cart`}>
-              {cartCount > 99 ? '99+' : cartCount}
-            </span>
-          )}
-        </div>
-
         <button className="shop-now-btn" style={{
           backgroundColor: darkGreen,
           color: light ? '#163624' : '#ffffff',
@@ -416,17 +320,6 @@ export default function Navbar({ page = 'home' }) {
 
       </div>
     </nav>
-    {cartMounted && (
-      <Suspense fallback={null}>
-        <CartDrawer
-          isOpen={isCartOpen}
-          onClose={() => setIsCartOpen(false)}
-          cartItems={cartItems}
-          updateQuantity={updateQuantity}
-          clearCart={clearCart}
-        />
-      </Suspense>
-    )}
     </>
   );
 }

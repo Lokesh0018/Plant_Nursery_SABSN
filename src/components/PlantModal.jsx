@@ -1,7 +1,7 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import gsap from 'gsap';
-import { X, Sun, Droplets, ShoppingBag, MessageCircle, Leaf, Check, Home, Sparkles, Layers, MapPin, Waves } from 'lucide-react';
+import { X, Sun, Droplets, MessageCircle, Leaf, Home, Sparkles, Layers, MapPin, Waves } from 'lucide-react';
 import './PlantModal.css';
 
 const WA_NUMBER = '919849936169';
@@ -14,7 +14,6 @@ export default function PlantModal({ product, originRect, onClose }) {
   const backdropRef = useRef(null);
   const panelRef = useRef(null);
   const closeRef = useRef(null);
-  const [added, setAdded] = useState(false);
   const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // --- open animation
@@ -94,45 +93,6 @@ export default function PlantModal({ product, originRect, onClose }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   });
-
-  const addToCart = () => {
-    const img = panelRef.current.querySelector('.pm-img');
-    const cartIcon = document.querySelector('.cart-icon-target');
-    if (img && cartIcon && !reduce) {
-      // same flight as the card's quick add: shrink, dip, then arc up into the cart
-      const clone = img.cloneNode(true);
-      const a = img.getBoundingClientRect();
-      const c = cartIcon.getBoundingClientRect();
-      Object.assign(clone.style, {
-        position: 'fixed', top: `${a.top}px`, left: `${a.left}px`, width: `${a.width}px`, height: `${a.height}px`,
-        zIndex: 9999, pointerEvents: 'none', transform: 'none', transition: 'none', margin: 0,
-        filter: 'drop-shadow(0 15px 15px rgba(0,0,0,0.25))',
-      });
-      document.body.appendChild(clone);
-      gsap.to(clone, { left: c.left + c.width / 2 - 15, width: 30, height: 30, duration: 0.9, ease: 'power1.inOut' });
-      gsap.to(clone, {
-        top: c.top + c.height / 2 - 15,
-        opacity: 0.3,
-        duration: 0.9,
-        ease: 'back.in(3)',
-        onComplete: () => {
-          clone.remove();
-          window.dispatchEvent(new CustomEvent('cart-updated', { detail: { item: product, quantity: 1 } }));
-          gsap.fromTo(cartIcon, { scale: 1 }, { scale: 1.3, duration: 0.15, yoyo: true, repeat: 1 });
-          setTimeout(() => {
-            const badge = document.querySelector('.cart-badge');
-            if (badge) gsap.fromTo(badge, { scale: 1 }, { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1 });
-          }, 50);
-        },
-      });
-      // the plant on stage dips and springs back as its copy leaves
-      gsap.fromTo(img, { scale: 1 }, { scale: 0.94, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.out' });
-    } else {
-      window.dispatchEvent(new CustomEvent('cart-updated', { detail: { item: product, quantity: 1 } }));
-    }
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1800);
-  };
 
   const isPot = Array.isArray(product.materials) && product.materials.length > 0;
   const waText = encodeURIComponent(isPot ? `Hello SABSN, I’d like to enquire about the ${product.name} pot (${product.scientificName}).` : `Hello SABSN, I’d like to enquire about the ${product.name} (${product.scientificName}).`);
@@ -214,18 +174,14 @@ export default function PlantModal({ product, originRect, onClose }) {
               <strong>₹{product.price.toLocaleString()}</strong>
             </div>
             <div className="pm-actions">
-              <button className={`pm-btn pm-btn-solid${added ? ' is-added' : ''}`} onClick={addToCart}>
-                {added ? <Check size={18} /> : <ShoppingBag size={18} />}
-                <span>{added ? 'Added to cart' : 'Add to cart'}</span>
-              </button>
               <a
-                className="pm-btn pm-btn-wa"
+                className="pm-btn pm-btn-solid"
                 href={`https://wa.me/${WA_NUMBER}?text=${waText}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <MessageCircle size={18} />
-                <span>Enquire</span>
+                <span>Enquire on WhatsApp</span>
               </a>
             </div>
           </div>

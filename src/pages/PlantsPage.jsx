@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, lazy, Suspense } from 'react';
-import { Search, X, Sun, CloudSun, Cloud, Sprout, ArrowLeft, MessageCircle, Star, Droplets, Plus, Check, Leaf, ArrowDown } from 'lucide-react';
+import { Search, X, Sun, CloudSun, Cloud, Sprout, ArrowLeft, MessageCircle, Star, Droplets, Leaf, ArrowDown } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import { ProductCard } from '../components/Collection';
@@ -53,18 +53,6 @@ const STATS = (() => {
 const PICK = [...products].sort(SORTS.rating.fn)[0];
 
 function Spotlight({ product, onOpen }) {
-  const [added, setAdded] = useState(false);
-  useEffect(() => {
-    if (!added) return undefined;
-    const t = setTimeout(() => setAdded(false), 1800);
-    return () => clearTimeout(t);
-  }, [added]);
-
-  const add = () => {
-    window.dispatchEvent(new CustomEvent('cart-updated', { detail: { item: product, quantity: 1 } }));
-    setAdded(true);
-  };
-
   return (
     <section className="pp-spot" aria-labelledby="pp-spot-name">
       <div className="pp-spot-stage">
@@ -91,10 +79,9 @@ function Spotlight({ product, onOpen }) {
           <p className="pp-spot-price">₹{product.price.toLocaleString()}</p>
           <div className="pp-spot-actions">
             <button type="button" className="pp-btn pp-btn--ghost" onClick={(e) => onOpen(product, e.currentTarget)}>View details</button>
-            <button type="button" className={`pp-btn${added ? ' is-done' : ''}`} onClick={add} aria-live="polite">
-              {added ? <Check size={18} strokeWidth={2.4} aria-hidden="true" /> : <Plus size={18} strokeWidth={2.4} aria-hidden="true" />}
-              {added ? 'Added to cart' : 'Add to cart'}
-            </button>
+            <a className="pp-btn" href={`https://wa.me/919849936169?text=${encodeURIComponent(`Hello SABSN, I’d like to enquire about the ${product.name} (${product.scientificName}).`)}`} target="_blank" rel="noopener noreferrer">
+              <MessageCircle size={18} strokeWidth={2.2} aria-hidden="true" />Enquire
+            </a>
           </div>
         </div>
       </div>
