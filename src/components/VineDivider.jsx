@@ -112,9 +112,20 @@ function decorate(svg, stem, mirror, { density = 95, size = 1.35, tendrils = tru
   return items;
 }
 
-export default function VineDivider({ variant = 'top' }) {
+// `id` lets a variant be used more than once on a page (each instance needs its own gradient ids);
+// `from` / `to` are the exact colours of the sections above and below, for variants that ramp between them
+export default function VineDivider({ variant = 'top', id = variant, from, to }) {
   const ref = useRef(null);
-  const uid = variant; // one instance per variant
+  const uid = id;
+  const style = {
+    '--leaf-fill': `url(#vine-leaf-fill-${uid})`,
+    '--leaf-fill-2': `url(#vine-leaf-fill-2-${uid})`,
+    '--bloom-fill': `url(#vine-bloom-fill-${uid})`,
+    '--berry-fill': `url(#vine-berry-fill-${uid})`,
+    '--bud-fill': `url(#vine-bud-fill-${uid})`,
+    ...(from && { '--vd-from': from }),
+    ...(to && { '--vd-to': to }),
+  };
 
   useLayoutEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -225,7 +236,7 @@ export default function VineDivider({ variant = 'top' }) {
   }, []);
 
   return (
-    <div ref={ref} className={`vine-divider vine-divider--${variant}`} aria-hidden="true">
+    <div ref={ref} className={`vine-divider vine-divider--${variant}`} style={style} aria-hidden="true">
       <svg className="vine-svg" preserveAspectRatio="none" height={H}>
         <defs>
           <linearGradient id={`vine-leaf-fill-${uid}`} x1="0" y1="0" x2="1" y2="1">

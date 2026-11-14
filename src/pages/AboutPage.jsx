@@ -10,6 +10,7 @@ import {
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import VineOrnament from '../components/VineOrnament';
+import VineDivider from '../components/VineDivider';
 import AboutHero from '../components/AboutHero';
 import './AboutPage.css';
 
@@ -189,6 +190,8 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <VineDivider variant="ramp" id="about-1" from="#F7F4EA" to="#eef3e4" />
+
         {/* What we do */}
         <section className="ap-section ap-bg ap-bg--sage" aria-labelledby="ap-do">
           <header className="ap-head">
@@ -227,6 +230,8 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <VineDivider variant="ramp" id="about-2" from="#edf2e3" to="#fbf8f1" />
+
         {/* Supply & services */}
         <section className="ap-section ap-band ap-bg ap-bg--cream" aria-labelledby="ap-supply">
           <header className="ap-head">
@@ -263,6 +268,8 @@ export default function AboutPage() {
           <p className="ap-note"><Info size={16} strokeWidth={2} aria-hidden="true" />Exact product specifications, stock and civil-work scope are confirmed before quotation.</p>
         </section>
 
+        <VineDivider variant="ramp" id="about-3" from="#f7f3ea" to="#163624" />
+
         {/* Workflow */}
         <section className="ap-section ap-flow ap-bg ap-bg--forest" aria-labelledby="ap-flow">
           <header className="ap-head">
@@ -292,6 +299,8 @@ export default function AboutPage() {
             })}
           </div>
         </section>
+
+        <VineDivider variant="ramp" id="about-4" from="#0f2d1b" to="#f6efe2" />
 
         {/* Track record */}
         <section className="ap-section ap-record ap-bg ap-bg--sand" aria-labelledby="ap-record">
@@ -336,6 +345,8 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <VineDivider variant="ramp" id="about-5" from="#f3ead9" to="#eef3e4" />
+
         {/* Plant palette */}
         <section className="ap-section ap-bg ap-bg--sage" aria-labelledby="ap-palette">
           <header className="ap-head ap-head--split">
@@ -361,6 +372,8 @@ export default function AboutPage() {
             ))}
           </ul>
         </section>
+
+        <VineDivider variant="ramp" id="about-6" from="#edf2e3" to="#F7F4EA" />
 
         {/* Leadership & contact */}
         <section className="ap-section ap-contact" aria-labelledby="ap-contact">

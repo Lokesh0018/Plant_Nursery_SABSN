@@ -22,6 +22,13 @@
 
 /* ================= shared ================= */
 .ap-main { position: relative; z-index: 0; isolation: isolate; padding: 0 5vw; }
+/* vine dividers run edge to edge across the page gutter, and take the place of the band hairlines */
+.ap-main > .vine-divider { margin-inline: -5vw; }
+.vine-divider + .ap-bg::before { display: none; }
+/* the divider already gives the seam breathing room, so the bands either side of it start and end a little tighter */
+.vine-divider + .ap-section { padding-top: clamp(2.25rem, 5vw, 4rem); }
+.ap-section:has(+ .vine-divider) { padding-bottom: clamp(2.25rem, 5vw, 4rem); }
+.ap-main > .vine-divider + .ap-section.ap-contact { margin-top: clamp(1.5rem, 3vw, 2.5rem); padding-top: clamp(2rem, 4vw, 3rem); }
 .ap-section { max-width: 1200px; margin: 0 auto; padding: clamp(3rem, 7vw, 5.5rem) 0; }
 
 /* Full-bleed section backgrounds: each band runs edge to edge behind the centred content,
@@ -31,26 +38,30 @@
   content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%);
   background: var(--ap-bg-fill); pointer-events: none;
 }
+/* every band's glows sit inside the band and fade out before its top and bottom edges, so the
+   vine dividers between bands can ramp between flat, exact edge colours */
 .ap-bg--sage {
   --ap-bg-fill:
-    radial-gradient(ellipse 45% 60% at 100% 0%, rgba(201, 217, 138, 0.35), transparent 70%),
-    radial-gradient(ellipse 40% 55% at 0% 100%, rgba(79, 127, 58, 0.10), transparent 70%),
+    radial-gradient(ellipse 45% 50% at 100% 40%, rgba(201, 217, 138, 0.35), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 0% 60%, rgba(79, 127, 58, 0.10), transparent 70%),
     linear-gradient(180deg, #eef3e4, #e6eedb 55%, #edf2e3);
 }
 .ap-bg--cream {
   --ap-bg-fill:
+    /* the dot grid fades out toward both edges */
+    linear-gradient(180deg, #fbf8f1 0, rgba(251, 248, 241, 0) 140px, rgba(247, 243, 234, 0) calc(100% - 140px), #f7f3ea 100%),
     radial-gradient(circle, rgba(49, 91, 53, 0.09) 1px, transparent 1.4px) 0 0 / 22px 22px,
     linear-gradient(180deg, #fbf8f1, #f7f3ea);
 }
 .ap-bg--sand {
   --ap-bg-fill:
-    radial-gradient(ellipse 50% 70% at 0% 50%, rgba(201, 150, 100, 0.12), transparent 70%),
+    radial-gradient(ellipse 50% 60% at 0% 50%, rgba(201, 150, 100, 0.12), transparent 70%),
     linear-gradient(180deg, #f6efe2, #f3ead9);
 }
 .ap-bg--forest {
   --ap-bg-fill:
-    radial-gradient(ellipse 55% 80% at 85% 0%, rgba(201, 217, 138, 0.16), transparent 65%),
-    radial-gradient(ellipse 40% 60% at 0% 100%, rgba(127, 168, 74, 0.12), transparent 70%),
+    radial-gradient(ellipse 55% 60% at 85% 45%, rgba(201, 217, 138, 0.16), transparent 65%),
+    radial-gradient(ellipse 40% 55% at 0% 55%, rgba(127, 168, 74, 0.12), transparent 70%),
     linear-gradient(180deg, #163624, #0f2d1b);
 }
 /* a soft hairline where a light band meets the ivory, so edges never look cut */
@@ -395,6 +406,7 @@
 }
 @media (max-width: 640px) {
   .ap-main { padding: 3rem 16px 0; }
+  .ap-main > .vine-divider { margin-inline: -16px; }
   .ap-supply > li { grid-template-columns: 1fr; }
   .ap-palette { grid-template-columns: 1fr; }
   .ap-palette > li { padding: 1.2rem; }

@@ -87,6 +87,22 @@
   margin-bottom: -1px;
 }
 
+/* generic seam: an eased ramp from the exact colour of the section above (--vd-from) to the one below
+   (--vd-to), both ends held flat so neither seam shows a change of pace, with a soft lime light in
+   the middle that stops well short of either edge */
+.vine-divider.vine-divider--ramp {
+  background:
+    radial-gradient(ellipse 38% 34% at 50% 50%, rgba(201, 217, 138, 0.22), transparent 100%),
+    linear-gradient(180deg,
+      var(--vd-from) 0%,
+      color-mix(in srgb, var(--vd-from) 92%, var(--vd-to)) 12%,
+      color-mix(in srgb, var(--vd-from) 50%, var(--vd-to)) 50%,
+      color-mix(in srgb, var(--vd-from) 8%, var(--vd-to)) 88%,
+      var(--vd-to) 100%);
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+
 .vine-divider {
   position: relative;
   z-index: 2;
