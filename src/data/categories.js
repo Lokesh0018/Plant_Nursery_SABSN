@@ -19,3 +19,13 @@ export const potCategories = [
   { title: 'Hanging Pots', text: 'Make room for trailing greenery on balconies and verandas.', alt: 'Hanging planters suspended by cords and chains with trailing foliage', tag: 'Let greenery flow' },
   { title: 'Grow Bags & Nursery Bags', text: 'Practical growing containers for saplings and nursery planting.', alt: 'Black nursery bags and a fabric grow bag containing saplings', tag: 'Start something green' },
 ];
+
+// Crop for one cell of a 4×2 category atlas (1536×1024). The pots atlas splits its rows at 465px.
+export function atlasCell(kind, i) {
+  const split = kind === 'pots' ? 465 : 512;
+  const rowHeight = i < 4 ? split : 1024 - split;
+  return {
+    ratio: 384 / rowHeight,
+    style: { left: `${-(i % 4) * 100}%`, top: i < 4 ? 0 : `${-split / rowHeight * 100}%`, height: `${1024 / rowHeight * 100}%` },
+  };
+}

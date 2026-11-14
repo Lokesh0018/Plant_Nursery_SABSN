@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { lazy, Suspense, useRef, useState } from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import VineOrnament from './VineOrnament';
+import { atlasCell } from '../data/categories';
 import './CategoryCollection.css';
+
+const CategoryModal = lazy(() => import('./CategoryModal')); // only fetched when a category is opened
 
 export default function CategoryCollection({ kind, categories }) {
   const pots = kind === 'pots';
-  const split = pots ? 465 : 512;
+  const [open, setOpen] = useState(null);
+  const cards = useRef([]);
+  const closeModal = () => {
+    const card = cards.current[open];
+    setOpen(null);
+    card?.focus({ preventScroll: true });
+  };
   return (
     <section id={pots ? 'pots-collection' : 'collection'} className={`category-section category-section--${kind}`} aria-labelledby={`${kind}-categories-title`}>
       <div className="category-wrap">
@@ -22,23 +31,21 @@ export default function CategoryCollection({ kind, categories }) {
         </header>
         <ul className="category-grid">
           {categories.map(({ title, text, alt, tag }, i) => {
-            const rowHeight = i < 4 ? split : 1024 - split;
-            const enquiry = `https://wa.me/919849936169?text=${encodeURIComponent(`Hello SABSN, I would like to enquire about ${title}. Please share available varieties, sizes and prices.`)}`;
             return <li key={title} className="category-card">
-              <a href={enquiry} target="_blank" rel="noopener noreferrer" aria-label={`Enquire about ${title} on WhatsApp`}>
+              <button type="button" ref={(el) => { cards.current[i] = el; }} onClick={() => setOpen(i)} aria-haspopup="dialog" aria-label={`View details for ${title}`}>
                 <div className="category-media">
                   <div className="category-photo">
                     <img src={`/categories/${kind}-atlas.webp`} alt={`Illustration of ${alt.charAt(0).toLowerCase() + alt.slice(1)}`} loading="lazy" decoding="async" width="1536" height="1024"
-                      style={{ left: `${-(i % 4) * 100}%`, top: i < 4 ? 0 : `${-split / rowHeight * 100}%`, height: `${1024 / rowHeight * 100}%` }} />
+                      style={atlasCell(kind, i).style} />
                   </div>
                   <span className="category-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                   <span className="category-tag">{tag}</span>
                 </div>
                 <div className="category-body">
                   <h3>{title}</h3><p>{text}</p>
-                  <span className="category-enquire">Enquire about this category <span><ArrowUpRight size={18} aria-hidden="true" /></span></span>
+                  <span className="category-enquire">Explore this category <span><ArrowUpRight size={18} aria-hidden="true" /></span></span>
                 </div>
-              </a>
+              </button>
             </li>;
           })}
         </ul>
@@ -50,6 +57,11 @@ export default function CategoryCollection({ kind, categories }) {
           </a>
         </div>
       </div>
+      {open !== null && (
+        <Suspense fallback={null}>
+          <CategoryModal kind={kind} categories={categories} index={open} onIndex={setOpen} onClose={closeModal} />
+        </Suspense>
+      )}
     </section>
   );
 }
