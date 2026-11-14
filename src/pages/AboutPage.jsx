@@ -338,15 +338,24 @@ export default function AboutPage() {
 
         {/* Plant palette */}
         <section className="ap-section ap-bg ap-bg--sage" aria-labelledby="ap-palette">
-          <header className="ap-head">
-            <p className="ap-kicker">06 · Landscape plant palette</p>
-            <h2 id="ap-palette" className="ap-h2">Rooted in <em>Indian & Andhra landscapes.</em></h2>
-            <p className="ap-head-text">A planning palette for landscape work. Final selection follows soil, water, sunlight, space, local suitability and availability.</p>
+          <header className="ap-head ap-head--split">
+            <div>
+              <p className="ap-kicker">06 · Landscape plant palette</p>
+              <h2 id="ap-palette" className="ap-h2 ap-h2--split">Rooted in <em>Indian & Andhra landscapes.</em></h2>
+            </div>
+            <p className="ap-palette-note">
+              <Info size={18} strokeWidth={2} aria-hidden="true" />
+              <span>A planning palette for landscape work. Final selection follows soil, water, sunlight, space, local suitability and availability.</span>
+            </p>
           </header>
           <ul className="ap-palette">
             {PALETTE.map(({ icon: Icon, title, plants }) => (
               <li key={title}>
-                <h3><Icon size={18} strokeWidth={2} aria-hidden="true" />{title}</h3>
+                <div className="ap-palette-head">
+                  <span className="ap-palette-icon"><Icon size={20} strokeWidth={1.9} aria-hidden="true" /></span>
+                  <h3>{title}</h3>
+                  <span className="ap-palette-count">{plants.length} species</span>
+                </div>
                 <ul className="ap-chips">{plants.map((p) => <li key={p}>{p}</li>)}</ul>
               </li>
             ))}

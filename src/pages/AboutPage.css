@@ -67,7 +67,6 @@
 
 /* cards on tinted bands lift to white so they don't melt into the background */
 .ap-bg--sage .ap-pillars li, .ap-bg--sage .ap-palette > li { box-shadow: 0 8px 24px rgba(22, 54, 36, 0.05); }
-.ap-bg--sage .ap-chips li { background: #eef3e4; }
 .ap-head { max-width: 720px; margin-bottom: 2.5rem; }
 .ap-head-text { margin: 1rem 0 0; color: var(--ap-muted); font-size: 0.95rem; line-height: 1.75; }
 .ap-kicker { margin: 0 0 0.9rem; color: var(--ap-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
@@ -313,9 +312,24 @@
 .ap-registration strong { color: #f7f6f0; font-weight: 600; }
 
 /* ================= palette ================= */
-.ap-palette { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
-.ap-palette > li { padding: 1.5rem; border: 1px solid var(--ap-line); border-radius: 22px; background: var(--ap-card); }
-.ap-palette h3 { display: flex; align-items: center; gap: 0.55rem; margin: 0 0 1rem; color: var(--ap-accent); font-size: 1rem; font-weight: 600; }
+/* header: title left, planning note right */
+.ap-head--split { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); align-items: end; gap: 1.5rem 3rem; max-width: none; }
+.ap-palette-note {
+  display: flex; gap: 0.75rem; margin: 0; padding: 1rem 1.15rem; border-left: 2px solid var(--ap-leaf); border-radius: 0 14px 14px 0;
+  background: rgba(255, 253, 247, 0.7); color: var(--ap-muted); font-size: 0.92rem; line-height: 1.65;
+}
+.ap-palette-note svg { flex: none; margin-top: 0.15rem; color: var(--ap-leaf); }
+/* five groups on a 6-column grid: three across, then two wider cards, so no card is left alone */
+.ap-palette { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1.1rem; margin: 0; padding: 0; list-style: none; }
+.ap-palette > li { grid-column: span 2; display: flex; flex-direction: column; padding: 1.4rem 1.4rem 1.5rem; border: 1px solid var(--ap-line); border-radius: 22px; background: var(--ap-card); transition: border-color 0.25s ease, box-shadow 0.25s ease; }
+.ap-palette > li:nth-child(n + 4) { grid-column: span 3; }
+.ap-palette-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.85rem; margin-bottom: 1.1rem; padding-bottom: 1.1rem; border-bottom: 1px solid var(--ap-line); }
+.ap-palette-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--ap-forest); color: var(--ap-lime); }
+.ap-palette h3 { margin: 0; font-family: var(--font-serif); font-size: 1.22rem; font-weight: 500; font-variant: normal; letter-spacing: 0; line-height: 1.25; color: var(--ap-ink); }
+.ap-palette-count { padding: 0.25rem 0.6rem; border-radius: 999px; background: var(--ap-tint); color: var(--ap-accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; white-space: nowrap; }
+.ap-palette .ap-chips li { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.42rem 0.8rem 0.42rem 0.65rem; border: 1px solid rgba(22, 54, 36, 0.08); background: #f3f6ec; color: var(--ap-ink); font-size: 0.82rem; }
+/* a small leaf-green bullet before each plant name */
+.ap-palette .ap-chips li::before { content: ''; width: 6px; height: 6px; border-radius: 50% 0; background: var(--ap-leaf); transform: rotate(45deg); }
 
 /* ================= contact ================= */
 .ap-section.ap-contact {
@@ -347,6 +361,7 @@
   .ap-supply > li:not(.ap-supply-all):hover { border-color: rgba(79, 127, 58, 0.32); box-shadow: 0 14px 30px rgba(22, 54, 36, 0.09); }
   .ap-supply > li:hover .ap-atlas { transform: scale(1.07); }
   .ap-steps li:hover { transform: translateY(-3px); }
+  .ap-palette > li:hover { border-color: rgba(79, 127, 58, 0.3); box-shadow: 0 14px 30px rgba(22, 54, 36, 0.08); }
   .ap-clients button:not([aria-selected="true"]):hover { border-color: rgba(79, 127, 58, 0.32); box-shadow: 0 14px 30px rgba(70, 40, 20, 0.09); }
   .ap-phase .ap-steps li:not(:last-child):hover, .ap-phase:not(:last-child) .ap-steps li:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(201, 217, 138, 0.45); }
   .ap-supply > li:not(.ap-supply-all):hover .ap-supply-icon { background: var(--ap-forest); color: var(--ap-lime); }
@@ -362,7 +377,10 @@
   .ap-supply { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
-  .ap-section.ap-intro, .ap-record-grid, .ap-section.ap-contact { grid-template-columns: 1fr; }
+  .ap-section.ap-intro, .ap-record-grid, .ap-section.ap-contact, .ap-head--split { grid-template-columns: 1fr; }
+  .ap-palette { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ap-palette > li, .ap-palette > li:nth-child(n + 4) { grid-column: auto; }
+  .ap-palette > li:last-child { grid-column: 1 / -1; }
   .ap-record-media { order: -1; min-height: 0; aspect-ratio: 16 / 9; }
   .ap-intro-media { min-height: 0; aspect-ratio: 4 / 3; }
   .ap-stats li { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
@@ -377,6 +395,8 @@
 @media (max-width: 640px) {
   .ap-main { padding: 3rem 16px 0; }
   .ap-supply > li { grid-template-columns: 1fr; }
+  .ap-palette { grid-template-columns: 1fr; }
+  .ap-palette > li { padding: 1.2rem; }
   .ap-clients { grid-template-columns: 1fr; gap: 0.6rem; }
   .ap-clients button { display: grid; grid-template-columns: auto 1fr; column-gap: 1rem; align-items: center; padding: 1rem 2.2rem 1rem 1.1rem; }
   .ap-client-icon { grid-row: span 2; margin: 0; }
