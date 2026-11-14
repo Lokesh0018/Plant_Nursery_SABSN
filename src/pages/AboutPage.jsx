@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-  ArrowRight, Sprout, Shovel, Scissors, Check, Building2, Plane, Factory, Landmark, BadgeCheck,
+  ArrowRight, Sprout, Shovel, Scissors, Building2, Plane, Factory, Landmark, BadgeCheck,
   Phone, Mail, MapPin, MessageCircle, Leaf, Trees, Apple, TreePine, Flower2, IndianRupee, LandPlot, Users, Quote,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -25,9 +25,10 @@ const STATS = [
 const MOTTO = ['Green Plants', 'Healthy Life', 'Happy Life'];
 
 const PILLARS = [
-  { icon: Sprout, title: 'Plant supply', text: 'Indoor, outdoor and ornamental plant selections for projects and customers.' },
-  { icon: Shovel, title: 'Landscaping', text: 'Garden establishment, planting, lawn design and landscape development.' },
-  { icon: Scissors, title: 'Maintenance', text: 'Ongoing gardening, plant care and landscape maintenance support.' },
+  // `atlas` picks a panel of the illustrative service atlas (public/services/service-atlas-six.webp)
+  { icon: Sprout, atlas: 'planting', title: 'Plant supply', text: 'Indoor, outdoor and ornamental plant selections for projects and customers.' },
+  { icon: Shovel, atlas: 'landscape', title: 'Landscaping', text: 'Garden establishment, planting, lawn design and landscape development.' },
+  { icon: Scissors, atlas: 'lawn', title: 'Maintenance', text: 'Ongoing gardening, plant care and landscape maintenance support.' },
 ];
 
 const STRENGTHS = [
@@ -39,7 +40,7 @@ const STRENGTHS = [
 
 const SUPPLY = [
   { title: 'Cocopeat / Coco-fibre', text: 'Growing media for potting, nursery propagation and soil-mix preparation.' },
-  { title: 'Varini Compost', text: 'Organic matter for planting beds, potting mixes and landscape soil improvement.' },
+  { title: 'Vermi Compost', text: 'Organic matter for planting beds, potting mixes and landscape soil improvement.' },
   { title: 'Plant Pots', text: 'Different types, sizes and finishes for nursery, indoor, outdoor and project planting.' },
   { title: 'Civil Works', text: 'Garden edging, planter construction, pathways, paving and site preparation.' },
   { title: 'Vertical Gardens', text: 'Planning, installation and planting for suitable walls and structures.' },
@@ -143,20 +144,37 @@ export default function AboutPage() {
         <section className="ap-section ap-bg ap-bg--sage" aria-labelledby="ap-do">
           <header className="ap-head">
             <p className="ap-kicker">02 · What we do</p>
-            <h2 id="ap-do" className="ap-h2">From the nursery bed <em>to a finished landscape.</em></h2>
+            <h2 id="ap-do" className="ap-h2 ap-h2--split">From the nursery bed <em>to a finished landscape.</em></h2>
           </header>
-          <ul className="ap-pillars">
-            {PILLARS.map(({ icon: Icon, title, text }) => (
+          <ol className="ap-pillars">
+            {PILLARS.map(({ icon: Icon, atlas, title, text }, i) => (
               <li key={title}>
-                <span className="ap-icon"><Icon size={22} strokeWidth={1.9} aria-hidden="true" /></span>
-                <h3>{title}</h3>
-                <p>{text}</p>
+                <div className="ap-pillar-media" aria-hidden="true">
+                  <img className={`ap-pillar-atlas ap-pillar-atlas--${atlas}`} src="/services/service-atlas-six.webp"
+                    width="1254" height="1254" loading="lazy" decoding="async" alt="" draggable="false" />
+                  <span className="ap-pillar-num">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <div className="ap-pillar-body">
+                  <span className="ap-icon"><Icon size={22} strokeWidth={1.9} aria-hidden="true" /></span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                  {i < PILLARS.length - 1 && <span className="ap-pillar-next" aria-hidden="true"><ArrowRight size={16} strokeWidth={2} /></span>}
+                </div>
               </li>
             ))}
-          </ul>
+          </ol>
           <div className="ap-strengths">
-            <h3 className="ap-label">What our capacity enables</h3>
-            <ul>{STRENGTHS.map((t) => <li key={t}><Check size={16} strokeWidth={2.6} aria-hidden="true" /><span>{t}</span></li>)}</ul>
+            <div className="ap-strengths-media">
+              <img src="/gallery/palms.webp" width="1672" height="941" loading="lazy" decoding="async"
+                alt="Rows of young potted palms lined up along a nursery path" />
+              <h3 className="ap-strengths-head">What our capacity <em>enables</em></h3>
+            </div>
+            <ul>{STRENGTHS.map((t, i) => (
+              <li key={t}>
+                <span className="ap-strength-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span>{t}</span>
+              </li>
+            ))}</ul>
           </div>
         </section>
 

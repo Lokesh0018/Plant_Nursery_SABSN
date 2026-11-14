@@ -69,7 +69,6 @@
 .ap-bg--forest .ap-steps li:not(:last-child)::after { background: repeating-linear-gradient(90deg, var(--ap-lime) 0 6px, transparent 6px 12px); opacity: 0.45; }
 
 /* cards on tinted bands lift to white so they don't melt into the background */
-.ap-bg--sage .ap-strengths { background: var(--ap-card); border: 1px solid var(--ap-line); }
 .ap-bg--sage .ap-pillars li, .ap-bg--sage .ap-palette > li { box-shadow: 0 8px 24px rgba(22, 54, 36, 0.05); }
 .ap-bg--sage .ap-chips li { background: #eef3e4; }
 .ap-bg--sand .ap-clients li { box-shadow: 0 6px 18px rgba(70, 40, 20, 0.05); }
@@ -79,6 +78,7 @@
 .ap-kicker--light { color: var(--ap-lime); }
 .ap-h2 { margin: 0; font-family: var(--font-serif); font-weight: 400; font-size: clamp(2rem, 3.8vw, 3.1rem); line-height: 1.14; }
 .ap-h2 em { color: var(--ap-accent); }
+.ap-h2--split em { display: block; }
 .ap-label { margin: 0 0 1rem; color: var(--ap-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
 .ap-icon { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: 16px; background: var(--ap-tint); color: var(--ap-accent); }
 .ap-icon--sm { width: 42px; height: 42px; border-radius: 50%; }
@@ -146,14 +146,59 @@
 .ap-motto-dot { color: var(--ap-lime); font-style: normal; }
 
 /* ================= what we do ================= */
+/* three services read as one chain: supply -> landscaping -> maintenance; each card leads with a photo panel */
 .ap-pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
-.ap-pillars li { padding: 1.8rem 1.6rem; border: 1px solid var(--ap-line); border-radius: 22px; background: var(--ap-card); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.ap-pillars h3 { margin: 1.2rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.45rem; font-weight: 500; }
-.ap-pillars p { margin: 0; color: var(--ap-muted); font-size: 0.92rem; line-height: 1.7; }
-.ap-strengths { margin-top: 2.5rem; padding: 1.8rem; border-radius: 22px; background: var(--ap-tint); }
-.ap-strengths ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 2rem; margin: 0; padding: 0; list-style: none; }
-.ap-strengths li { display: flex; gap: 0.65rem; font-size: 0.93rem; line-height: 1.6; }
-.ap-strengths svg { flex: none; margin-top: 0.25rem; color: var(--ap-leaf); }
+.ap-pillars li {
+  position: relative; display: flex; flex-direction: column; padding: 0.6rem;
+  border: 1px solid var(--ap-line); border-radius: 24px; background: var(--ap-card);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.ap-pillar-media { position: relative; overflow: hidden; aspect-ratio: 3 / 2; border-radius: 18px; background: var(--ap-tint); isolation: isolate; }
+/* one panel of the 2x3 atlas: the image is drawn at 2x width / 3x height and shifted to the wanted cell */
+.ap-pillar-atlas {
+  position: absolute; width: 200%; height: 300%; max-width: none; object-fit: fill;
+  transform-origin: var(--ox) var(--oy); transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ap-pillar-atlas--landscape { left: 0; top: 0; --ox: 25%; --oy: 16.7%; }
+.ap-pillar-atlas--planting { left: -100%; top: 0; --ox: 75%; --oy: 16.7%; }
+.ap-pillar-atlas--lawn { left: 0; top: -100%; --ox: 25%; --oy: 50%; }
+/* gentle shade at the bottom so the step number reads on any photo */
+.ap-pillar-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(10, 32, 19, 0.55)); pointer-events: none; }
+.ap-pillar-num {
+  position: absolute; z-index: 1; left: 1rem; bottom: 0.8rem; font-family: var(--font-serif); font-size: 1.9rem; font-style: italic; line-height: 1;
+  color: #f7f6f0; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+.ap-pillar-body { position: relative; display: flex; flex-direction: column; flex: 1; padding: 0 1.15rem 1.35rem; }
+/* the icon chip overlaps the seam between photo and text */
+.ap-pillar-body .ap-icon {
+  margin: -26px 0 0 auto; position: relative; z-index: 1; width: 52px; height: 52px; border: 4px solid var(--ap-card); border-radius: 50%;
+  background: var(--ap-forest); color: var(--ap-lime); box-shadow: 0 8px 18px rgba(22, 54, 36, 0.18);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.ap-pillars h3 { margin: 0.2rem 0 0.5rem; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; color: var(--ap-ink); }
+.ap-pillars p { margin: 0; color: var(--ap-muted); font-size: 0.94rem; line-height: 1.7; }
+/* connector chip sitting in the gutter between two services, level with the photo seam */
+.ap-pillar-next {
+  position: absolute; z-index: 2; top: 0; right: calc(-18px - 0.625rem - 0.6rem - 1px); display: grid; place-items: center; width: 36px; height: 36px;
+  border-radius: 50%; border: 4px solid #e9f0de; background: var(--ap-lime); color: var(--ap-forest); transform: translateY(-50%);
+}
+
+/* capacity: a photo panel carrying the heading, beside four numbered points in a ruled grid */
+.ap-strengths {
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.6fr); gap: clamp(1.5rem, 3.5vw, 3rem); align-items: stretch;
+  margin-top: 1.5rem; padding: 0.6rem; border: 1px solid var(--ap-line); border-radius: 24px; background: var(--ap-card);
+  box-shadow: 0 8px 24px rgba(22, 54, 36, 0.05);
+}
+.ap-strengths-media { position: relative; overflow: hidden; min-height: 260px; border-radius: 18px; display: flex; align-items: flex-end; isolation: isolate; }
+.ap-strengths-media img { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
+.ap-strengths-media::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, rgba(10, 32, 19, 0.05) 20%, rgba(10, 32, 19, 0.82)); }
+.ap-strengths-head { margin: 0; padding: 1.5rem 1.6rem; font-family: var(--font-serif); font-size: clamp(1.5rem, 2.3vw, 1.95rem); font-weight: 400; line-height: 1.18; color: #f7f6f0; }
+.ap-strengths-head::before { content: ''; display: block; width: 32px; height: 1.5px; margin-bottom: 0.9rem; border-radius: 2px; background: var(--ap-lime); }
+.ap-strengths-head em { color: var(--ap-lime); }
+.ap-strengths ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: center; gap: 0 2.25rem; margin: 0; padding: 1rem clamp(0.6rem, 2vw, 1.6rem) 1rem 0; list-style: none; }
+.ap-strengths li { display: flex; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--ap-line); color: var(--ap-ink); font-size: 0.95rem; line-height: 1.6; }
+.ap-strengths li:nth-last-child(-n+2) { border-bottom: 0; }
+.ap-strength-num { flex: none; min-width: 1.7rem; padding-top: 0.05rem; font-family: var(--font-serif); font-size: 1.15rem; font-style: italic; line-height: 1.35; color: var(--ap-leaf); }
 
 /* ================= supply ================= */
 .ap-supply { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin: 0; padding: 0; list-style: none; border: 1px solid var(--ap-line); border-radius: 22px; overflow: hidden; background: var(--ap-line); }
@@ -210,7 +255,9 @@
 .ap-btn:focus-visible, .ap-contact-list a:focus-visible { outline: 2px solid var(--ap-lime); outline-offset: 3px; }
 
 @media (hover: hover) {
-  .ap-pillars li:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(22, 54, 36, 0.09); }
+  .ap-pillars li:hover { transform: translateY(-4px); border-color: rgba(79, 127, 58, 0.32); box-shadow: 0 18px 36px rgba(22, 54, 36, 0.1); }
+  .ap-pillars li:hover .ap-pillar-atlas { transform: scale(1.06); }
+  .ap-pillars li:hover .ap-icon { background: var(--ap-lime); color: var(--ap-forest); }
 }
 
 /* ================= responsive ================= */
@@ -226,7 +273,11 @@
   .ap-record-media { order: -1; }
   .ap-contact-photo { max-width: 280px; }
   .ap-pillars { grid-template-columns: 1fr; }
-  .ap-strengths ul { grid-template-columns: 1fr; }
+  .ap-pillar-media { aspect-ratio: 16 / 7; }
+  .ap-pillar-next { top: auto; right: auto; bottom: calc(-18px - 0.625rem - 0.6rem - 1px); left: 50%; transform: translateX(-50%) rotate(90deg); }
+  .ap-strengths { grid-template-columns: 1fr; gap: 0; }
+  .ap-strengths-media { min-height: 220px; }
+  .ap-strengths ul { padding: 0.5rem 1rem; }
 }
 @media (max-width: 640px) {
   .ap-main { padding: 3rem 16px 0; }
@@ -242,11 +293,14 @@
   .ap-motto { margin-top: 0.4rem; }
   .ap-intro-media { margin: 0 0.75rem 0.75rem 0; }
   .ap-intro-media::before { inset: 0.75rem -0.75rem -0.75rem 0.75rem; }
-  .ap-strengths { padding: 1.3rem; }
+  .ap-strengths ul { grid-template-columns: 1fr; }
+  .ap-strengths li:nth-last-child(-n+2) { border-bottom: 1px solid var(--ap-line); }
+  .ap-strengths li:last-child { border-bottom: 0; }
   .ap-section.ap-contact { margin-bottom: 3rem; border-radius: 24px; }
   .ap-actions .ap-btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ap-pillars li { transition: none; }
+  .ap-pillars li, .ap-pillar-atlas { transition: none; }
   .ap-pillars li:hover { transform: none; }
+  .ap-pillars li:hover .ap-pillar-atlas { transform: none; }
 }
