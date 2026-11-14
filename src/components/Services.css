@@ -231,29 +231,72 @@
 .svc-dot[aria-current] span { transform: scale(1.5); background: #254b31; box-shadow: 0 0 0 4px rgba(79,127,58,.12); }
 .svc-dot:focus-visible { outline: 2px solid #8f4724; outline-offset: 2px; border-radius: 8px; }
 .svc-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.svc-dialog { position: fixed; inset: 0; margin: auto; padding: 0; width: min(640px, calc(100vw - 32px)); max-height: 90dvh; border: 0; border-radius: 24px; background: #fffdf7; color: #163624; box-shadow: 0 32px 100px #0d2a1866; overscroll-behavior: contain; }
-.svc-dialog::backdrop { background: rgba(12,31,20,.65); backdrop-filter: blur(7px); }
-.svc-dialog-content { position: relative; }
-.svc-dialog-close { position: absolute; top: 1rem; right: 1rem; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #fffdf7; color: #163624; box-shadow: 0 4px 15px #16362422; }
+/* Service details dialog: photo on the left, details on the right; stacks on narrow screens */
+.svc-dialog {
+  position: fixed; inset: 0; margin: auto; padding: 0; width: min(980px, calc(100vw - 32px)); max-height: min(90dvh, 680px);
+  border: 0; border-radius: 28px; overflow: hidden; background: #fffdf7; color: #163624;
+  box-shadow: 0 40px 120px rgba(8, 28, 16, 0.45), 0 0 0 1px rgba(22, 54, 36, 0.06); overscroll-behavior: contain;
+}
+.svc-dialog[open] { animation: svc-dialog-in 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.svc-dialog::backdrop { background: rgba(10, 28, 18, 0.62); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+@keyframes svc-dialog-in { from { opacity: 0; transform: translateY(14px) scale(0.98); } }
+@keyframes svc-dialog-swap { from { opacity: 0; } }
+.svc-dialog-content {
+  position: relative; display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); min-height: 520px; max-height: inherit;
+  animation: svc-dialog-swap 0.3s ease;
+}
+/* the photo fills its column: each atlas cell is scaled to cover the box, keeping its 3:2 shape */
+.svc-dialog .svc-card-media { aspect-ratio: auto; height: auto; min-height: 0; container-type: size; margin: 0.6rem 0 0.6rem 0.6rem; border-radius: 22px; }
+.svc-dialog .svc-card-media .svc-atlas {
+  --cw: max(100cqw, 150cqh); --ch: calc(var(--cw) / 1.5);
+  width: calc(var(--cw) * 2); height: calc(var(--ch) * var(--rows, 2));
+  left: calc((100cqw - var(--cw)) / 2 - var(--col) * var(--cw)); top: calc((100cqh - var(--ch)) / 2 - var(--row) * var(--ch));
+}
+.svc-dialog .svc-card-media::after { inset: 55% 0 0; }
+.svc-dialog .svc-card-category { bottom: 1.1rem; left: 1.1rem; }
+.svc-dialog-close {
+  position: absolute; z-index: 2; top: 1rem; right: 1rem; width: 44px; height: 44px; display: grid; place-items: center;
+  border: 1px solid #e3e7da; border-radius: 50%; background: #fffdf7; color: #163624; cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.svc-dialog-close:hover { background: #163624; border-color: #163624; color: #f4ecd9; }
 .svc-dialog-close:focus-visible { outline: 3px solid #8f4724; outline-offset: 3px; }
-.svc-dialog-body { padding: clamp(1.4rem, 4vw, 2.5rem); }
-.svc-dialog-body h3 { font-size: clamp(1.6rem, 3vw, 2rem); line-height: 1.2; }
-.svc-dialog-body > p:not(.services-eyebrow) { line-height: 1.8; color: #46574a; margin: 1rem 0 1.5rem; }
+.svc-dialog-body { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; padding: clamp(1.6rem, 3.5vw, 2.6rem) clamp(1.4rem, 3.5vw, 2.6rem) 1.4rem; }
+.svc-dialog-meta { display: flex; align-items: center; gap: 0.85rem; padding-right: 3rem; }
+.svc-dialog-meta .services-eyebrow { margin: 0; }
+.svc-dialog-meta .services-eyebrow span { color: #849b78; }
+.svc-dialog-icon { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 14px; background: #e8eedf; color: #163624; }
+.svc-dialog-body h3 { margin: 1.2rem 0 0; font-family: var(--font-serif); font-size: clamp(1.7rem, 2.8vw, 2.25rem); font-weight: 400; line-height: 1.15; color: #163624; }
+.svc-dialog-text { margin: 0.9rem 0 0; max-width: 46ch; color: #46574a; font-size: 1rem; line-height: 1.8; }
+.svc-dialog-for { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.9rem; margin-top: 1.4rem; padding: 1rem 0; border-top: 1px solid #e3e7da; border-bottom: 1px solid #e3e7da; }
+.svc-dialog-for > span { color: #46574a; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.svc-dialog-for ul { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.svc-dialog-for li { padding: 0.32rem 0.75rem; border-radius: 999px; background: #eef3e4; color: #163624; font-size: 0.78rem; font-weight: 600; }
+.svc-dialog-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.5rem; margin-top: 1.6rem; }
+.svc-dialog-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: auto; padding-top: 1.4rem; }
+.svc-dialog-nav button {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; padding: 0 0.9rem; border: 1px solid #e3e7da; border-radius: 999px;
+  background: none; color: #365b3c; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.svc-dialog-nav button:hover { background: #eef3e4; border-color: #c9d6b8; color: #163624; }
+.svc-dialog-nav button:focus-visible { outline: 2px solid #8f4724; outline-offset: 2px; }
+.svc-dialog-nav > span { color: #6b7d68; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
 
 .svc-card-media { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: #e6e7d8; }
 .svc-card-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .svc-card-media .svc-atlas { position: absolute; width: 200%; height: 200%; max-width: none; object-fit: fill; }
-.svc-atlas--cocopeat { left: 0; top: 0; }
-.svc-atlas--vertical { left: -100%; top: 0; }
-.svc-atlas--civil { left: 0; top: -100%; }
-.svc-atlas--research { left: -100%; top: -100%; }
-.svc-card-media .svc-atlas--six { height: 300%; }
-.svc-atlas--landscape { left: 0; top: 0; }
-.svc-atlas--planting { left: -100%; top: 0; }
-.svc-atlas--lawn { left: 0; top: -100%; }
-.svc-atlas--flowers { left: -100%; top: -100%; }
-.svc-atlas--compost { left: 0; top: -200%; }
-.svc-atlas--planters { left: -100%; top: -200%; }
+.svc-atlas--cocopeat { left: 0; top: 0; --col: 0; --row: 0; }
+.svc-atlas--vertical { left: -100%; top: 0; --col: 1; --row: 0; }
+.svc-atlas--civil { left: 0; top: -100%; --col: 0; --row: 1; }
+.svc-atlas--research { left: -100%; top: -100%; --col: 1; --row: 1; }
+.svc-card-media .svc-atlas--six { height: 300%; --rows: 3; }
+.svc-atlas--landscape { left: 0; top: 0; --col: 0; --row: 0; }
+.svc-atlas--planting { left: -100%; top: 0; --col: 1; --row: 0; }
+.svc-atlas--lawn { left: 0; top: -100%; --col: 0; --row: 1; }
+.svc-atlas--flowers { left: -100%; top: -100%; --col: 1; --row: 1; }
+.svc-atlas--compost { left: 0; top: -200%; --col: 0; --row: 2; }
+.svc-atlas--planters { left: -100%; top: -200%; --col: 1; --row: 2; }
 .svc-card-media::after { content: ''; position: absolute; inset: 50% 0 0; background: linear-gradient(transparent, rgba(12, 36, 20, .5)); pointer-events: none; }
 .svc-card-category { position: absolute; z-index: 1; bottom: 1rem; left: 1rem; border-radius: 999px; padding: .4rem .75rem; background: #fffdf2; color: #163624; font-size: .69rem; font-weight: 700; letter-spacing: .03em; }
 .svc-card-num { position: absolute; top: .85rem; left: 1rem; border-radius: 50%; width: 32px; height: 32px; display: grid; place-items: center; background: rgba(255,253,247,.93); color: #163624; font-size: .72rem; font-weight: 700; }
@@ -428,13 +471,22 @@
   .services-step { flex-direction: row; text-align: left; }
   .services-step-num { flex: none; }
 }
+@media (max-width: 760px) {
+  .svc-dialog { width: calc(100vw - 24px); max-height: 92dvh; border-radius: 24px; overflow-y: auto; }
+  .svc-dialog-content { grid-template-columns: 1fr; min-height: 0; max-height: none; }
+  .svc-dialog .svc-card-media { height: auto; aspect-ratio: 16 / 10; margin: 0.5rem 0.5rem 0; border-radius: 18px; }
+  .svc-dialog-body { overflow: visible; padding: 1.4rem 1.25rem 1rem; }
+  .svc-dialog-meta { padding-right: 0; }
+  .svc-dialog-close { top: 1.1rem; right: 1.1rem; background: rgba(255, 253, 247, 0.94); border-color: transparent; box-shadow: 0 4px 15px rgba(22, 54, 36, 0.2); }
+  .svc-dialog-actions .services-btn:not(.services-btn--ghost) { width: 100%; justify-content: center; }
+  .svc-dialog-actions { justify-content: center; }
+}
 @media (max-width: 640px) {
   /* phones: one card and a sliver of the next, a little smaller gap */
   .svc-stage { --card-w: min(78vw, 340px); --spread: 62vw; height: 510px; }
   .svc-navigation { gap: .25rem; }
   .svc-dot { width: 22px; }
   .svc-card-body { height: 260px; }
-  .svc-dialog-body .services-btn { font-size: .8rem; padding: 0 1rem; }
   .svc-arrow { width: 44px; height: 44px; }
   .svc-catalog-title span:last-child { display: none; }
   .svc-card-body { padding: 1.6rem 1.25rem 1.2rem; }
@@ -444,6 +496,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .svc-card, .svc-card::after, .svc-dot span { transition: none; }
+  .svc-dialog[open], .svc-dialog-content { animation: none; }
   .services-steps::after, .services-step-num, .services-step-text, .services-client { transition: none; }
   .services-steps::after { transform: none; }
   .services-step-num { background: #163624; border-color: #163624; color: #e0e9c4; }

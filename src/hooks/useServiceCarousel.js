@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 // drift speed in cards per second, and how long a click / drag / hover holds it before drifting on
-const DRIFT = 0.2;
+const DRIFT = 0.32;
 const HOLD_AFTER_MS = 2600;
 
 /**
@@ -169,9 +169,16 @@ export default function useServiceCarousel(count) {
     interactionProps: {
       onKeyDown, onPointerDown, onPointerMove, onPointerUp, onClickCapture,
       onPointerCancel: () => { drag.current = null; dragged.current = false; },
-      onMouseEnter: () => { held.current.hover = true; },
-      onMouseLeave: () => { held.current.hover = false; hold(700); },
-      onFocus: () => { held.current.focus = true; },
+      // hover holds the drift only while the pointer is over a card, not the empty stage around the fan
+      onMouseOver: (e) => {
+        const onCard = !!e.target.closest('.svc-card');
+        if (held.current.hover && !onCard) hold(700);
+        held.current.hover = onCard;
+      },
+      onMouseLeave: () => { if (held.current.hover) hold(700); held.current.hover = false; },
+      // only keyboard focus holds the drift: focus a mouse click leaves behind (e.g. returned to a card
+      // when the details dialog closes) must not freeze the carousel
+      onFocus: (e) => { held.current.focus = e.target.matches(':focus-visible'); },
       onBlur: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) { held.current.focus = false; hold(700); } },
     },
   };

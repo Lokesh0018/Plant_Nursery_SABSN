@@ -96,14 +96,16 @@ export default function Services() {
   const [recordRef, recordIn] = useSeenOnce();
   const [expanded, setExpanded] = useState(null);
   const dialogRef = useRef(null);
+  // keyed on open/closed only: browsing services inside the dialog must not close and reopen it
+  const isOpen = expanded !== null;
   useEffect(() => {
-    if (expanded === null) return undefined;
+    if (!isOpen) return undefined;
     const dialog = dialogRef.current;
     const previousOverflow = document.body.style.overflow;
     dialog.showModal();
     document.body.style.overflow = 'hidden';
     return () => { dialog.close(); document.body.style.overflow = previousOverflow; };
-  }, [expanded]);
+  }, [isOpen]);
   const openService = (i) => { carousel.setPaused(true); setExpanded(i); };
   const toContact = (e) => {
     e.preventDefault();
@@ -186,14 +188,40 @@ export default function Services() {
         </div>
         <dialog ref={dialogRef} className="svc-dialog" aria-labelledby="svc-dialog-title" onClose={() => { setExpanded(null); carousel.setPaused(false); }}
           onClick={event => { if (event.target === event.currentTarget) setExpanded(null); }}>
-          {expanded !== null && <div className="svc-dialog-content">
-            <ServiceImage media={SERVICE_IMAGES[expanded]} />
-            <button type="button" className="svc-dialog-close" onClick={() => setExpanded(null)} aria-label="Close service details" autoFocus><X size={21} /></button>
-            <div className="svc-dialog-body"><p className="services-eyebrow">Service {String(expanded + 1).padStart(2, '0')} / 10</p>
-              <h3 id="svc-dialog-title">{SERVICES[expanded].title}</h3><p>{SERVICES[expanded].text}</p>
-              <a className="services-btn" href={`https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I would like to enquire about ' + SERVICES[expanded].title + '.')}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} /> Enquire about this service <ArrowRight size={17} /></a>
-            </div>
-          </div>}
+          {expanded !== null && (() => {
+            const { title, text, Icon } = SERVICES[expanded];
+            // browsing inside the dialog also moves the carousel, so closing lands on the same service
+            const step = (d) => { const next = (expanded + d + SERVICES.length) % SERVICES.length; setExpanded(next); carousel.goTo(next); };
+            return <div className="svc-dialog-content" key={expanded}>
+              <ServiceImage media={SERVICE_IMAGES[expanded]} />
+              <button type="button" className="svc-dialog-close" onClick={() => setExpanded(null)} aria-label="Close service details" autoFocus><X size={20} /></button>
+              <div className="svc-dialog-body">
+                <div className="svc-dialog-meta">
+                  <span className="svc-dialog-icon" aria-hidden="true"><Icon size={22} strokeWidth={1.8} /></span>
+                  <p className="services-eyebrow">Service {String(expanded + 1).padStart(2, '0')} <span aria-hidden="true">/</span> 10</p>
+                </div>
+                <h3 id="svc-dialog-title">{title}</h3>
+                <p className="svc-dialog-text">{text}</p>
+                <div className="svc-dialog-for">
+                  <span>We work with</span>
+                  <ul><li>Institutional</li><li>Commercial</li><li>Residential</li></ul>
+                </div>
+                <div className="svc-dialog-actions">
+                  <a className="services-btn" href={`https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I would like to enquire about ' + title + '.')}`} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle size={17} aria-hidden="true" /> Enquire on WhatsApp
+                  </a>
+                  <a className="services-btn services-btn--ghost" href="#contact" onClick={(e) => { setExpanded(null); toContact(e); }}>
+                    Plan a project <ArrowRight className="services-btn-arrow" size={16} strokeWidth={2.2} aria-hidden="true" />
+                  </a>
+                </div>
+                <nav className="svc-dialog-nav" aria-label="Browse services">
+                  <button type="button" onClick={() => step(-1)} aria-label={`Previous service: ${SERVICES[(expanded - 1 + SERVICES.length) % SERVICES.length].title}`}><ArrowLeft size={17} aria-hidden="true" /> Previous</button>
+                  <span aria-hidden="true">{String(expanded + 1).padStart(2, '0')} / 10</span>
+                  <button type="button" onClick={() => step(1)} aria-label={`Next service: ${SERVICES[(expanded + 1) % SERVICES.length].title}`}>Next <ArrowRight size={17} aria-hidden="true" /></button>
+                </nav>
+              </div>
+            </div>;
+          })()}
         </dialog>
 
         <div ref={processRef} className={`services-process${processIn ? ' is-in' : ''}`} aria-labelledby="services-process-title">

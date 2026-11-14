@@ -17,7 +17,6 @@ import './PlantCare.css';
 
 const protocolCards = [
   {
-    num: '01',
     code: 'ACCLIMATIZATION',
     title: 'Microclimate Balance',
     desc: 'Every specimen undergoes gradual shade-to-sun conditioning and Godavari riverbed humidity tapering before departing our nursery grounds.',
@@ -29,7 +28,6 @@ const protocolCards = [
     imageAlt: 'Nursery beds of young plants hardening off under green shade netting'
   },
   {
-    num: '02',
     code: 'NUTRITION',
     title: 'Bio-Dynamic Soil',
     desc: 'Formulated with indigenous vermicompost, mycorrhizal inoculants, and mineral-rich alluvial loam for robust root anchoring.',
@@ -41,7 +39,6 @@ const protocolCards = [
     imageAlt: 'Rows of seedlings emerging from dark, crumbly compost-rich soil'
   },
   {
-    num: '03',
     code: 'HYDRATION',
     title: 'Precision Aeration',
     desc: 'Root-balls protected with breathable burlap and aerated packing to prevent moisture stress during transit and establishment.',
@@ -53,7 +50,6 @@ const protocolCards = [
     imageAlt: 'Fine-mist sprinklers irrigating a lawn at the nursery'
   },
   {
-    num: '04',
     code: 'STEWARDSHIP',
     title: 'Lifetime Guidance',
     desc: 'Direct master horticulturist consultation and bespoke maintenance schedules for landscape architects and collectors.',
@@ -133,8 +129,7 @@ export default function PlantCare() {
                     height="700"
                   />
                   <span className="plantcare-stage-fade" aria-hidden="true" />
-                  <span className="plantcare-code-label">{card.num} // {card.code}</span>
-                  <span className="plantcare-card-numeral" aria-hidden="true">{card.num}</span>
+                  <span className="plantcare-code-label">{card.code}</span>
                 </div>
                 <div className="plantcare-card-top">
                   <div className="plantcare-code-row">

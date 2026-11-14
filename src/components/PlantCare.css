@@ -266,25 +266,6 @@
     0 35px 70px -25px rgba(22, 54, 36, 0.1),
     0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent);
 }
-/* oversized ghosted step numeral behind the card content */ .plantcare-card-numeral {
-  position: absolute;
-  right: 1rem;
-  top: 0.5rem;
-  font-family: var(--font-serif, 'Playfair Display', serif);
-  font-size: 3.6rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 2px 14px rgba(22, 54, 36, 0.45);
-  pointer-events: none;
-  user-select: none;
-  z-index: 2;
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.plantcare-protocol-card:hover .plantcare-card-numeral {
-  transform: translateY(3px);
-}
 .plantcare-card-top, .plantcare-card-bottom {
   position: relative;
   z-index: 1;
@@ -593,10 +574,6 @@
   .plantcare-card-heading {
     max-width: none;
   }
-  .plantcare-card-numeral {
-    font-size: 3rem;
-    right: 0.85rem;
-  }
   .plantcare-card-description {
     max-width: none;
   }
@@ -611,7 +588,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .plantcare-protocol-card,
-  .plantcare-card-numeral,
   .plantcare-card-image,
   .plantcare-cta-btn,
   .plantcare-cta-btn svg,
