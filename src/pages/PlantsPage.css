@@ -1018,3 +1018,133 @@
   .plants-page .indoor-card, .plants-page .indoor-photo .plant-frame-cell, .plants-page .indoor-more-icon, .plants-page .indoor-photo::after { transition: none; }
   .plants-page .indoor-card:hover, .plants-page .indoor-card:hover .plant-frame-cell, .plants-page .indoor-card:hover .indoor-more-icon { transform: none; }
 }
+
+/* ================= plant details dialog ================= */
+.plants-page .indoor-dialog {
+  /* centred in the viewport (a global reset had zeroed the dialog's own auto margins) */
+  position: fixed; inset: 0; margin: auto;
+  width: min(980px, calc(100% - 32px)); max-height: min(90dvh, 700px); padding: 0; overflow: hidden;
+  border: 0; border-radius: 28px; background: var(--pp-paper); color: var(--pp-ink);
+  box-shadow: 0 40px 120px rgba(8, 28, 16, 0.45), 0 0 0 1px rgba(22, 54, 36, 0.06);
+}
+.plants-page .indoor-dialog[open] { animation: pp-dialog-in 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.plants-page .indoor-dialog::backdrop { background: rgba(10, 28, 18, 0.62); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+@keyframes pp-dialog-in { from { opacity: 0; transform: translateY(14px) scale(0.98); } }
+/* photo and benefits stacked on the left, details on the right (scrolling on their own when long) */
+.plants-page .indoor-dialog-layout {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 1fr;
+  grid-template-areas: "photo details" "benefits details"; max-height: inherit;
+}
+.plants-page .indoor-dialog-photo { grid-area: photo; }
+.plants-page .indoor-details { grid-area: details; grid-row: 1 / -1; }
+.plants-page .indoor-benefits { grid-area: benefits; align-self: start; margin: 0 0 0.6rem 0.6rem; overflow-y: auto; min-height: 0; }
+/* photo column: the square plant image inset with rounded corners, on a soft linen ground */
+.plants-page .indoor-dialog-photo { position: relative; align-self: start; margin: 0.6rem 0 0.6rem 0.6rem; overflow: hidden; border-radius: 22px; background: #ece9db; }
+.plants-page .indoor-dialog-photo .plant-frame { aspect-ratio: 1; }
+.plants-page .indoor-dialog-photo .plant-frame-cell { transform: scale(1.04); }
+.plants-page .indoor-dialog-photo .plant-presentation {
+  position: absolute; z-index: 1; left: 14px; bottom: 14px; margin: 0; padding: 0.32rem 0.7rem; border-radius: 999px;
+  background: rgba(255, 253, 248, 0.88); color: var(--pp-forest); font-size: 0.7rem; font-weight: 600;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+/* details column scrolls on its own when it is taller than the dialog */
+.plants-page .indoor-details { min-height: 0; overflow-y: auto; padding: clamp(1.6rem, 3.5vw, 2.6rem) clamp(1.4rem, 3.5vw, 2.6rem) 1.6rem; }
+.plants-page .indoor-details .indoor-kicker { display: flex; align-items: center; gap: 0.5rem; padding-right: 3rem; color: var(--pp-leaf); }
+.plants-page .indoor-details h2 { margin: 0.9rem 0 0; font-family: var(--font-serif); font-size: clamp(1.9rem, 3vw, 2.5rem); font-weight: 400; line-height: 1.1; color: var(--pp-forest); }
+.plants-page .indoor-details .indoor-botanical { margin: 0.35rem 0 0; font-size: 0.95rem; font-style: italic; color: var(--pp-muted); }
+.plants-page .indoor-detail-desc { margin: 1rem 0 0; font-size: 1rem; line-height: 1.75; color: var(--pp-muted); }
+.plants-page .indoor-facts { display: grid; gap: 0.6rem; margin: 1.4rem 0 0; font-size: 0.9rem; }
+.plants-page .indoor-facts > div { padding: 0.8rem 0.95rem; border: 1px solid rgba(22, 54, 36, 0.08); border-radius: 14px; background: #f6f4ec; }
+.plants-page .indoor-facts dt { display: flex; align-items: center; gap: 0.5rem; margin: 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pp-leaf); }
+.plants-page .indoor-facts dd { margin: 0.35rem 0 0; line-height: 1.55; color: var(--pp-ink); }
+.plants-page .indoor-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+.plants-page .indoor-details .indoor-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; flex: 1 1 200px; min-height: 50px; margin: 0; padding: 0 1.3rem;
+  border: 1px solid var(--pp-forest); border-radius: 999px; background: var(--pp-forest); color: #f7f6f0;
+  font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.plants-page .indoor-details .indoor-cta:hover { background: #1f4a2f; border-color: #1f4a2f; }
+.plants-page .indoor-details .indoor-cta--ghost { background: transparent; color: var(--pp-forest); border-color: rgba(22, 54, 36, 0.25); }
+.plants-page .indoor-details .indoor-cta--ghost:hover { background: #eef3e4; border-color: var(--pp-leaf); color: var(--pp-forest); }
+.plants-page .indoor-details .indoor-cta:focus-visible { outline: 2px solid var(--pp-leaf); outline-offset: 3px; }
+.plants-page .indoor-details .indoor-note { display: flex; align-items: center; gap: 0.4rem; margin: 1rem 0 0; font-size: 0.78rem; color: #6b7d68; }
+.plants-page .indoor-close {
+  top: 1rem; right: 1rem; z-index: 3; width: 44px; height: 44px; border: 1px solid rgba(22, 54, 36, 0.12);
+  background: var(--pp-paper); color: var(--pp-forest); transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.plants-page .indoor-close:hover { background: var(--pp-forest); border-color: var(--pp-forest); color: var(--pp-lime); }
+@media (max-width: 760px) {
+  .plants-page .indoor-dialog { width: calc(100% - 24px); max-height: 92dvh; overflow-y: auto; border-radius: 24px; }
+  .plants-page .indoor-dialog-layout { grid-template-columns: 1fr; max-height: none; }
+  .plants-page .indoor-dialog-photo { margin: 0.5rem 0.5rem 0; }
+  .plants-page .indoor-details { overflow: visible; padding: 1.3rem 1.2rem 1.2rem; }
+  .plants-page .indoor-details .indoor-kicker { padding-right: 0; }
+  .plants-page .indoor-close { top: 1.1rem; right: 1.1rem; background: rgba(255, 253, 248, 0.92); box-shadow: 0 4px 14px rgba(22, 54, 36, 0.2); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plants-page .indoor-dialog[open] { animation: none; }
+  .plants-page .indoor-details .indoor-cta, .plants-page .indoor-close { transition: none; }
+}
+
+/* "Why grow it": a forest panel with lime checks */
+.plants-page .indoor-benefits {
+  padding: 1.1rem 1.2rem 1.15rem; border-radius: 20px; color: #f4ecd9;
+  background: radial-gradient(ellipse 70% 90% at 100% 0%, rgba(201, 217, 138, 0.16), transparent 70%), linear-gradient(160deg, #1d4a2e, var(--pp-forest));
+}
+.plants-page .indoor-benefits h3 { display: flex; align-items: center; gap: 0.5rem; margin: 0 0 0.75rem; font-family: var(--font-serif); font-size: 1.15rem; font-weight: 500; color: #f7f6f0; }
+.plants-page .indoor-benefits h3 svg { color: var(--pp-lime); }
+.plants-page .indoor-benefits ul { display: grid; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
+.plants-page .indoor-benefits li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; line-height: 1.5; color: rgba(244, 236, 217, 0.9); }
+.indoor-benefit-check { display: grid; place-items: center; flex: none; width: 20px; height: 20px; margin-top: 0.1rem; border-radius: 50%; background: var(--pp-lime); color: var(--pp-forest); }
+@media (max-width: 760px) {
+  .plants-page .indoor-dialog-layout { grid-template-rows: none; grid-template-areas: "photo" "details" "benefits"; }
+  .plants-page .indoor-details { grid-row: auto; }
+  .plants-page .indoor-benefits { margin: 0 0.5rem 0.5rem; overflow: visible; }
+}
+
+/* ---------- one fixed shape for every plant's dialog ----------
+   desktop: always 980 x 640 (or less on short screens); the photo is always a 4:3 window onto the
+   centre of the square plant image, "Why grow it" always fills the space under it, and the details
+   column scrolls inside when a plant has more to say, so no plant makes the dialog grow or jump. */
+.plants-page .indoor-dialog { height: min(90dvh, 640px); max-height: none; }
+.plants-page .indoor-dialog-layout { height: 100%; max-height: none; grid-template-rows: auto minmax(0, 1fr); }
+.plants-page .indoor-dialog-photo { aspect-ratio: 4 / 3; }
+.plants-page .indoor-dialog-photo .plant-frame { position: absolute; inset: 0; aspect-ratio: auto; width: 100%; height: 100%; }
+.plants-page .indoor-dialog-photo .plant-frame-cell { position: absolute; left: 0; top: 50%; width: 100%; transform: translateY(-50%) scale(1.04); }
+.plants-page .indoor-benefits { align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
+.plants-page .indoor-details { height: 100%; }
+@media (max-width: 760px) {
+  /* phones: same width every time, the whole dialog scrolls; photo keeps the same 4:3 window */
+  .plants-page .indoor-dialog { height: auto; max-height: 92dvh; }
+  .plants-page .indoor-dialog-layout { height: auto; grid-template-rows: none; }
+  .plants-page .indoor-details { height: auto; }
+  .plants-page .indoor-benefits { justify-content: flex-start; }
+}
+
+/* ---------- the details always fit the fixed dialog: no inner scrolling ----------
+   compact facts strip, side-by-side actions, clamped description and small print */
+.plants-page .indoor-details { overflow: hidden; display: flex; flex-direction: column; padding: 2rem 2.2rem 1.6rem; }
+.plants-page .indoor-details h2 { margin-top: 0.7rem; font-size: clamp(1.8rem, 2.6vw, 2.2rem); }
+.plants-page .indoor-detail-desc { margin-top: 0.8rem; font-size: 0.95rem; line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.plants-page .indoor-facts { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 0; margin-top: 1.2rem; border: 1px solid rgba(22, 54, 36, 0.08); border-radius: 14px; background: #f6f4ec; overflow: hidden; }
+.plants-page .indoor-facts > div { padding: 0.75rem 0.9rem; border: 0; border-radius: 0; background: none; }
+.plants-page .indoor-facts > div + div { border-left: 1px solid rgba(22, 54, 36, 0.08); }
+.plants-page .indoor-facts dd { font-size: 0.88rem; line-height: 1.45; }
+.plants-page .indoor-actions { flex-wrap: nowrap; margin-top: auto; padding-top: 1.2rem; }
+.plants-page .indoor-details .indoor-cta { flex: 1 1 0; min-height: 48px; padding: 0 1rem; font-size: 0.88rem; }
+.plants-page .indoor-details .indoor-cta--ghost { flex: 0 0 auto; }
+.plants-page .indoor-details .indoor-note { align-items: flex-start; gap: 0.45rem; margin-top: 0.8rem; font-size: 0.74rem; line-height: 1.5; }
+.plants-page .indoor-details .indoor-note svg { flex: none; margin-top: 0.12rem; color: var(--pp-leaf); }
+.plants-page .indoor-details .indoor-note span { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+@media (max-width: 760px) {
+  .plants-page .indoor-details { overflow: visible; padding: 1.3rem 1.2rem 1.2rem; }
+  .plants-page .indoor-actions { margin-top: 1.2rem; padding-top: 0; }
+  .plants-page .indoor-facts { grid-template-columns: 1fr; }
+  .plants-page .indoor-facts > div + div { border-left: 0; border-top: 1px solid rgba(22, 54, 36, 0.08); }
+}
+
+/* care at a glance: sunlight, watering and plant form, stacked, between the facts strip and the actions */
+.plants-page .indoor-care { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-top: 0.8rem; }
+.plants-page .indoor-care > div { display: flex; align-items: center; gap: 0.65rem; padding: 0.6rem 0.8rem; border-radius: 14px; background: #eef3e4; font-size: 0.8rem; line-height: 1.35; color: var(--pp-ink); }
+.plants-page .indoor-care small { display: block; margin-bottom: 0.15rem; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pp-leaf); }
+.indoor-care-icon { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 9px; background: var(--pp-forest); color: var(--pp-lime); }

@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Leaf, X, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Leaf, X, MessageCircle, Phone, LayoutGrid, Info, Check, Sprout, Sun, Droplets, TreeDeciduous } from 'lucide-react';
+import { plantBenefits, plantCare } from '../data/plantBenefits';
 import './IndoorPlants.css';
 import PlantFrame from './PlantFrame';
+import catalogue from '../data/plantCatalogue.json';
 
-const plants = [
-  { id: 'mickey-green', name: 'Mickey Green', botanical: 'Peperomia tetraphylla', description: 'Small rounded leaves and delicate trailing stems bring a soft green accent to shelves and tabletops.', feature: 'Delicate trailing foliage', placement: 'Shelves & tabletops', note: 'Botanical name confirmed in the nursery company profile.' },
-  { id: 'peperomia', name: 'Peperomia', botanical: 'Peperomia species', description: 'A compact foliage plant with rounded, glossy leaves for a fresh accent in smaller indoor spaces.', feature: 'Compact glossy foliage', placement: 'Desks & small spaces', note: 'Image represents Peperomia obtusifolia. Confirm the available variety with the nursery.' },
-  { id: 'alocasia', name: 'Alocasia', botanical: 'Alocasia species', description: 'Bold arrow-shaped leaves and expressive veins create a sculptural focal point in an indoor plant collection.', feature: 'Sculptural statement leaves', placement: 'Indoor feature displays', note: 'Leaf shape and colour vary by cultivar. Ask the nursery to confirm the available selection.' },
-];
+const plants = catalogue.find(group => group.slug === 'indoor-plants').items;
 
 export default function IndoorPlants({ query = '', items = plants, category = 'Indoor Plants', slug = 'indoor-plants', title = 'A little green, closer to home.', subtitle = 'Thoughtful foliage for your everyday spaces.', icon: KickerIcon = Leaf }) {
   const [selected, setSelected] = useState(null);
@@ -32,7 +30,44 @@ export default function IndoorPlants({ query = '', items = plants, category = 'I
     {!shown.length && <p>No plants in this category match your search.</p>}
     {selected && <dialog ref={dialog} className="indoor-dialog" onCancel={close} onClick={e => { if (e.target === e.currentTarget) close(); }} aria-labelledby={`${slug}-detail-name`}>
       <button className="indoor-close" onClick={close} aria-label="Close plant details"><X /></button>
-      <div className="indoor-dialog-layout"><PlantFrame plant={selected} /><div className="indoor-details"><p className="indoor-kicker">{category}</p><h2 id={`${slug}-detail-name`}>{selected.name}</h2><p className="indoor-botanical">{selected.botanical}</p><p className="plant-presentation">{selected.imagePresentation?.label}</p><p>{selected.description}</p><dl><dt>Foliage character</dt><dd>{selected.feature}</dd><dt>Styling idea</dt><dd>{selected.placement}</dd><dt>Variety details</dt><dd>{selected.note}</dd></dl><a href={`https://wa.me/919849936169?text=${encodeURIComponent(`Hello SABSN, please share availability, size, price and care guidance for ${selected.name}.`)}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Enquire about this plant</a><p className="indoor-note">Illustrative image; actual nursery plants may vary.</p></div></div>
+      <div className="indoor-dialog-layout">
+        <div className="indoor-dialog-photo">
+          <PlantFrame plant={selected} />
+          {selected.imagePresentation?.label && <span className="plant-presentation">{selected.imagePresentation.label}</span>}
+        </div>
+        <div className="indoor-details">
+          <p className="indoor-kicker"><KickerIcon size={15} aria-hidden="true" /> {category}</p>
+          <h2 id={`${slug}-detail-name`}>{selected.name}</h2>
+          <p className="indoor-botanical">{selected.botanical}</p>
+          <p className="indoor-detail-desc">{selected.description}</p>
+          <dl className="indoor-facts">
+            {/* the feature field sometimes only repeats the category name; that row is skipped then */}
+            {selected.feature && selected.feature !== category && <div><dt><Leaf size={16} aria-hidden="true" />Foliage character</dt><dd>{selected.feature}</dd></div>}
+            {selected.placement && <div><dt><LayoutGrid size={16} aria-hidden="true" />Styling idea</dt><dd>{selected.placement}</dd></div>}
+          </dl>
+          {/* care at a glance: fills the space above the actions without growing the dialog */}
+          {(() => {
+            const care = plantCare(selected, slug);
+            const tiles = [[Sun, 'Sunlight', care.sun], [Droplets, 'Watering', care.water], [TreeDeciduous, 'Plant form', care.form]].filter(t => t[2]);
+            return tiles.length > 0 && <div className="indoor-care" aria-label="Care at a glance">
+              {tiles.map(([Icon, label, value]) => <div key={label}><span className="indoor-care-icon"><Icon size={16} aria-hidden="true" /></span><span><small>{label}</small>{value}</span></div>)}
+            </div>;
+          })()}
+          <div className="indoor-actions">
+            <a className="indoor-cta" href={`https://wa.me/919849936169?text=${encodeURIComponent(`Hello SABSN, please share availability, size, price and care guidance for ${selected.name}.`)}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} aria-hidden="true" /> Enquire on WhatsApp</a>
+            <a className="indoor-cta indoor-cta--ghost" href="tel:+919849936169"><Phone size={17} aria-hidden="true" /> Call us</a>
+          </div>
+          {/* the variety caveat sits with the image note as small print */}
+          <p className="indoor-note"><Info size={14} aria-hidden="true" /><span>{/^illustrative/i.test(selected.note || '') ? selected.note : `${selected.note ? `${selected.note} ` : ''}Illustrative image; actual nursery plants may vary.`}</span></p>
+        </div>
+        {/* sits under the photo on wide screens, after the details on phones */}
+        {plantBenefits(selected.name, slug).length > 0 && (
+          <section className="indoor-benefits" aria-labelledby={`${slug}-benefits`}>
+            <h3 id={`${slug}-benefits`}><Sprout size={17} aria-hidden="true" />Why grow it</h3>
+            <ul>{plantBenefits(selected.name, slug).map((b) => <li key={b}><span className="indoor-benefit-check" aria-hidden="true"><Check size={13} strokeWidth={3} /></span>{b}</li>)}</ul>
+          </section>
+        )}
+      </div>
     </dialog>}
   </section>;
 }
