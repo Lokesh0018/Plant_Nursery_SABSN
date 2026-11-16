@@ -1062,7 +1062,12 @@
       "Shiva Lingam",
       "Deer",
       "Star",
-      "Multi-tier"
+      "Multi-tier",
+      "Ficus microcarpa – Umbrella Topiary",
+      "Ficus microcarpa – Multi-Tier Cloud Topiary",
+      "Variegated Ficus Topiary",
+      "Ficus Arch Topiary – Living Garden Arch",
+      "Sculpted Ball Topiary"
     ],
     "items": [
       {
@@ -1751,7 +1756,7 @@
         "columns": 3,
         "rows": 3,
         "cell": 0,
-        "sheet": "/plants/catalogue/ornamental-topiary-plants-4.webp",
+        "sheet": "/plants/catalogue/ornamental-topiary-plants-4-v3.webp",
         "imagePresentation": {
           "growthForm": "trained-ornamental",
           "maturity": "trained",
@@ -1763,6 +1768,131 @@
           "identityStatus": "illustrative-not-stock-verification",
           "actualProductSize": "not-specified",
           "reviewReason": "Compact stock or trained ornamental form; no evidence that this is a mature landscape specimen. Retain original container illustration."
+        }
+      },
+      {
+        "id": "ornamental-topiary-ficus-microcarpa-umbrella",
+        "name": "Ficus microcarpa – Umbrella Topiary",
+        "botanical": "Ficus microcarpa",
+        "description": "A trained ficus with a broad umbrella-shaped canopy, a clear upright trunk and dense green foliage. Shown as a nursery-grown ornamental specimen.",
+        "feature": "Ornamental & Topiary Plants",
+        "placement": "Formal gardens & feature displays",
+        "note": "Illustrative image based on the supplied nursery photograph. Confirm current availability and specimen dimensions with the nursery.",
+        "columns": 3,
+        "rows": 3,
+        "cell": 1,
+        "sheet": "/plants/catalogue/ornamental-topiary-plants-4-v3.webp",
+        "imagePresentation": {
+          "growthForm": "trained-ornamental",
+          "maturity": "trained",
+          "displayStyle": "nursery-container",
+          "allowNurseryPot": true,
+          "imageAspectRatio": "4:5",
+          "cellAspectRatio": 1,
+          "label": "Container-grown illustration",
+          "identityStatus": "owner-identified-reference",
+          "actualProductSize": "not-specified",
+          "sourceType": "generated-illustration"
+        }
+      },
+      {
+        "id": "ornamental-topiary-cloud",
+        "name": "Ficus microcarpa – Multi-Tier Cloud Topiary",
+        "botanical": "Ficus microcarpa",
+        "description": "A sculptural ficus with a branching pale trunk and rounded foliage pads arranged at different heights.",
+        "feature": "Ornamental & Topiary Plants",
+        "placement": "Specimen gardens & feature displays",
+        "note": "Illustrative image based on the supplied nursery reference. Confirm species, dimensions and availability with the nursery.",
+        "columns": 3,
+        "rows": 3,
+        "cell": 2,
+        "sheet": "/plants/catalogue/ornamental-topiary-plants-4-v3.webp",
+        "imagePresentation": {
+          "growthForm": "trained-ornamental",
+          "maturity": "trained",
+          "displayStyle": "root-ball",
+          "allowNurseryPot": false,
+          "imageAspectRatio": "4:5",
+          "cellAspectRatio": 1,
+          "label": "Reference-based topiary illustration",
+          "identityStatus": "owner-named-reference",
+          "actualProductSize": "not-specified",
+          "sourceType": "generated-illustration"
+        }
+      },
+      {
+        "id": "ornamental-topiary-variegated",
+        "name": "Variegated Ficus Topiary",
+        "botanical": "Ficus species; cultivar to be confirmed",
+        "description": "Cream-and-green variegated foliage forms clipped clusters along a sculptural trunk.",
+        "feature": "Ornamental & Topiary Plants",
+        "placement": "Formal gardens & feature displays",
+        "note": "Illustrative image based on the supplied nursery reference. Confirm species, dimensions and availability with the nursery.",
+        "columns": 3,
+        "rows": 3,
+        "cell": 3,
+        "sheet": "/plants/catalogue/ornamental-topiary-plants-4-v3.webp",
+        "imagePresentation": {
+          "growthForm": "trained-ornamental",
+          "maturity": "trained",
+          "displayStyle": "root-ball",
+          "allowNurseryPot": false,
+          "imageAspectRatio": "4:5",
+          "cellAspectRatio": 1,
+          "label": "Reference-based topiary illustration",
+          "identityStatus": "owner-named-reference",
+          "actualProductSize": "not-specified",
+          "sourceType": "generated-illustration"
+        }
+      },
+      {
+        "id": "ornamental-topiary-arch",
+        "name": "Ficus Arch Topiary – Living Garden Arch",
+        "botanical": "Ficus species; selection to be confirmed",
+        "description": "A living foliage arch trained around an open passage for a distinctive garden entrance.",
+        "feature": "Ornamental & Topiary Plants",
+        "placement": "Garden entrances & pathways",
+        "note": "Illustrative image based on the supplied nursery reference. Confirm species, dimensions and availability with the nursery.",
+        "columns": 3,
+        "rows": 3,
+        "cell": 4,
+        "sheet": "/plants/catalogue/ornamental-topiary-plants-4-v3.webp",
+        "imagePresentation": {
+          "growthForm": "trained-ornamental",
+          "maturity": "trained",
+          "displayStyle": "in-ground",
+          "allowNurseryPot": false,
+          "imageAspectRatio": "4:5",
+          "cellAspectRatio": 1,
+          "label": "Reference-based topiary illustration",
+          "identityStatus": "owner-named-reference",
+          "actualProductSize": "not-specified",
+          "sourceType": "generated-illustration"
+        }
+      },
+      {
+        "id": "ornamental-topiary-sculpted-ball",
+        "name": "Sculpted Ball Topiary",
+        "botanical": "Nursery selection; species to be confirmed",
+        "description": "Dense glossy green foliage shaped into rounded tiers for a structured ornamental display.",
+        "feature": "Ornamental & Topiary Plants",
+        "placement": "Courtyards & formal gardens",
+        "note": "Illustrative image based on the supplied nursery reference. Confirm species, dimensions and availability with the nursery.",
+        "columns": 3,
+        "rows": 3,
+        "cell": 5,
+        "sheet": "/plants/catalogue/ornamental-topiary-plants-4-v3.webp",
+        "imagePresentation": {
+          "growthForm": "trained-ornamental",
+          "maturity": "trained",
+          "displayStyle": "nursery-container",
+          "allowNurseryPot": true,
+          "imageAspectRatio": "4:5",
+          "cellAspectRatio": 1,
+          "label": "Reference-based topiary illustration",
+          "identityStatus": "owner-named-reference",
+          "actualProductSize": "not-specified",
+          "sourceType": "generated-illustration"
         }
       }
     ]

@@ -58,7 +58,7 @@ export default function IndoorPlants({ query = '', items = plants, category = 'I
             <a className="indoor-cta indoor-cta--ghost" href="tel:+919849936169"><Phone size={17} aria-hidden="true" /> Call us</a>
           </div>
           {/* the variety caveat sits with the image note as small print */}
-          <p className="indoor-note"><Info size={14} aria-hidden="true" /><span>{/^illustrative/i.test(selected.note || '') ? selected.note : `${selected.note ? `${selected.note} ` : ''}Illustrative image; actual nursery plants may vary.`}</span></p>
+          <p className="indoor-note"><Info size={14} aria-hidden="true" /><span>{selected.imagePresentation?.sourceType === 'photograph' || /^illustrative/i.test(selected.note || '') ? selected.note : `${selected.note ? `${selected.note} ` : ''}Illustrative image; actual nursery plants may vary.`}</span></p>
         </div>
         {/* sits under the photo on wide screens, after the details on phones */}
         {plantBenefits(selected.name, slug).length > 0 && (

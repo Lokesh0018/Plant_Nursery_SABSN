@@ -301,3 +301,9 @@
   .gp-tile-media img, .gp-tile-zoom, .gp-print, .gp-hero-btn, .gp-collections button { transition: none; }
   .gp-tile-btn:hover .gp-tile-media img, .gp-print:hover { transform: none; scale: none; }
 }
+
+/* the back print's caption stays clear of the two prints in front of it */
+.gp-collage { aspect-ratio: 1 / 1; }
+.gp-print--a { width: 66%; top: 0; }
+.gp-print--a figcaption { text-align: right; }
+.gp-print--c { width: 50%; }
