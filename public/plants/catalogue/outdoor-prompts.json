@@ -1,0 +1,29 @@
+[
+  {
+    "source": "C:\\Users\\munak\\.codex\\generated_images\\01a1d431-b3ca-7a20-bbd2-248830ec6a44\\exec-eadbbe10-b137-4f6d-a3b1-9366c38999f3.png",
+    "prompt": "Create a square 3x3 contact sheet of nine equally sized square photographs. CRITICAL FRAMING: photograph every plant from far enough away that the COMPLETE plant AND entire pot fit in its own square. Subject including pot occupies AT MOST 65% of the tile height and 65% width. Leave at least 17% empty background ABOVE highest leaf, BELOW pot base, LEFT and RIGHT of widest leaves. All nine pots fully visible, including bottom edge and ground below. No leaves may touch or cross any cell boundary. For tall palms zoom OUT much further, render plant smaller; NEVER cut fronds or pot to fill frame. Strict equal thirds grid, no gutters, no borders, no text. Soft cream and sage background, realistic nursery photography, consistent natural daylight. Each subject isolated, centered. Subjects in row-major order:\n1. Red Wax Palm: Cyrtostachys renda lipstick palm, vivid red crownshafts and multiple stems, feather palm leaves\n2. Triangular Palm: Dypsis decaryi triangle palm, three-ranked triangular leaf arrangement, grey trunk and arching feather fronds\n3. Traveller Palm: Ravenala madagascariensis, broad banana-like leaves arranged in one dramatic flat fan\n4. Royal Palm: Roystonea regia royal palm, smooth pale grey trunk, green crownshaft and symmetrical feather crown\n5. Foxtail Palm: Wodyetia bifurcata foxtail palm, fluffy bottlebrush-like feather fronds, smooth solitary trunk\n6. Washingtonia Palm: Washingtonia fan palm, deeply divided palmate fan leaves with fine white threads\n7. Date Palm: Phoenix dactylifera date palm, silver-green arching pinnate fronds and textured trunk\n8. Dismarkia Palm: Bismarckia nobilis silver Bismarck palm, large circular silver-blue fan leaves\n9. Red Bottle Brush: red-flowered Callistemon bottlebrush shrub, cylindrical red flower spikes and narrow green leaves",
+    "names": [
+      "Red Wax Palm",
+      "Triangular Palm",
+      "Traveller Palm",
+      "Royal Palm",
+      "Foxtail Palm",
+      "Washingtonia Palm",
+      "Date Palm",
+      "Dismarkia Palm",
+      "Red Bottle Brush"
+    ]
+  },
+  {
+    "source": "C:\\Users\\munak\\.codex\\generated_images\\01a1d431-b3ca-7a20-bbd2-248830ec6a44\\exec-9b3584ec-04c6-41ad-8724-721b0b690cb7.png",
+    "prompt": "Create a square 3x3 contact sheet of nine equally sized square photographs. CRITICAL FRAMING: photograph every plant from far enough away that the COMPLETE plant AND entire pot fit in its own square. Subject including pot occupies AT MOST 65% of the tile height and 65% width. Leave at least 17% empty background ABOVE highest leaf, BELOW pot base, LEFT and RIGHT of widest leaves. All nine pots fully visible, including bottom edge and ground below. No leaves may touch or cross any cell boundary. For tall palms zoom OUT much further, render plant smaller; NEVER cut fronds or pot to fill frame. Strict equal thirds grid, no gutters, no borders, no text. Soft cream and sage background, realistic nursery photography, consistent natural daylight. Each subject isolated, centered. Subjects in row-major order:\n1. Green Bottle Brush: green-foliaged bottlebrush nursery tree, dense narrow green leaves, no claimed flower colour, illustrative nursery form\n2. Ashoka: Indian nursery Ashoka, tall narrow columnar tree with cascading glossy wavy leaves, illustrative landscape form\n3. Temple Tree: Plumeria frangipani temple tree, thick branching stems, broad leaves and soft pink-yellow flowers\n4. White Temple Tree: white-flowered Plumeria temple tree, white five-petalled blooms with yellow centres\n5. Multiplex Bamboo: Bambusa multiplex clumping bamboo, dense slender green culms and fine narrow leaves\n6. Bamboo: healthy bamboo clump with upright jointed culms and arching narrow leaves\n7,8,9: empty cream background cells. Exactly SIX plants in first six cells, bottom three blank.",
+    "names": [
+      "Green Bottle Brush",
+      "Ashoka",
+      "Temple Tree",
+      "White Temple Tree",
+      "Multiplex Bamboo",
+      "Bamboo"
+    ]
+  }
+]

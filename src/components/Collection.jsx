@@ -1,3 +1,5 @@
+import PlantFrame from './PlantFrame';
+import './IndoorPlants.css';
 import React from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -28,7 +30,7 @@ export function ProductCard({ product, onOpen, showRating = false }) {
       <div className="product-stage">
         <span className="product-stage-glow" aria-hidden="true" />
         <span className="product-stage-shadow" aria-hidden="true" />
-        <img src={product.image} alt={product.name} className="product-img" loading="lazy" decoding="async" />
+        {product.sheet ? <PlantFrame plant={product} /> : <img src={product.image} alt={product.name} className="product-img" loading="lazy" decoding="async" />}
       </div>
 
       <div className="product-body">

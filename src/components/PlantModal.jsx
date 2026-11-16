@@ -1,3 +1,5 @@
+import PlantFrame from './PlantFrame';
+import './IndoorPlants.css';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import gsap from 'gsap';
@@ -110,7 +112,7 @@ export default function PlantModal({ product, originRect, onClose }) {
           <span className="pm-stage-glow" aria-hidden="true" />
           <span className="pm-stage-ring" aria-hidden="true" />
           <span className="pm-stage-shadow" aria-hidden="true" />
-          <img className="pm-img" src={product.image} alt={product.name} />
+          {product.sheet ? <PlantFrame plant={product} /> : <img className="pm-img" src={product.image} alt={product.name} />}
         </div>
 
         {/* Details */}

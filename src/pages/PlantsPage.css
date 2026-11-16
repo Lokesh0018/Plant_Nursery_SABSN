@@ -45,6 +45,169 @@
   overflow: hidden;
 }
 /* forest to ivory, eased flat at both ends; sits just under the header */
+/* catalogue header: the site's forest green (as on the home hero and the About bands), with cream
+   type and lime accents so the transparent navbar reads over it */
+.plants-page .catalogue-header {
+  position: relative;
+  color: #f4ecd9;
+  background:
+    radial-gradient(ellipse 50% 70% at 85% 20%, rgba(201, 217, 138, 0.16), transparent 70%),
+    radial-gradient(ellipse 40% 60% at 0% 90%, rgba(127, 168, 74, 0.12), transparent 70%),
+    linear-gradient(180deg, #0f2d1b 0%, #163624 100%);
+}
+.plants-page .catalogue-header .indoor-kicker { color: var(--pp-lime); }
+/* copy on the left, the plant shelf on the right */
+.plants-page .catalogue-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: 2rem clamp(2rem, 5vw, 5rem);
+  overflow: hidden;
+}
+.plants-page .catalogue-header-copy h1 { color: #f7f6f0; }
+.plants-page .catalogue-header-copy h1 em { color: var(--pp-lime); }
+.plants-page .catalogue-header-copy > p:not(.indoor-kicker) { max-width: 620px; line-height: 1.7; color: rgba(244, 236, 217, 0.82); }
+
+/* ---------- header art: a glasshouse arch with three plants on a ledge ---------- */
+.catalogue-header-art { position: relative; justify-self: center; width: min(100%, 440px); padding: 0 2.5rem; }
+.cha-arch {
+  position: relative;
+  aspect-ratio: 4 / 4.6;
+  border-radius: 999px 999px 28px 28px;
+  border: 1px solid rgba(201, 217, 138, 0.25);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02) 60%, rgba(201, 217, 138, 0.06)),
+    rgba(11, 36, 21, 0.35);
+  box-shadow: 0 30px 60px rgba(4, 18, 10, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  isolation: isolate;
+}
+/* glazing bars, like a glasshouse window */
+.cha-arch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(201, 217, 138, 0.12) calc(50% - 0.5px), rgba(201, 217, 138, 0.12) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(180deg, transparent 38%, rgba(201, 217, 138, 0.1) 38%, rgba(201, 217, 138, 0.1) calc(38% + 1px), transparent calc(38% + 1px));
+}
+.cha-glow { position: absolute; z-index: -1; left: 50%; top: 42%; width: 85%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(201, 217, 138, 0.42), transparent 65%); }
+.cha-plant { position: absolute; bottom: 12%; height: auto; filter: drop-shadow(0 14px 18px rgba(4, 18, 10, 0.45)); transform-origin: 50% 100%; }
+.cha-plant--centre { left: 50%; width: 48%; margin-left: -24%; z-index: 2; animation: cha-sway 7s ease-in-out infinite; }
+.cha-plant--left { left: 6%; width: 32%; z-index: 1; animation: cha-sway 8s ease-in-out -2s infinite; }
+.cha-plant--right { right: 2%; width: 42%; bottom: 11%; z-index: 1; animation: cha-sway 9s ease-in-out -4s infinite; }
+/* the wooden ledge the pots stand on */
+.cha-ledge {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 9%;
+  height: 12px;
+  z-index: 3;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #c9a77c, #8d6b46);
+  box-shadow: 0 10px 18px rgba(4, 18, 10, 0.45);
+}
+@keyframes cha-sway { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1.2deg); } }
+
+/* category shortcuts floating around the arch */
+.cha-picks { position: absolute; inset: 0; pointer-events: none; }
+.cha-pick {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  padding: 0.45rem 0.8rem 0.45rem 0.45rem;
+  border: 1px solid rgba(255, 253, 248, 0.6);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.94);
+  color: var(--pp-forest);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 14px 30px rgba(4, 18, 10, 0.35);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.cha-pick > svg { color: var(--pp-leaf); }
+.cha-pick:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 18px 36px rgba(4, 18, 10, 0.4); }
+.cha-pick:focus-visible { outline: 2px solid var(--pp-lime); outline-offset: 3px; }
+.cha-pick-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--pp-forest); color: var(--pp-lime); }
+.cha-pick-text { display: flex; flex-direction: column; line-height: 1.15; }
+.cha-pick-text strong { font-size: 0.82rem; font-weight: 700; }
+.cha-pick-text small { font-size: 0.7rem; color: var(--pp-muted); }
+.cha-pick--flowering-plants { top: 16%; left: 0; }
+.cha-pick--ornamental-topiary-plants { top: 44%; right: 0; }
+.cha-pick--fruit-plants { bottom: 2%; left: 6%; }
+
+@media (max-width: 900px) {
+  .plants-page .catalogue-header { grid-template-columns: 1fr; }
+  .catalogue-header-art { width: min(100%, 380px); justify-self: start; }
+}
+@media (max-width: 560px) {
+  .ch-actions .ch-btn { flex: 1 1 100%; }
+  /* the two figures side by side across the full width */
+  .plants-page .catalogue-stats { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .plants-page .catalogue-stats li { flex-direction: column; align-items: flex-start; gap: 0.45rem; padding: 0.6rem 0.75rem; }
+  .plants-page .catalogue-stats li + li { padding-left: 0.9rem; }
+  .ch-stat-icon { width: 30px; height: 30px; }
+  .ch-corner--bl { display: none; }
+  .ch-corner--tr { opacity: 0.35; }
+  .catalogue-header-art { width: 100%; padding: 0 1.25rem; }
+  .cha-pick { padding-right: 0.6rem; }
+  .cha-pick > svg { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cha-plant { animation: none; }
+  .ch-btn, .ch-btn svg { transition: none; }
+  .ch-btn:hover svg { transform: none; }
+  .cha-pick { transition: none; }
+  .cha-pick:hover { transform: none; }
+}
+.plants-page .catalogue-header h1 { color: #f7f6f0; }
+.plants-page .catalogue-header h1 em { color: var(--pp-lime); }
+.plants-page .catalogue-header > p { color: rgba(244, 236, 217, 0.82); }
+/* stats as one glass strip with a divider between the two figures */
+.plants-page .catalogue-stats {
+  display: inline-flex; flex-wrap: wrap; gap: 0; margin: 2rem 0 0; padding: 0.35rem; list-style: none;
+  border: 1px solid rgba(201, 217, 138, 0.2); border-radius: 18px; background: rgba(255, 255, 255, 0.05);
+}
+.plants-page .catalogue-stats li { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 1.1rem 0.55rem 0.6rem; color: rgba(244, 236, 217, 0.75); font-size: 0.82rem; }
+.plants-page .catalogue-stats li + li { border-left: 1px solid rgba(201, 217, 138, 0.18); padding-left: 1rem; }
+.plants-page .catalogue-stats strong { margin-right: 0.35rem; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; color: var(--pp-lime); }
+.ch-stat-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: rgba(201, 217, 138, 0.14); color: var(--pp-lime); }
+
+/* header actions */
+.ch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 1.75rem; }
+.ch-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; padding: 0 1.4rem;
+  border: 1px solid var(--pp-lime); border-radius: 999px; background: var(--pp-lime); color: var(--pp-forest);
+  font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.ch-btn:hover { background: #dbe7a3; border-color: #dbe7a3; }
+.ch-btn--ghost { background: transparent; border-color: rgba(244, 236, 217, 0.35); color: #f4ecd9; }
+.ch-btn--ghost:hover { background: rgba(255, 255, 255, 0.06); border-color: var(--pp-lime); color: var(--pp-lime); }
+.ch-btn:focus-visible { outline: 2px solid var(--pp-lime); outline-offset: 3px; }
+.ch-btn svg { transition: transform 0.2s ease; }
+.ch-btn:hover svg { transform: translateY(2px); }
+.ch-btn--ghost:hover svg { transform: none; }
+.plants-page .catalogue-header .vine-ornament { margin: 0.4rem 0 0; }
+
+/* corner foliage and a faint leaf pattern behind everything */
+.plants-page .catalogue-header > :not(.ch-corner) { position: relative; z-index: 1; }
+.plants-page .catalogue-header::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+  background: radial-gradient(circle, rgba(201, 217, 138, 0.07) 1px, transparent 1.6px) 0 0 / 26px 26px;
+  -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 95%); mask-image: linear-gradient(180deg, #000 20%, transparent 95%);
+}
+.ch-corner { position: absolute; pointer-events: none; height: auto; opacity: 0.55; }
+.ch-corner--tr { top: -20px; right: -40px; width: clamp(160px, 18vw, 280px); }
+.ch-corner--bl { bottom: -40px; left: -90px; width: clamp(180px, 20vw, 300px); opacity: 0.35; }
+
+/* header green into the page ivory, eased flat at both ends, just under the header */
+.plants-page .catalogue-header + .pp-main::before,
 .plants-page .pp-hero + .pp-main::before {
   content: '';
   position: absolute;
@@ -359,7 +522,11 @@
 }
 .pp-spot-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 
-/* ---------- toolbar: sticks under the floating navbar while you browse ---------- */
+/* ---------- toolbar: sticks under the floating navbar while you browse the plant grid ---------- */
+.pp-shop { position: relative; }
+/* on this page every card puts its care chips on their own line under the price, so all cards match */
+.pp-grid .product-foot { flex-direction: column; align-items: flex-start; gap: 0.65rem; }
+.pp-grid .product-care { flex-wrap: wrap; }
 .pp-toolbar {
   position: sticky;
   top: 84px;
@@ -562,64 +729,6 @@
   color: var(--pp-muted);
 }
 .pp-empty-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; }
-
-/* ---------- landscape plant palette ---------- */
-.pp-palette { margin-top: 6rem; }
-.pp-palette-head { max-width: 680px; margin: 0 auto 2.25rem; text-align: center; }
-.pp-palette-head h2 {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
-  line-height: 1.15;
-  color: var(--pp-forest);
-}
-.pp-palette-head p:last-child { margin: 0.9rem 0 0; line-height: 1.65; color: var(--pp-muted); }
-.pp-palette-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.pp-palette-card {
-  padding: 1.4rem 1.5rem 1.2rem;
-  border-radius: 22px;
-  background: rgba(255, 253, 248, 0.9);
-  border: 1px solid rgba(22, 54, 36, 0.08);
-  box-shadow: 0 10px 28px rgba(22, 54, 36, 0.05);
-}
-.pp-palette-card h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0 0 0.9rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid rgba(22, 54, 36, 0.1);
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--pp-forest);
-}
-.pp-palette-card h3 svg { flex: none; color: var(--pp-leaf); }
-.pp-palette-card ul { margin: 0; padding: 0; list-style: none; }
-.pp-palette-card li {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.38rem 0;
-  font-size: 0.9rem;
-  border-bottom: 1px dashed rgba(22, 54, 36, 0.08);
-}
-.pp-palette-card li:last-child { border-bottom: 0; }
-.pp-palette-card li span { font-weight: 600; color: var(--pp-ink); }
-.pp-palette-card li em { color: var(--pp-muted); text-align: right; }
-.pp-palette-note {
-  max-width: 680px;
-  margin: 1.5rem auto 0;
-  font-size: 0.86rem;
-  line-height: 1.6;
-  text-align: center;
-  color: var(--pp-muted);
-}
 
 /* ---------- help band before the footer ---------- */
 .pp-help {

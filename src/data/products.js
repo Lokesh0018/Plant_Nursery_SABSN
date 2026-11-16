@@ -1,6 +1,9 @@
 export const products = [
   {
     id: 'p1',
+    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    cell: 0, columns: 3, rows: 3,
+    imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Fiddle Leaf Fig',
     scientificName: 'Ficus lyrata',
     price: 2499,
@@ -18,6 +21,9 @@ export const products = [
   },
   {
     id: 'p2',
+    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    cell: 1, columns: 3, rows: 3,
+    imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Monstera Deliciosa',
     scientificName: 'Monstera deliciosa',
     price: 1899,
@@ -35,6 +41,9 @@ export const products = [
   },
   {
     id: 'p3',
+    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    cell: 2, columns: 3, rows: 3,
+    imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Rubber Plant',
     scientificName: 'Ficus elastica',
     price: 1599,
@@ -52,6 +61,9 @@ export const products = [
   },
   {
     id: 'p4',
+    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    cell: 3, columns: 3, rows: 3,
+    imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Snake Plant',
     scientificName: 'Sansevieria trifasciata',
     price: 999,
@@ -69,6 +81,9 @@ export const products = [
   },
   {
     id: 'p5',
+    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    cell: 4, columns: 3, rows: 3,
+    imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Peace Lily',
     scientificName: 'Spathiphyllum',
     price: 1199,
@@ -86,6 +101,9 @@ export const products = [
   },
   {
     id: 'p6',
+    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    cell: 5, columns: 3, rows: 3,
+    imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Bird of Paradise',
     scientificName: 'Strelitzia nicolai',
     price: 2999,
@@ -103,6 +121,9 @@ export const products = [
   },
   {
     id: 'p7',
+    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    cell: 6, columns: 3, rows: 3,
+    imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Golden Pothos',
     scientificName: 'Epipremnum aureum',
     price: 799,
@@ -120,6 +141,9 @@ export const products = [
   },
   {
     id: 'p8',
+    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    cell: 7, columns: 3, rows: 3,
+    imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'ZZ Plant',
     scientificName: 'Zamioculcas zamiifolia',
     price: 1299,
