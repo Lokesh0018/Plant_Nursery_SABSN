@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { Fragment, useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Sprout, Armchair, Clock, MapPin, X, Sun, Trees, TreePine, Leaf, SlidersHorizontal } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import IndoorPlants from '../components/IndoorPlants';
@@ -78,6 +78,33 @@ export default function PlantsPage() {
     document.getElementById('plants')?.scrollIntoView({ behavior: 'smooth' });
   };
   const visible = groups.filter(g => category === 'all' || category === g.slug);
+  // "All plants" with no search loads one category at a time as the visitor scrolls: each next section
+  // arrives after a vine divider and a short loader. A chosen category or a search shows everything at once.
+  const progressive = category === 'all' && !query.trim() && typeof IntersectionObserver !== 'undefined';
+  // progress is kept per filter, so changing the category or search starts again from the first section
+  const filterKey = `${category}|${query}`;
+  const [progress, setProgress] = useState({ key: filterKey, loaded: 1, loading: false });
+  const loaded = progress.key === filterKey ? progress.loaded : 1;
+  const loadingNext = progress.key === filterKey && progress.loading;
+  const sentinel = useRef(null);
+  useEffect(() => {
+    if (!progressive || loaded >= visible.length) return undefined;
+    const el = sentinel.current;
+    if (!el) return undefined;
+    let timer;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      setProgress({ key: filterKey, loaded, loading: true });
+      // long enough to see the vine grow and the loader, short enough not to feel slow
+      const wait = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 150 : 900;
+      timer = setTimeout(() => setProgress({ key: filterKey, loaded: loaded + 1, loading: false }), wait);
+    }, { rootMargin: '0px 0px 120px 0px' });
+    io.observe(el);
+    return () => { io.disconnect(); clearTimeout(timer); };
+  }, [progressive, loaded, visible.length, filterKey]);
+  const shownGroups = progressive ? visible.slice(0, loaded) : visible;
+  const nextGroup = progressive && loaded < visible.length ? visible[loaded] : null;
   const count = visible.reduce((sum, g) => sum + g.items.filter(p => `${p.name} ${p.botanical} ${g.title}`.toLowerCase().includes(query.trim().toLowerCase())).length, 0);
   return <div className="plants-page">
     <Navbar page="plants" />
@@ -168,7 +195,22 @@ export default function PlantsPage() {
           )}
         </div>
       </div>
-      {visible.map(g => <IndoorPlants key={g.slug} icon={CATEGORY_ICONS[g.slug] || Leaf} items={g.items} category={g.title} slug={g.slug} title={g.title} subtitle="Explore the collection and enquire about your favourites." query={query} />)}
+      {shownGroups.map((g, i) => (
+        <Fragment key={g.slug}>
+          {/* in the progressive "All plants" view, a vine divider separates each loaded category */}
+          {progressive && i > 0 && <VineDivider variant="ramp" id={`plants-${g.slug}`} from="#F7F3EA" to="#F7F3EA" />}
+          <IndoorPlants icon={CATEGORY_ICONS[g.slug] || Leaf} items={g.items} category={g.title} slug={g.slug} title={g.title} subtitle="Explore the collection and enquire about your favourites." query={query} />
+        </Fragment>
+      ))}
+      {nextGroup && (
+        <div ref={sentinel} className="pp-next">
+          <VineDivider variant="ramp" id={`plants-${nextGroup.slug}`} from="#F7F3EA" to="#F7F3EA" />
+          <p className={`pp-next-loader${loadingNext ? ' is-loading' : ''}`} role="status" aria-live="polite">
+            <span className="pp-next-spinner" aria-hidden="true"><Leaf size={16} /></span>
+            {loadingNext ? `Loading ${nextGroup.title}…` : `Next: ${nextGroup.title}`}
+          </p>
+        </div>
+      )}
       {!count && <div className="pp-empty"><h2>No plants match your search</h2><button className="pp-btn" onClick={() => { setQuery(''); setCategory('all'); }}>Show all plants</button></div>}
     </main>
     <Suspense fallback={null}><Footer /></Suspense><WhatsAppButton />

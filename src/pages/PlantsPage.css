@@ -1148,3 +1148,24 @@
 .plants-page .indoor-care > div { display: flex; align-items: center; gap: 0.65rem; padding: 0.6rem 0.8rem; border-radius: 14px; background: #eef3e4; font-size: 0.8rem; line-height: 1.35; color: var(--pp-ink); }
 .plants-page .indoor-care small { display: block; margin-bottom: 0.15rem; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pp-leaf); }
 .indoor-care-icon { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 9px; background: var(--pp-forest); color: var(--pp-lime); }
+
+/* ================= progressive "All plants": vine divider + loader before each next category ================= */
+/* dividers inside the catalogue run edge to edge across the page */
+.plants-page .pp-main .vine-divider { margin-inline: calc(50% - 50vw); }
+.plants-page .pp-main > .vine-divider { margin-top: -1.5rem; margin-bottom: 2.5rem; }
+.pp-next { min-height: 260px; }
+.pp-next-loader {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin: 0.4rem auto 0; width: fit-content;
+  padding: 0.55rem 1.1rem 0.55rem 0.6rem; border: 1px solid rgba(22, 54, 36, 0.1); border-radius: 999px; background: var(--pp-paper);
+  color: var(--pp-muted); font-size: 0.85rem; font-weight: 500; box-shadow: 0 8px 20px rgba(22, 54, 36, 0.06);
+}
+.pp-next-spinner { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #eef3e4; color: var(--pp-leaf); }
+.pp-next-loader.is-loading { color: var(--pp-forest); }
+.pp-next-loader.is-loading .pp-next-spinner { background: var(--pp-forest); color: var(--pp-lime); animation: pp-spin 1s linear infinite; }
+@keyframes pp-spin { to { transform: rotate(360deg); } }
+/* each newly loaded category rises in */
+.plants-page .indoor-category { animation: pp-section-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes pp-section-in { from { opacity: 0; transform: translateY(24px); } }
+@media (prefers-reduced-motion: reduce) {
+  .pp-next-loader.is-loading .pp-next-spinner, .plants-page .indoor-category { animation: none; }
+}
