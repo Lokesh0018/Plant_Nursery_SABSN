@@ -172,7 +172,7 @@ export default function Navbar({ page = 'home' }) {
                 setIsMobileOpen(false);
                 setActiveSection(item.toLowerCase());
                 // About, Plants, Services and Gallery are their own pages (/about, /plants, /services, /gallery)
-                const own = { About: 'about', Plants: 'plants', Services: 'services', Gallery: 'gallery' }[item];
+                const own = { Pots: 'pots', About: 'about', Plants: 'plants', Services: 'services', Gallery: 'gallery' }[item];
                 if (own) {
                   if (page === own) window.scrollTo({ top: 0, behavior: 'smooth' });
                   else window.location.href = `/${own}`;
@@ -243,9 +243,9 @@ export default function Navbar({ page = 'home' }) {
                 transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
               }}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && e.target.value.trim() !== '' && page === 'plants') {
+                if (e.key === 'Enter' && e.target.value.trim() !== '' && (page === 'plants' || page === 'pots')) {
                   // the plants page filters its own grid
-                  window.dispatchEvent(new CustomEvent('plants-search', { detail: e.target.value.trim() }));
+                  window.dispatchEvent(new CustomEvent(page === 'pots' ? 'pots-search' : 'plants-search', { detail: e.target.value.trim() }));
                   setIsSearchOpen(false);
                   e.target.blur();
                   e.target.value = '';

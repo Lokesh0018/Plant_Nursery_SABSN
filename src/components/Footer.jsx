@@ -126,7 +126,7 @@ export default function Footer() {
             <h4 className="footer-col-header">Shop</h4>
             <a href="/plants" className="footer-link">All Plants</a>
             <a href="#collection" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('collection'); }}>Collections</a>
-            <a href="#pots-collection" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('pots-collection'); }}>Planters</a>
+            <a href="/pots" className="footer-link">Pots & Planters</a>
             <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('care'); }}>Care Tools</a>
           </div>
 

@@ -1,0 +1,586 @@
+[
+  {
+    "title": "Plastic Pots",
+    "slug": "plastic-pots",
+    "material": "Moulded plastic",
+    "items": [
+      {
+        "id": "plastic-pots-1",
+        "name": "Round Nursery Pot",
+        "description": "Forest green round tapered plastic nursery pot with rolled rim.",
+        "material": "Moulded plastic",
+        "sheet": "/pots/catalogue/plastic-pots.webp",
+        "cell": 0,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "plastic-pots-2",
+        "name": "Square Plastic Planter",
+        "description": "Charcoal square tapered plastic planter.",
+        "material": "Moulded plastic",
+        "sheet": "/pots/catalogue/plastic-pots.webp",
+        "cell": 1,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "plastic-pots-3",
+        "name": "Ribbed Plastic Pot",
+        "description": "Warm ivory round plastic pot with subtle vertical ribs.",
+        "material": "Moulded plastic",
+        "sheet": "/pots/catalogue/plastic-pots.webp",
+        "cell": 2,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "plastic-pots-4",
+        "name": "Balcony Trough",
+        "description": "Terracotta coloured long rectangular plastic balcony trough.",
+        "material": "Moulded plastic",
+        "sheet": "/pots/catalogue/plastic-pots.webp",
+        "cell": 3,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "plastic-pots-5",
+        "name": "Wide Bowl Planter",
+        "description": "Sage green low wide plastic bowl planter.",
+        "material": "Moulded plastic",
+        "sheet": "/pots/catalogue/plastic-pots.webp",
+        "cell": 4,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "plastic-pots-6",
+        "name": "Tall Plastic Planter",
+        "description": "Matte sand tall tapered plastic planter.",
+        "material": "Moulded plastic",
+        "sheet": "/pots/catalogue/plastic-pots.webp",
+        "cell": 5,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      }
+    ]
+  },
+  {
+    "title": "Ceramic Pots",
+    "slug": "ceramic-pots",
+    "material": "Glazed ceramic",
+    "items": [
+      {
+        "id": "ceramic-pots-1",
+        "name": "Ivory Cylinder",
+        "description": "Ivory glazed ceramic cylinder pot.",
+        "material": "Glazed ceramic",
+        "sheet": "/pots/catalogue/ceramic-pots.webp",
+        "cell": 0,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "ceramic-pots-2",
+        "name": "Sage Round Pot",
+        "description": "Sage green glazed rounded ceramic pot.",
+        "material": "Glazed ceramic",
+        "sheet": "/pots/catalogue/ceramic-pots.webp",
+        "cell": 1,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "ceramic-pots-3",
+        "name": "Fluted Ceramic Pot",
+        "description": "Cream ceramic pot with fine vertical fluting.",
+        "material": "Glazed ceramic",
+        "sheet": "/pots/catalogue/ceramic-pots.webp",
+        "cell": 2,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "ceramic-pots-4",
+        "name": "Blue Glaze Planter",
+        "description": "Deep blue glazed ceramic planter with subtle tonal variation.",
+        "material": "Glazed ceramic",
+        "sheet": "/pots/catalogue/ceramic-pots.webp",
+        "cell": 3,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "ceramic-pots-5",
+        "name": "Speckled Ceramic Pot",
+        "description": "Warm white speckled ceramic pot.",
+        "material": "Glazed ceramic",
+        "sheet": "/pots/catalogue/ceramic-pots.webp",
+        "cell": 4,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "ceramic-pots-6",
+        "name": "Ceramic Bowl",
+        "description": "Soft jade glazed shallow ceramic bowl planter.",
+        "material": "Glazed ceramic",
+        "sheet": "/pots/catalogue/ceramic-pots.webp",
+        "cell": 5,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      }
+    ]
+  },
+  {
+    "title": "Cement Pots",
+    "slug": "cement-pots",
+    "material": "Cement",
+    "items": [
+      {
+        "id": "cement-pots-1",
+        "name": "Cement Cylinder",
+        "description": "Natural grey concrete cylindrical planter.",
+        "material": "Cement",
+        "sheet": "/pots/catalogue/cement-pots.webp",
+        "cell": 0,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "cement-pots-2",
+        "name": "Square Cement Planter",
+        "description": "Light grey concrete square planter.",
+        "material": "Cement",
+        "sheet": "/pots/catalogue/cement-pots.webp",
+        "cell": 1,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "cement-pots-3",
+        "name": "Tapered Cement Pot",
+        "description": "Charcoal grey tapered concrete planter.",
+        "material": "Cement",
+        "sheet": "/pots/catalogue/cement-pots.webp",
+        "cell": 2,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "cement-pots-4",
+        "name": "Low Cement Bowl",
+        "description": "Wide low pale grey concrete bowl.",
+        "material": "Cement",
+        "sheet": "/pots/catalogue/cement-pots.webp",
+        "cell": 3,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "cement-pots-5",
+        "name": "Cement Trough",
+        "description": "Rectangular raw grey concrete planting trough.",
+        "material": "Cement",
+        "sheet": "/pots/catalogue/cement-pots.webp",
+        "cell": 4,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "cement-pots-6",
+        "name": "Textured Cement Pot",
+        "description": "Round cement planter with subtle horizontal textured bands.",
+        "material": "Cement",
+        "sheet": "/pots/catalogue/cement-pots.webp",
+        "cell": 5,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      }
+    ]
+  },
+  {
+    "title": "Terracotta / Clay Pots",
+    "slug": "terracotta-clay-pots",
+    "material": "Fired clay",
+    "items": [
+      {
+        "id": "terracotta-clay-pots-1",
+        "name": "Classic Clay Pot",
+        "description": "Classic orange terracotta tapered pot with rolled rim.",
+        "material": "Fired clay",
+        "sheet": "/pots/catalogue/terracotta-clay-pots.webp",
+        "cell": 0,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "terracotta-clay-pots-2",
+        "name": "Terracotta Cylinder",
+        "description": "Straight-sided unglazed terracotta cylinder.",
+        "material": "Fired clay",
+        "sheet": "/pots/catalogue/terracotta-clay-pots.webp",
+        "cell": 1,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "terracotta-clay-pots-3",
+        "name": "Clay Bowl",
+        "description": "Low wide terracotta bowl planter.",
+        "material": "Fired clay",
+        "sheet": "/pots/catalogue/terracotta-clay-pots.webp",
+        "cell": 2,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "terracotta-clay-pots-4",
+        "name": "Terracotta Urn",
+        "description": "Traditional terracotta garden urn with wide open neck.",
+        "material": "Fired clay",
+        "sheet": "/pots/catalogue/terracotta-clay-pots.webp",
+        "cell": 3,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "terracotta-clay-pots-5",
+        "name": "Clay Trough",
+        "description": "Unglazed terracotta rectangular trough.",
+        "material": "Fired clay",
+        "sheet": "/pots/catalogue/terracotta-clay-pots.webp",
+        "cell": 4,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "terracotta-clay-pots-6",
+        "name": "Ribbed Clay Pot",
+        "description": "Hand-thrown terracotta planter with horizontal ribs.",
+        "material": "Fired clay",
+        "sheet": "/pots/catalogue/terracotta-clay-pots.webp",
+        "cell": 5,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      }
+    ]
+  },
+  {
+    "title": "Fibre Pots",
+    "slug": "fibre-pots",
+    "material": "Fibre composite",
+    "items": [
+      {
+        "id": "fibre-pots-1",
+        "name": "Tall Fibre Taper",
+        "description": "Matte ivory tall tapered fibre composite planter.",
+        "material": "Fibre composite",
+        "sheet": "/pots/catalogue/fibre-pots.webp",
+        "cell": 0,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "fibre-pots-2",
+        "name": "Fibre Cube",
+        "description": "Graphite fibre composite cube planter.",
+        "material": "Fibre composite",
+        "sheet": "/pots/catalogue/fibre-pots.webp",
+        "cell": 1,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "fibre-pots-3",
+        "name": "Rounded Fibre Pot",
+        "description": "Sandstone-look rounded fibre composite planter.",
+        "material": "Fibre composite",
+        "sheet": "/pots/catalogue/fibre-pots.webp",
+        "cell": 2,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "fibre-pots-4",
+        "name": "Fibre Cylinder",
+        "description": "Matte sage fibre composite cylinder.",
+        "material": "Fibre composite",
+        "sheet": "/pots/catalogue/fibre-pots.webp",
+        "cell": 3,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "fibre-pots-5",
+        "name": "Fibre Trough",
+        "description": "Long charcoal fibre composite trough.",
+        "material": "Fibre composite",
+        "sheet": "/pots/catalogue/fibre-pots.webp",
+        "cell": 4,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "fibre-pots-6",
+        "name": "Fibre Bowl",
+        "description": "Smooth off-white low wide fibre composite bowl.",
+        "material": "Fibre composite",
+        "sheet": "/pots/catalogue/fibre-pots.webp",
+        "cell": 5,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      }
+    ]
+  },
+  {
+    "title": "Designer & Decorative Pots",
+    "slug": "designer-decorative-pots",
+    "material": "Material varies by design",
+    "items": [
+      {
+        "id": "designer-decorative-pots-1",
+        "name": "Fluted Statement Pot",
+        "description": "Cream decorative planter with pronounced architectural fluting.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/designer-decorative-pots.webp",
+        "cell": 0,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "designer-decorative-pots-2",
+        "name": "Geometric Planter",
+        "description": "Terracotta toned faceted geometric decorative pot.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/designer-decorative-pots.webp",
+        "cell": 1,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "designer-decorative-pots-3",
+        "name": "Terrazzo Planter",
+        "description": "Ivory pot with subtle multicolour terrazzo chips.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/designer-decorative-pots.webp",
+        "cell": 2,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "designer-decorative-pots-4",
+        "name": "Two-Tone Planter",
+        "description": "Round cream and muted ochre colour-block decorative pot.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/designer-decorative-pots.webp",
+        "cell": 3,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "designer-decorative-pots-5",
+        "name": "Embossed Botanical Pot",
+        "description": "Sage decorative pot with embossed leaf pattern.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/designer-decorative-pots.webp",
+        "cell": 4,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "designer-decorative-pots-6",
+        "name": "Sculptural Planter",
+        "description": "Asymmetric sculptural warm ivory organic-shaped pot with clear plant opening.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/designer-decorative-pots.webp",
+        "cell": 5,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      }
+    ]
+  },
+  {
+    "title": "Hanging Pots",
+    "slug": "hanging-pots",
+    "material": "Material varies by design",
+    "items": [
+      {
+        "id": "hanging-pots-1",
+        "name": "Classic Hanging Bowl",
+        "description": "Green plastic hanging bowl with three matching straps and hanging hook.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/hanging-pots.webp",
+        "cell": 0,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "hanging-pots-2",
+        "name": "Macrame Hanging Planter",
+        "description": "Ivory pot in natural cotton macrame hanger.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/hanging-pots.webp",
+        "cell": 1,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "hanging-pots-3",
+        "name": "Chain Hanging Basket",
+        "description": "Black wire basket with coir liner and three chains meeting a hook.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/hanging-pots.webp",
+        "cell": 2,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "hanging-pots-4",
+        "name": "Ceramic Hanging Pot",
+        "description": "Small sage ceramic hanging planter on three cords.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/hanging-pots.webp",
+        "cell": 3,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "hanging-pots-5",
+        "name": "Metal Hanging Bowl",
+        "description": "Matte cream metal hanging bowl on three chains.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/hanging-pots.webp",
+        "cell": 4,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "hanging-pots-6",
+        "name": "Coconut Shell Hanger",
+        "description": "Natural coconut shell planter suspended by three jute cords.",
+        "material": "Material varies by design",
+        "sheet": "/pots/catalogue/hanging-pots.webp",
+        "cell": 5,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      }
+    ]
+  },
+  {
+    "title": "Grow Bags & Nursery Bags",
+    "slug": "grow-nursery-bags",
+    "material": "Fabric or nursery-grade plastic",
+    "items": [
+      {
+        "id": "grow-nursery-bags-1",
+        "name": "Fabric Grow Bag",
+        "description": "Black fabric cylindrical grow bag with two sturdy handles.",
+        "material": "Fabric or nursery-grade plastic",
+        "sheet": "/pots/catalogue/grow-nursery-bags.webp",
+        "cell": 0,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "grow-nursery-bags-2",
+        "name": "Nursery Poly Bag",
+        "description": "Upright black flexible nursery poly bag with drainage perforations.",
+        "material": "Fabric or nursery-grade plastic",
+        "sheet": "/pots/catalogue/grow-nursery-bags.webp",
+        "cell": 1,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "grow-nursery-bags-3",
+        "name": "Tall Nursery Bag",
+        "description": "Tall narrow black nursery poly bag with perforations.",
+        "material": "Fabric or nursery-grade plastic",
+        "sheet": "/pots/catalogue/grow-nursery-bags.webp",
+        "cell": 2,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "grow-nursery-bags-4",
+        "name": "Round Grow Bag",
+        "description": "Green woven grow bag with black handles.",
+        "material": "Fabric or nursery-grade plastic",
+        "sheet": "/pots/catalogue/grow-nursery-bags.webp",
+        "cell": 3,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "grow-nursery-bags-5",
+        "name": "Rectangular Grow Bag",
+        "description": "Rectangular black fabric raised grow bag with handles.",
+        "material": "Fabric or nursery-grade plastic",
+        "sheet": "/pots/catalogue/grow-nursery-bags.webp",
+        "cell": 4,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      },
+      {
+        "id": "grow-nursery-bags-6",
+        "name": "White Nursery Bag",
+        "description": "White outside black inside flexible nursery bag with small drainage perforations.",
+        "material": "Fabric or nursery-grade plastic",
+        "sheet": "/pots/catalogue/grow-nursery-bags.webp",
+        "cell": 5,
+        "columns": 3,
+        "rows": 2,
+        "cellAspectRatio": 1.0
+      }
+    ]
+  }
+]

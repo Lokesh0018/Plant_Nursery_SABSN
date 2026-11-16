@@ -51,9 +51,8 @@ export default function CategoryCollection({ kind, categories }) {
         </ul>
         <div className="category-bottom">
           <p>{pots ? 'Need help choosing a size or finish? Let’s find the right fit.' : 'Not sure where to start? We’ll help you choose the right plants.'}</p>
-          <a href={pots ? `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, please help me choose the right pots for my plants.')}` : '/plants'}
-            {...(pots ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-            {pots ? 'Find your perfect planter' : 'Browse all plants'} <ArrowRight size={17} aria-hidden="true" />
+          <a href={pots ? '/pots' : '/plants'}>
+            {pots ? 'Browse all pots' : 'Browse all plants'} <ArrowRight size={17} aria-hidden="true" />
           </a>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import potCatalogue from '../data/potCatalogue.json';
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Sun, Sprout, Ruler, MapPin, Weight, MessageCircle, ArrowRight, ArrowLeft, Check, Leaf } from 'lucide-react';
@@ -116,7 +117,7 @@ export default function CategoryModal({ kind, categories, index, onIndex, onClos
                 <MessageCircle size={18} aria-hidden="true" /> Enquire on WhatsApp
               </a>
               {pots
-                ? <a className="cm-btn cm-btn--ghost" target="_blank" rel="noopener noreferrer" href={wa(`Hello SABSN, please help me choose the right ${category.title.toLowerCase()} for my plants.`)}>Help me choose <ArrowRight size={17} aria-hidden="true" /></a>
+                ? <a className="cm-btn cm-btn--ghost" href={`/pots?category=${potCatalogue.find(g => g.title === category.title)?.slug || 'all'}`}>Browse this category <ArrowRight size={17} aria-hidden="true" /></a>
                 : <a className="cm-btn cm-btn--ghost" href="/plants">Browse all plants <ArrowRight size={17} aria-hidden="true" /></a>}
             </div>
             <nav className="cm-nav" aria-label={`${pots ? 'Pot' : 'Plant'} categories`}>
