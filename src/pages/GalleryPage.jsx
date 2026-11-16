@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
-import { ArrowLeft, ArrowRight, X, Images, Expand } from 'lucide-react';
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
+import { ArrowLeft, ArrowRight, ArrowDown, X, Images, Expand, Clock, MapPin, MessageCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import VineOrnament from '../components/VineOrnament';
+import VineDivider from '../components/VineDivider';
 import { GALLERY_GROUPS, galleryItems } from '../data/gallery';
 import './GalleryPage.css';
 
@@ -10,6 +11,9 @@ const Footer = lazy(() => import('../components/Footer'));
 
 const FILTERS = [{ key: 'all', label: 'All' }, ...GALLERY_GROUPS.map(({ key, label }) => ({ key, label }))];
 const countOf = (key) => (key === 'all' ? galleryItems.length : galleryItems.filter((g) => g.cat === key).length);
+// three photographs pinned up in the header like prints
+const PRINTS = ['/gallery/airport.webp', '/gallery/ficus.webp', '/gallery/palms.webp'].map((src) => galleryItems.find((g) => g.src === src)).filter(Boolean);
+const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I saw your gallery and would like to discuss a landscaping project.')}`;
 
 /* Full-screen viewer for one photo at a time: arrows, keyboard (left / right / Esc), swipe on touch,
    and a click on the dark backdrop closes it. Runs through whichever photos are currently shown. */
@@ -102,12 +106,13 @@ export default function GalleryPage() {
       <Navbar page="gallery" />
 
       <header className="gp-hero">
-        <div className="gp-hero-inner">
-          <nav className="gp-crumbs" aria-label="Breadcrumb">
-            <a href="/"><ArrowLeft size={14} strokeWidth={2.2} aria-hidden="true" />Home</a>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">Gallery</span>
-          </nav>
+        <img className="gp-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+        <div className="gp-hero-copy">
+          <p className="gp-visit">
+            <span className="gp-visit-open"><span className="gp-visit-dot" aria-hidden="true" />Open daily</span>
+            <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
+            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+          </p>
           <p className="gp-eyebrow">The living archive</p>
           <h1 className="gp-title">Our <em>Gallery</em></h1>
           <VineOrnament />
@@ -115,12 +120,40 @@ export default function GalleryPage() {
             Landscapes we plant and look after, stock from our nursery beds in Kadiyam, and the clients and
             partners we work with.
           </p>
-          <ul className="gp-stats">
+          <div className="gp-actions">
+            <a className="gp-hero-btn" href="#photos" onClick={(e) => { e.preventDefault(); document.getElementById('photos')?.scrollIntoView({ behavior: 'smooth' }); }}>
+              Browse the photos <ArrowDown size={16} strokeWidth={2.2} aria-hidden="true" />
+            </a>
+            <a className="gp-hero-btn gp-hero-btn--ghost" href={WA_LINK} target="_blank" rel="noopener noreferrer">
+              <MessageCircle size={16} strokeWidth={2.2} aria-hidden="true" /> Plan a project
+            </a>
+          </div>
+          <div className="gp-collections">
+            <span>Collections</span>
+            <ul>{GALLERY_GROUPS.map((g) => (
+              <li key={g.key}><button type="button" onClick={() => { setFilter(g.key); document.getElementById('photos')?.scrollIntoView({ behavior: 'smooth' }); }}>
+                {g.label}<span>{countOf(g.key)}</span>
+              </button></li>
+            ))}</ul>
+          </div>
+        </div>
+
+        {/* three photographs pinned up like prints, with the archive's figures on a glass card */}
+        <div className="gp-collage" aria-hidden="true">
+          {PRINTS.map((item, i) => (
+            <figure key={item.src} className={`gp-print gp-print--${'abc'[i]}`}>
+              <img src={item.src} alt="" width={item.width} height={item.height} decoding="async" style={{ objectPosition: item.pos || 'center' }} />
+              <figcaption>{item.tag}</figcaption>
+            </figure>
+          ))}
+          <ul className="gp-collage-stats">
             <li><strong>{galleryItems.length}</strong><span>photographs</span></li>
             <li><strong>{GALLERY_GROUPS.length}</strong><span>collections</span></li>
           </ul>
         </div>
       </header>
+
+      <VineDivider variant="ramp" id="gallery-top" from="#163624" to="#F7F3EA" />
 
       <main className="gp-main" id="photos">
         <div className="gp-filters" role="group" aria-label="Show a collection">
@@ -132,6 +165,7 @@ export default function GalleryPage() {
               aria-pressed={filter === key}
               onClick={() => setFilter(key)}
             >
+              {key === 'all' && <Images size={15} strokeWidth={2} aria-hidden="true" />}
               {label}
               <span className="gp-filter-count">{countOf(key)}</span>
             </button>
@@ -140,47 +174,55 @@ export default function GalleryPage() {
 
         {/* re-keyed per filter so the collections settle in again */}
         <div key={filter}>
-          {groups.map((group) => (
-            <section key={group.key} className="gp-group" aria-labelledby={`gp-${group.key}`}>
-              <header className="gp-group-head">
-                <div>
-                  <h2 id={`gp-${group.key}`}>{group.title}</h2>
-                  <p>{group.blurb}</p>
-                </div>
-                <span className="gp-group-count"><Images size={15} aria-hidden="true" />{group.items.length} photos</span>
-              </header>
+          {groups.map((group, gi) => (
+            <Fragment key={group.key}>
+              {/* a vine divider between collections */}
+              {gi > 0 && <VineDivider variant="ramp" id={`gallery-${group.key}`} from="#F7F3EA" to="#F7F3EA" />}
+              <section className="gp-group" aria-labelledby={`gp-${group.key}`}>
+                <header className="gp-group-head">
+                  <div>
+                    <p className="gp-group-kicker"><span>{String(GALLERY_GROUPS.findIndex((g) => g.key === group.key) + 1).padStart(2, '0')}</span>{group.label}</p>
+                    <h2 id={`gp-${group.key}`}>{group.title}</h2>
+                    <p>{group.blurb}</p>
+                  </div>
+                  <span className="gp-group-count"><Images size={15} aria-hidden="true" />{group.items.length} photos</span>
+                </header>
 
-              {/* masonry: every photo keeps its own shape, nothing is cropped */}
-              <ul className={`gp-masonry${group.items.length <= 2 ? ' gp-masonry--pair' : ''}`}>
-                {group.items.map((item) => {
-                  const at = indexOf.get(item.src);
-                  return (
-                    <li key={item.src} className="gp-tile" style={{ '--i': at }}>
-                      <button type="button" className="gp-tile-btn" onClick={() => setOpen(at)} aria-label={`Open photo: ${item.title}`}>
-                        <span className="gp-tile-media">
-                          <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" decoding="async" />
-                          <span className="gp-tile-zoom" aria-hidden="true"><Expand size={16} /></span>
-                        </span>
-                        <span className="gp-tile-caption">
-                          <span className="gp-tag">{item.tag}</span>
-                          <span className="gp-tile-title">{item.title}</span>
-                        </span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
+                {/* justified rows: every photo keeps its own shape, and each row fills the width at one height */}
+                <ul className="gp-rows">
+                  {group.items.map((item) => {
+                    const at = indexOf.get(item.src);
+                    return (
+                      <li key={item.src} className="gp-tile" style={{ '--i': at, '--r': (item.width / item.height).toFixed(3) }}>
+                        <button type="button" className="gp-tile-btn" onClick={() => setOpen(at)} aria-label={`Open photo: ${item.title}`}>
+                          <span className="gp-tile-media">
+                            <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" decoding="async" />
+                            <span className="gp-tile-zoom" aria-hidden="true"><Expand size={16} /></span>
+                            <span className="gp-tile-caption">
+                              <span className="gp-tag">{item.tag}</span>
+                              <span className="gp-tile-title">{item.title}</span>
+                            </span>
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            </Fragment>
           ))}
         </div>
 
         <section className="gp-cta" aria-labelledby="gp-cta-title">
           <div>
-            <p className="gp-eyebrow gp-eyebrow--dark">Work with us</p>
-            <h2 id="gp-cta-title">Want your landscape in our next photographs?</h2>
+            <p className="gp-eyebrow">Work with us</p>
+            <h2 id="gp-cta-title">Want your landscape in <em>our next photographs?</em></h2>
             <p>From a single planter to a full campus, tell us what you have in mind.</p>
           </div>
-          <a className="gp-btn" href="/?section=contact">Plan a project <ArrowRight size={17} strokeWidth={2.2} aria-hidden="true" /></a>
+          <div className="gp-cta-actions">
+            <a className="gp-hero-btn" href={WA_LINK} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} strokeWidth={2.2} aria-hidden="true" /> Chat on WhatsApp</a>
+            <a className="gp-hero-btn gp-hero-btn--ghost" href="/?section=contact">Contact details <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" /></a>
+          </div>
         </section>
       </main>
 
