@@ -1,5 +1,5 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ArrowDown, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Clock, MapPin } from 'lucide-react';
+import { Fragment, lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Clock, MapPin, Phone, Droplets } from 'lucide-react';
 import VineOrnament from '../components/VineOrnament';
 import VineDivider from '../components/VineDivider';
 import Navbar from '../components/Navbar';
@@ -24,8 +24,23 @@ function PotFrame({ item, eager = false }) {
   return <div className="pots-frame" role="img" aria-label={`${item.name}, illustrative pot style`}><div className="pots-frame-cell" style={{ aspectRatio: item.cellAspectRatio }}><img src={item.sheet} alt="" loading={eager ? 'eager' : 'lazy'} decoding="async" style={{ width: `${item.columns * 100}%`, transform: `translate(-${item.cell % item.columns * 100 / item.columns}%, -${Math.floor(item.cell / item.columns) * 100 / item.rows}%)` }} /></div></div>;
 }
 
-function PotDetails({ item, category, onClose }) {
+// where each kind of pot works well, shown in the detail window
+const BEST_FOR = {
+  'plastic-pots': ['Nursery growing', 'Balconies', 'Everyday plants'],
+  'ceramic-pots': ['Living rooms', 'Office desks', 'Gifting'],
+  'cement-pots': ['Patios & gardens', 'Large shrubs', 'Entrances'],
+  'terracotta-clay-pots': ['Herbs & flowers', 'Terraces', 'Outdoor beds'],
+  'fibre-pots': ['Lobbies & offices', 'Large indoor plants', 'Rooftops'],
+  'designer-decorative-pots': ['Statement corners', 'Hotels & cafés', 'Gifting'],
+  'hanging-pots': ['Balconies', 'Verandahs', 'Trailing plants'],
+  'grow-nursery-bags': ['Nursery stock', 'Kitchen gardens', 'Saplings & trees'],
+};
+
+// detail window: the same size for every pot; steps through the pots of the same category
+function PotDetails({ group, index, onStep, onGo, onClose }) {
   const ref = useRef(null);
+  const item = group.items[index];
+  const many = group.items.length > 1;
   useEffect(() => {
     const previous = document.activeElement;
     const overflow = document.body.style.overflow;
@@ -33,12 +48,51 @@ function PotDetails({ item, category, onClose }) {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = overflow; previous?.focus({ preventScroll: true }); };
   }, []);
-  return <dialog ref={ref} className="pots-dialog" aria-labelledby="pot-detail-title" onCancel={onClose} onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
-    <button className="pots-close" onClick={onClose} aria-label="Close pot details" autoFocus><X size={20} /></button>
-    <div className="pots-dialog-grid"><PotFrame item={item} eager /><div className="pots-detail-copy"><p className="pots-eyebrow">{category}</p><h2 id="pot-detail-title">{item.name}</h2><p>{item.description}</p>
-      <dl><div><dt><Layers size={16} /> Material family</dt><dd>{item.material}</dd></div><div><dt><MoveDiagonal size={16} /> Sizes & finishes</dt><dd>Ask us for current options and dimensions.</dd></div><div><dt><Flower2 size={16} /> Planting details</dt><dd>Confirm the internal opening, drainage and any liner or saucer before ordering.</dd></div></dl>
-      <a className="pots-button" href={enquiry(item.name)} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Enquire about this style</a><p className="pots-disclaimer">AI-generated style illustration. Colours, proportions and availability may differ from nursery stock.</p>
-    </div></div>
+  const neighbour = d => group.items[(index + d + group.items.length) % group.items.length].name;
+  return <dialog ref={ref} className="pots-dialog" aria-labelledby="pot-detail-title" onCancel={onClose}
+    onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+    onKeyDown={e => { if (many && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) onStep(e.key === 'ArrowRight' ? 1 : -1); }}>
+    <button className="pots-close" onClick={onClose} aria-label="Close pot details" autoFocus><X size={18} /></button>
+    <div className="pots-dialog-grid" key={item.id}>
+      <div className="pots-dialog-photo">
+        <PotFrame item={item} eager />
+        <span className="pots-dialog-num">{String(index + 1).padStart(2, '0')}<small> / {String(group.items.length).padStart(2, '0')}</small></span>
+        <span className="pots-dialog-material"><Layers size={13} strokeWidth={2.2} aria-hidden="true" />{item.material}</span>
+      </div>
+      <div className="pots-detail-copy">
+        <p className="pots-dialog-kicker"><span aria-hidden="true"><Flower2 size={15} strokeWidth={1.9} /></span>{group.title}</p>
+        <h2 id="pot-detail-title">{item.name}</h2>
+        <p className="pots-dialog-text">{item.description}</p>
+
+        {BEST_FOR[group.slug] && <>
+          <h3>Works well for</h3>
+          <ul className="pots-dialog-for">{BEST_FOR[group.slug].map(x => <li key={x}>{x}</li>)}</ul>
+        </>}
+
+        <h3>Before you order</h3>
+        <ul className="pots-dialog-facts">
+          <li><span aria-hidden="true"><MoveDiagonal size={16} strokeWidth={2} /></span><div><strong>Sizes & finishes</strong><p>Ask us for the current options and dimensions.</p></div></li>
+          <li><span aria-hidden="true"><Droplets size={16} strokeWidth={2} /></span><div><strong>Planting details</strong><p>Confirm the opening, drainage and any liner or saucer.</p></div></li>
+        </ul>
+
+        {many && <>
+          <h3>In this collection</h3>
+          <ul className="pots-dialog-thumbs">{group.items.map((p, i) => <li key={p.id}>
+            <button type="button" aria-label={`Show ${p.name}`} aria-current={i === index ? 'true' : undefined} onClick={() => onGo(i)}><PotFrame item={p} /></button>
+          </li>)}</ul>
+        </>}
+
+        <div className="pots-dialog-actions">
+          <a className="pots-dialog-cta" href={enquiry(item.name)} target="_blank" rel="noopener noreferrer"><MessageCircle size={16} strokeWidth={2.2} aria-hidden="true" />Enquire on WhatsApp</a>
+          <a className="pots-dialog-call" href="tel:+919849936169"><Phone size={15} strokeWidth={2.2} aria-hidden="true" />Call us</a>
+          {many && <div className="pots-dialog-nav">
+            <button type="button" onClick={() => onStep(-1)} aria-label={`Previous pot: ${neighbour(-1)}`}><ArrowLeft size={17} aria-hidden="true" /></button>
+            <button type="button" onClick={() => onStep(1)} aria-label={`Next pot: ${neighbour(1)}`}><ArrowRight size={17} aria-hidden="true" /></button>
+          </div>}
+        </div>
+        <p className="pots-disclaimer">Illustrative style. Colours, proportions and availability may differ from nursery stock.</p>
+      </div>
+    </div>
   </dialog>;
 }
 
@@ -120,12 +174,16 @@ export default function PotsPage() {
       <div className="pots-toolbar"><div><p className="pots-eyebrow">Find your favourite</p><h2>Pots for every setting.</h2></div><label className="pots-search"><Search size={19} /><input type="search" aria-label="Search pots" placeholder="Search styles, materials or finishes" value={query} onChange={e => setQuery(e.target.value)} />{query && <button onClick={() => setQuery('')} aria-label="Clear pot search"><X size={17} /></button>}</label></div>
       <nav className="pots-filters" aria-label="Pot categories"><button aria-pressed={category === 'all'} onClick={() => setCategory('all')}>All pots <span>{total}</span></button>{groups.map(g => <button key={g.slug} aria-pressed={category === g.slug} onClick={() => setCategory(g.slug)}>{g.title}<span>{g.items.length}</span></button>)}</nav>
       <p className="pots-results" aria-live="polite">{count} {count === 1 ? 'style' : 'styles'}{query && <> matching “{query}”</>}</p>
-      {filtered.map(g => <section className="pots-category" key={g.slug} aria-labelledby={`${g.slug}-heading`}><div className="pots-category-heading"><div><p className="pots-eyebrow">{g.material}</p><h2 id={`${g.slug}-heading`}>{g.title}</h2></div><span>{g.items.length} styles</span></div><div className="pots-grid">{g.items.map((item, i) => <button className="pots-card" key={item.id} onClick={() => setSelected({ item, category: g.title })} aria-label={`View ${item.name} details`} aria-haspopup="dialog">
+      {filtered.map((g, gi) => <Fragment key={g.slug}>
+      {/* a vine divider between categories, and one after the last before the help panel */}
+      {gi > 0 && <VineDivider variant="ramp" id={`pots-${g.slug}`} from="#FAF8F2" to="#FAF8F2" />}
+      <section className="pots-category" aria-labelledby={`${g.slug}-heading`}><div className="pots-category-heading"><div><p className="pots-eyebrow">{g.material}</p><h2 id={`${g.slug}-heading`}>{g.title}</h2></div><span>{g.items.length} styles</span></div><div className="pots-grid">{g.items.map((item, i) => <button className="pots-card" key={item.id} onClick={() => setSelected({ group: g, index: i })} aria-label={`View ${item.name} details`} aria-haspopup="dialog">
         <div className="pots-card-photo"><PotFrame item={item} /><span className="pots-card-num">{String(i + 1).padStart(2, '0')}</span><span className="pots-card-material">{item.material}</span></div>
         <div className="pots-card-copy"><h3>{item.name}</h3><p>{item.description}</p><div className="pots-card-bottom"><span className="pots-card-more">View details<ArrowUpRight size={15} strokeWidth={2.2} aria-hidden="true" /></span></div></div>
-      </button>)}</div></section>)}
+      </button>)}</div></section></Fragment>)}
+      {count > 0 && <VineDivider variant="ramp" id="pots-help" from="#FAF8F2" to="#FAF8F2" />}
       {!count && <div className="pots-empty"><Flower2 size={35} /><h2>No matching styles</h2><p>Try another material or browse the full collection.</p><button className="pots-button" onClick={() => { setQuery(''); setCategory('all'); }}>Show all pots</button></div>}
       <aside className="pots-help"><div><p className="pots-eyebrow">Let's find the right fit</p><h2>A beautiful pairing starts here.</h2><p>Share your plant and space with us. We’ll help you compare pot sizes and finishes.</p></div><a className="pots-button" href={enquiry('pots for my plants')} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Ask the nursery</a></aside><p className="pots-disclaimer">Images show illustrative styles. Please confirm current stock, dimensions, materials and prices with the nursery.</p>
-    </main><Suspense fallback={null}><Footer /></Suspense><WhatsAppButton />{selected && <PotDetails {...selected} onClose={() => setSelected(null)} />}
+    </main><Suspense fallback={null}><Footer /></Suspense><WhatsAppButton />{selected && <PotDetails {...selected} onStep={d => setSelected(s => ({ ...s, index: (s.index + d + s.group.items.length) % s.group.items.length }))} onGo={i => setSelected(s => ({ ...s, index: i }))} onClose={() => setSelected(null)} />}
   </div>;
 }

@@ -372,3 +372,7 @@
   .sp-dialog[open], .sp-dialog-layout { animation: none; }
   .sp-dialog-cta, .sp-dialog-call, .sp-dialog-nav button, .sp-dialog-close { transition: none; }
 }
+/* the card body must not be the positioning box, or the "View details" overlay would only cover the text
+   and clicks on the photo would do nothing; the overlay also sits above the photo's badges */
+.sp-card .sp-card-body { position: static; }
+.sp-card-link::after { z-index: 2; }
