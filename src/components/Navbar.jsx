@@ -171,14 +171,14 @@ export default function Navbar({ page = 'home' }) {
               onClick={() => {
                 setIsMobileOpen(false);
                 setActiveSection(item.toLowerCase());
-                // About, Plants and Gallery are their own pages (/about, /plants, /gallery)
-                const own = { About: 'about', Plants: 'plants', Gallery: 'gallery' }[item];
+                // About, Plants, Services and Gallery are their own pages (/about, /plants, /services, /gallery)
+                const own = { About: 'about', Plants: 'plants', Services: 'services', Gallery: 'gallery' }[item];
                 if (own) {
                   if (page === own) window.scrollTo({ top: 0, behavior: 'smooth' });
                   else window.location.href = `/${own}`;
                 } else {
                   goToSection(page, {
-                    Home: 'home', Pots: 'pots-collection', Services: 'services',
+                    Home: 'home', Pots: 'pots-collection',
                   }[item]);
                 }
               }}

@@ -4,9 +4,10 @@ import App from './App.jsx';
 const PlantsPage = lazy(() => import('./pages/PlantsPage.jsx'));
 const GalleryPage = lazy(() => import('./pages/GalleryPage.jsx'));
 const AboutPage = lazy(() => import('./pages/AboutPage.jsx'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage.jsx'));
 
-// Pages, picked by path: the home page, the plants catalogue at /plants, the gallery at /gallery and the company profile at /about
-const PAGES = { '/plants': PlantsPage, '/gallery': GalleryPage, '/about': AboutPage };
+// Pages, picked by path: the home page, the plants catalogue at /plants, the services at /services, the gallery at /gallery and the company profile at /about
+const PAGES = { '/plants': PlantsPage, '/services': ServicesPage, '/gallery': GalleryPage, '/about': AboutPage };
 
 export default function Root() {
   const Page = PAGES[window.location.pathname.replace(/\/+$/, '')];

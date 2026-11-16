@@ -133,7 +133,7 @@ export default function Footer() {
           <div className="footer-links-col">
             <h4 className="footer-col-header">About</h4>
             <a href="/about" className="footer-link">Our Story</a>
-            <a href="#services" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('services'); }}>Services</a>
+            <a href="/services" className="footer-link">Services</a>
             <a href="/gallery" className="footer-link">Gallery</a>
             <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('contact'); }}>Careers</a>
           </div>
