@@ -52,27 +52,36 @@
   color: #f4ecd9;
   background:
     radial-gradient(ellipse 50% 70% at 85% 20%, rgba(201, 217, 138, 0.16), transparent 70%),
-    radial-gradient(ellipse 40% 60% at 0% 90%, rgba(127, 168, 74, 0.12), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 0% 60%, rgba(127, 168, 74, 0.12), transparent 70%),
     linear-gradient(180deg, #0f2d1b 0%, #163624 100%);
 }
 .plants-page .catalogue-header .indoor-kicker { color: var(--pp-lime); }
 /* copy on the left, the plant shelf on the right */
 .plants-page .catalogue-header {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   align-items: center;
   gap: 2rem clamp(2rem, 5vw, 5rem);
+  /* content lines up with the 1280px catalogue column below, however wide the screen */
+  padding-inline: max(5vw, 16px, calc((100% - 1280px) / 2));
+  /* fills the first screen; the content sits centred in the space below the floating navbar */
+  min-height: 100vh;
+  min-height: 100svh;
+  box-sizing: border-box;
+  padding-top: 110px;
+  padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+  align-content: center;
   overflow: hidden;
 }
 .plants-page .catalogue-header-copy h1 { color: #f7f6f0; }
 .plants-page .catalogue-header-copy h1 em { color: var(--pp-lime); }
 .plants-page .catalogue-header-copy > p:not(.indoor-kicker) { max-width: 620px; line-height: 1.7; color: rgba(244, 236, 217, 0.82); }
 
-/* ---------- header art: a glasshouse arch with three plants on a ledge ---------- */
-.catalogue-header-art { position: relative; justify-self: center; width: min(100%, 440px); padding: 0 2.5rem; }
+/* ---------- header art: a two-tier glasshouse stand, five plants at two depths ---------- */
+.catalogue-header-art { position: relative; justify-self: center; width: min(100%, max(480px, 62vh), 640px); padding: 0 2.5rem; }
 .cha-arch {
   position: relative;
-  aspect-ratio: 4 / 4.6;
+  aspect-ratio: 1 / 1.08;
   border-radius: 999px 999px 28px 28px;
   border: 1px solid rgba(201, 217, 138, 0.25);
   background:
@@ -90,26 +99,57 @@
   z-index: -1;
   background:
     linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(201, 217, 138, 0.12) calc(50% - 0.5px), rgba(201, 217, 138, 0.12) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-    linear-gradient(180deg, transparent 38%, rgba(201, 217, 138, 0.1) 38%, rgba(201, 217, 138, 0.1) calc(38% + 1px), transparent calc(38% + 1px));
+    linear-gradient(180deg, transparent 30%, rgba(201, 217, 138, 0.1) 30%, rgba(201, 217, 138, 0.1) calc(30% + 1px), transparent calc(30% + 1px));
 }
-.cha-glow { position: absolute; z-index: -1; left: 50%; top: 42%; width: 85%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(201, 217, 138, 0.42), transparent 65%); }
-.cha-plant { position: absolute; bottom: 12%; height: auto; filter: drop-shadow(0 14px 18px rgba(4, 18, 10, 0.45)); transform-origin: 50% 100%; }
-.cha-plant--centre { left: 50%; width: 48%; margin-left: -24%; z-index: 2; animation: cha-sway 7s ease-in-out infinite; }
-.cha-plant--left { left: 6%; width: 32%; z-index: 1; animation: cha-sway 8s ease-in-out -2s infinite; }
-.cha-plant--right { right: 2%; width: 42%; bottom: 11%; z-index: 1; animation: cha-sway 9s ease-in-out -4s infinite; }
-/* the wooden ledge the pots stand on */
+.cha-glow { position: absolute; z-index: -1; left: 50%; top: 45%; width: 90%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(201, 217, 138, 0.38), transparent 65%); }
+.cha-plant { position: absolute; height: auto; transform-origin: 50% 100%; }
+/* back shelf: smaller and a touch dimmer, so it reads as further away */
+.cha-shelf--back {
+  position: absolute; z-index: 1; left: 12%; right: 12%; bottom: 40%; height: 9px; border-radius: 5px;
+  background: linear-gradient(180deg, #a98a63, #6f5436); box-shadow: 0 8px 14px rgba(4, 18, 10, 0.4);
+}
+.cha-back { z-index: 1; bottom: calc(40% + 7px); filter: brightness(0.82) saturate(0.95) drop-shadow(0 8px 10px rgba(4, 18, 10, 0.4)); }
+.cha-back--1 { left: 13%; width: 22%; }
+.cha-back--2 { right: 11%; width: 28%; }
+/* front ledge: the three larger plants */
+.cha-front { z-index: 2; bottom: calc(9% + 10px); filter: drop-shadow(0 14px 18px rgba(4, 18, 10, 0.45)); }
+.cha-front--1 { left: 5%; width: 25%; }
+.cha-front--2 { left: 50%; width: 36%; margin-left: -18%; z-index: 3; }
+.cha-front--3 { right: 2%; width: 34%; }
+/* the wooden ledge the front pots stand on */
 .cha-ledge {
   position: absolute;
-  left: 4%;
-  right: 4%;
+  left: 3%;
+  right: 3%;
   bottom: 9%;
   height: 12px;
-  z-index: 3;
+  z-index: 4;
   border-radius: 6px;
   background: linear-gradient(180deg, #c9a77c, #8d6b46);
   box-shadow: 0 10px 18px rgba(4, 18, 10, 0.45);
 }
-@keyframes cha-sway { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1.2deg); } }
+
+/* cursor movement: only the category pills follow the cursor (eased so they glide); the glasshouse stays still */
+.catalogue-header-art { --mx: 0; --my: 0; }
+.cha-pick { translate: calc(var(--mx) * 20px) calc(var(--my) * 14px); }
+
+/* ---------- entrance: copy fades up line by line, then the arch and its pills settle in (once) ---------- */
+@keyframes ch-rise { from { opacity: 0; transform: translateY(18px); } }
+@keyframes ch-pop { from { opacity: 0; transform: translateY(10px) scale(0.92); } }
+.catalogue-header-copy > * { animation: ch-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.catalogue-header-copy > :nth-child(1) { animation-delay: 0.05s; }
+.catalogue-header-copy > :nth-child(2) { animation-delay: 0.12s; }
+.catalogue-header-copy > :nth-child(3) { animation-delay: 0.2s; }
+.catalogue-header-copy > :nth-child(4) { animation-delay: 0.28s; }
+.catalogue-header-copy > :nth-child(5) { animation-delay: 0.34s; }
+.catalogue-header-copy > :nth-child(6) { animation-delay: 0.4s; }
+.catalogue-header-copy > :nth-child(7) { animation-delay: 0.46s; }
+.cha-arch { animation: ch-rise 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+.cha-pick { animation: ch-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.cha-pick--flowering-plants { animation-delay: 0.7s; }
+.cha-pick--indoor-plants { animation-delay: 0.8s; }
+.cha-pick--fruit-plants { animation-delay: 0.9s; }
+.cha-pick--ornamental-topiary-plants { animation-delay: 1s; }
 
 /* category shortcuts floating around the arch */
 .cha-picks { position: absolute; inset: 0; pointer-events: none; }
@@ -119,28 +159,34 @@
   align-items: center;
   gap: 0.6rem;
   min-height: 44px;
-  padding: 0.45rem 0.8rem 0.45rem 0.45rem;
-  border: 1px solid rgba(255, 253, 248, 0.6);
+  padding: 0.4rem 0.85rem 0.4rem 0.4rem;
+  /* dark frosted glass, like a tag hung on the glasshouse */
+  border: 1px solid rgba(201, 217, 138, 0.35);
   border-radius: 999px;
-  background: rgba(255, 253, 248, 0.94);
-  color: var(--pp-forest);
+  background: linear-gradient(180deg, rgba(36, 74, 48, 0.72), rgba(14, 40, 24, 0.78));
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  color: #f4ecd9;
   font: inherit;
   text-align: left;
   cursor: pointer;
   pointer-events: auto;
-  box-shadow: 0 14px 30px rgba(4, 18, 10, 0.35);
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 14px 30px rgba(4, 18, 10, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, translate 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.cha-pick > svg { color: var(--pp-leaf); }
-.cha-pick:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 18px 36px rgba(4, 18, 10, 0.4); }
+.cha-pick > svg { color: var(--pp-lime); transition: transform 0.2s ease; }
+.cha-pick:hover { transform: translateY(-2px); border-color: var(--pp-lime); box-shadow: 0 18px 36px rgba(4, 18, 10, 0.5), 0 0 0 4px rgba(201, 217, 138, 0.12); }
+.cha-pick:hover > svg { transform: translateX(2px); }
 .cha-pick:focus-visible { outline: 2px solid var(--pp-lime); outline-offset: 3px; }
-.cha-pick-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--pp-forest); color: var(--pp-lime); }
+.cha-pick-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--pp-lime); color: var(--pp-forest); }
 .cha-pick-text { display: flex; flex-direction: column; line-height: 1.15; }
-.cha-pick-text strong { font-size: 0.82rem; font-weight: 700; }
-.cha-pick-text small { font-size: 0.7rem; color: var(--pp-muted); }
-.cha-pick--flowering-plants { top: 16%; left: 0; }
-.cha-pick--ornamental-topiary-plants { top: 44%; right: 0; }
-.cha-pick--fruit-plants { bottom: 2%; left: 6%; }
+.cha-pick-text strong { font-size: 0.82rem; font-weight: 700; color: #f7f6f0; }
+.cha-pick-text small { font-size: 0.7rem; color: rgba(244, 236, 217, 0.68); }
+/* four shortcuts framing the glasshouse: two high on the curve, two on the base */
+.cha-pick--flowering-plants { top: 14%; left: 0; }
+.cha-pick--indoor-plants { top: 9%; right: 2%; }
+.cha-pick--ornamental-topiary-plants { bottom: 1%; right: 0; }
+.cha-pick--fruit-plants { bottom: 1%; left: 4%; }
 
 @media (max-width: 900px) {
   .plants-page .catalogue-header { grid-template-columns: 1fr; }
@@ -153,18 +199,19 @@
   .plants-page .catalogue-stats li { flex-direction: column; align-items: flex-start; gap: 0.45rem; padding: 0.6rem 0.75rem; }
   .plants-page .catalogue-stats li + li { padding-left: 0.9rem; }
   .ch-stat-icon { width: 30px; height: 30px; }
-  .ch-corner--bl { display: none; }
   .ch-corner--tr { opacity: 0.35; }
   .catalogue-header-art { width: 100%; padding: 0 1.25rem; }
   .cha-pick { padding-right: 0.6rem; }
   .cha-pick > svg { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cha-plant { animation: none; }
+  .cha-arch, .cha-pick, .catalogue-header-copy > *, .ch-visit-dot::after { animation: none; }
+  .catalogue-header-art * { translate: none !important; transition: none; }
   .ch-btn, .ch-btn svg { transition: none; }
   .ch-btn:hover svg { transform: none; }
   .cha-pick { transition: none; }
   .cha-pick:hover { transform: none; }
+  .cha-pick:hover > svg { transform: none; }
 }
 .plants-page .catalogue-header h1 { color: #f7f6f0; }
 .plants-page .catalogue-header h1 em { color: var(--pp-lime); }
@@ -172,12 +219,26 @@
 /* stats as one glass strip with a divider between the two figures */
 .plants-page .catalogue-stats {
   display: inline-flex; flex-wrap: wrap; gap: 0; margin: 2rem 0 0; padding: 0.35rem; list-style: none;
-  border: 1px solid rgba(201, 217, 138, 0.2); border-radius: 18px; background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(201, 217, 138, 0.2); border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
 }
 .plants-page .catalogue-stats li { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 1.1rem 0.55rem 0.6rem; color: rgba(244, 236, 217, 0.75); font-size: 0.82rem; }
 .plants-page .catalogue-stats li + li { border-left: 1px solid rgba(201, 217, 138, 0.18); padding-left: 1rem; }
 .plants-page .catalogue-stats strong { margin-right: 0.35rem; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; color: var(--pp-lime); }
 .ch-stat-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: rgba(201, 217, 138, 0.14); color: var(--pp-lime); }
+
+/* visiting badge above the kicker */
+.ch-visit {
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem; margin: 0 0 1.4rem; padding: 0.4rem 0.9rem 0.4rem 0.5rem;
+  border: 1px solid rgba(201, 217, 138, 0.22); border-radius: 999px; background: rgba(255, 255, 255, 0.05);
+  color: rgba(244, 236, 217, 0.82); font-size: 0.76rem; font-weight: 500;
+}
+.ch-visit-open { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.2rem 0.6rem; border-radius: 999px; background: rgba(201, 217, 138, 0.16); color: var(--pp-lime); font-weight: 700; }
+.ch-visit-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #9fd36f; }
+.ch-visit-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(159, 211, 111, 0.5); animation: ch-pulse 2.4s ease-out infinite; }
+@keyframes ch-pulse { from { transform: scale(0.5); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+.ch-visit-item { display: inline-flex; align-items: center; gap: 0.35rem; }
+.ch-visit-item svg { color: var(--pp-lime); }
 
 /* header actions */
 .ch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 1.75rem; }
@@ -204,22 +265,6 @@
 }
 .ch-corner { position: absolute; pointer-events: none; height: auto; opacity: 0.55; }
 .ch-corner--tr { top: -20px; right: -40px; width: clamp(160px, 18vw, 280px); }
-.ch-corner--bl { bottom: -40px; left: -90px; width: clamp(180px, 20vw, 300px); opacity: 0.35; }
-
-/* header green into the page ivory, eased flat at both ends, just under the header */
-.plants-page .catalogue-header + .pp-main::before,
-.plants-page .pp-hero + .pp-main::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
-  top: 0;
-  height: 150px;
-  background: linear-gradient(180deg, #163624 0%, #1d4029 10%, #6f8a6c 45%, #d9dccd 82%, var(--pp-ivory) 100%);
-  pointer-events: none;
-  z-index: -1;
-}
 
 .pp-hero-art {
   position: absolute;

@@ -1,9 +1,10 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
-import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Sprout } from 'lucide-react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Sprout, Armchair, Clock, MapPin } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import IndoorPlants from '../components/IndoorPlants';
 import WhatsAppButton from '../components/WhatsAppButton';
 import VineOrnament from '../components/VineOrnament';
+import VineDivider from '../components/VineDivider';
 import groups from '../data/plantCatalogue.json';
 import './PlantsPage.css';
 
@@ -13,6 +14,7 @@ const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SAB
 // shortcuts shown on the header's plant shelf; each jumps straight to that category
 const HEADER_PICKS = [
   { slug: 'flowering-plants', label: 'Flowering', Icon: Flower2 },
+  { slug: 'indoor-plants', label: 'Indoor', Icon: Armchair },
   { slug: 'ornamental-topiary-plants', label: 'Topiary', Icon: Shrub },
   { slug: 'fruit-plants', label: 'Fruit trees', Icon: Apple },
 ].map((p) => ({ ...p, count: groups.find((g) => g.slug === p.slug)?.items.length ?? 0 }));
@@ -22,6 +24,37 @@ export default function PlantsPage() {
     const slug = new URLSearchParams(window.location.search).get('category');
     return groups.some(g => g.slug === slug) ? slug : 'all';
   });
+  // the category pills follow the cursor: --mx / --my run from -1 to 1 across the header (see .cha-pick in
+  // PlantsPage.css); the glasshouse itself stays still. Mouse only, never for reduced motion.
+  const headerRef = useRef(null);
+  const artRef = useRef(null);
+  useEffect(() => {
+    const header = headerRef.current;
+    const art = artRef.current;
+    if (!header || !art) return undefined;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    let raf = 0;
+    const set = (x, y) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        art.style.setProperty('--mx', x.toFixed(3));
+        art.style.setProperty('--my', y.toFixed(3));
+      });
+    };
+    const onMove = (e) => {
+      const r = header.getBoundingClientRect();
+      set(((e.clientX - r.left) / r.width) * 2 - 1, ((e.clientY - r.top) / r.height) * 2 - 1);
+    };
+    const onLeave = () => set(0, 0);
+    header.addEventListener('pointermove', onMove);
+    header.addEventListener('pointerleave', onLeave);
+    return () => {
+      cancelAnimationFrame(raf);
+      header.removeEventListener('pointermove', onMove);
+      header.removeEventListener('pointerleave', onLeave);
+    };
+  }, []);
   useEffect(() => {
     document.title = 'Plant Catalogue | SABSN Nursery';
     const search = e => { setQuery(e.detail || ''); setCategory('all'); document.getElementById('plants')?.scrollIntoView({ behavior: 'smooth' }); };
@@ -37,11 +70,16 @@ export default function PlantsPage() {
   const count = visible.reduce((sum, g) => sum + g.items.filter(p => `${p.name} ${p.botanical} ${g.title}`.toLowerCase().includes(query.trim().toLowerCase())).length, 0);
   return <div className="plants-page">
     <Navbar page="plants" />
-    <header className="catalogue-header">
-      {/* the home hero's own foliage and flowers, framing the corners */}
+    <header ref={headerRef} className="catalogue-header">
+      {/* the home hero's own foliage, framing the top-right corner */}
       <img className="ch-corner ch-corner--tr" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
-      <img className="ch-corner ch-corner--bl" src="/hero-tree/flowers-bl.webp" alt="" width="500" height="321" aria-hidden="true" decoding="async" />
       <div className="catalogue-header-copy">
+        {/* visiting details, as given in the footer */}
+        <p className="ch-visit">
+          <span className="ch-visit-open"><span className="ch-visit-dot" aria-hidden="true" />Open daily</span>
+          <span className="ch-visit-item"><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
+          <span className="ch-visit-item"><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+        </p>
         <p className="indoor-kicker">The nursery collection</p>
         <h1>Find your kind of <em>green.</em></h1>
         <VineOrnament />
@@ -60,12 +98,16 @@ export default function PlantsPage() {
         </ul>
       </div>
       {/* a glasshouse arch with three potted plants on a ledge, and category shortcuts around it */}
-      <div className="catalogue-header-art">
+      <div ref={artRef} className="catalogue-header-art">
+        {/* a two-tier glasshouse stand: two plants on a back shelf, three in front */}
         <div className="cha-arch" aria-hidden="true">
           <span className="cha-glow" />
-          <img className="cha-plant cha-plant--left" src="/plants/plant2-Photoroom.webp" alt="" width="450" height="800" decoding="async" />
-          <img className="cha-plant cha-plant--centre" src="/plants/plant3-Photoroom.webp" alt="" width="530" height="800" decoding="async" />
-          <img className="cha-plant cha-plant--right" src="/plants/plant5-Photoroom.webp" alt="" width="640" height="640" decoding="async" />
+          <span className="cha-shelf cha-shelf--back" />
+          <img className="cha-plant cha-back cha-back--1" src="/plants/plant6-Photoroom.webp" alt="" width="431" height="800" decoding="async" />
+          <img className="cha-plant cha-back cha-back--2" src="/Main Hero Plant.webp" alt="" width="809" height="800" decoding="async" />
+          <img className="cha-plant cha-front cha-front--1" src="/plants/plant2-Photoroom.webp" alt="" width="450" height="800" decoding="async" />
+          <img className="cha-plant cha-front cha-front--2" src="/plants/plant3-Photoroom.webp" alt="" width="530" height="800" decoding="async" />
+          <img className="cha-plant cha-front cha-front--3" src="/plants/plant5-Photoroom.webp" alt="" width="640" height="640" decoding="async" />
           <span className="cha-ledge" />
         </div>
         <nav className="cha-picks" aria-label="Jump to a category">
@@ -79,6 +121,8 @@ export default function PlantsPage() {
         </nav>
       </div>
     </header>
+    {/* the header's forest green into the catalogue's ivory, as between sections on Home and About */}
+    <VineDivider variant="ramp" id="plants-top" from="#163624" to="#F7F3EA" />
     <main className="pp-main" id="plants">
       <div className="catalogue-controls">
         <label className="catalogue-search"><Search size={20} /><input type="search" aria-label="Search plants" placeholder="Search a plant or botanical name" value={query} onChange={e => setQuery(e.target.value)} /></label>
