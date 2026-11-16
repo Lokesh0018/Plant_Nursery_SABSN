@@ -1169,3 +1169,7 @@
 @media (prefers-reduced-motion: reduce) {
   .pp-next-loader.is-loading .pp-next-spinner, .plants-page .indoor-category { animation: none; }
 }
+
+/* sections below the first are skipped by the browser's layout and paint work until they scroll near;
+   the intrinsic size keeps the scrollbar steady meanwhile */
+.plants-page .indoor-category ~ .indoor-category { content-visibility: auto; contain-intrinsic-size: auto 1400px; }

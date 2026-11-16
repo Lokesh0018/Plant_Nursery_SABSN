@@ -7,8 +7,18 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- LCP image: start fetching the hero banyan before the JS bundle has parsed -->
-    <link rel="preload" as="image" href="/hero-tree/banyan.webp" imagesrcset="/hero-tree/banyan-600.webp 600w, /hero-tree/banyan-800.webp 800w, /hero-tree/banyan-1200.webp 1200w, /hero-tree/banyan.webp 1534w" imagesizes="(max-width: 900px) 130vw, min(78vw, 1150px)" fetchpriority="high" />
+    <!-- LCP image: start fetching the home hero banyan before the JS bundle has parsed. Added only on the
+         home page: every route shares this file, and the other pages never show the banyan. -->
+    <script>
+      if (/^\/(index\.html)?$/.test(location.pathname)) {
+        var l = document.createElement('link');
+        l.rel = 'preload'; l.as = 'image'; l.href = '/hero-tree/banyan.webp';
+        l.setAttribute('imagesrcset', '/hero-tree/banyan-600.webp 600w, /hero-tree/banyan-800.webp 800w, /hero-tree/banyan-1200.webp 1200w, /hero-tree/banyan.webp 1534w');
+        l.setAttribute('imagesizes', '(max-width: 900px) 130vw, min(78vw, 1150px)');
+        l.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(l);
+      }
+    </script>
     <meta name="theme-color" content="#0d2a18" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Fonts are self-hosted (src/styles/fonts.css). Preload the two faces the first screen paints with. -->

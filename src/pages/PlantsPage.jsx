@@ -141,11 +141,11 @@ export default function PlantsPage() {
         <div className="cha-arch" aria-hidden="true">
           <span className="cha-glow" />
           <span className="cha-shelf cha-shelf--back" />
-          <img className="cha-plant cha-back cha-back--1" src="/plants/plant6-Photoroom.webp" alt="" width="431" height="800" decoding="async" />
-          <img className="cha-plant cha-back cha-back--2" src="/Main Hero Plant.webp" alt="" width="809" height="800" decoding="async" />
-          <img className="cha-plant cha-front cha-front--1" src="/plants/plant2-Photoroom.webp" alt="" width="450" height="800" decoding="async" />
-          <img className="cha-plant cha-front cha-front--2" src="/plants/plant3-Photoroom.webp" alt="" width="530" height="800" decoding="async" />
-          <img className="cha-plant cha-front cha-front--3" src="/plants/plant5-Photoroom.webp" alt="" width="640" height="640" decoding="async" />
+          <img className="cha-plant cha-back cha-back--1" src="/plants/header/plant6.webp" alt="" width="320" height="594" decoding="async" />
+          <img className="cha-plant cha-back cha-back--2" src="/plants/header/red-leaf.webp" alt="" width="320" height="316" decoding="async" />
+          <img className="cha-plant cha-front cha-front--1" src="/plants/header/plant2.webp" alt="" width="320" height="569" decoding="async" />
+          <img className="cha-plant cha-front cha-front--2" src="/plants/header/plant3.webp" alt="" width="320" height="483" decoding="async" />
+          <img className="cha-plant cha-front cha-front--3" src="/plants/header/plant5.webp" alt="" width="320" height="320" decoding="async" />
           <span className="cha-ledge" />
         </div>
         <nav className="cha-picks" aria-label="Jump to a category">
