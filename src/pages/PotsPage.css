@@ -228,3 +228,40 @@
 @media (prefers-reduced-motion: reduce) {
   .pots-ticker-track, .pots-light { animation: none; }
 }
+
+/* ================= pot cards: photo set inside the card, material label, "View details" pill ================= */
+.pots-page .pots-grid { gap: clamp(1rem, 2vw, 1.5rem); }
+.pots-page .pots-card {
+  position: relative; padding: 0.55rem; overflow: visible; border: 1px solid rgba(32, 62, 48, 0.08); border-radius: 24px;
+  background: #fffdf8; box-shadow: 0 6px 18px rgba(32, 62, 48, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.pots-card-photo { position: relative; overflow: hidden; border-radius: 18px; background: #f2e6d9; }
+.pots-card-photo .pots-frame { transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.pots-card-num, .pots-card-material {
+  position: absolute; z-index: 1; padding: 0.3rem 0.65rem; border-radius: 999px; font-size: 0.7rem; font-weight: 600;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.pots-card-num { top: 12px; left: 12px; background: rgba(255, 253, 248, 0.82); color: #203e30; }
+.pots-card-material { left: 12px; bottom: 12px; background: rgba(22, 54, 36, 0.78); color: #f4ecd9; }
+.pots-page .pots-card-copy { padding: 1.1rem 0.85rem 0.85rem; }
+.pots-page .pots-card h3 { margin: 0; font-size: 1.4rem; line-height: 1.25; color: #163624; }
+.pots-page .pots-card-copy > p { margin: 0.5rem 0 1.1rem; font-size: 0.9rem; line-height: 1.65; color: #4f5b4f; }
+.pots-page .pots-card-bottom { border-top: 0; padding-top: 0; }
+.pots-card-more {
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 40px; padding: 0 1rem; border: 1px solid rgba(32, 62, 48, 0.16);
+  border-radius: 999px; color: #163624; font-size: 0.82rem; font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.pots-card-more svg { transition: transform 0.2s ease; }
+.pots-page .pots-card:focus-visible { outline: 2px solid #4f7f3a; outline-offset: 3px; }
+@media (hover: hover) {
+  .pots-page .pots-card:hover { transform: translateY(-4px); border-color: rgba(163, 109, 72, 0.35); box-shadow: 0 20px 40px rgba(32, 62, 48, 0.12); }
+  .pots-page .pots-card:hover .pots-frame { transform: scale(1.05); }
+  .pots-page .pots-card:hover .pots-card-more { background: #163624; border-color: #163624; color: #f7f6f0; }
+  .pots-page .pots-card:hover .pots-card-more svg { transform: translate(2px, -2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pots-page .pots-card, .pots-card-photo .pots-frame, .pots-card-more, .pots-card-more svg { transition: none; }
+  .pots-page .pots-card:hover, .pots-page .pots-card:hover .pots-frame { transform: none; }
+}
