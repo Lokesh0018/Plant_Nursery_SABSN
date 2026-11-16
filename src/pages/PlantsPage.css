@@ -856,3 +856,165 @@
   .pp-grid .product-card { animation: none; }
   .pp-hero-cue svg { animation: none; }
 }
+
+/* ================= catalogue controls: search, category filters and the result line ================= */
+.plants-page .catalogue-controls {
+  margin: 0 0 3rem;
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  border: 1px solid rgba(22, 54, 36, 0.08);
+  border-radius: 26px;
+  background: var(--pp-paper);
+  box-shadow: 0 18px 44px rgba(22, 54, 36, 0.08), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+.cc-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 1.5rem; margin-bottom: 1.1rem; }
+.cc-title {
+  display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; flex: none;
+  font-family: var(--font-serif); font-size: 1.3rem; font-weight: 500; color: var(--pp-forest);
+}
+.cc-title svg { color: var(--pp-leaf); }
+
+/* search box */
+.plants-page .catalogue-search {
+  position: relative; flex: 1 1 320px; margin: 0; padding: 0 0.6rem 0 1.1rem; min-height: 54px;
+  gap: 0.75rem; border: 1px solid rgba(22, 54, 36, 0.14); border-radius: 999px; background: #f6f4ec;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.plants-page .catalogue-search > svg { flex: none; color: var(--pp-leaf); }
+.plants-page .catalogue-search input { font-size: 1rem; color: var(--pp-ink); }
+.plants-page .catalogue-search input::placeholder { color: #7b8a78; }
+/* the browser's own clear cross is replaced by ours */
+.plants-page .catalogue-search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.plants-page .catalogue-search:focus-within { outline: 0; border-color: var(--pp-leaf); background: #fff; box-shadow: 0 0 0 4px rgba(201, 217, 138, 0.45); }
+.cc-clear {
+  display: grid; place-items: center; flex: none; width: 36px; height: 36px; border: 0; border-radius: 50%;
+  background: rgba(22, 54, 36, 0.07); color: var(--pp-forest); cursor: pointer; transition: background-color 0.2s ease;
+}
+.cc-clear:hover { background: rgba(22, 54, 36, 0.14); }
+.cc-clear:focus-visible { outline: 2px solid var(--pp-leaf); outline-offset: 2px; }
+
+/* category chips */
+.plants-page .plant-category-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; }
+.plants-page .plant-category-links button {
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0 0.6rem 0 0.95rem;
+  border: 1px solid rgba(22, 54, 36, 0.12); border-radius: 999px; background: #fff; color: var(--pp-forest);
+  font: inherit; font-size: 0.84rem; font-weight: 500; cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.plants-page .plant-category-links button > svg { color: var(--pp-leaf); transition: color 0.2s ease; }
+.plants-page .plant-category-links button span {
+  display: grid; place-items: center; min-width: 26px; height: 24px; padding: 0 0.45rem; border-radius: 999px;
+  background: #eef3e4; color: var(--pp-leaf); font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.plants-page .plant-category-links button:hover { border-color: rgba(79, 127, 58, 0.45); background: #f7faf1; }
+.plants-page .plant-category-links button:focus-visible { outline: 2px solid var(--pp-leaf); outline-offset: 2px; }
+.plants-page .plant-category-links button[aria-pressed="true"] {
+  border-color: var(--pp-forest); background: var(--pp-forest); color: #f7f6f0; box-shadow: 0 8px 18px rgba(22, 54, 36, 0.2);
+}
+.plants-page .plant-category-links button[aria-pressed="true"] > svg { color: var(--pp-lime); }
+.plants-page .plant-category-links button[aria-pressed="true"] span { background: var(--pp-lime); color: var(--pp-forest); }
+
+/* result line */
+.cc-status {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1rem;
+  margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(22, 54, 36, 0.08);
+}
+.plants-page .catalogue-controls .cc-status p { margin: 0; font-size: 0.9rem; color: var(--pp-muted); }
+.cc-status strong { color: var(--pp-forest); font-weight: 700; }
+.cc-status q { color: var(--pp-forest); font-style: italic; }
+.cc-reset {
+  display: inline-flex; align-items: center; gap: 0.4rem; min-height: 40px; padding: 0 0.9rem;
+  border: 1px solid rgba(22, 54, 36, 0.14); border-radius: 999px; background: none; color: var(--pp-forest);
+  font: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.cc-reset:hover { background: #eef3e4; border-color: rgba(79, 127, 58, 0.4); }
+.cc-reset:focus-visible { outline: 2px solid var(--pp-leaf); outline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .plants-page .catalogue-controls { margin-bottom: 2rem; border-radius: 22px; }
+  .cc-head { gap: 0.75rem; }
+  .plants-page .catalogue-search { flex-basis: 100%; }
+  /* one swipeable row of chips instead of a tall stack */
+  .plants-page .plant-category-links {
+    flex-wrap: nowrap; overflow-x: auto; margin: 0 calc(-1 * clamp(1.1rem, 2.5vw, 1.6rem)); padding: 0.1rem clamp(1.1rem, 2.5vw, 1.6rem) 0.3rem;
+    scrollbar-width: none; scroll-snap-type: x proximity; scroll-padding-inline: clamp(1.1rem, 2.5vw, 1.6rem);
+  }
+  .plants-page .plant-category-links::-webkit-scrollbar { display: none; }
+  .plants-page .plant-category-links button { flex: none; scroll-snap-align: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plants-page .catalogue-search, .plants-page .plant-category-links button, .cc-clear, .cc-reset { transition: none; }
+}
+
+/* ================= catalogue sections and plant cards (scoped here: IndoorPlants.css is shared with the home page) ================= */
+.plants-page .indoor-category { margin-bottom: clamp(3.5rem, 7vw, 5.5rem); scroll-margin-top: 110px; }
+.plants-page .indoor-heading { align-items: flex-end; margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(22, 54, 36, 0.1); }
+.plants-page .indoor-heading .indoor-kicker { color: var(--pp-leaf); }
+.plants-page .indoor-heading h2 { margin: 0.6rem 0 0.4rem; font-family: var(--font-serif); color: var(--pp-forest); }
+.plants-page .indoor-heading p:not(.indoor-kicker) { margin: 0; color: var(--pp-muted); }
+.plants-page .indoor-count {
+  display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.55rem 1rem; border: 0; border-radius: 999px;
+  background: var(--pp-forest); color: rgba(244, 236, 217, 0.85); font-size: 0.8rem; font-weight: 500;
+}
+.plants-page .indoor-count strong { color: var(--pp-lime); font-size: 0.95rem; font-weight: 700; }
+
+/* cards */
+.plants-page .indoor-grid { gap: clamp(1rem, 2vw, 1.5rem); }
+.plants-page .indoor-card {
+  border: 1px solid rgba(22, 54, 36, 0.08); border-radius: 24px; background: var(--pp-paper);
+  box-shadow: 0 6px 18px rgba(22, 54, 36, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.plants-page .indoor-card:focus-visible { outline: 3px solid var(--pp-leaf); outline-offset: 3px; }
+/* photo: square, filled edge to edge (no empty bands above and below the cell) */
+.plants-page .indoor-card { padding: 0.55rem; }
+.plants-page .indoor-photo { aspect-ratio: 1; overflow: hidden; border-radius: 18px; background: #ece9db; isolation: isolate; }
+/* a lime line that grows along the foot of the photo on hover */
+.plants-page .indoor-photo::after {
+  content: ''; position: absolute; z-index: 2; left: 0; bottom: 0; width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--pp-lime), var(--pp-leaf)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+}
+.plants-page .indoor-photo .plant-presentation {
+  position: absolute; z-index: 1; left: 12px; bottom: 12px; margin: 0; padding: 0.3rem 0.65rem; border-radius: 999px;
+  background: rgba(255, 253, 248, 0.86); color: var(--pp-forest); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.02em;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(22, 54, 36, 0.1);
+}
+.plants-page .indoor-photo .plant-frame { aspect-ratio: 1; height: 100%; }
+/* a touch of zoom trims the thin borders between cells of the image sheet */
+.plants-page .indoor-photo .plant-frame-cell { transform: scale(1.04); transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.plants-page .indoor-number {
+  top: 14px; left: 14px; z-index: 1; min-width: 34px; padding: 0.35rem 0.6rem; border-radius: 999px;
+  background: rgba(15, 45, 27, 0.72); color: #f4ecd9; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.plants-page .indoor-card-body { padding: 1.05rem 0.85rem 0.55rem; }
+.plants-page .indoor-card h3 { margin: 0; font-family: var(--font-serif); font-size: 1.55rem; font-weight: 500; line-height: 1.2; color: var(--pp-forest); }
+.plants-page .indoor-card .indoor-botanical { margin: 0.25rem 0 0; font-size: 0.86rem; font-style: italic; color: var(--pp-muted); }
+/* description kept to two lines so every card in a row lines up */
+.plants-page .indoor-card .indoor-desc {
+  margin: 0.75rem 0 1rem; font-size: 0.9rem; line-height: 1.6; color: var(--pp-muted);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.plants-page .indoor-card-foot { margin-top: auto; padding-top: 0.9rem; border-top: 1px solid rgba(22, 54, 36, 0.08); }
+.plants-page .indoor-feature { display: inline-flex; align-items: center; gap: 0.45rem; min-width: 0; color: var(--pp-forest); font-size: 0.8rem; font-weight: 600; }
+.plants-page .indoor-feature svg { flex: none; color: var(--pp-leaf); }
+.plants-page .indoor-more { display: inline-flex; align-items: center; gap: 0.5rem; flex: none; color: var(--pp-forest); font-size: 0.78rem; font-weight: 600; }
+.plants-page .indoor-more-icon {
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  background: #eef3e4; color: var(--pp-forest); transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+@media (hover: hover) {
+  .plants-page .indoor-card:hover { transform: translateY(-4px); border-color: rgba(79, 127, 58, 0.3); box-shadow: 0 20px 40px rgba(22, 54, 36, 0.12); }
+  .plants-page .indoor-card:hover .plant-frame-cell { transform: scale(1.09); }
+  .plants-page .indoor-card:hover .indoor-more-icon { background: var(--pp-forest); color: var(--pp-lime); transform: rotate(45deg); }
+  .plants-page .indoor-card:hover .indoor-photo::after { transform: scaleX(1); }
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .plants-page .indoor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .plants-page .indoor-heading { align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plants-page .indoor-card, .plants-page .indoor-photo .plant-frame-cell, .plants-page .indoor-more-icon, .plants-page .indoor-photo::after { transition: none; }
+  .plants-page .indoor-card:hover, .plants-page .indoor-card:hover .plant-frame-cell, .plants-page .indoor-card:hover .indoor-more-icon { transform: none; }
+}

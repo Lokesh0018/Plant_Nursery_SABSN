@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react';
-import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Sprout, Armchair, Clock, MapPin } from 'lucide-react';
+import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Sprout, Armchair, Clock, MapPin, X, Sun, Trees, TreePine, Leaf, SlidersHorizontal } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import IndoorPlants from '../components/IndoorPlants';
 import WhatsAppButton from '../components/WhatsAppButton';
@@ -10,6 +10,17 @@ import './PlantsPage.css';
 
 const Footer = lazy(() => import('../components/Footer'));
 const total = groups.reduce((sum, g) => sum + g.items.length, 0);
+// one icon per catalogue category, for the filter chips
+const CATEGORY_ICONS = {
+  'indoor-plants': Armchair,
+  'outdoor-plants': Sun,
+  'flowering-plants': Flower2,
+  'ornamental-topiary-plants': Shrub,
+  'avenue-shade-trees': Trees,
+  'fruit-plants': Apple,
+  'native-forest-trees': TreePine,
+  'ground-cover-landscape-plants': Leaf,
+};
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, can you help me choose plants?')}`;
 // shortcuts shown on the header's plant shelf; each jumps straight to that category
 const HEADER_PICKS = [
@@ -125,14 +136,39 @@ export default function PlantsPage() {
     <VineDivider variant="ramp" id="plants-top" from="#163624" to="#F7F3EA" />
     <main className="pp-main" id="plants">
       <div className="catalogue-controls">
-        <label className="catalogue-search"><Search size={20} /><input type="search" aria-label="Search plants" placeholder="Search a plant or botanical name" value={query} onChange={e => setQuery(e.target.value)} /></label>
+        <div className="cc-head">
+          <p className="cc-title"><SlidersHorizontal size={16} strokeWidth={2.2} aria-hidden="true" />Browse the collection</p>
+          <label className="catalogue-search">
+            <Search size={20} aria-hidden="true" />
+            <input type="search" aria-label="Search plants" placeholder="Search a plant or botanical name" value={query} onChange={e => setQuery(e.target.value)} />
+            {query && <button type="button" className="cc-clear" onClick={() => setQuery('')} aria-label="Clear search"><X size={16} strokeWidth={2.4} /></button>}
+          </label>
+        </div>
         <nav className="plant-category-links" aria-label="Plant categories">
-          <button aria-pressed={category === 'all'} onClick={() => setCategory('all')}>All plants <span>{total}</span></button>
-          {groups.map(g => <button key={g.slug} aria-pressed={category === g.slug} onClick={() => setCategory(g.slug)}>{g.title} <span>{g.items.length}</span></button>)}
+          <button type="button" aria-pressed={category === 'all'} onClick={() => setCategory('all')}>
+            <LayoutGrid size={15} strokeWidth={2} aria-hidden="true" />All plants <span>{total}</span>
+          </button>
+          {groups.map(g => {
+            const Icon = CATEGORY_ICONS[g.slug] || Leaf;
+            return <button type="button" key={g.slug} aria-pressed={category === g.slug} onClick={() => setCategory(g.slug)}>
+              <Icon size={15} strokeWidth={2} aria-hidden="true" />{g.title} <span>{g.items.length}</span>
+            </button>;
+          })}
         </nav>
-        <p aria-live="polite">{count} matching catalogue entries</p>
+        <div className="cc-status">
+          <p aria-live="polite">
+            <strong>{count}</strong> {count === 1 ? 'plant' : 'plants'}
+            {category !== 'all' && <> in <strong>{groups.find(g => g.slug === category)?.title}</strong></>}
+            {query.trim() && <> matching <q>{query.trim()}</q></>}
+          </p>
+          {(query || category !== 'all') && (
+            <button type="button" className="cc-reset" onClick={() => { setQuery(''); setCategory('all'); }}>
+              <X size={14} strokeWidth={2.4} aria-hidden="true" />Clear filters
+            </button>
+          )}
+        </div>
       </div>
-      {visible.map(g => <IndoorPlants key={g.slug} items={g.items} category={g.title} slug={g.slug} title={g.title} subtitle="Explore the collection and enquire about your favourites." query={query} />)}
+      {visible.map(g => <IndoorPlants key={g.slug} icon={CATEGORY_ICONS[g.slug] || Leaf} items={g.items} category={g.title} slug={g.slug} title={g.title} subtitle="Explore the collection and enquire about your favourites." query={query} />)}
       {!count && <div className="pp-empty"><h2>No plants match your search</h2><button className="pp-btn" onClick={() => { setQuery(''); setCategory('all'); }}>Show all plants</button></div>}
     </main>
     <Suspense fallback={null}><Footer /></Suspense><WhatsAppButton />

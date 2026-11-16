@@ -9,7 +9,7 @@ const plants = [
   { id: 'alocasia', name: 'Alocasia', botanical: 'Alocasia species', description: 'Bold arrow-shaped leaves and expressive veins create a sculptural focal point in an indoor plant collection.', feature: 'Sculptural statement leaves', placement: 'Indoor feature displays', note: 'Leaf shape and colour vary by cultivar. Ask the nursery to confirm the available selection.' },
 ];
 
-export default function IndoorPlants({ query = '', items = plants, category = 'Indoor Plants', slug = 'indoor-plants', title = 'A little green, closer to home.', subtitle = 'Thoughtful foliage for your everyday spaces.' }) {
+export default function IndoorPlants({ query = '', items = plants, category = 'Indoor Plants', slug = 'indoor-plants', title = 'A little green, closer to home.', subtitle = 'Thoughtful foliage for your everyday spaces.', icon: KickerIcon = Leaf }) {
   const [selected, setSelected] = useState(null);
   const dialog = useRef(null);
   const opener = useRef(null);
@@ -24,10 +24,10 @@ export default function IndoorPlants({ query = '', items = plants, category = 'I
   const close = () => { dialog.current?.close(); setSelected(null); };
   if (!shown.length) return null;
   return <section className="indoor-category" id={slug} aria-labelledby={`${slug}-heading`}>
-    <div className="indoor-heading"><div><p className="indoor-kicker"><Leaf size={15} /> {category}</p><h2 id={`${slug}-heading`}>{title}</h2><p>{category} · {subtitle}</p></div><span className="indoor-count">{shown.length} / {items.length} plants</span></div>
+    <div className="indoor-heading"><div><p className="indoor-kicker"><KickerIcon size={15} aria-hidden="true" /> {category}</p><h2 id={`${slug}-heading`}>{title}</h2><p>{subtitle}</p></div><span className="indoor-count"><strong>{shown.length}</strong>{shown.length === items.length ? '' : ` of ${items.length}`} {items.length === 1 ? 'plant' : 'plants'}</span></div>
     <div className="indoor-grid">{shown.map((plant, i) => <button className="indoor-card" key={plant.id} onClick={e => { opener.current = e.currentTarget; setSelected(plant); }} aria-label={`View ${plant.name} details`}>
-      <div className="indoor-photo"><PlantFrame plant={plant} /><span className="indoor-number">{String(i + 1).padStart(2, '0')}</span></div>
-      <div className="indoor-card-body"><span className="indoor-kicker">{category}</span><h3>{plant.name}</h3><span className="plant-presentation">{plant.imagePresentation?.label}</span><p className="indoor-botanical">{plant.botanical}</p><p>{plant.description}</p><div className="indoor-card-foot"><span>{plant.feature}</span><ArrowUpRight size={20} /></div></div>
+      <div className="indoor-photo"><PlantFrame plant={plant} /><span className="indoor-number">{String(i + 1).padStart(2, '0')}</span>{plant.imagePresentation?.label && <span className="plant-presentation">{plant.imagePresentation.label}</span>}</div>
+      <div className="indoor-card-body"><h3>{plant.name}</h3><p className="indoor-botanical">{plant.botanical}</p><p className="indoor-desc">{plant.description}</p><div className="indoor-card-foot"><span className="indoor-feature"><Leaf size={14} aria-hidden="true" />{plant.placement || plant.feature}</span><span className="indoor-more" aria-hidden="true">View details<span className="indoor-more-icon"><ArrowUpRight size={16} /></span></span></div></div>
     </button>)}</div>
     {!shown.length && <p>No plants in this category match your search.</p>}
     {selected && <dialog ref={dialog} className="indoor-dialog" onCancel={close} onClick={e => { if (e.target === e.currentTarget) close(); }} aria-labelledby={`${slug}-detail-name`}>
