@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowUpRight, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2 } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Clock, MapPin } from 'lucide-react';
+import VineOrnament from '../components/VineOrnament';
+import VineDivider from '../components/VineDivider';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import groups from '../data/potCatalogue.json';
@@ -7,6 +9,15 @@ import './PotsPage.css';
 
 const Footer = lazy(() => import('../components/Footer'));
 const total = groups.reduce((sum, group) => sum + group.items.length, 0);
+// materials offered as shortcuts in the header (each opens that category in the catalogue)
+const HERO_MATERIALS = ['terracotta-clay-pots', 'ceramic-pots', 'cement-pots', 'designer-decorative-pots'].map(slug => groups.find(g => g.slug === slug)).filter(Boolean);
+// a colour swatch for each material shortcut
+const SWATCHES = {
+  'terracotta-clay-pots': 'linear-gradient(135deg, #e08a5a, #a9532c)',
+  'ceramic-pots': 'linear-gradient(135deg, #f4f6ef, #9fb7a2)',
+  'cement-pots': 'linear-gradient(135deg, #b9b8b1, #74736d)',
+  'designer-decorative-pots': 'linear-gradient(135deg, #f0d48a, #a8792c)',
+};
 const enquiry = name => `https://wa.me/919849936169?text=${encodeURIComponent(`Hello SABSN, I am interested in ${name}. Please share available sizes, materials, finishes, drainage options and prices.`)}`;
 
 function PotFrame({ item, eager = false }) {
@@ -38,6 +49,19 @@ export default function PotsPage() {
     return groups.some(g => g.slug === value) ? value : 'all';
   });
   const [selected, setSelected] = useState(null);
+  // header pots follow the cursor a little (--mx / --my from -1 to 1); mouse only, never for reduced motion
+  const heroRef = useRef(null);
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero || !window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    let raf = 0;
+    const set = (x, y) => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { hero.style.setProperty('--mx', x.toFixed(3)); hero.style.setProperty('--my', y.toFixed(3)); }); };
+    const onMove = e => { const r = hero.getBoundingClientRect(); set(((e.clientX - r.left) / r.width) * 2 - 1, ((e.clientY - r.top) / r.height) * 2 - 1); };
+    const onLeave = () => set(0, 0);
+    hero.addEventListener('pointermove', onMove);
+    hero.addEventListener('pointerleave', onLeave);
+    return () => { cancelAnimationFrame(raf); hero.removeEventListener('pointermove', onMove); hero.removeEventListener('pointerleave', onLeave); };
+  }, []);
   useEffect(() => {
     document.title = 'Pots & Planters | SABSN Nursery';
     const search = e => { setQuery(e.detail || ''); setCategory('all'); document.getElementById('pots-catalogue')?.scrollIntoView({ behavior: 'smooth' }); };
@@ -46,8 +70,52 @@ export default function PotsPage() {
   }, []);
   const filtered = groups.filter(g => category === 'all' || category === g.slug).map(g => ({ ...g, items: g.items.filter(p => `${p.name} ${p.description} ${g.title} ${p.material}`.toLowerCase().includes(query.trim().toLowerCase())) })).filter(g => g.items.length);
   const count = filtered.reduce((sum, g) => sum + g.items.length, 0);
+  const toCatalogue = () => document.getElementById('pots-catalogue')?.scrollIntoView({ behavior: 'smooth' });
   return <div className="pots-page"><Navbar page="pots" />
-    <header className="pots-hero"><div className="pots-hero-copy"><a href="/" className="pots-back"><ArrowLeft size={15} /> Home</a><p className="pots-eyebrow">The planter collection</p><h1>Good roots.<br /><em>Beautiful pots.</em></h1><p>From the warmth of clay to clean contemporary forms, find a home for every kind of green.</p><a href="#pots-catalogue" className="pots-button">Explore the collection <ArrowRight size={18} /></a><div className="pots-stats"><span><strong>08</strong> categories</span><span><strong>{total}</strong> illustrated styles</span></div></div><div className="pots-hero-art"><PotFrame item={groups[3].items[0]} eager /><div className="pots-hero-caption"><span>Form. Texture. Character.</span><span>Made for your green spaces</span></div></div></header>
+    <header ref={heroRef} className="pots-hero">
+      <img className="pots-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+      <div className="pots-hero-copy">
+        <p className="pots-visit">
+          <span className="pots-visit-open"><span className="pots-visit-dot" aria-hidden="true" />Open daily</span>
+          <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
+          <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+        </p>
+        <p className="pots-eyebrow">The planter collection</p>
+        <h1>Good roots. <em>Beautiful pots.</em></h1>
+        <VineOrnament />
+        <p className="pots-lede">From the warmth of clay to clean contemporary forms, find a home for every kind of green.</p>
+        <div className="pots-hero-actions">
+          <a href="#pots-catalogue" className="pots-hero-btn" onClick={e => { e.preventDefault(); toCatalogue(); }}>Explore the collection <ArrowDown size={16} strokeWidth={2.2} aria-hidden="true" /></a>
+          <a href={enquiry('pots for my plants')} className="pots-hero-btn pots-hero-btn--ghost" target="_blank" rel="noopener noreferrer"><MessageCircle size={16} strokeWidth={2.2} aria-hidden="true" /> Ask the nursery</a>
+        </div>
+        <div className="pots-hero-materials">
+          <span>Shop by material</span>
+          <ul>{HERO_MATERIALS.map(g => <li key={g.slug}><button type="button" onClick={() => { setQuery(''); setCategory(g.slug); toCatalogue(); }}><span className="pots-swatch" style={{ background: SWATCHES[g.slug] }} aria-hidden="true" />{g.title.split(' / ')[0].replace(' Pots', '')}<ArrowUpRight size={13} strokeWidth={2.2} aria-hidden="true" /></button></li>)}</ul>
+        </div>
+      </div>
+
+      {/* three planters on a stone plinth inside a glass arch; the pots drift a little with the cursor */}
+      <div className="pots-stage" aria-hidden="true">
+        <div className="pots-arch" />
+        <img className="pots-stage-pot pots-stage-pot--l" src="/pots/hero/facet.webp" alt="" width="361" height="397" decoding="async" fetchPriority="high" />
+        <img className="pots-stage-pot pots-stage-pot--c" src="/pots/hero/curve.webp" alt="" width="359" height="537" decoding="async" fetchPriority="high" />
+        <img className="pots-stage-pot pots-stage-pot--r" src="/pots/hero/slim.webp" alt="" width="220" height="565" decoding="async" fetchPriority="high" />
+        <div className="pots-light" />
+        <div className="pots-plinth"><span /></div>
+        <div className="pots-stage-card"><strong>Form. Texture. Character.</strong><span>Made for your green spaces</span></div>
+        <ul className="pots-stage-stats">
+          <li><strong>{String(groups.length).padStart(2, '0')}</strong><span>categories</span></li>
+          <li><strong>{total}</strong><span>illustrated styles</span></li>
+        </ul>
+      </div>
+      {/* every category, drifting slowly along the foot of the header (the list is doubled so it loops seamlessly) */}
+      <div className="pots-ticker" aria-hidden="true">
+        <div className="pots-ticker-track">
+          {[...groups, ...groups].map((g, i) => <span key={`${g.slug}-${i}`} className="pots-ticker-item">{g.title}<small>{g.material}</small></span>)}
+        </div>
+      </div>
+    </header>
+    <VineDivider variant="ramp" id="pots-top" from="#163624" to="#FAF8F2" />
     <main id="pots-catalogue" className="pots-main">
       <div className="pots-toolbar"><div><p className="pots-eyebrow">Find your favourite</p><h2>Pots for every setting.</h2></div><label className="pots-search"><Search size={19} /><input type="search" aria-label="Search pots" placeholder="Search styles, materials or finishes" value={query} onChange={e => setQuery(e.target.value)} />{query && <button onClick={() => setQuery('')} aria-label="Clear pot search"><X size={17} /></button>}</label></div>
       <nav className="pots-filters" aria-label="Pot categories"><button aria-pressed={category === 'all'} onClick={() => setCategory('all')}>All pots <span>{total}</span></button>{groups.map(g => <button key={g.slug} aria-pressed={category === g.slug} onClick={() => setCategory(g.slug)}>{g.title}<span>{g.items.length}</span></button>)}</nav>
