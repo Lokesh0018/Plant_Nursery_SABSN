@@ -28,3 +28,18 @@ export const SERVICE_IMAGES = [
   { atlas: 'vertical', alt: 'Illustration of a vertical garden filled with ferns and trailing foliage', category: 'Design & build' },
 ];
 
+
+// More about each service, shown in its detail window on the Services page (same order as SERVICES).
+// kind: 'project' services run as site work; 'supply' services are materials and plants supplied to order.
+export const SERVICE_DETAILS = [
+  { kind: 'project', includes: ['Site survey and layout planning', 'A plant palette chosen for the site', 'Beds, lawns, hedges and features', 'Handover and ongoing garden care'], idealFor: ['Campuses & institutions', 'Offices & hotels', 'Homes & villas'] },
+  { kind: 'project', includes: ['Trees, shrubs and ornamentals from our nursery', 'Bulk supply for large projects', 'Pit preparation and planting', 'Staking, mulching and first watering'], idealFor: ['Landscape contractors', 'Avenues & campuses', 'Housing layouts'] },
+  { kind: 'project', includes: ['Ground levelling and soil preparation', 'Grass planting or turf laying', 'Mowing, edging and feeding', 'Weed control and patch repair'], idealFor: ['Schools & sports grounds', 'Gated communities', 'Home gardens'] },
+  { kind: 'supply', includes: ['Seasonal annuals and bedding plants', 'Flowering shrubs and climbers', 'Crotons and foliage ornamentals', 'Picks matched to sun and season'], idealFor: ['Beds & borders', 'Entrances & medians', 'Events & festivals'] },
+  { kind: 'project', includes: ['Trials of new plant varieties', 'Propagation and growing techniques', 'Improved nursery practices', 'Healthy, acclimatised stock'], idealFor: ['Nurseries & growers', 'Research partners', 'Plantation projects'] },
+  { kind: 'supply', includes: ['Cocopeat blocks and loose media', 'Coco fibre for mixes and mulch', 'For propagation and potting', 'Bulk and retail quantities'], idealFor: ['Nurseries & growers', 'Terrace & kitchen gardens', 'Hydroponic setups'] },
+  { kind: 'supply', includes: ['Organic and vermi compost', 'Soil conditioners and enrichers', 'Advice on mix and quantity', 'Bagged and bulk supply'], idealFor: ['Farms & orchards', 'Landscape projects', 'Home gardeners'] },
+  { kind: 'supply', includes: ['Indoor and outdoor pots', 'Terracotta, ceramic and more', 'Large containers for landscapes', 'Sizes from tabletop to statement'], idealFor: ['Homes & balconies', 'Offices & lobbies', 'Hotels & restaurants'] },
+  { kind: 'project', includes: ['Pathways and paving', 'Garden edging and kerbs', 'Raised planters and beds', 'Site preparation and groundwork'], idealFor: ['Parks & campuses', 'Commercial sites', 'Residential layouts'] },
+  { kind: 'project', includes: ['Custom wall design and layout', 'Plants chosen for light and wall', 'Irrigation built into the system', 'Regular trimming and plant care'], idealFor: ['Office lobbies & façades', 'Balconies & terraces', 'Hotels & cafés'] },
+];
