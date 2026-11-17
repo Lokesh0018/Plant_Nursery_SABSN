@@ -47,6 +47,8 @@ export default function Navbar({ page = 'home' }) {
         ['services', 'services'],
         ['pots-collection', 'pots'],
         ['gallery', 'gallery'],
+        // the FAQ has no menu item: reaching it clears the highlight (Gallery no longer stays lit)
+        ['faq', 'faq'],
         ['contact', 'contact'],
       ];
       let active = 'home';

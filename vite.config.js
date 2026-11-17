@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import { faqJsonLd } from './src/data/faqs.js'
 
 const BACKSLASH = String.fromCharCode(92)
 
@@ -25,9 +26,20 @@ function slimPlantCatalogue() {
   }
 }
 
+// The home-page FAQ as schema.org FAQPage JSON-LD in the static HTML, so answer engines and crawlers
+// that do not run JavaScript still read the questions and answers (same source as Faq.jsx)
+function faqStructuredData() {
+  return {
+    name: 'faq-structured-data',
+    transformIndexHtml() {
+      return [{ tag: 'script', attrs: { type: 'application/ld+json', 'data-faq': '' }, children: JSON.stringify(faqJsonLd()), injectTo: 'head' }]
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), slimPlantCatalogue()],
+  plugins: [react(), slimPlantCatalogue(), faqStructuredData()],
   build: {
     target: 'es2020', // no legacy transforms; every supported browser handles this natively
     rollupOptions: {

@@ -21,6 +21,10 @@ window.addEventListener('load', () => {
 window.addEventListener('pageshow', toTop);
 window.addEventListener('beforeunload', toTop);
 
+// Every path serves this same index.html, but only the home page shows the FAQ, so its FAQPage
+// structured data (written in by vite.config.js) is dropped everywhere else.
+if (window.location.pathname.replace(/\/+$/, '') !== '') document.querySelector('script[data-faq]')?.remove();
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Root />

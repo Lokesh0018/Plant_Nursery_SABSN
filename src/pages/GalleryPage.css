@@ -32,6 +32,7 @@
   overflow: hidden;
   color: #f4ecd9;
   background:
+    linear-gradient(180deg, transparent 82%, #163624 100%), /* top-most: the bottom edge is exactly #163624, where the vine divider starts */
     radial-gradient(ellipse 50% 60% at 82% 40%, rgba(201, 217, 138, 0.16), transparent 70%),
     radial-gradient(ellipse 40% 45% at 0% 55%, rgba(127, 168, 74, 0.12), transparent 70%),
     /* scrim darkest under the copy, a top/bottom wash (navbar contrast above, solid #163624 below for
@@ -286,6 +287,7 @@
   .gp-hero {
     grid-template-columns: 1fr;
     background:
+      linear-gradient(180deg, transparent 82%, #163624 100%), /* top-most: the bottom edge is exactly #163624, where the vine divider starts */
       radial-gradient(ellipse 70% 40% at 50% 78%, rgba(201, 217, 138, 0.16), transparent 70%),
       linear-gradient(180deg, rgba(11, 36, 21, 0.9) 0%, rgba(11, 36, 21, 0.84) 55%, #163624 100%),
       url('/hero-tree/background.webp') center 30% / cover no-repeat,

@@ -38,6 +38,7 @@
   /* the home hero's forest backdrop under a deep wash, a lime light behind the title, and a flat
      #163624 along the bottom edge for the fade below to start from */
   background:
+    linear-gradient(180deg, transparent 82%, #163624 100%), /* top-most: the bottom edge is exactly #163624, where the vine divider starts */
     radial-gradient(ellipse 55% 45% at 50% 38%, rgba(201, 217, 138, 0.18), transparent 70%),
     linear-gradient(180deg, rgba(13, 42, 24, 0.86) 0%, rgba(13, 42, 24, 0.78) 45%, #163624 100%),
     url('/hero-tree/background.webp') center 30% / cover no-repeat,
@@ -54,6 +55,7 @@
   position: relative;
   color: #f4ecd9;
   background:
+    linear-gradient(180deg, transparent 82%, #163624 100%), /* top-most: the bottom edge is exactly #163624, where the vine divider starts */
     radial-gradient(ellipse 42% 55% at 76% 42%, rgba(201, 217, 138, 0.2), transparent 70%),
     radial-gradient(ellipse 40% 50% at 0% 60%, rgba(127, 168, 74, 0.12), transparent 70%),
     linear-gradient(90deg, rgba(11, 36, 21, 0.94) 0%, rgba(11, 36, 21, 0.82) 45%, rgba(11, 36, 21, 0.6) 100%),
@@ -217,6 +219,7 @@
   .plants-page .catalogue-header {
     grid-template-columns: 1fr;
     background:
+      linear-gradient(180deg, transparent 82%, #163624 100%), /* top-most: the bottom edge is exactly #163624, where the vine divider starts */
       radial-gradient(ellipse 70% 40% at 50% 78%, rgba(201, 217, 138, 0.16), transparent 70%),
       linear-gradient(180deg, rgba(11, 36, 21, 0.9) 0%, rgba(11, 36, 21, 0.84) 55%, #163624 100%),
       url('/hero-tree/background.webp') center 30% / cover no-repeat,

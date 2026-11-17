@@ -1,0 +1,161 @@
+/* Home-page FAQ (Faq.jsx). It opens on the light sage (#eef3e4) that the vine divider above ramps
+   into from the gallery's ivory, and eases back to that ivory (#F7F3EA) at the bottom, where the
+   contact divider starts. Forest type, lime and leaf accents. Desktop: a sticky intro column beside
+   the questions; phones: stacked. */
+
+.faq {
+  --faq-forest: #163624;
+  --faq-ink: #17271d;
+  --faq-muted: #4a5b4c;
+  --faq-leaf: #4f7f3a;
+  --faq-lime: #c9d98a;
+  --faq-line: rgba(22, 54, 36, 0.1);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: 3rem clamp(2.5rem, 6vw, 6rem);
+  padding: clamp(3rem, 6vw, 4.5rem) max(5vw, 16px, calc((100% - 1280px) / 2)) clamp(5rem, 9vw, 7rem);
+  /* both seams are flat: sage at the top (the divider's end), ivory at the bottom (the contact
+     divider's start); a soft lime light behind the questions sits well clear of either edge */
+  background:
+    radial-gradient(ellipse 45% 40% at 72% 38%, rgba(201, 217, 138, 0.22), transparent 70%),
+    linear-gradient(180deg, #eef3e4 0%, #eef3e4 8%, #f2f3e7 50%, #f6f3ea 88%, #F7F3EA 100%);
+  color: var(--faq-ink);
+  margin-top: -1px; /* no sub-pixel hairline at the seam with the divider */
+  /* lets the open answer's height animate where the browser supports it */
+  interpolate-size: allow-keywords;
+}
+.faq > :not(.faq-watermark) { position: relative; z-index: 1; }
+.faq-watermark {
+  position: absolute; z-index: 0; left: -10vw; bottom: 8%; width: clamp(280px, 30vw, 460px); height: auto;
+  color: var(--faq-leaf); opacity: 0.05; rotate: -24deg; pointer-events: none;
+}
+
+/* ---------- intro ---------- */
+/* (child selector so it outranks the `.faq > :not(...)` stacking rule above) */
+.faq > .faq-intro { position: sticky; top: 120px; }
+.faq-kicker {
+  display: flex; align-items: center; gap: 0.75rem; margin: 0;
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faq-leaf);
+}
+.faq-kicker::before { content: ''; flex: none; width: 28px; height: 1px; background: currentColor; }
+.faq h2 {
+  margin: 1rem 0 0.6rem; font-family: var(--font-serif); font-weight: 400;
+  font-size: clamp(2.4rem, 4.4vw, 3.8rem); line-height: 1.04; letter-spacing: -0.02em; color: var(--faq-forest);
+}
+.faq h2 em { color: var(--faq-leaf); }
+.faq .vine-ornament { margin: 0.2rem 0 0; }
+.faq-lede { max-width: 440px; margin: 1.1rem 0 0; font-size: 1rem; line-height: 1.75; color: var(--faq-muted); }
+.faq-count { display: flex; align-items: baseline; gap: 0.5rem; margin: 1.4rem 0 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faq-muted); }
+.faq-count strong { font-family: var(--font-serif); font-size: 2rem; font-weight: 500; line-height: 1; letter-spacing: 0; font-variant-numeric: lining-nums; color: var(--faq-leaf); }
+
+/* the ways to ask directly, as a forest card with a lime glow in its corner */
+.faq-ask {
+  position: relative; overflow: hidden;
+  margin-top: 1.8rem; padding: 1.5rem 1.6rem 1.6rem; border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(201, 217, 138, 0.22), transparent 55%),
+    linear-gradient(160deg, #1f4a32, var(--faq-forest));
+  box-shadow: 0 24px 48px rgba(22, 54, 36, 0.2);
+}
+.faq-ask-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 14px; background: rgba(201, 217, 138, 0.16); color: var(--faq-lime); }
+.faq-ask-title { margin: 1rem 0 0.35rem; font-family: var(--font-serif); font-size: 1.45rem; color: #f7f6f0; }
+.faq-ask-text { margin: 0 0 1.2rem; font-size: 0.9rem; line-height: 1.6; color: rgba(244, 236, 217, 0.8); }
+.faq-ask-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.faq-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 46px; padding: 0 1.2rem;
+  border: 1px solid var(--faq-lime); border-radius: 999px; background: var(--faq-lime); color: var(--faq-forest);
+  font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.faq-btn:hover { background: #dbe7a3; border-color: #dbe7a3; }
+.faq-btn--ghost { background: transparent; border-color: rgba(244, 236, 217, 0.35); color: #f4ecd9; }
+.faq-btn--ghost:hover { background: rgba(255, 255, 255, 0.06); border-color: var(--faq-lime); color: var(--faq-lime); }
+.faq-btn:focus-visible { outline: 2px solid var(--faq-lime); outline-offset: 3px; }
+
+/* ---------- questions ---------- */
+.faq-list { display: flex; flex-direction: column; gap: 0.7rem; }
+.faq-item {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--faq-line); border-radius: 20px;
+  background: rgba(255, 253, 248, 0.82);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 1px 2px rgba(22, 54, 36, 0.04);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+/* a leaf-green bar down the left edge of the open question */
+.faq-item::before {
+  content: ''; position: absolute; left: 0; top: 18px; bottom: 18px; width: 3px; border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, var(--faq-lime), var(--faq-leaf));
+  opacity: 0; transition: opacity 0.25s ease;
+}
+.faq-item:hover { border-color: rgba(79, 127, 58, 0.3); box-shadow: 0 10px 24px rgba(22, 54, 36, 0.06); }
+.faq-item[open] { border-color: rgba(79, 127, 58, 0.35); background: #fffefa; box-shadow: 0 22px 46px rgba(22, 54, 36, 0.1); }
+.faq-item[open]::before { opacity: 1; }
+
+.faq-item summary {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem;
+  padding: 1.1rem 1.15rem 1.1rem 1.2rem; list-style: none; cursor: pointer; border-radius: 20px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:focus-visible { outline: 2px solid var(--faq-leaf); outline-offset: -2px; }
+
+/* number in a soft ring, which fills when the question is open */
+.faq-num {
+  display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid rgba(79, 127, 58, 0.25);
+  font-family: var(--font-serif); font-size: 0.92rem; font-variant-numeric: lining-nums; color: var(--faq-leaf);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.faq-item[open] .faq-num { background: var(--faq-forest); border-color: var(--faq-forest); color: var(--faq-lime); }
+.faq-q { margin: 0; font-family: var(--font-sans); font-size: 1.02rem; font-weight: 600; line-height: 1.4; color: var(--faq-forest); }
+
+.faq-icon {
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(201, 217, 138, 0.35); color: var(--faq-forest);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease, color 0.25s ease;
+}
+.faq-item summary:hover .faq-icon { background: var(--faq-lime); }
+.faq-item[open] .faq-icon { transform: rotate(45deg); background: var(--faq-forest); color: var(--faq-lime); }
+/* hovering the close (×) of an open question: a lighter forest, so the lime × never sits on lime */
+.faq-item[open] summary:hover .faq-icon { background: var(--faq-leaf); color: #fff; }
+
+/* the answer lines up under the question text, past the number */
+.faq-a { padding: 0 1.4rem 1.4rem calc(1.2rem + 38px + 1rem); }
+.faq-a p { max-width: 62ch; margin: 0; padding-top: 0.95rem; border-top: 1px dashed rgba(79, 127, 58, 0.22); font-size: 0.97rem; line-height: 1.75; color: var(--faq-muted); }
+/* the direct answer, ahead of the detail */
+.faq-yes {
+  display: inline-block; margin-right: 0.25rem; padding: 0.05rem 0.55rem; border-radius: 999px;
+  background: rgba(201, 217, 138, 0.45); color: var(--faq-forest); font-weight: 700; font-size: 0.88rem;
+}
+
+/* opening: the answer's height eases open where ::details-content is supported, and its text fades up */
+.faq-item::details-content {
+  block-size: 0; overflow: hidden;
+  transition: block-size 0.38s cubic-bezier(0.22, 1, 0.36, 1), content-visibility 0.38s allow-discrete;
+}
+.faq-item[open]::details-content { block-size: auto; }
+.faq-item[open] .faq-a { animation: faq-open 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes faq-open { from { opacity: 0; transform: translateY(-6px); } }
+
+/* ---------- tablets and phones: stacked ---------- */
+@media (max-width: 900px) {
+  .faq { grid-template-columns: 1fr; }
+  .faq > .faq-intro { position: relative; top: auto; }
+  .faq-watermark { display: none; }
+}
+@media (max-width: 560px) {
+  .faq-item summary { gap: 0.75rem; padding: 0.95rem 0.85rem 0.95rem 0.9rem; }
+  .faq-num { width: 32px; height: 32px; font-size: 0.82rem; }
+  .faq-a { padding: 0 1rem 1.15rem; }
+  .faq-q { font-size: 0.98rem; }
+  .faq-ask-actions .faq-btn { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item, .faq-item::before, .faq-num, .faq-icon, .faq-btn { transition: none; }
+  .faq-item::details-content { transition: none; }
+  .faq-item[open] .faq-a { animation: none; }
+}

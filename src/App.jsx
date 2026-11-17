@@ -18,6 +18,7 @@ import LoadingScreen from './components/LoadingScreen';
 const Services = lazy(() => import('./components/Services'));
 const PlantCare = lazy(() => import('./components/PlantCare'));
 const LivingArchive = lazy(() => import('./components/LivingArchive'));
+const Faq = lazy(() => import('./components/Faq'));
 const Contact = lazy(() => import('./components/Contact'));
 const Footer = lazy(() => import('./components/Footer'));
 
@@ -84,6 +85,9 @@ function App() {
       <PotsCollection />
       <VineDivider variant="pots" />
       <LazySection height="120vh" color="#F7F3EA"><LivingArchive /></LazySection>
+      {/* the gallery's ivory into the FAQ's light sage; the FAQ eases back to ivory for the contact divider */}
+      <VineDivider variant="ramp" id="faq-top" from="#F7F3EA" to="#eef3e4" />
+      <LazySection height="100vh" color="#eef3e4"><Faq /></LazySection>
       <VineDivider variant="contact" />
       <LazySection height="70vh" color="#c4d6bb"><Contact /></LazySection>
       <LazySection height="460px" color="#0f2d1b"><Footer /></LazySection>

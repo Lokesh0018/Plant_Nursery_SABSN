@@ -9,6 +9,7 @@
   padding: 110px max(5vw, 16px, calc((100% - 1280px) / 2)) clamp(3rem, 7vh, 5rem);
   color: #f4ecd9;
   background:
+    linear-gradient(180deg, transparent 82%, #163624 100%), /* top-most: the bottom edge is exactly #163624, where the vine divider starts */
     radial-gradient(ellipse 50% 60% at 82% 40%, rgba(214, 160, 110, 0.16), transparent 70%),
     radial-gradient(ellipse 40% 45% at 0% 55%, rgba(127, 168, 74, 0.12), transparent 70%),
     /* scrim darkest under the copy, a top/bottom wash (navbar contrast above, solid #163624 below for
@@ -131,6 +132,7 @@
   .pots-page .pots-hero {
     grid-template-columns: 1fr;
     background:
+      linear-gradient(180deg, transparent 82%, #163624 100%), /* top-most: the bottom edge is exactly #163624, where the vine divider starts */
       radial-gradient(ellipse 70% 40% at 50% 78%, rgba(214, 160, 110, 0.16), transparent 70%),
       linear-gradient(180deg, rgba(11, 36, 21, 0.9) 0%, rgba(11, 36, 21, 0.84) 55%, #163624 100%),
       url('/hero-tree/background.webp') center 30% / cover no-repeat,
@@ -223,7 +225,8 @@
 .pots-page .pots-hero > .pots-ticker { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; }
 .pots-ticker {
   overflow: hidden; padding: 0.9rem 0; border-top: 1px solid rgba(201, 217, 138, 0.16);
-  background: linear-gradient(180deg, rgba(10, 32, 19, 0), rgba(10, 32, 19, 0.45));
+  /* darkest behind the text, clear again at the bottom so the hero still ends on flat #163624 */
+  background: linear-gradient(180deg, rgba(10, 32, 19, 0), rgba(10, 32, 19, 0.4) 45%, rgba(10, 32, 19, 0));
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 .pots-ticker-track { display: flex; width: max-content; gap: 2.5rem; animation: pots-ticker 60s linear infinite; }
