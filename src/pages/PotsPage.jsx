@@ -1,5 +1,5 @@
 import { Fragment, lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Clock, MapPin, Phone, Droplets } from 'lucide-react';
+import { Leaf, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Clock, MapPin, Phone, Droplets } from 'lucide-react';
 import VineOrnament from '../components/VineOrnament';
 import VineDivider from '../components/VineDivider';
 import Navbar from '../components/Navbar';
@@ -128,6 +128,8 @@ export default function PotsPage() {
   return <div className="pots-page"><Navbar page="pots" />
     <header ref={heroRef} className="pots-hero">
       <img className="pots-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+      {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
+      <Leaf className="pots-watermark" strokeWidth={0.6} aria-hidden="true" />
       <div className="pots-hero-copy">
         <p className="pots-visit">
           <span className="pots-visit-open"><span className="pots-visit-dot" aria-hidden="true" />Open daily</span>

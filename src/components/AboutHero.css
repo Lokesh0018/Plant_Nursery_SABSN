@@ -24,9 +24,17 @@
 /* forest shade behind the full-size navbar, so its cream text reads over the picture until the
    first scroll turns the bar into the capsule */
 .ah-navshade {
-  position: absolute; left: 0; right: 0; top: 0; height: clamp(130px, 38%, 170px);
-  background: linear-gradient(180deg, rgba(8, 30, 17, 0.62) 0%, rgba(8, 30, 17, 0.3) 50%, rgba(8, 30, 17, 0.06) 85%, transparent);
+  position: absolute; left: 0; right: 0; top: 0; height: clamp(150px, 42%, 200px);
+  background: linear-gradient(180deg, rgba(8, 30, 17, 0.86) 0%, rgba(8, 30, 17, 0.6) 40%, rgba(8, 30, 17, 0.18) 78%, transparent);
   pointer-events: none;
+}
+/* a soft vignette at the sides draws the eye to the topiary, and the lawn eases into the ivory
+   "Who we are" section instead of ending on a hard edge */
+.about-hero::after {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 84%, rgba(247, 244, 234, 0.55) 96%, #F7F4EA 100%),
+    radial-gradient(ellipse 75% 95% at 50% 55%, transparent 60%, rgba(8, 30, 17, 0.28) 100%);
 }
 
 /* ---------- tablets ---------- */

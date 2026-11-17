@@ -47,13 +47,19 @@
 /* forest to ivory, eased flat at both ends; sits just under the header */
 /* catalogue header: the site's forest green (as on the home hero and the About bands), with cream
    type and lime accents so the transparent navbar reads over it */
+/* layers, top to bottom: a lime light behind the glasshouse, a soft green glow on the left, a scrim
+   that is darkest under the copy, a top/bottom wash (navbar contrast above, solid #163624 below for
+   the VineDivider), then the home hero's forest photo (already cached from the home page) */
 .plants-page .catalogue-header {
   position: relative;
   color: #f4ecd9;
   background:
-    radial-gradient(ellipse 50% 70% at 85% 20%, rgba(201, 217, 138, 0.16), transparent 70%),
+    radial-gradient(ellipse 42% 55% at 76% 42%, rgba(201, 217, 138, 0.2), transparent 70%),
     radial-gradient(ellipse 40% 50% at 0% 60%, rgba(127, 168, 74, 0.12), transparent 70%),
-    linear-gradient(180deg, #0f2d1b 0%, #163624 100%);
+    linear-gradient(90deg, rgba(11, 36, 21, 0.94) 0%, rgba(11, 36, 21, 0.82) 45%, rgba(11, 36, 21, 0.6) 100%),
+    linear-gradient(180deg, rgba(11, 36, 21, 0.55) 0%, transparent 28%, transparent 62%, #163624 100%),
+    url('/hero-tree/background.webp') center 30% / cover no-repeat,
+    #0f2d1b;
 }
 .plants-page .catalogue-header .indoor-kicker { color: var(--pp-lime); }
 /* copy on the left, the plant shelf on the right */
@@ -73,18 +79,36 @@
   align-content: center;
   overflow: hidden;
 }
-.plants-page .catalogue-header-copy h1 { color: #f7f6f0; }
-.plants-page .catalogue-header-copy h1 em { color: var(--pp-lime); }
-.plants-page .catalogue-header-copy > p:not(.indoor-kicker) { max-width: 620px; line-height: 1.7; color: rgba(244, 236, 217, 0.82); }
+.plants-page .catalogue-header-copy h1 {
+  margin: 1rem 0 0.9rem; color: #f7f6f0; font-size: clamp(2.6rem, 5.4vw, 5.25rem); line-height: 1.02; letter-spacing: -0.02em;
+  text-shadow: 0 2px 24px rgba(4, 18, 10, 0.35);
+}
+/* a short lime rule leads into the kicker */
+.plants-page .catalogue-header .indoor-kicker::before { content: ''; width: 28px; height: 1px; margin-right: 0.35rem; background: currentColor; }
+.plants-page .catalogue-header-copy h1 em { color: var(--pp-lime); font-style: italic; }
+.plants-page .catalogue-header-copy > p:not(.indoor-kicker) { max-width: 620px; line-height: 1.7; text-wrap: balance; color: rgba(244, 236, 217, 0.82); }
 
 /* ---------- header art: a two-tier glasshouse stand, five plants at two depths ---------- */
 .catalogue-header-art { position: relative; justify-self: center; width: min(100%, max(480px, 62vh), 640px); padding: 0 2.5rem; }
+/* grounds the glasshouse: a soft contact shadow, and a faint lime pool of light on the "floor" */
+.catalogue-header-art::after {
+  content: ''; position: absolute; z-index: -1; left: 8%; right: 8%; bottom: -5%; height: 12%; pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, rgba(4, 18, 10, 0.6), transparent),
+    radial-gradient(closest-side, rgba(201, 217, 138, 0.14), transparent) 50% 60% / 130% 160% no-repeat;
+  filter: blur(6px);
+}
 .cha-arch {
   position: relative;
   aspect-ratio: 1 / 1.08;
   border-radius: 999px 999px 28px 28px;
-  border: 1px solid rgba(201, 217, 138, 0.25);
+  border: 1px solid rgba(201, 217, 138, 0.32);
   background:
+    /* a soft beam of sun across the glass, falling from the top right like the backdrop's rays */
+    linear-gradient(225deg, transparent 18%, rgba(255, 244, 210, 0.09) 26%, rgba(255, 244, 210, 0.03) 36%, transparent 44%),
+    /* sheen from the top right, where the backdrop photo's sun rays come from */
+    linear-gradient(245deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 28%, transparent 42%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02) 60%, rgba(201, 217, 138, 0.06)),
     rgba(11, 36, 21, 0.35);
   box-shadow: 0 30px 60px rgba(4, 18, 10, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -181,7 +205,7 @@
 .cha-pick-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--pp-lime); color: var(--pp-forest); }
 .cha-pick-text { display: flex; flex-direction: column; line-height: 1.15; }
 .cha-pick-text strong { font-size: 0.82rem; font-weight: 700; color: #f7f6f0; }
-.cha-pick-text small { font-size: 0.7rem; color: rgba(244, 236, 217, 0.68); }
+.cha-pick-text small { font-size: 0.72rem; color: rgba(244, 236, 217, 0.82); }
 /* four shortcuts framing the glasshouse: two high on the curve, two on the base */
 .cha-pick--flowering-plants { top: 14%; left: 0; }
 .cha-pick--indoor-plants { top: 9%; right: 2%; }
@@ -189,16 +213,22 @@
 .cha-pick--fruit-plants { bottom: 1%; left: 4%; }
 
 @media (max-width: 900px) {
-  .plants-page .catalogue-header { grid-template-columns: 1fr; }
-  .catalogue-header-art { width: min(100%, 380px); justify-self: start; }
+  /* stacked: copy runs full width, so the scrim is even across and the photo only peeks through */
+  .plants-page .catalogue-header {
+    grid-template-columns: 1fr;
+    background:
+      radial-gradient(ellipse 70% 40% at 50% 78%, rgba(201, 217, 138, 0.16), transparent 70%),
+      linear-gradient(180deg, rgba(11, 36, 21, 0.9) 0%, rgba(11, 36, 21, 0.84) 55%, #163624 100%),
+      url('/hero-tree/background.webp') center 30% / cover no-repeat,
+      #0f2d1b;
+  }
+  .catalogue-header-art { width: min(100%, 440px); justify-self: center; }
 }
 @media (max-width: 560px) {
   .ch-actions .ch-btn { flex: 1 1 100%; }
   /* the two figures side by side across the full width */
-  .plants-page .catalogue-stats { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
-  .plants-page .catalogue-stats li { flex-direction: column; align-items: flex-start; gap: 0.45rem; padding: 0.6rem 0.75rem; }
-  .plants-page .catalogue-stats li + li { padding-left: 0.9rem; }
-  .ch-stat-icon { width: 30px; height: 30px; }
+  .plants-page .catalogue-stats li { padding-inline: 0.85rem; }
+  .plants-page .catalogue-stats span { letter-spacing: 0.08em; }
   .ch-corner--tr { opacity: 0.35; }
   .catalogue-header-art { width: 100%; padding: 0 1.25rem; }
   .cha-pick { padding-right: 0.6rem; }
@@ -216,22 +246,22 @@
 .plants-page .catalogue-header h1 { color: #f7f6f0; }
 .plants-page .catalogue-header h1 em { color: var(--pp-lime); }
 .plants-page .catalogue-header > p { color: rgba(244, 236, 217, 0.82); }
-/* stats as one glass strip with a divider between the two figures */
+/* the figures: large serif numerals over small caps, ruled off from the copy above */
 .plants-page .catalogue-stats {
-  display: inline-flex; flex-wrap: wrap; gap: 0; margin: 2rem 0 0; padding: 0.35rem; list-style: none;
-  border: 1px solid rgba(201, 217, 138, 0.2); border-radius: 18px;
-  background: rgba(255, 255, 255, 0.05);
+  display: flex; gap: 0; max-width: 500px; margin: 2.6rem 0 0; padding: 1.4rem 0 0; list-style: none;
+  border-top: 1px solid rgba(201, 217, 138, 0.2);
 }
-.plants-page .catalogue-stats li { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 1.1rem 0.55rem 0.6rem; color: rgba(244, 236, 217, 0.75); font-size: 0.82rem; }
-.plants-page .catalogue-stats li + li { border-left: 1px solid rgba(201, 217, 138, 0.18); padding-left: 1rem; }
-.plants-page .catalogue-stats strong { margin-right: 0.35rem; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; color: var(--pp-lime); }
-.ch-stat-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: rgba(201, 217, 138, 0.14); color: var(--pp-lime); }
+.plants-page .catalogue-stats li { flex: 1; display: flex; flex-direction: column; gap: 0.45rem; padding: 0 1.4rem; }
+.plants-page .catalogue-stats li:first-child { padding-left: 0; }
+.plants-page .catalogue-stats li + li { border-left: 1px solid rgba(201, 217, 138, 0.18); }
+.plants-page .catalogue-stats strong { margin: 0; font-family: var(--font-serif); font-size: clamp(1.9rem, 2.5vw, 2.35rem); font-weight: 500; line-height: 1; font-variant-numeric: lining-nums; color: var(--pp-lime); }
+.plants-page .catalogue-stats span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 236, 217, 0.72); }
 
 /* visiting badge above the kicker */
 .ch-visit {
   display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem; margin: 0 0 1.4rem; padding: 0.4rem 0.9rem 0.4rem 0.5rem;
   border: 1px solid rgba(201, 217, 138, 0.22); border-radius: 999px; background: rgba(255, 255, 255, 0.05);
-  color: rgba(244, 236, 217, 0.82); font-size: 0.76rem; font-weight: 500;
+  color: rgba(244, 236, 217, 0.88); font-size: 0.8rem; font-weight: 500;
 }
 .ch-visit-open { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.2rem 0.6rem; border-radius: 999px; background: rgba(201, 217, 138, 0.16); color: var(--pp-lime); font-weight: 700; }
 .ch-visit-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #9fd36f; }
@@ -241,7 +271,7 @@
 .ch-visit-item svg { color: var(--pp-lime); }
 
 /* header actions */
-.ch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 1.75rem; }
+.ch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 2rem; }
 .ch-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; padding: 0 1.4rem;
   border: 1px solid var(--pp-lime); border-radius: 999px; background: var(--pp-lime); color: var(--pp-forest);
@@ -265,6 +295,11 @@
 }
 .ch-corner { position: absolute; pointer-events: none; height: auto; opacity: 0.55; }
 .ch-corner--tr { top: -20px; right: -40px; width: clamp(160px, 18vw, 280px); }
+.plants-page .catalogue-header > .ch-watermark {
+  position: absolute; z-index: 0; left: -9vw; bottom: -22vh; width: clamp(320px, 36vw, 540px); height: auto;
+  color: var(--pp-lime); opacity: 0.045; rotate: -24deg; pointer-events: none;
+}
+@media (max-width: 900px) { .plants-page .catalogue-header > .ch-watermark { display: none; } }
 
 .pp-hero-art {
   position: absolute;
@@ -1173,3 +1208,4 @@
 /* sections below the first are skipped by the browser's layout and paint work until they scroll near;
    the intrinsic size keeps the scrollbar steady meanwhile */
 .plants-page .indoor-category ~ .indoor-category { content-visibility: auto; contain-intrinsic-size: auto 1400px; }
+

@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
-import { ArrowLeft, ArrowRight, ArrowDown, X, Images, Expand, Clock, MapPin, MessageCircle } from 'lucide-react';
+import { Leaf, ArrowLeft, ArrowRight, ArrowDown, X, Images, Expand, Clock, MapPin, MessageCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import VineOrnament from '../components/VineOrnament';
@@ -14,6 +14,11 @@ const countOf = (key) => (key === 'all' ? galleryItems.length : galleryItems.fil
 // three photographs pinned up in the header like prints
 const PRINTS = ['/gallery/airport.webp', '/gallery/ficus.webp', '/gallery/palms.webp'].map((src) => galleryItems.find((g) => g.src === src)).filter(Boolean);
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I saw your gallery and would like to discuss a landscaping project.')}`;
+
+function GalleryPhoto({ item, lazy = false, crop = false }) {
+  if (item.cell !== undefined) return <span className="gp-sheet-photo" role="img" aria-label={item.alt} style={{ backgroundImage: `url(${item.src})`, backgroundPosition: `${(item.cell % 2) * 100}% ${Math.floor(item.cell / 2) * 100}%` }} />;
+  return <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading={lazy ? 'lazy' : undefined} decoding="async" style={crop && item.pos ? { objectPosition: item.pos } : undefined} />;
+}
 
 /* Full-screen viewer for one photo at a time: arrows, keyboard (left / right / Esc), swipe on touch,
    and a click on the dark backdrop closes it. Runs through whichever photos are currently shown. */
@@ -54,8 +59,8 @@ function Lightbox({ items, index, onClose, onMove }) {
         if (Math.abs(dx) > 50) onMove(dx < 0 ? 1 : -1);
       }}
     >
-      <figure className="gp-lightbox-figure" key={item.src}>
-        <img src={item.src} alt={item.alt} width={item.width} height={item.height} />
+      <figure className="gp-lightbox-figure" key={item.id || item.src}>
+        <GalleryPhoto item={item} />
         <figcaption>
           <span className="gp-tag">{item.tag}</span>
           <strong>{item.title}</strong>
@@ -99,7 +104,7 @@ export default function GalleryPage() {
   }, [shown.length]);
 
   // position of each tile within `shown`
-  const indexOf = useMemo(() => new Map(shown.map((item, i) => [item.src, i])), [shown]);
+  const indexOf = useMemo(() => new Map(shown.map((item, i) => [item.id || item.src, i])), [shown]);
 
   return (
     <div className="gallery-page">
@@ -107,6 +112,8 @@ export default function GalleryPage() {
 
       <header className="gp-hero">
         <img className="gp-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+        {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
+        <Leaf className="gp-watermark" strokeWidth={0.6} aria-hidden="true" />
         <div className="gp-hero-copy">
           <p className="gp-visit">
             <span className="gp-visit-open"><span className="gp-visit-dot" aria-hidden="true" />Open daily</span>
@@ -141,7 +148,7 @@ export default function GalleryPage() {
         {/* three photographs pinned up like prints, with the archive's figures on a glass card */}
         <div className="gp-collage" aria-hidden="true">
           {PRINTS.map((item, i) => (
-            <figure key={item.src} className={`gp-print gp-print--${'abc'[i]}`}>
+            <figure key={item.id || item.src} className={`gp-print gp-print--${'abc'[i]}`}>
               <img src={item.src} alt="" width={item.width} height={item.height} decoding="async" style={{ objectPosition: item.pos || 'center' }} />
               <figcaption>{item.tag}</figcaption>
             </figure>
@@ -190,13 +197,17 @@ export default function GalleryPage() {
 
                 {/* justified rows: every photo keeps its own shape, and each row fills the width at one height */}
                 <ul className="gp-rows">
-                  {group.items.map((item) => {
-                    const at = indexOf.get(item.src);
+                  {group.items.map((item, ii) => {
+                    const at = indexOf.get(item.id || item.src);
+                    // the first fixed-size photo starts a fresh row, so the closing portraits sit together
+                    const breakBefore = item.fixedRow && !group.items[ii - 1]?.fixedRow;
                     return (
-                      <li key={item.src} className="gp-tile" style={{ '--i': at, '--r': (item.width / item.height).toFixed(3) }}>
+                      <Fragment key={item.id || item.src}>
+                      {breakBefore && <li className="gp-row-break" role="presentation" />}
+                      <li className={`gp-tile${item.fit === 'contain' ? ' gp-tile--complete' : ''}${item.fixedRow ? ' gp-tile--fixed' : ''}`} style={{ '--i': at, '--r': (item.displayRatio || item.width / item.height).toFixed(3) }}>
                         <button type="button" className="gp-tile-btn" onClick={() => setOpen(at)} aria-label={`Open photo: ${item.title}`}>
                           <span className="gp-tile-media">
-                            <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" decoding="async" />
+                            <GalleryPhoto item={item} lazy crop />
                             <span className="gp-tile-zoom" aria-hidden="true"><Expand size={16} /></span>
                             <span className="gp-tile-caption">
                               <span className="gp-tag">{item.tag}</span>
@@ -205,6 +216,7 @@ export default function GalleryPage() {
                           </span>
                         </button>
                       </li>
+                      </Fragment>
                     );
                   })}
                 </ul>

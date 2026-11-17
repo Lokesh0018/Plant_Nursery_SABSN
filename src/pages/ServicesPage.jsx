@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react';
-import { ArrowRight, ArrowLeft, ArrowDown, ArrowUpRight, MessageCircle, Phone, Clock, MapPin, LayoutGrid, Building2, Briefcase, Home, Check, X, Users } from 'lucide-react';
+import { Leaf, ArrowRight, ArrowLeft, ArrowDown, ArrowUpRight, MessageCircle, Phone, Clock, MapPin, LayoutGrid, Building2, Briefcase, Home, Check, X, Users } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import VineOrnament from '../components/VineOrnament';
@@ -94,6 +94,8 @@ export default function ServicesPage() {
 
       <header ref={heroRef} className="sp-hero">
         <img className="sp-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+        {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
+        <Leaf className="sp-watermark" strokeWidth={0.6} aria-hidden="true" />
         <div className="sp-hero-copy">
           <p className="sp-visit">
             <span className="sp-visit-open"><span className="sp-visit-dot" aria-hidden="true" />Open daily</span>

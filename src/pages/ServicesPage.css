@@ -43,7 +43,12 @@
   background:
     radial-gradient(ellipse 50% 60% at 85% 35%, rgba(201, 217, 138, 0.16), transparent 70%),
     radial-gradient(ellipse 40% 45% at 0% 55%, rgba(127, 168, 74, 0.12), transparent 70%),
-    linear-gradient(180deg, #0f2d1b 0%, #163624 100%);
+    /* scrim darkest under the copy, a top/bottom wash (navbar contrast above, solid #163624 below for
+       the VineDivider), then the home hero's forest photo; see docs/plants-hero-background.md */
+    linear-gradient(90deg, rgba(11, 36, 21, 0.94) 0%, rgba(11, 36, 21, 0.82) 45%, rgba(11, 36, 21, 0.6) 100%),
+    linear-gradient(180deg, rgba(11, 36, 21, 0.55) 0%, transparent 28%, transparent 62%, #163624 100%),
+    url('/hero-tree/background.webp') center 30% / cover no-repeat,
+    #0f2d1b;
 }
 .sp-hero::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
@@ -56,7 +61,7 @@
 .sp-visit {
   display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem; margin: 0 0 1.4rem; padding: 0.4rem 0.9rem 0.4rem 0.5rem;
   border: 1px solid rgba(201, 217, 138, 0.22); border-radius: 999px; background: rgba(255, 255, 255, 0.05);
-  color: rgba(244, 236, 217, 0.82); font-size: 0.76rem; font-weight: 500;
+  color: rgba(244, 236, 217, 0.88); font-size: 0.8rem; font-weight: 500;
 }
 .sp-visit > span { display: inline-flex; align-items: center; gap: 0.35rem; }
 .sp-visit svg { color: var(--sp-lime); }
@@ -84,7 +89,7 @@
 .sp-btn:focus-visible { outline: 2px solid var(--sp-lime); outline-offset: 3px; }
 
 .sp-for { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.9rem; margin-top: 1.75rem; }
-.sp-for > span { color: rgba(244, 236, 217, 0.62); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.sp-for > span { color: rgba(244, 236, 217, 0.8); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
 .sp-for ul { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
 .sp-for li {
   display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.75rem; border: 1px solid rgba(201, 217, 138, 0.25);
@@ -118,7 +123,7 @@
 .sp-facts li { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.55rem 1rem; }
 .sp-facts li + li { border-left: 1px solid rgba(201, 217, 138, 0.18); }
 .sp-facts strong { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 500; line-height: 1; color: var(--sp-lime); }
-.sp-facts span { font-size: 0.7rem; color: rgba(244, 236, 217, 0.72); }
+.sp-facts span { font-size: 0.72rem; color: rgba(244, 236, 217, 0.82); }
 
 /* entrance, once */
 @keyframes sp-rise { from { opacity: 0; transform: translateY(18px); } }
@@ -211,7 +216,15 @@
   .sp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 900px) {
-  .sp-hero { grid-template-columns: 1fr; }
+  /* stacked: copy runs full width, so the scrim is even across and the photo only peeks through */
+  .sp-hero {
+    grid-template-columns: 1fr;
+    background:
+      radial-gradient(ellipse 70% 40% at 50% 78%, rgba(201, 217, 138, 0.16), transparent 70%),
+      linear-gradient(180deg, rgba(11, 36, 21, 0.9) 0%, rgba(11, 36, 21, 0.84) 55%, #163624 100%),
+      url('/hero-tree/background.webp') center 30% / cover no-repeat,
+      #0f2d1b;
+  }
   .sp-mosaic { justify-self: start; width: min(100%, 480px); }
   .sp-cta { grid-template-columns: 1fr; }
   .sp-cta-actions { flex-direction: row; flex-wrap: wrap; }
@@ -376,3 +389,15 @@
    and clicks on the photo would do nothing; the overlay also sits above the photo's badges */
 .sp-card .sp-card-body { position: static; }
 .sp-card-link::after { z-index: 2; }
+
+/* ---------- hero refinements, matching the Plants header: a lime rule into the kicker, a softly
+   shadowed title, lining numerals in the figures, and a faint outline leaf in the lower left ---------- */
+.sp-hero .sp-kicker { display: flex; align-items: center; gap: 0.75rem; }
+.sp-hero .sp-kicker::before { content: ''; flex: none; width: 28px; height: 1px; background: currentColor; }
+.sp-hero h1 { letter-spacing: -0.02em; text-shadow: 0 2px 24px rgba(4, 18, 10, 0.35); }
+.sp-hero .sp-facts strong { font-variant-numeric: lining-nums; }
+.sp-hero > .sp-watermark {
+  position: absolute; z-index: 0; left: -9vw; bottom: -22vh; width: clamp(320px, 36vw, 540px); height: auto;
+  color: #c9d98a; opacity: 0.045; rotate: -24deg; pointer-events: none;
+}
+@media (max-width: 900px) { .sp-hero > .sp-watermark { display: none; } }

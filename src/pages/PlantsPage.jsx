@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState, lazy, Suspense } from 'react';
-import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Sprout, Armchair, Clock, MapPin, X, Sun, Trees, TreePine, Leaf, SlidersHorizontal } from 'lucide-react';
+import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Armchair, Clock, MapPin, X, Sun, Trees, TreePine, Leaf, SlidersHorizontal } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import IndoorPlants from '../components/IndoorPlants';
 import WhatsAppButton from '../components/WhatsAppButton';
@@ -111,6 +111,8 @@ export default function PlantsPage() {
     <header ref={headerRef} className="catalogue-header">
       {/* the home hero's own foliage, framing the top-right corner */}
       <img className="ch-corner ch-corner--tr" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+      {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
+      <Leaf className="ch-watermark" strokeWidth={0.6} aria-hidden="true" />
       <div className="catalogue-header-copy">
         {/* visiting details, as given in the footer */}
         <p className="ch-visit">
@@ -130,9 +132,11 @@ export default function PlantsPage() {
             <MessageCircle size={16} strokeWidth={2.2} aria-hidden="true" /> Ask on WhatsApp
           </a>
         </div>
+        {/* the catalogue in figures: serif numerals over small caps, ruled off from the copy above */}
         <ul className="catalogue-stats">
-          <li><span className="ch-stat-icon"><LayoutGrid size={16} strokeWidth={2} aria-hidden="true" /></span><span><strong>{groups.length}</strong> categories</span></li>
-          <li><span className="ch-stat-icon"><Sprout size={16} strokeWidth={2} aria-hidden="true" /></span><span><strong>{total}</strong> catalogue entries</span></li>
+          <li><strong>{groups.length}</strong><span>Categories</span></li>
+          <li><strong>{total}</strong><span>Plants listed</span></li>
+          <li><strong>7</strong><span>Days a week</span></li>
         </ul>
       </div>
       {/* a glasshouse arch with three potted plants on a ledge, and category shortcuts around it */}

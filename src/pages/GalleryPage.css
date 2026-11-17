@@ -34,7 +34,12 @@
   background:
     radial-gradient(ellipse 50% 60% at 82% 40%, rgba(201, 217, 138, 0.16), transparent 70%),
     radial-gradient(ellipse 40% 45% at 0% 55%, rgba(127, 168, 74, 0.12), transparent 70%),
-    linear-gradient(180deg, #0f2d1b 0%, #163624 100%);
+    /* scrim darkest under the copy, a top/bottom wash (navbar contrast above, solid #163624 below for
+       the VineDivider), then the home hero's forest photo; see docs/plants-hero-background.md */
+    linear-gradient(90deg, rgba(11, 36, 21, 0.94) 0%, rgba(11, 36, 21, 0.82) 45%, rgba(11, 36, 21, 0.6) 100%),
+    linear-gradient(180deg, rgba(11, 36, 21, 0.55) 0%, transparent 28%, transparent 62%, #163624 100%),
+    url('/hero-tree/background.webp') center 30% / cover no-repeat,
+    #0f2d1b;
 }
 .gp-hero::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
@@ -47,7 +52,7 @@
 .gp-visit {
   display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem; margin: 0 0 1.4rem; padding: 0.4rem 0.9rem 0.4rem 0.5rem;
   border: 1px solid rgba(201, 217, 138, 0.22); border-radius: 999px; background: rgba(255, 255, 255, 0.05);
-  color: rgba(244, 236, 217, 0.82); font-size: 0.76rem; font-weight: 500;
+  color: rgba(244, 236, 217, 0.88); font-size: 0.8rem; font-weight: 500;
 }
 .gp-visit > span { display: inline-flex; align-items: center; gap: 0.35rem; }
 .gp-visit svg { color: var(--gp-lime); }
@@ -74,7 +79,7 @@
 .gp-hero-btn:focus-visible, .gp-collections button:focus-visible { outline: 2px solid var(--gp-lime); outline-offset: 3px; }
 
 .gp-collections { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.9rem; margin-top: 1.75rem; }
-.gp-collections > span { color: rgba(244, 236, 217, 0.62); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.gp-collections > span { color: rgba(244, 236, 217, 0.8); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
 .gp-collections ul { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
 .gp-collections button {
   display: inline-flex; align-items: center; gap: 0.45rem; min-height: 36px; padding: 0 0.45rem 0 0.85rem; border: 1px solid rgba(201, 217, 138, 0.25);
@@ -116,7 +121,7 @@
 .gp-collage-stats li { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.55rem 1rem; }
 .gp-collage-stats li + li { border-left: 1px solid rgba(201, 217, 138, 0.18); }
 .gp-collage-stats strong { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; line-height: 1; color: var(--gp-lime); }
-.gp-collage-stats span { font-size: 0.7rem; color: rgba(244, 236, 217, 0.72); }
+.gp-collage-stats span { font-size: 0.72rem; color: rgba(244, 236, 217, 0.82); }
 
 @keyframes gp-rise { from { opacity: 0; transform: translateY(18px); } }
 .gp-hero-copy > * { animation: gp-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
@@ -162,11 +167,18 @@
 }
 
 /* justified rows: each tile grows in proportion to its width/height ratio, so a row shares one height */
-.gp-rows { --row: 270px; display: flex; flex-wrap: wrap; gap: clamp(0.75rem, 1.4vw, 1.1rem); margin: 0; padding: 0; list-style: none; }
+.gp-rows { --row: 270px; --gap: clamp(0.75rem, 1.4vw, 1.1rem); display: flex; flex-wrap: wrap; gap: var(--gap); margin: 0; padding: 0; list-style: none; }
+/* forces a new row; the empty line adds one extra row gap, which the tiles after it pull back up */
+.gp-row-break { flex-basis: 100%; height: 0; }
+.gp-row-break ~ .gp-tile--fixed { margin-top: calc(-1 * var(--gap)); }
 .gp-tile {
   flex: var(--r) 1 calc(var(--r) * var(--row)); min-width: 0;
   animation: gp-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; animation-delay: calc(var(--i, 0) * 50ms);
 }
+/* the closing row: its tiles share the full width equally at one fixed height (the bouquet portrait's
+   former height), cropping each photo from its `pos` point */
+.gp-tile.gp-tile--fixed { flex: 1 1 0; }
+.gp-tile--fixed .gp-tile-media { aspect-ratio: auto; height: calc(var(--row) * 1.05); }
 @keyframes gp-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 .gp-tile-btn { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; text-align: left; font: inherit; cursor: zoom-in; }
 .gp-tile-btn:focus-visible { outline: 2px solid var(--gp-leaf); outline-offset: 4px; border-radius: 20px; }
@@ -270,7 +282,15 @@
 
 /* ================= responsive ================= */
 @media (max-width: 900px) {
-  .gp-hero { grid-template-columns: 1fr; }
+  /* stacked: copy runs full width, so the scrim is even across and the photo only peeks through */
+  .gp-hero {
+    grid-template-columns: 1fr;
+    background:
+      radial-gradient(ellipse 70% 40% at 50% 78%, rgba(201, 217, 138, 0.16), transparent 70%),
+      linear-gradient(180deg, rgba(11, 36, 21, 0.9) 0%, rgba(11, 36, 21, 0.84) 55%, #163624 100%),
+      url('/hero-tree/background.webp') center 30% / cover no-repeat,
+      #0f2d1b;
+  }
   .gp-collage { justify-self: start; width: min(100%, 500px); }
   .gp-cta { grid-template-columns: 1fr; }
   .gp-cta-actions { flex-direction: row; flex-wrap: wrap; }
@@ -307,3 +327,22 @@
 .gp-print--a { width: 66%; top: 0; }
 .gp-print--a figcaption { text-align: right; }
 .gp-print--c { width: 50%; }
+
+/* Keep every panel of a collage visible, including on hover. */
+.gp-tile--complete .gp-tile-media img { object-fit: contain; background: #f7f3ea; }
+.gp-tile--complete .gp-tile-btn:hover .gp-tile-media img { transform: none; }
+
+.gp-sheet-photo { display:block; width:100%; aspect-ratio:16/9; background-size:200% 200%; background-repeat:no-repeat; }
+.gp-lightbox-figure > .gp-sheet-photo { width:min(100%, calc((100dvh - 11rem) * 16 / 9)); flex:none; border-radius:14px; pointer-events:auto; }
+
+/* ---------- hero refinements, matching the Plants header: a lime rule into the kicker, a softly
+   shadowed title, lining numerals in the figures, and a faint outline leaf in the lower left ---------- */
+.gp-hero .gp-eyebrow { display: flex; align-items: center; gap: 0.75rem; }
+.gp-hero .gp-eyebrow::before { content: ''; flex: none; width: 28px; height: 1px; background: currentColor; }
+.gp-hero .gp-title { letter-spacing: -0.02em; text-shadow: 0 2px 24px rgba(4, 18, 10, 0.35); }
+.gp-hero .gp-collage-stats strong { font-variant-numeric: lining-nums; font-size: 1.75rem; }
+.gp-hero > .gp-watermark {
+  position: absolute; z-index: 0; left: -9vw; bottom: -22vh; width: clamp(320px, 36vw, 540px); height: auto;
+  color: #c9d98a; opacity: 0.045; rotate: -24deg; pointer-events: none;
+}
+@media (max-width: 900px) { .gp-hero > .gp-watermark { display: none; } }
