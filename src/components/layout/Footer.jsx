@@ -126,7 +126,7 @@ export default function Footer() {
                   <a href={loc.path} className="footer-branch-link"><strong>{loc.cardTitle}</strong>{formatAddress(loc, { country: false })}</a>
                 </li>
               ))}
-              <li><Clock size={14} /> Open daily, 7 am to 6 pm</li>
+              <li className="footer-hours"><Clock size={14} aria-hidden="true" /> Open daily, 7 am to 6 pm</li>
             </ul>
           </div>
 

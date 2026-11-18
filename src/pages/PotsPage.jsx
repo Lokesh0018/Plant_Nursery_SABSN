@@ -1,6 +1,6 @@
 import { Fragment, lazy, Suspense, useEffect, useRef, useState } from 'react';
 import useOffscreenPause from '../hooks/useOffscreenPause';
-import { Leaf, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Phone, Droplets } from 'lucide-react';
+import { Leaf, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Phone, Droplets, ChevronDown } from 'lucide-react';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
 import Navbar from '../components/layout/Navbar';
@@ -52,15 +52,48 @@ function PotDetails({ group, index, onStep, onGo, onClose }) {
     return () => { document.body.style.overflow = overflow; previous?.focus({ preventScroll: true }); };
   }, []);
   const neighbour = d => group.items[(index + d + group.items.length) % group.items.length].name;
+  // phones: the window is a bottom sheet that scrolls without a visible scrollbar; a "Scroll for more" cue
+  // shows while there is content below. The grid is keyed by pot, so each pot starts at the top again.
+  const sheet = useRef(null);
+  const [more, setMore] = useState(false);
+  useEffect(() => {
+    const el = sheet.current;
+    if (!el) return undefined;
+    const update = () => setMore(el.scrollHeight - el.clientHeight - el.scrollTop > 24);
+    update();
+    el.addEventListener('scroll', update, { passive: true });
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(update) : null;
+    ro?.observe(el);
+    return () => { el.removeEventListener('scroll', update); ro?.disconnect(); };
+  }, [item.id]);
+  const scrollMore = () => {
+    const el = sheet.current;
+    if (!el) return;
+    el.scrollBy({ top: el.clientHeight * 0.6, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  };
+  // a sideways swipe on the photo steps to the previous / next pot
+  const swipe = useRef(null);
+  const onTouchStart = e => { const t = e.touches[0]; swipe.current = { x: t.clientX, y: t.clientY }; };
+  const onTouchEnd = e => {
+    const s = swipe.current; swipe.current = null;
+    if (!s || !many) return;
+    const t = e.changedTouches[0]; const dx = t.clientX - s.x; const dy = t.clientY - s.y;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) onStep(dx < 0 ? 1 : -1);
+  };
   return <dialog ref={ref} className="pots-dialog" aria-labelledby="pot-detail-title" onCancel={onClose}
     onClick={e => { if (e.target === e.currentTarget) onClose(); }}
     onKeyDown={e => { if (many && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) onStep(e.key === 'ArrowRight' ? 1 : -1); }}>
     <button className="pots-close" onClick={onClose} aria-label="Close pot details" autoFocus><X size={18} /></button>
-    <div className="pots-dialog-grid" key={item.id}>
-      <div className="pots-dialog-photo">
+    <div ref={sheet} className="pots-dialog-grid" key={item.id}>
+      <div className="pots-dialog-photo" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <PotFrame item={item} eager />
         <span className="pots-dialog-num">{String(index + 1).padStart(2, '0')}<small> / {String(group.items.length).padStart(2, '0')}</small></span>
         <span className="pots-dialog-material"><Layers size={13} strokeWidth={2.2} aria-hidden="true" />{item.material}</span>
+        {/* phones: previous / next sit on the photo (the action bar below holds only the two contact buttons) */}
+        {many && <div className="pots-photo-nav">
+          <button type="button" onClick={() => onStep(-1)} aria-label={`Previous pot: ${neighbour(-1)}`}><ArrowLeft size={18} aria-hidden="true" /></button>
+          <button type="button" onClick={() => onStep(1)} aria-label={`Next pot: ${neighbour(1)}`}><ArrowRight size={18} aria-hidden="true" /></button>
+        </div>}
       </div>
       <div className="pots-detail-copy">
         <p className="pots-dialog-kicker"><span aria-hidden="true"><Flower2 size={15} strokeWidth={1.9} /></span>{group.title}</p>
@@ -86,6 +119,9 @@ function PotDetails({ group, index, onStep, onGo, onClose }) {
         </>}
 
         <div className="pots-dialog-actions">
+          {more && <button type="button" className="pots-scroll-hint" onClick={scrollMore} aria-label="Scroll down for more details">
+            Scroll for more <ChevronDown size={15} strokeWidth={2.4} aria-hidden="true" />
+          </button>}
           <a className="pots-dialog-cta" href={enquiry(item.name)} target="_blank" rel="noopener noreferrer"><MessageCircle size={16} strokeWidth={2.2} aria-hidden="true" />Enquire on WhatsApp</a>
           <a className="pots-dialog-call" href="tel:+919849936169"><Phone size={15} strokeWidth={2.2} aria-hidden="true" />Call us</a>
           {many && <div className="pots-dialog-nav">

@@ -590,3 +590,31 @@
 .footer-branch-link:hover strong { color: #c9d98a; text-decoration: underline; text-underline-offset: 3px; }
 .footer-branch-link:focus-visible { outline: 2px solid #c9d98a; outline-offset: 3px; border-radius: 4px; }
 
+
+/* phones: the brand column is centred, which left the multi-line addresses ragged beside their pins.
+   Give each branch (and the hours) its own left-aligned card in one even-width stack instead. */
+@media (max-width: 600px) {
+  .footer-meta {
+    width: 100%;
+    max-width: 22rem;
+    margin: 1.25rem auto 0;
+    gap: 0.6rem;
+    text-align: left;
+  }
+  .footer-meta li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    background: rgba(237, 242, 227, 0.05);
+    border: 1px solid rgba(201, 217, 138, 0.18);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .footer-meta li svg { width: 16px; height: 16px; }
+  .footer-branch svg { margin-top: 0.15rem; }
+  .footer-branch-link { min-width: 0; overflow-wrap: anywhere; }
+  .footer-branch-link strong { font-size: 0.95rem; }
+  .footer-meta .footer-hours { justify-content: center; font-weight: 500; }
+}

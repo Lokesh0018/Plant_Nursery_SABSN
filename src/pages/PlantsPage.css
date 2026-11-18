@@ -386,7 +386,8 @@
   font: inherit; font-size: 0.84rem; font-weight: 500; cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
-.plants-page .plant-category-links button > svg { color: var(--pp-leaf); transition: color 0.2s ease; }
+.plants-page .plant-category-links button > svg { flex: none; color: var(--pp-leaf); transition: color 0.2s ease; }
+.plants-page .plant-category-links button em { font-style: normal; }
 .plants-page .plant-category-links button span {
   display: grid; place-items: center; min-width: 26px; height: 24px; padding: 0 0.45rem; border-radius: 999px;
   background: #eef3e4; color: var(--pp-leaf); font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums;
@@ -416,16 +417,52 @@
 .cc-reset:focus-visible { outline: 2px solid var(--pp-leaf); outline-offset: 2px; }
 
 @media (max-width: 640px) {
-  .plants-page .catalogue-controls { margin-bottom: 2rem; border-radius: 22px; }
-  .cc-head { gap: 0.75rem; }
-  .plants-page .catalogue-search { flex-basis: 100%; }
-  /* one swipeable row of chips instead of a tall stack */
-  .plants-page .plant-category-links {
-    flex-wrap: nowrap; overflow-x: auto; margin: 0 calc(-1 * clamp(1.1rem, 2.5vw, 1.6rem)); padding: 0.1rem clamp(1.1rem, 2.5vw, 1.6rem) 0.3rem;
-    scrollbar-width: none; scroll-snap-type: x proximity; scroll-padding-inline: clamp(1.1rem, 2.5vw, 1.6rem);
+  .plants-page .pp-main { padding-top: 1.75rem; }
+  /* a tighter panel: the panel padding is one variable so the chip row can bleed to its edges */
+  .plants-page .catalogue-controls {
+    --cc-pad: 1rem;
+    margin-bottom: 2rem; padding: var(--cc-pad); border-radius: 22px;
+    box-shadow: 0 12px 30px rgba(22, 54, 36, 0.08), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
   }
-  .plants-page .plant-category-links::-webkit-scrollbar { display: none; }
-  .plants-page .plant-category-links button { flex: none; scroll-snap-align: start; }
+  .cc-head { gap: 0.7rem; margin-bottom: 0.9rem; }
+  .cc-title { font-size: 1.12rem; }
+  .plants-page .catalogue-search { flex-basis: 100%; min-height: 50px; padding: 0 0.4rem 0 1rem; gap: 0.6rem; }
+  .plants-page .catalogue-search > svg { width: 18px; height: 18px; }
+  /* 16px stops iOS zooming into the field on focus */
+  .plants-page .catalogue-search input { font-size: 16px; }
+  .plants-page .catalogue-search input::placeholder { font-size: 0.92rem; }
+  .cc-clear { width: 40px; height: 40px; }
+
+  /* every filter visible at once: "All plants" across the top, then the categories two to a row.
+     Each tile is icon, label (wrapping onto a second line when long) and count, aligned in columns. */
+  .plants-page .plant-category-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+  .plants-page .plant-category-links .pcl-all { grid-column: 1 / -1; }
+  .plants-page .plant-category-links button {
+    min-width: 0; min-height: 52px; gap: 0.5rem; padding: 0.45rem 0.5rem 0.45rem 0.7rem;
+    border-radius: 14px; font-size: 0.8rem; line-height: 1.25; text-align: left;
+    background: #f6f4ec; border-color: rgba(22, 54, 36, 0.1);
+  }
+  .plants-page .plant-category-links button em { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .plants-page .plant-category-links button span { flex: none; min-width: 26px; height: 22px; padding: 0 0.4rem; font-size: 0.7rem; background: #fff; }
+  .plants-page .plant-category-links .pcl-all { min-height: 46px; }
+  .plants-page .plant-category-links button[aria-pressed="true"] { background: var(--pp-forest); border-color: var(--pp-forest); box-shadow: 0 6px 14px rgba(22, 54, 36, 0.22); }
+  .plants-page .plant-category-links button[aria-pressed="true"] span { background: var(--pp-lime); }
+  /* no hover tint on touch: it sticks after a tap */
+  .plants-page .plant-category-links button:not([aria-pressed="true"]):hover { background: #f6f4ec; border-color: rgba(22, 54, 36, 0.1); }
+
+  /* result line: count on the left, a compact reset on the right, never wrapping under each other */
+  .cc-status { flex-wrap: nowrap; gap: 0.75rem; margin-top: 0.75rem; padding-top: 0.8rem; }
+  .plants-page .catalogue-controls .cc-status p { min-width: 0; font-size: 0.85rem; line-height: 1.45; }
+  .cc-reset { flex: none; min-height: 44px; padding: 0 0.8rem; font-size: 0.8rem; background: #eef3e4; border-color: transparent; }
+}
+@media (max-width: 380px) {
+  .plants-page .catalogue-controls { --cc-pad: 0.85rem; border-radius: 20px; }
+  .cc-title { font-size: 1.05rem; }
+  .plants-page .plant-category-links { gap: 0.4rem; }
+  .plants-page .plant-category-links button { gap: 0.4rem; padding-left: 0.55rem; font-size: 0.76rem; }
+  /* on the narrowest phones the reset shows only its cross */
+  .cc-reset { width: 44px; padding: 0; justify-content: center; font-size: 0; gap: 0; }
+  .cc-reset svg { width: 16px; height: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .plants-page .catalogue-search, .plants-page .plant-category-links button, .cc-clear, .cc-reset { transition: none; }
@@ -634,6 +671,111 @@
 .plants-page .indoor-care > div { display: flex; align-items: center; gap: 0.65rem; padding: 0.6rem 0.8rem; border-radius: 14px; background: #eef3e4; font-size: 0.8rem; line-height: 1.35; color: var(--pp-ink); }
 .plants-page .indoor-care small { display: block; margin-bottom: 0.15rem; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pp-leaf); }
 .indoor-care-icon { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 9px; background: var(--pp-forest); color: var(--pp-lime); }
+
+/* ---------- phones: the plant dialog becomes a bottom sheet ----------
+   It rises from the bottom edge (in thumb reach) with a grab handle. The sheet's content scrolls inside
+   while the close button stays put, and the WhatsApp / Call actions stay pinned at the foot. The details
+   column is flattened (display: contents) so its parts and "Why grow it" share one scrolling column,
+   letting the actions come last and stick for the whole scroll, with nothing clamped any more. */
+@media (max-width: 760px) {
+  .plants-page .indoor-dialog {
+    inset: auto 0 0; margin: 0 auto; width: min(100%, 640px); max-width: 100%; height: auto; max-height: 92dvh;
+    border-radius: 26px 26px 0 0; overflow: hidden;
+    box-shadow: 0 -18px 60px rgba(8, 28, 16, 0.35);
+  }
+  .plants-page .indoor-dialog[open] { display: flex; flex-direction: column; animation: pp-sheet-in 0.42s cubic-bezier(0.22, 1, 0.36, 1); }
+  /* grab handle over the top of the photo */
+  .plants-page .indoor-dialog::before {
+    content: ''; position: absolute; z-index: 5; top: 9px; left: 50%; width: 42px; height: 4px; margin-left: -21px;
+    border-radius: 999px; background: rgba(255, 253, 248, 0.92); box-shadow: 0 1px 4px rgba(8, 28, 16, 0.3); pointer-events: none;
+  }
+  .plants-page .indoor-close { position: absolute; top: 1rem; right: 1rem; z-index: 6; width: 44px; height: 44px; }
+
+  .plants-page .indoor-dialog-layout {
+    display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; height: auto; max-height: none;
+    overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  }
+  .plants-page .indoor-dialog-layout > * { flex: none; }
+  /* no visible scrollbar: the sheet still scrolls by touch, and the sticky action bar's soft top edge
+     shows there is more beneath */
+  .plants-page .indoor-dialog-layout, .plants-page .indoor-dialog { scrollbar-width: none; -ms-overflow-style: none; }
+  .plants-page .indoor-dialog-layout::-webkit-scrollbar, .plants-page .indoor-dialog::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  .plants-page .indoor-details { display: contents; }
+  .plants-page .indoor-details > * { order: 1; margin-inline: 1.15rem; }
+
+  /* photo: a 4:3 window, inset with rounded corners */
+  /* stretch, not the desktop's align-self: start: the frame inside is absolutely positioned, so a
+     start-aligned box would shrink to zero width and the (lazy) image would never show or load */
+  .plants-page .indoor-dialog-photo { order: 0; align-self: stretch; width: auto; margin: 0.5rem 0.5rem 0; border-radius: 20px; }
+  /* a soft shade along the top of the photo so the handle and close button read on light images */
+  .plants-page .indoor-dialog-photo::after {
+    content: ''; position: absolute; z-index: 1; inset: 0 0 auto; height: 72px; pointer-events: none;
+    background: linear-gradient(180deg, rgba(8, 28, 16, 0.28), transparent);
+  }
+
+  /* title block: the category as a small pill, then name and botanical name */
+  .plants-page .indoor-details .indoor-kicker {
+    align-self: flex-start; width: fit-content; margin-top: 1.1rem; padding: 0.35rem 0.75rem 0.35rem 0.6rem;
+    border-radius: 999px; background: #eef3e4; font-size: 0.7rem;
+  }
+  .plants-page .indoor-details h2 { margin-top: 0.6rem; font-size: 1.85rem; line-height: 1.12; }
+  .plants-page .indoor-details .indoor-botanical { margin-top: 0.3rem; font-size: 0.92rem; }
+  /* there is room to scroll, so the full description shows */
+  .plants-page .indoor-detail-desc { display: block; margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.65; overflow: visible; -webkit-line-clamp: unset; }
+
+  /* facts and care, stacked */
+  .plants-page .indoor-facts { margin-top: 1rem; }
+  .plants-page .indoor-facts > div { padding: 0.7rem 0.85rem; }
+  /* care tips grouped into one card with hairline rows, instead of three separate boxes */
+  .plants-page .indoor-care { gap: 0; margin-top: 0.6rem; border-radius: 14px; background: #eef3e4; overflow: hidden; }
+  .plants-page .indoor-care > div { padding: 0.7rem 0.85rem; border-radius: 0; background: none; font-size: 0.86rem; }
+  .plants-page .indoor-care > div + div { border-top: 1px solid rgba(22, 54, 36, 0.08); }
+
+  /* "Why grow it" after the care tiles, inset like the photo */
+  .plants-page .indoor-benefits { order: 2; margin: 1rem 0.5rem 0; padding: 1rem 1.05rem 1.1rem; border-radius: 20px; }
+
+  /* the small print, unclamped */
+  .plants-page .indoor-details .indoor-note { order: 3; margin-top: 0.9rem; }
+  .plants-page .indoor-details .indoor-note span { display: block; overflow: visible; -webkit-line-clamp: unset; }
+
+  /* actions pinned to the foot of the sheet, clear of the home indicator */
+  .plants-page .indoor-actions {
+    order: 4; position: sticky; bottom: 0; z-index: 3; flex-wrap: nowrap; gap: 0.5rem;
+    margin: 0.9rem 0 0; padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(22, 54, 36, 0.08); background: rgba(255, 253, 248, 0.96);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 -10px 24px rgba(22, 54, 36, 0.06);
+  }
+  /* a short fade above the action bar: content slides under it rather than being cut by a hard line */
+  .plants-page .indoor-actions::before {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 22px; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 253, 248, 0), rgba(255, 253, 248, 0.95));
+  }
+  /* "Scroll for more": a small pill floating just above the action bar while there is more below */
+  .plants-page .indoor-scroll-hint {
+    position: absolute; z-index: 1; bottom: calc(100% + 10px); left: 50%; translate: -50% 0;
+    display: inline-flex; align-items: center; gap: 0.35rem; min-height: 36px; padding: 0 0.85rem 0 1rem;
+    border: 0; border-radius: 999px; background: var(--pp-forest); color: #f7f6f0;
+    font: inherit; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(8, 28, 16, 0.28);
+    animation: pp-hint-in 0.3s ease both;
+  }
+  .plants-page .indoor-scroll-hint svg { color: var(--pp-lime); animation: pp-hint-bob 1.6s ease-in-out infinite; }
+  .plants-page .indoor-scroll-hint:focus-visible { outline: 2px solid var(--pp-leaf); outline-offset: 3px; }
+  /* a bigger invisible tap area than the pill itself */
+  .plants-page .indoor-scroll-hint::after { content: ''; position: absolute; inset: -6px -4px; }
+  .plants-page .indoor-details .indoor-cta { flex: 1 1 0; min-height: 50px; padding: 0 0.9rem; font-size: 0.88rem; white-space: nowrap; }
+  .plants-page .indoor-details .indoor-cta--ghost { flex: 0 0 auto; }
+}
+@media (max-width: 360px) {
+  .plants-page .indoor-details .indoor-cta { gap: 0.4rem; padding: 0 0.7rem; font-size: 0.82rem; }
+}
+@keyframes pp-sheet-in { from { transform: translateY(100%); } }
+@keyframes pp-hint-in { from { opacity: 0; translate: -50% 6px; } }
+@keyframes pp-hint-bob { 0%, 100% { transform: translateY(-1px); } 50% { transform: translateY(2px); } }
+@media (prefers-reduced-motion: reduce) {
+  .plants-page .indoor-dialog[open], .plants-page .indoor-scroll-hint, .plants-page .indoor-scroll-hint svg { animation: none; }
+}
 
 /* ================= progressive "All plants": vine divider + loader before each next category ================= */
 /* dividers inside the catalogue run edge to edge across the page */

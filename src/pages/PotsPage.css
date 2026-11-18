@@ -328,15 +328,107 @@
 .pots-page .pots-detail-copy .pots-disclaimer { margin: 0.6rem 0 0; font-size: 0.7rem; line-height: 1.5; color: #677064; }
 .pots-dialog a:focus-visible, .pots-dialog button:focus-visible { outline: 2px solid #4f7f3a; outline-offset: 3px; }
 
+.pots-photo-nav, .pots-scroll-hint { display: none; }
+
+/* ---------- phones: the pot window becomes a bottom sheet, as on the Plants page ----------
+   It rises from the bottom edge with a grab handle. The content scrolls inside with no visible scrollbar,
+   while the close button stays put and WhatsApp / Call stay pinned at the foot. Previous / next move
+   onto the photo, which can also be swiped. */
 @media (max-width: 760px) {
-  /* phones: the same layout stacked, and the whole window scrolls */
-  .pots-page .pots-dialog { width: calc(100% - 24px); height: auto; max-height: 92dvh; overflow-y: auto; border-radius: 24px; }
-  .pots-page .pots-dialog-grid { grid-template-columns: 1fr; height: auto; }
-  .pots-dialog-photo { aspect-ratio: 1 / 0.85; margin: 0.5rem 0.5rem 0; }
-  .pots-page .pots-detail-copy { padding: 1.3rem 1.2rem 1.2rem; }
-  .pots-dialog-facts { grid-template-columns: 1fr; }
-  .pots-dialog-actions .pots-dialog-cta { flex: 1 1 100%; }
-  .pots-page .pots-close { position: fixed; top: calc(4dvh + 1.1rem); right: 1.6rem; box-shadow: 0 4px 14px rgba(22, 54, 36, 0.2); }
+  .pots-page .pots-dialog {
+    inset: auto 0 0; margin: 0 auto; width: min(100%, 640px); max-width: 100%; height: auto; max-height: 92dvh;
+    border-radius: 26px 26px 0 0; overflow: hidden; box-shadow: 0 -18px 60px rgba(8, 28, 16, 0.35);
+  }
+  .pots-page .pots-dialog[open] { display: flex; flex-direction: column; animation: pots-sheet-in 0.42s cubic-bezier(0.22, 1, 0.36, 1); }
+  .pots-page .pots-dialog::before {
+    content: ''; position: absolute; z-index: 5; top: 9px; left: 50%; width: 42px; height: 4px; margin-left: -21px;
+    border-radius: 999px; background: rgba(255, 253, 248, 0.92); box-shadow: 0 1px 4px rgba(8, 28, 16, 0.3); pointer-events: none;
+  }
+  .pots-page .pots-close { position: absolute; z-index: 6; top: 1rem; right: 1rem; box-shadow: 0 4px 14px rgba(22, 54, 36, 0.2); }
+
+  /* the scrolling column */
+  .pots-page .pots-dialog-grid {
+    display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; height: auto;
+    overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .pots-page .pots-dialog-grid::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  .pots-page .pots-dialog-grid > * { flex: none; }
+
+  /* photo: a 4:3 window (stretched: its frame is absolutely positioned, so it has no width of its own) */
+  .pots-dialog-photo { align-self: stretch; aspect-ratio: 4 / 3; margin: 0.5rem 0.5rem 0; border-radius: 20px; touch-action: pan-y; }
+  .pots-dialog-photo::after {
+    content: ''; position: absolute; z-index: 1; inset: 0 0 auto; height: 72px; pointer-events: none;
+    background: linear-gradient(180deg, rgba(8, 28, 16, 0.28), transparent);
+  }
+  .pots-dialog-num { top: auto; bottom: 14px; left: auto; right: 14px; z-index: 2; }
+  .pots-dialog-material { z-index: 2; }
+  /* previous / next as frosted buttons on the photo's sides */
+  .pots-photo-nav { position: absolute; z-index: 2; inset: 50% 10px auto; display: flex; justify-content: space-between; translate: 0 -50%; pointer-events: none; }
+  .pots-photo-nav button {
+    display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; pointer-events: auto;
+    background: rgba(255, 253, 248, 0.88); color: #163624; cursor: pointer;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 6px 16px rgba(8, 28, 16, 0.22);
+  }
+  .pots-photo-nav button:active { background: #163624; color: #c9d98a; }
+  .pots-dialog-actions .pots-dialog-nav { display: none; }
+
+  /* details */
+  .pots-page .pots-detail-copy { padding: 1.1rem 1.15rem 0; }
+  .pots-page .pots-detail-copy > .pots-dialog-kicker {
+    align-self: flex-start; width: fit-content; padding: 0.25rem 0.75rem 0.25rem 0.25rem; border-radius: 999px; background: #fbf1e7; font-size: 0.68rem;
+  }
+  .pots-dialog-kicker span { width: 28px; height: 28px; }
+  .pots-page .pots-detail-copy h2 { margin-top: 0.6rem; padding-right: 0; font-size: 1.85rem; }
+  .pots-page .pots-detail-copy .pots-dialog-text { font-size: 0.95rem; }
+  .pots-page .pots-detail-copy h3 { margin-top: 1.2rem; }
+  /* the two "before you order" notes as one card with a hairline between */
+  .pots-dialog-facts { grid-template-columns: 1fr; gap: 0; border: 1px solid rgba(22, 54, 36, 0.08); border-radius: 14px; background: #f6f8ef; overflow: hidden; }
+  .pots-dialog-facts li { border: 0; border-radius: 0; background: none; padding: 0.75rem 0.85rem; }
+  .pots-dialog-facts li + li { border-top: 1px solid rgba(22, 54, 36, 0.08); }
+  .pots-page .pots-dialog-facts p { font-size: 0.82rem; }
+  /* thumbnails: one swipeable row of comfortable taps */
+  .pots-dialog-thumbs {
+    display: flex; gap: 0.5rem; max-width: none; margin: 0 -1.15rem; padding: 0.1rem 1.15rem 0.2rem;
+    overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; scroll-padding-inline: 1.15rem;
+  }
+  .pots-dialog-thumbs::-webkit-scrollbar { display: none; }
+  .pots-dialog-thumbs li { flex: none; width: 60px; scroll-snap-align: start; }
+  .pots-dialog-thumbs button { opacity: 0.8; }
+  .pots-page .pots-detail-copy .pots-disclaimer { order: 1; margin: 0.9rem 0 0; }
+
+  /* WhatsApp / Call pinned to the foot of the sheet, clear of the home indicator */
+  .pots-dialog-actions {
+    order: 2; position: sticky; bottom: 0; z-index: 3; flex-wrap: nowrap; gap: 0.5rem;
+    margin: 0.9rem -1.15rem 0; padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(22, 54, 36, 0.08); background: rgba(255, 253, 248, 0.96);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 -10px 24px rgba(22, 54, 36, 0.06);
+  }
+  .pots-dialog-actions::before {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 22px; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 253, 248, 0), rgba(255, 253, 248, 0.95));
+  }
+  .pots-dialog-actions .pots-dialog-cta { flex: 1 1 0; min-height: 50px; padding: 0 0.9rem; white-space: nowrap; }
+  .pots-dialog-actions .pots-dialog-call { flex: 0 0 auto; min-height: 50px; padding: 0 1rem; white-space: nowrap; }
+
+  /* "Scroll for more" just above the action bar */
+  .pots-scroll-hint {
+    position: absolute; z-index: 1; bottom: calc(100% + 10px); left: 50%; translate: -50% 0;
+    display: inline-flex; align-items: center; gap: 0.35rem; min-height: 36px; padding: 0 0.85rem 0 1rem;
+    border: 0; border-radius: 999px; background: #163624; color: #f7f6f0;
+    font-size: 0.76rem; font-weight: 600; white-space: nowrap; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(8, 28, 16, 0.28); animation: pots-hint-in 0.3s ease both;
+  }
+  .pots-scroll-hint svg { color: #c9d98a; animation: pots-hint-bob 1.6s ease-in-out infinite; }
+  .pots-scroll-hint::after { content: ''; position: absolute; inset: -6px -4px; }
+}
+@media (max-width: 360px) {
+  .pots-dialog-actions .pots-dialog-cta, .pots-dialog-actions .pots-dialog-call { gap: 0.4rem; padding: 0 0.7rem; font-size: 0.8rem; }
+}
+@keyframes pots-sheet-in { from { transform: translateY(100%); } }
+@keyframes pots-hint-in { from { opacity: 0; translate: -50% 6px; } }
+@keyframes pots-hint-bob { 0%, 100% { transform: translateY(-1px); } 50% { transform: translateY(2px); } }
+@media (prefers-reduced-motion: reduce) {
+  .pots-page .pots-dialog[open], .pots-scroll-hint, .pots-scroll-hint svg { animation: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pots-page .pots-dialog[open], .pots-page .pots-dialog-grid { animation: none; }

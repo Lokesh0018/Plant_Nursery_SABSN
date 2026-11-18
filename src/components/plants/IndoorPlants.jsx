@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Leaf, X, MessageCircle, Phone, LayoutGrid, Info, Check, Sprout, Sun, Droplets, TreeDeciduous } from 'lucide-react';
+import { ArrowUpRight, Leaf, X, MessageCircle, Phone, LayoutGrid, Info, Check, Sprout, Sun, Droplets, TreeDeciduous, ChevronDown } from 'lucide-react';
 import { plantBenefits, plantCare } from '../../data/plantBenefits';
 import './IndoorPlants.css';
 import PlantFrame from '../shared/PlantFrame';
@@ -15,6 +15,26 @@ export default function IndoorPlants({ query = '', items = [], category = 'Indoo
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = previousOverflow; opener.current?.focus(); };
   }, [selected]);
+  // on phones the dialog is a bottom sheet that scrolls without a visible scrollbar: a "Scroll for more" cue
+  // shows while there is content below, and goes once the visitor reaches the end
+  const layout = useRef(null);
+  const [more, setMore] = useState(false);
+  useEffect(() => {
+    const el = layout.current;
+    if (!selected || !el) return undefined;
+    const update = () => setMore(el.scrollHeight - el.clientHeight - el.scrollTop > 24);
+    update();
+    el.addEventListener('scroll', update, { passive: true });
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(update) : null;
+    ro?.observe(el);
+    return () => { el.removeEventListener('scroll', update); ro?.disconnect(); };
+  }, [selected]);
+  const scrollMore = () => {
+    const el = layout.current;
+    if (!el) return;
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollBy({ top: el.clientHeight * 0.6, behavior: smooth ? 'smooth' : 'auto' });
+  };
   const close = () => { dialog.current?.close(); setSelected(null); };
   if (!shown.length) return null;
   return <section className="indoor-category" id={slug} aria-labelledby={`${slug}-heading`}>
@@ -26,7 +46,7 @@ export default function IndoorPlants({ query = '', items = [], category = 'Indoo
     {!shown.length && <p>No plants in this category match your search.</p>}
     {selected && <dialog ref={dialog} className="indoor-dialog" onCancel={close} onClick={e => { if (e.target === e.currentTarget) close(); }} aria-labelledby={`${slug}-detail-name`}>
       <button className="indoor-close" onClick={close} aria-label="Close plant details"><X /></button>
-      <div className="indoor-dialog-layout">
+      <div ref={layout} className="indoor-dialog-layout">
         <div className="indoor-dialog-photo">
           <PlantFrame plant={selected} />
           {selected.imagePresentation?.label && <span className="plant-presentation">{selected.imagePresentation.label}</span>}
@@ -50,6 +70,9 @@ export default function IndoorPlants({ query = '', items = [], category = 'Indoo
             </div>;
           })()}
           <div className="indoor-actions">
+            {more && <button type="button" className="indoor-scroll-hint" onClick={scrollMore} aria-label="Scroll down for more details">
+              Scroll for more <ChevronDown size={15} strokeWidth={2.4} aria-hidden="true" />
+            </button>}
             <a className="indoor-cta" href={`https://wa.me/919849936169?text=${encodeURIComponent(`Hello SABSN, please share availability, size, price and care guidance for ${selected.name}.`)}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} aria-hidden="true" /> Enquire on WhatsApp</a>
             <a className="indoor-cta indoor-cta--ghost" href="tel:+919849936169"><Phone size={17} aria-hidden="true" /> Call us</a>
           </div>

@@ -338,6 +338,47 @@
 }
 @media (max-width: 900px) { .gp-hero > .gp-watermark { display: none; } }
 
+/* ---------- phones: a tighter, centred header ----------
+   The content runs taller than one screen anyway, so the header no longer stretches to 100svh (which left
+   uneven gaps). The collections become a small glass menu with comfortable rows,
+   and the pinned prints are centred, with their figures card hanging just below them instead of over a print. */
+@media (max-width: 640px) {
+  .gp-hero { min-height: 0; gap: 2.25rem; padding: 96px 20px 3.25rem; }
+  .gp-hero .gp-eyebrow { font-size: 0.7rem; }
+  .gp-title { margin-top: 0.85rem; font-size: clamp(2.7rem, 13vw, 3.4rem); }
+  .gp-lede { font-size: 1rem; line-height: 1.7; }
+
+  /* the two buttons stacked full width (side by side, "Browse the photos" would not fit a 375px phone) */
+  .gp-actions { gap: 0.55rem; margin-top: 1.5rem; }
+
+  /* collections: a frosted card with one tappable row per collection */
+  .gp-collections {
+    display: block; margin-top: 1.5rem; padding: 0.35rem 0.4rem 0.4rem; border: 1px solid rgba(201, 217, 138, 0.22); border-radius: 18px;
+    background: linear-gradient(180deg, rgba(36, 74, 48, 0.55), rgba(14, 40, 24, 0.6));
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .gp-collections > span { display: block; padding: 0.55rem 0.65rem 0.35rem; font-size: 0.66rem; }
+  .gp-collections ul { display: block; }
+  .gp-collections li + li { border-top: 1px solid rgba(201, 217, 138, 0.12); }
+  .gp-collections button {
+    display: flex; width: 100%; min-height: 48px; gap: 0.6rem; padding: 0 0.65rem; border: 0; border-radius: 12px;
+    background: none; font-size: 0.92rem; font-weight: 500; text-align: left;
+  }
+  .gp-collections button span { margin-left: auto; min-width: 26px; height: 24px; font-size: 0.72rem; }
+  /* a small chevron after the count */
+  .gp-collections button::after {
+    content: ''; flex: none; width: 7px; height: 7px; margin: 0 0.15rem 0 0.1rem;
+    border-top: 2px solid var(--gp-lime); border-right: 2px solid var(--gp-lime); rotate: 45deg; opacity: 0.85;
+  }
+  .gp-collections button:active { background: rgba(201, 217, 138, 0.12); }
+
+  /* the prints: centred, a little shorter, with room below for the figures card */
+  .gp-collage { justify-self: center; width: min(100%, 400px); aspect-ratio: 1 / 0.92; margin-bottom: 3.6rem; }
+  .gp-print::before { width: 64px; height: 20px; margin-left: -32px; top: -10px; }
+  .gp-collage-stats { top: auto; bottom: -3.6rem; left: 50%; translate: -50% 0; }
+  .gp-collage-stats li { align-items: center; padding: 0.5rem 1.15rem; }
+  .gp-hero .gp-collage-stats strong { font-size: 1.5rem; }
+}
 /* the "Full photo" hint on tiles that crop a portrait: always shown (touch screens have no hover), quieter at rest */
 .gp-tile-zoom.gp-tile-zoom--label {
   display: flex; align-items: center; width: auto; gap: 0.35rem; padding: 0 0.7rem 0 0.55rem; border-radius: 999px;

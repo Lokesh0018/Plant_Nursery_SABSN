@@ -195,13 +195,13 @@ export default function PlantsPage() {
           </label>
         </div>
         <nav className="plant-category-links" aria-label="Plant categories">
-          <button type="button" aria-pressed={category === 'all'} onClick={() => setCategory('all')}>
-            <LayoutGrid size={15} strokeWidth={2} aria-hidden="true" />All plants <span>{total}</span>
+          <button type="button" className="pcl-all" aria-pressed={category === 'all'} onClick={() => setCategory('all')}>
+            <LayoutGrid size={15} strokeWidth={2} aria-hidden="true" /><em>All plants</em> <span>{total}</span>
           </button>
           {CATALOGUE_INDEX.map(g => {
             const Icon = CATEGORY_ICONS[g.slug] || Leaf;
             return <button type="button" key={g.slug} aria-pressed={category === g.slug} onClick={() => setCategory(g.slug)}>
-              <Icon size={15} strokeWidth={2} aria-hidden="true" />{g.title} <span>{g.count}</span>
+              <Icon size={15} strokeWidth={2} aria-hidden="true" /><em>{g.title}</em> <span>{g.count}</span>
             </button>;
           })}
         </nav>
