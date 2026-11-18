@@ -17,11 +17,13 @@ gsap.registerPlugin(ScrollTrigger);
  * `depth` drives scroll parallax, mouse parallax and the idle sway.
  */
 const LAYERS = [
-  { id: 'bg',      src: '/images/home/hero/background.webp', depth: 0,    cls: 'tl-bg', priority: true },
+  // `critical`: the hero's backdrop (forest, ground, banyan). The loading screen stays up until these exact
+  // images have loaded and decoded (LoadingScreen.jsx); the rest are foreground cut-outs that may follow.
+  { id: 'bg',      src: '/images/home/hero/background.webp', depth: 0,    cls: 'tl-bg', priority: true, critical: true },
   { id: 'rays',    src: null,                         depth: 0.12, cls: 'tl-rays' },
-  { id: 'ground',  src: '/images/home/hero/ground.webp',     depth: 0.3,  cls: 'tl-ground' },
+  { id: 'ground',  src: '/images/home/hero/ground.webp',     depth: 0.3,  cls: 'tl-ground', critical: true },
   // the banyan is the LCP element: three widths, highest fetch priority, and a preload in index.html
-  { id: 'banyan',  src: '/images/home/hero/banyan.webp',     depth: 0.42, cls: 'tl-banyan', priority: true,
+  { id: 'banyan',  src: '/images/home/hero/banyan.webp',     depth: 0.42, cls: 'tl-banyan', priority: true, critical: true,
     srcSet: '/images/home/hero/banyan-600.webp 600w, /images/home/hero/banyan-800.webp 800w, /images/home/hero/banyan-1200.webp 1200w, /images/home/hero/banyan.webp 1534w',
     sizes: '(max-width: 900px) 130vw, min(78vw, 1150px)' },
   { id: 'fol-tr',  src: '/images/home/hero/foliage-tr.webp', depth: 0.7,  cls: 'tl-fol-tr' },
@@ -181,6 +183,7 @@ export default function Hero() {
                 alt=""
                 draggable="false"
                 loading={i < 4 ? 'eager' : 'lazy'}
+                data-hero-critical={l.critical ? '' : undefined}
                 decoding="async"
                 fetchPriority={l.priority ? 'high' : undefined}
               />

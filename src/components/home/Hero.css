@@ -354,3 +354,14 @@
   .tree-hero-pollen i,
   .tree-hero-pollen i { opacity: 0.5; }
 }
+
+/* a backdrop image that failed to load (LoadingScreen.jsx marks it): hide the broken image and paint the forest
+   in its place, so the hero still reads as the hero and the page opens normally */
+.tree-hero[data-hero-fallback] {
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 40%, rgba(201, 217, 138, 0.18), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 15% 85%, rgba(127, 168, 74, 0.16), transparent 70%),
+    linear-gradient(180deg, #0f2d1b 0%, #163624 60%, #0d2a18 100%);
+}
+.tree-layer img[data-hero-failed] { visibility: hidden; }
+

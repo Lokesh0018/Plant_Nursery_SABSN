@@ -5,14 +5,17 @@ import './LoadingScreen.css';
 /**
  * Botanical loading screen.
  *
- * Progress is real: it counts the things the first screen genuinely needs before it can be shown
- * cleanly (web fonts, the hero's eagerly loaded images, and the document's own load event). There
- * is no artificial delay. The only wait that is not "loading" is the intro's own choreography: the
- * exit will not start before the logo has finished appearing, so a fast connection still gets a
- * calm, complete introduction instead of a flash.
+ * Event-driven, never timed. The screen shows at once while the hero's backdrop images (forest, ground,
+ * banyan: the <img> elements marked `data-hero-critical` in Hero.jsx, preloaded from index.html) download
+ * underneath it. It leaves only when those exact images have loaded AND decoded, and once the logo's
+ * intro animation has played through, whichever happens last. There is no timer anywhere in the decision.
  *
- * On exit it dispatches `sabsn:loaded` on `window` so the hero can run its entrance behind the
- * dissolve, then unmounts.
+ *   loading ──(all decoded)──▶ hero-ready ──┐
+ *      └────(an image failed)──▶ error-fallback ─┴─(intro done)─▶ exiting ──(fade finished)─▶ complete
+ *
+ * A failed image is logged, hidden, and replaced by a painted forest background on the hero, so the
+ * visitor is never trapped behind the overlay. The current state is mirrored on <html data-hero-load>.
+ * On exit it dispatches `sabsn:loaded` on `window` so the hero runs its entrance behind the dissolve.
  */
 
 // small leaves that drift around the logo, (x %, y %, size px, rotation deg)
@@ -33,45 +36,51 @@ function Leaf({ size, rotate, className }) {
   );
 }
 
-/** Wait for the assets the first screen needs; report progress as a 0–1 fraction. */
-function useRealProgress() {
+/** One hero image: resolves when it has loaded and decoded (ok) or failed (not ok). Waits on the <img>
+ *  itself, so the variant its srcset chose is the one checked, and nothing is downloaded a second time. */
+function heroImageReady(img) {
+  return new Promise((resolve) => {
+    const settle = () => {
+      if (!img.naturalWidth) { resolve(false); return; }
+      if (!img.decode) { resolve(true); return; }
+      // decode() can reject for reasons other than a broken image (e.g. a src swap); a loaded bitmap still counts
+      img.decode().then(() => resolve(true), () => resolve(img.naturalWidth > 0));
+    };
+    if (img.complete) settle();
+    else {
+      img.addEventListener('load', settle, { once: true });
+      img.addEventListener('error', settle, { once: true });
+    }
+  });
+}
+
+/** The hero backdrop's state: 'loading' → 'hero-ready' | 'error-fallback', with real 0–1 progress */
+function useHeroReady() {
+  const [state, setState] = useState('loading');
   const [progress, setProgress] = useState(0);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    const tasks = [];
-
-    // 1. web fonts, so the hero headline does not swap mid-dissolve
-    if (document.fonts && document.fonts.ready) tasks.push(document.fonts.ready);
-
-    // 2. the hero's eager images (the parts of the first screen that must be decoded)
-    const heroImgs = Array.from(document.querySelectorAll('.tree-hero img[loading="eager"]'));
-    heroImgs.forEach((img) => {
-      tasks.push(
-        img.complete && img.naturalWidth > 0
-          ? Promise.resolve()
-          : (img.decode ? img.decode().catch(() => undefined) : new Promise((res) => { img.onload = img.onerror = res; }))
-      );
-    });
-
-    // 3. the document itself
-    tasks.push(document.readyState === 'complete' ? Promise.resolve() : new Promise((res) => window.addEventListener('load', res, { once: true })));
-
-    const total = Math.max(1, tasks.length);
+    const hero = document.querySelector('.tree-hero');
+    const imgs = Array.from(document.querySelectorAll('.tree-hero img[data-hero-critical]'));
     let done = 0;
-    tasks.forEach((t) => {
-      Promise.resolve(t).finally(() => {
-        if (cancelled) return;
-        done += 1;
-        setProgress(done / total);
-        if (done === total) setReady(true);
-      });
+    Promise.all(imgs.map((img) => heroImageReady(img).then((ok) => {
+      if (cancelled) return ok;
+      if (!ok) {
+        console.error('[SABSN] Hero image failed to load:', img.currentSrc || img.src);
+        img.setAttribute('data-hero-failed', '');
+        hero?.setAttribute('data-hero-fallback', '');
+      }
+      done += 1;
+      setProgress(done / imgs.length);
+      return ok;
+    }))).then((oks) => {
+      if (!cancelled) setState(oks.every(Boolean) ? 'hero-ready' : 'error-fallback');
     });
     return () => { cancelled = true; };
   }, []);
 
-  return { progress, ready };
+  return { state, progress };
 }
 
 export default function LoadingScreen({ onDone }) {
@@ -79,7 +88,14 @@ export default function LoadingScreen({ onDone }) {
   const introDone = useRef(false);
   const readyRef = useRef(false);
   const exited = useRef(false);
-  const { progress, ready } = useRealProgress();
+  const { state: heroState, progress } = useHeroReady();
+  const ready = heroState !== 'loading';
+  // loading | hero-ready | error-fallback | exiting (then 'complete' on <html> once the overlay has gone)
+  const [exiting, setExiting] = useState(false);
+  const phase = exiting ? 'exiting' : heroState;
+  useEffect(() => {
+    document.documentElement.dataset.heroLoad = phase;
+  }, [phase]);
   const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Exit runs when BOTH the app is ready and the intro has shown the logo. It is called from
@@ -87,11 +103,13 @@ export default function LoadingScreen({ onDone }) {
   const exit = useCallback(() => {
     if (exited.current) return;
     exited.current = true;
+    setExiting(true);
     const el = root.current;
     window.__sabsnLoaded = true;
     window.dispatchEvent(new Event('sabsn:loaded'));
-    if (reduce || !el) { onDone?.(); return; }
-    gsap.timeline({ onComplete: () => onDone?.() })
+    const finish = () => { document.documentElement.dataset.heroLoad = 'complete'; onDone?.(); };
+    if (reduce || !el) { finish(); return; }
+    gsap.timeline({ onComplete: finish })
       .to('.ls-floater', { opacity: 0, y: -10, duration: 0.5, stagger: 0.04, ease: 'power2.in' }, 0)
       .to('.ls-caption, .ls-rail', { opacity: 0, y: -6, duration: 0.45, ease: 'power2.in' }, 0)
       .to('.ls-stage', { scale: 1.06, duration: 0.9, ease: 'power2.inOut' }, 0.1)
@@ -137,31 +155,18 @@ export default function LoadingScreen({ onDone }) {
     return () => ctx.revert();
   }, [reduce, maybeExit]);
 
-  // ready: try to exit now (the intro's onComplete tries too, whichever comes last wins)
+  // the hero is ready (or has fallen back): exit now if the intro has played, otherwise the intro's own
+  // onComplete calls maybeExit, whichever comes last wins. No timer: a background tab simply resumes here.
   useEffect(() => {
-    if (!ready) return undefined;
+    if (!ready) return;
     readyRef.current = true;
     maybeExit();
-    // Watchdog, not a delay: if the animation engine is starved (background tab, throttled frames),
-    // never trap the visitor behind the overlay. A plain CSS fade hands over instead.
-    const guard = setTimeout(() => {
-      if (exited.current) return;
-      exited.current = true;
-      window.__sabsnLoaded = true;
-      window.dispatchEvent(new Event('sabsn:loaded'));
-      const el = root.current;
-      if (!el) { onDone?.(); return; }
-      el.style.transition = 'opacity 0.5s ease';
-      el.style.opacity = '0';
-      setTimeout(() => onDone?.(), 520);
-    }, 4000);
-    return () => clearTimeout(guard);
-  }, [ready, maybeExit, onDone]);
+  }, [ready, maybeExit]);
 
   const pct = Math.round(progress * 100);
 
   return (
-    <div ref={root} className="ls-root" role="status" aria-live="polite" aria-label={`Loading, ${pct}%`} style={{ opacity: reduce ? 1 : 0 }}>
+    <div ref={root} className="ls-root" role="status" aria-live="polite" aria-label={`Loading, ${pct}%`} data-state={phase} style={{ opacity: reduce ? 1 : 0 }}>
       <div className="ls-stage">
         {FLOATERS.map(([x, y, s, r], i) => (
           <span key={i} className="ls-floater" style={{ left: `${x}%`, top: `${y}%` }}>

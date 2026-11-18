@@ -7,16 +7,25 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- LCP image: start fetching the home hero banyan before the JS bundle has parsed. Added only on the
-         home page: every route shares this file, and the other pages never show the banyan. -->
+    <!-- The home hero's backdrop (forest, ground, banyan): fetched while the loading screen is still starting,
+         before the JS has parsed. The loading screen waits for exactly these images (LoadingScreen.jsx). The
+         banyan's srcset/sizes match its <img>, so the browser picks the same width once and reuses it.
+         Home page only: every route shares this file, and the other pages never show the hero. -->
     <script>
       if (/^\/(index\.html)?$/.test(location.pathname)) {
-        var l = document.createElement('link');
-        l.rel = 'preload'; l.as = 'image'; l.href = '/images/home/hero/banyan.webp';
-        l.setAttribute('imagesrcset', '/images/home/hero/banyan-600.webp 600w, /images/home/hero/banyan-800.webp 800w, /images/home/hero/banyan-1200.webp 1200w, /images/home/hero/banyan.webp 1534w');
-        l.setAttribute('imagesizes', '(max-width: 900px) 130vw, min(78vw, 1150px)');
-        l.setAttribute('fetchpriority', 'high');
-        document.head.appendChild(l);
+        [
+          { href: '/images/home/hero/background.webp', priority: 'high' },
+          { href: '/images/home/hero/banyan.webp', priority: 'high',
+            srcset: '/images/home/hero/banyan-600.webp 600w, /images/home/hero/banyan-800.webp 800w, /images/home/hero/banyan-1200.webp 1200w, /images/home/hero/banyan.webp 1534w',
+            sizes: '(max-width: 900px) 130vw, min(78vw, 1150px)' },
+          { href: '/images/home/hero/ground.webp' },
+        ].forEach(function (img) {
+          var l = document.createElement('link');
+          l.rel = 'preload'; l.as = 'image'; l.href = img.href;
+          if (img.srcset) { l.setAttribute('imagesrcset', img.srcset); l.setAttribute('imagesizes', img.sizes); }
+          if (img.priority) l.setAttribute('fetchpriority', img.priority);
+          document.head.appendChild(l);
+        });
       }
     </script>
     <meta name="theme-color" content="#0d2a18" />
