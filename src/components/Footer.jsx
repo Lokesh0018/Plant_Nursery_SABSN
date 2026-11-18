@@ -142,7 +142,7 @@ export default function Footer() {
             <h4 className="footer-col-header">Support</h4>
             <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('care'); }}>Plant Care</a>
             <a href="#faq" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('faq'); }}>FAQ</a>
-            <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('contact'); }}>Contact Us</a>
+            <a href="/contact" className="footer-link">Contact Us</a>
           </div>
 
           {/* finale: the seed rolls in from the page edge and becomes the nursery stamp */}

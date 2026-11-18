@@ -233,7 +233,7 @@ export default function GalleryPage() {
           </div>
           <div className="gp-cta-actions">
             <a className="gp-hero-btn" href={WA_LINK} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} strokeWidth={2.2} aria-hidden="true" /> Chat on WhatsApp</a>
-            <a className="gp-hero-btn gp-hero-btn--ghost" href="/?section=contact">Contact details <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" /></a>
+            <a className="gp-hero-btn gp-hero-btn--ghost" href="/contact">Contact details <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" /></a>
           </div>
         </section>
       </main>

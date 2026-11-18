@@ -1,0 +1,295 @@
+import { useEffect, useState, lazy, Suspense } from 'react';
+import { Leaf, Clock, MapPin, Phone, Mail, MessageCircle, ArrowRight, ArrowUpRight, Navigation, Send, CircleHelp, Package } from 'lucide-react';
+import Navbar from '../components/Navbar';
+import WhatsAppButton from '../components/WhatsAppButton';
+import VineOrnament from '../components/VineOrnament';
+import VineDivider from '../components/VineDivider';
+import './ContactPage.css';
+
+const Footer = lazy(() => import('../components/Footer'));
+
+// the nursery's details, as given on the About page and in the footer
+const PHONE_1 = { label: '+91 98499 36169', tel: '+919849936169' };
+const PHONE_2 = { label: '+91 94903 78689', tel: '+919490378689' };
+const EMAIL = 'uppadakumaraswamy@gmail.com';
+const WA_NUMBER = '919849936169';
+const ADDRESS = 'Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh';
+const MAP_QUERY = encodeURIComponent('Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh');
+const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hello SABSN, I would like to know more about your plants and services.')}`;
+
+const TOPICS = ['Plants for my home or garden', 'Landscaping project', 'Bulk or plantation order', 'Plant delivery', 'Pots & planters', 'Something else'];
+
+// open or closed right now, from the posted hours (daily, 7 am to 6 pm) in India Standard Time, and
+// where "now" falls on the header's 6 am to 8 pm hours line (null outside it); re-checked every minute
+function useOpenStatus() {
+  const read = () => {
+    const [h, m] = new Intl.DateTimeFormat('en-GB', { hour: 'numeric', minute: 'numeric', hourCycle: 'h23', timeZone: 'Asia/Kolkata' })
+      .format(new Date()).split(':').map(Number);
+    const mins = h * 60 + m;
+    const now = mins >= 7 * 60 && mins < 18 * 60;
+    const mark = mins >= 6 * 60 && mins <= 20 * 60 ? ((mins - 6 * 60) / (14 * 60)) * 100 : null;
+    return { now, mark, label: now ? 'until 6 pm' : 'opens 7 am' };
+  };
+  const [status, setStatus] = useState(read);
+  useEffect(() => {
+    const id = setInterval(() => setStatus(read()), 60000);
+    return () => clearInterval(id);
+  }, []);
+  return status;
+}
+
+/*
+ * /contact: the ways to reach the nursery in one place. A forest header (the same family as the Plants,
+ * Services, Pots and Gallery headers) with a contact panel (live status, a row per channel, today's hours), a
+ * vine divider into the ivory body, four contact cards, an enquiry form and the visiting details with
+ * a map. The site has no form backend, so the form composes the enquiry and opens it in WhatsApp
+ * (or the visitor's email app); nothing is stored or sent anywhere else.
+ */
+export default function ContactPage() {
+  const [form, setForm] = useState({ name: '', phone: '', topic: TOPICS[0], place: '', message: '' });
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  useEffect(() => { document.title = 'Contact | SABSN Nursery'; }, []);
+  const open = useOpenStatus();
+
+  const enquiry = [
+    `Hello SABSN, my name is ${form.name.trim()}.`,
+    `Enquiry: ${form.topic}`,
+    form.place.trim() && `Location: ${form.place.trim()}`,
+    form.phone.trim() && `Phone: ${form.phone.trim()}`,
+    '',
+    form.message.trim(),
+  ].filter((l) => l !== false && l !== '').join('\n');
+
+  const sendWhatsApp = (e) => {
+    e.preventDefault();
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(enquiry)}`, '_blank', 'noopener,noreferrer');
+  };
+  const mailHref = `mailto:${EMAIL}?subject=${encodeURIComponent(`Enquiry: ${form.topic}`)}&body=${encodeURIComponent(enquiry)}`;
+  const ready = form.name.trim() && form.message.trim();
+
+  return (
+    <div className="contact-page">
+      <Navbar page="contact" />
+
+      <header className="cp-hero">
+        <img className="cp-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+        {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
+        <Leaf className="cp-watermark" strokeWidth={0.6} aria-hidden="true" />
+        <div className="cp-hero-copy">
+          <p className="cp-visit">
+            <span className="cp-visit-open"><span className="cp-visit-dot" aria-hidden="true" />Open daily</span>
+            <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
+            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+          </p>
+          <p className="cp-eyebrow">Get in touch</p>
+          <h1 className="cp-title">Let’s talk <em>plants.</em></h1>
+          <VineOrnament />
+          <p className="cp-lede">
+            Choosing plants for a home, planning a landscape or ordering in bulk, call, message or visit the
+            nursery and we will help you find the right green.
+          </p>
+          <div className="cp-actions">
+            <a className="cp-btn" href={WA_LINK} target="_blank" rel="noopener noreferrer">
+              <MessageCircle size={17} strokeWidth={2.2} aria-hidden="true" /> Chat on WhatsApp
+            </a>
+            <a className="cp-btn cp-btn--ghost" href={`tel:${PHONE_1.tel}`}>
+              <Phone size={16} strokeWidth={2.2} aria-hidden="true" /> Call {PHONE_1.label}
+            </a>
+          </div>
+          {/* the nursery's hours and lines in figures, as in the Plants header */}
+          <ul className="cp-stats" aria-label="When and how to reach us">
+            <li><strong>7</strong><span>Days a week</span></li>
+            <li><strong>7–6</strong><span>Opening hours</span></li>
+            <li><strong>2</strong><span>Phone lines</span></li>
+          </ul>
+        </div>
+
+        {/* one contact panel: the nursery and whether it is open now, a row for each way to reach us (each row
+            is the link), and today's hours on a line with a marker at the time now */}
+        <div className="cp-board">
+          <span className="cp-board-glow" aria-hidden="true" />
+          <span className="cp-card-back" aria-hidden="true" />
+          {/* two tags pinned to the panel's left edge: where we deliver, and that we take large orders (both from the FAQ) */}
+          <p className="cp-float cp-float--areas">
+            <span className="cp-float-icon" aria-hidden="true"><Navigation size={15} strokeWidth={2.2} /></span>
+            <span><small>We serve</small>Rajahmundry &amp; Visakhapatnam</span>
+          </p>
+          <p className="cp-float cp-float--bulk">
+            <span className="cp-float-icon" aria-hidden="true"><Package size={15} strokeWidth={2.2} /></span>
+            <span><small>Landscaping &amp; plantation</small>Bulk orders welcome</span>
+          </p>
+          <section className="cp-panel" aria-label="Contact the nursery">
+            <header className="cp-panel-head">
+              <img src="/logo/logo-256.webp" alt="" width="52" height="52" decoding="async" />
+              <div className="cp-panel-name">
+                <strong>Sri Ayyappa Bala Sai Nursery</strong>
+                <span>Kadiyam, East Godavari</span>
+              </div>
+              <p className={`cp-panel-status${open.now ? ' is-open' : ''}`}>
+                <span className="cp-panel-dot" aria-hidden="true" />{open.now ? 'Open now' : 'Closed now'}
+              </p>
+            </header>
+
+            <ul className="cp-actions-list">
+              <li>
+                <a className="cp-action" href={`tel:${PHONE_1.tel}`}>
+                  <span className="cp-action-icon" aria-hidden="true"><Phone size={18} strokeWidth={2} /></span>
+                  <span className="cp-action-text"><small>Call</small>{PHONE_1.label}</span>
+                  <span className="cp-action-go" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
+                </a>
+              </li>
+              <li>
+                <a className="cp-action cp-action--wa" href={WA_LINK} target="_blank" rel="noopener noreferrer">
+                  <span className="cp-action-icon" aria-hidden="true"><MessageCircle size={18} strokeWidth={2} /></span>
+                  <span className="cp-action-text"><small>WhatsApp · quickest reply</small>Chat with the nursery</span>
+                  <span className="cp-action-go" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
+                </a>
+              </li>
+              <li>
+                <a className="cp-action" href={`mailto:${EMAIL}`}>
+                  <span className="cp-action-icon" aria-hidden="true"><Mail size={18} strokeWidth={2} /></span>
+                  <span className="cp-action-text"><small>Email</small><span className="cp-action-mail">{EMAIL}</span></span>
+                  <span className="cp-action-go" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
+                </a>
+              </li>
+              <li>
+                <a className="cp-action" href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`} target="_blank" rel="noopener noreferrer">
+                  <span className="cp-action-icon" aria-hidden="true"><MapPin size={18} strokeWidth={2} /></span>
+                  <span className="cp-action-text"><small>Visit · get directions</small>Jakkampudi Nagar, Kadiyam</span>
+                  <span className="cp-action-go" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
+                </a>
+              </li>
+            </ul>
+
+            <footer className="cp-panel-hours">
+              <p><Clock size={14} strokeWidth={2.2} aria-hidden="true" /><span>Open daily, 7 am – 6 pm</span><b>{open.label}</b></p>
+              {/* 6 am to 8 pm; the open window is lit and the marker shows the time now */}
+              <div className="cp-hours-track" aria-hidden="true">
+                <span className="cp-hours-window" />
+                {open.mark !== null && <span className="cp-hours-now" style={{ left: `${open.mark}%` }} />}
+              </div>
+              <div className="cp-hours-scale" aria-hidden="true"><span>6 am</span><span>Noon</span><span>8 pm</span></div>
+            </footer>
+          </section>
+        </div>
+      </header>
+
+      <VineDivider variant="ramp" id="contact-top" from="#163624" to="#F7F3EA" />
+
+      <main className="cp-main">
+        {/* the four ways to reach us */}
+        <section className="cp-ways" aria-labelledby="cp-ways-title">
+          <div className="cp-head">
+            <p className="cp-kicker">Reach us</p>
+            <h2 id="cp-ways-title">Four ways to <em>reach the nursery.</em></h2>
+          </div>
+          <ul className="cp-cards">
+            <li className="cp-card">
+              <span className="cp-card-icon" aria-hidden="true"><Phone size={20} strokeWidth={2} /></span>
+              <h3>Call us</h3>
+              <p>Talk to the team about plants, sizes and prices.</p>
+              <a href={`tel:${PHONE_1.tel}`}>{PHONE_1.label}</a>
+              <a href={`tel:${PHONE_2.tel}`}>{PHONE_2.label}</a>
+            </li>
+            <li className="cp-card cp-card--feature">
+              <span className="cp-card-icon" aria-hidden="true"><MessageCircle size={20} strokeWidth={2} /></span>
+              <h3>WhatsApp</h3>
+              <p>Send photos of your space or a plant list and we will reply there.</p>
+              <a className="cp-card-cta" href={WA_LINK} target="_blank" rel="noopener noreferrer">Start a chat <ArrowUpRight size={16} aria-hidden="true" /></a>
+            </li>
+            <li className="cp-card">
+              <span className="cp-card-icon" aria-hidden="true"><Mail size={20} strokeWidth={2} /></span>
+              <h3>Email</h3>
+              <p>For project briefs, plant lists and quotations.</p>
+              <a className="cp-card-mail" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            </li>
+            <li className="cp-card">
+              <span className="cp-card-icon" aria-hidden="true"><MapPin size={20} strokeWidth={2} /></span>
+              <h3>Visit</h3>
+              <p>{ADDRESS}.</p>
+              <a className="cp-card-cta" href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`} target="_blank" rel="noopener noreferrer">Get directions <ArrowUpRight size={16} aria-hidden="true" /></a>
+            </li>
+          </ul>
+        </section>
+
+        {/* enquiry form beside the visiting details */}
+        <section className="cp-split" aria-label="Send an enquiry and visit the nursery">
+          <form className="cp-form" onSubmit={sendWhatsApp}>
+            <p className="cp-kicker">Send an enquiry</p>
+            <h2>Tell us what <em>you need.</em></h2>
+            <p className="cp-form-note">Fill this in and it opens in WhatsApp, ready to send. Prefer email? Use the email button instead.</p>
+
+            <div className="cp-fields">
+              <label className="cp-field">
+                <span>Your name <b aria-hidden="true">*</b></span>
+                <input type="text" name="name" autoComplete="name" required value={form.name} onChange={set('name')} />
+              </label>
+              <label className="cp-field">
+                <span>Phone <i>(optional)</i></span>
+                <input type="tel" name="phone" autoComplete="tel" inputMode="tel" value={form.phone} onChange={set('phone')} />
+              </label>
+              <label className="cp-field">
+                <span>I’m asking about</span>
+                <select name="topic" value={form.topic} onChange={set('topic')}>
+                  {TOPICS.map((t) => <option key={t}>{t}</option>)}
+                </select>
+              </label>
+              <label className="cp-field">
+                <span>Town or city <i>(optional)</i></span>
+                <input type="text" name="place" autoComplete="address-level2" placeholder="e.g. Rajahmundry" value={form.place} onChange={set('place')} />
+              </label>
+              <label className="cp-field cp-field--wide">
+                <span>Message <b aria-hidden="true">*</b></span>
+                <textarea name="message" rows={5} required placeholder="Plants or services you need, quantities, sizes, your space…" value={form.message} onChange={set('message')} />
+              </label>
+            </div>
+
+            <div className="cp-form-actions">
+              <button type="submit" className="cp-btn cp-btn--forest">
+                <Send size={16} strokeWidth={2.2} aria-hidden="true" /> Send on WhatsApp
+              </button>
+              <a className={`cp-btn cp-btn--outline${ready ? '' : ' is-disabled'}`} href={ready ? mailHref : undefined} aria-disabled={!ready}>
+                <Mail size={16} strokeWidth={2.2} aria-hidden="true" /> Send by email
+              </a>
+            </div>
+          </form>
+
+          <aside className="cp-visitcard" aria-labelledby="cp-visit-title">
+            <p className="cp-kicker cp-kicker--light">Visit the nursery</p>
+            <h2 id="cp-visit-title">Come and <em>walk the beds.</em></h2>
+            <dl className="cp-facts">
+              <div><dt><Clock size={16} aria-hidden="true" />Hours</dt><dd>Open daily, 7 am – 6 pm</dd></div>
+              <div><dt><MapPin size={16} aria-hidden="true" />Address</dt><dd>{ADDRESS}</dd></div>
+              <div><dt><Navigation size={16} aria-hidden="true" />We serve</dt><dd>Rajahmundry, Visakhapatnam and across Andhra Pradesh</dd></div>
+            </dl>
+            <p className="cp-visit-tip">Call ahead and we can have plants ready for you to see.</p>
+            <div className="cp-map">
+              <iframe
+                title="Map: Jakkampudi Nagar, Kadiyam, East Godavari"
+                src={`https://maps.google.com/maps?q=${MAP_QUERY}&z=14&output=embed`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+            <a className="cp-btn cp-btn--light" href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`} target="_blank" rel="noopener noreferrer">
+              <Navigation size={16} strokeWidth={2.2} aria-hidden="true" /> Open in Google Maps
+            </a>
+          </aside>
+        </section>
+
+        {/* quick answers live in the home-page FAQ */}
+        <a className="cp-faq" href="/?section=faq">
+          <span className="cp-faq-icon" aria-hidden="true"><CircleHelp size={22} strokeWidth={2} /></span>
+          <span className="cp-faq-text"><strong>Have a quick question?</strong>Delivery, bulk orders, visits and more, answered in our FAQ.</span>
+          <span className="cp-faq-go">Read the FAQ <ArrowRight size={16} aria-hidden="true" /></span>
+        </a>
+      </main>
+
+      <Suspense fallback={<div style={{ minHeight: 460, background: '#0f2d1b' }} aria-hidden="true" />}>
+        <Footer />
+      </Suspense>
+      <WhatsAppButton />
+    </div>
+  );
+}

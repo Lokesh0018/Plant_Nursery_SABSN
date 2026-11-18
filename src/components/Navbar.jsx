@@ -304,7 +304,9 @@ export default function Navbar({ page = 'home' }) {
           e.currentTarget.style.transform = 'translateY(0)';
           e.currentTarget.style.opacity = '1';
         }}
-        onClick={() => goToSection(page, 'contact')}>
+        // the contact page; already there, it scrolls back to the top
+        aria-current={page === 'contact' ? 'page' : undefined}
+        onClick={() => { if (page === 'contact') window.scrollTo({ top: 0, behavior: 'smooth' }); else window.location.href = '/contact'; }}>
           <span>Contact</span>
           <ArrowRight size={14} />
         </button>
