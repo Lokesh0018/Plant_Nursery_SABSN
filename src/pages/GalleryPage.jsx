@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import VineOrnament from '../components/VineOrnament';
 import VineDivider from '../components/VineDivider';
-import { GALLERY_GROUPS, galleryItems } from '../data/gallery';
+import { GALLERY_GROUPS, galleryItems, gallerySrcSet } from '../data/gallery';
 import './GalleryPage.css';
 
 const Footer = lazy(() => import('../components/Footer'));
@@ -15,9 +15,10 @@ const countOf = (key) => (key === 'all' ? galleryItems.length : galleryItems.fil
 const PRINTS = ['/gallery/airport.webp', '/gallery/ficus.webp', '/gallery/palms.webp'].map((src) => galleryItems.find((g) => g.src === src)).filter(Boolean);
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I saw your gallery and would like to discuss a landscaping project.')}`;
 
-function GalleryPhoto({ item, lazy = false, crop = false }) {
+// `sizes` says how wide the photo is drawn, so the browser picks the nearest of its 640 / 1280 / 2400 px versions
+function GalleryPhoto({ item, lazy = false, crop = false, sizes = '100vw' }) {
   if (item.cell !== undefined) return <span className="gp-sheet-photo" role="img" aria-label={item.alt} style={{ backgroundImage: `url(${item.src})`, backgroundPosition: `${(item.cell % 2) * 100}% ${Math.floor(item.cell / 2) * 100}%` }} />;
-  return <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading={lazy ? 'lazy' : undefined} decoding="async" style={crop && item.pos ? { objectPosition: item.pos } : undefined} />;
+  return <img src={item.src} srcSet={gallerySrcSet(item)} sizes={sizes} alt={item.alt} width={item.width} height={item.height} loading={lazy ? 'lazy' : undefined} decoding="async" style={crop && item.pos ? { objectPosition: item.pos } : undefined} />;
 }
 
 /* Full-screen viewer for one photo at a time: arrows, keyboard (left / right / Esc), swipe on touch,
@@ -60,7 +61,7 @@ function Lightbox({ items, index, onClose, onMove }) {
       }}
     >
       <figure className="gp-lightbox-figure" key={item.id || item.src}>
-        <GalleryPhoto item={item} />
+        <GalleryPhoto item={item} sizes="92vw" />
         <figcaption>
           <span className="gp-tag">{item.tag}</span>
           <strong>{item.title}</strong>
@@ -149,7 +150,7 @@ export default function GalleryPage() {
         <div className="gp-collage" aria-hidden="true">
           {PRINTS.map((item, i) => (
             <figure key={item.id || item.src} className={`gp-print gp-print--${'abc'[i]}`}>
-              <img src={item.src} alt="" width={item.width} height={item.height} decoding="async" style={{ objectPosition: item.pos || 'center' }} />
+              <img src={item.src} srcSet={gallerySrcSet(item)} sizes="(max-width: 900px) 60vw, 420px" alt="" width={item.width} height={item.height} decoding="async" style={{ objectPosition: item.pos || 'center' }} />
               <figcaption>{item.tag}</figcaption>
             </figure>
           ))}
@@ -207,7 +208,7 @@ export default function GalleryPage() {
                       <li className={`gp-tile${item.fit === 'contain' ? ' gp-tile--complete' : ''}${item.fixedRow ? ' gp-tile--fixed' : ''}`} style={{ '--i': at, '--r': (item.displayRatio || item.width / item.height).toFixed(3) }}>
                         <button type="button" className="gp-tile-btn" onClick={() => setOpen(at)} aria-label={`Open photo: ${item.title}`}>
                           <span className="gp-tile-media">
-                            <GalleryPhoto item={item} lazy crop />
+                            <GalleryPhoto item={item} lazy crop sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 640px" />
                             <span className="gp-tile-zoom" aria-hidden="true"><Expand size={16} /></span>
                             <span className="gp-tile-caption">
                               <span className="gp-tag">{item.tag}</span>

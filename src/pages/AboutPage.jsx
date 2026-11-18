@@ -76,7 +76,7 @@ const CLIENTS = [
   { icon: Building2, name: 'Renaatus', work: 'Plant supply, gardening and maintenance',
     photo: '/clients/renaatus.webp', size: [678, 900], focus: '50% 40%', alt: 'Renaatus office building with landscaped planting at its base' },
   { icon: Plane, name: 'Airports Authority of India', work: 'Rajahmundry airport landscape support',
-    photo: '/gallery/airport.webp', size: [3840, 2880], focus: '60% 55%', alt: 'Rajahmundry airport terminal with landscaped lawns, palms and flowering shrubs' },
+    photo: '/gallery/airport-1280.webp', size: [1280, 960], focus: '60% 55%', alt: 'Rajahmundry airport terminal with landscaped lawns, palms and flowering shrubs' },
   { icon: Factory, name: 'Sri Sarvaraya Sugars Ltd.', work: 'Gopalapuram: plant and garden requirements',
     photo: '/clients/sri-sarvaraya.webp', size: [600, 376], focus: '50% 50%', alt: 'Sri Sarvaraya Sugars building with a planted hedge and garden in front' },
   { icon: Factory, name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Baladrapuram',
@@ -217,7 +217,7 @@ export default function AboutPage() {
           </ol>
           <div className="ap-strengths">
             <div className="ap-strengths-media">
-              <img src="/gallery/palms.webp" width="3840" height="2161" loading="lazy" decoding="async"
+              <img src="/gallery/palms-1280.webp" srcSet="/gallery/palms-640.webp 640w, /gallery/palms-1280.webp 1280w, /gallery/palms-2400.webp 2400w" sizes="(max-width: 900px) 92vw, 50vw" width="1280" height="720" loading="lazy" decoding="async"
                 alt="Rows of young potted palms lined up along a nursery path" />
               <h3 className="ap-strengths-head">What our capacity <em>enables</em></h3>
             </div>

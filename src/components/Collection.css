@@ -1,113 +1,5 @@
-.collection-section {
-  padding: 10vh 5vw;
-  /* same forest as the hero, with a faint lime glow so the grid does not sit on a flat slab */
-  /* light sage-mint: airy ground for the plants, warm enough to sit with the cream sections */
-  background:
-    radial-gradient(ellipse 70% 30% at 50% 24%, rgba(201, 217, 138, 0.35), transparent 70%),
-    radial-gradient(ellipse 40% 30% at 88% 76%, rgba(155, 184, 150, 0.35), transparent 70%),
-    linear-gradient(180deg, #eef3e4 0%, #e6eedb 55%, #edf2e3 100%);
-  color: var(--color-text-dark);
-  position: relative;
-  overflow: hidden;
-}
-
-.collection-bg-text {
-  will-change: transform; /* scroll parallax: move it on the compositor instead of repainting */
-  position: absolute;
-  top: 5vh;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 25vw;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.55);
-  z-index: 0;
-  white-space: nowrap;
-  pointer-events: none;
-  line-height: 1;
-}
-
-.collection-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.collection-subtitle {
-  display: block;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #4f7f3a;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.collection-title {
-  font-size: 3.5rem;
-  font-family: var(--font-serif);
-  color: #163624;
-  font-weight: 400;
-  line-height: 1.1;
-  margin: 0;
-}
 
 
-.collection-lede {
-  max-width: 520px;
-  margin: 1.4rem auto 0;
-  font-size: 1rem;
-  line-height: 1.65;
-  color: #4a5b4c;
-}
-
-.collection-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 2rem;
-  position: relative;
-  z-index: 1;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-/* link from the home grid to the full plants page */
-.collection-more {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  margin-top: 3rem;
-}
-.collection-more-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  min-height: 48px;
-  padding: 0.8rem 1.6rem;
-  border-radius: 999px;
-  background: #163624;
-  color: #f4ecd9;
-  font-size: 0.92rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  box-shadow: 0 10px 24px rgba(22, 54, 36, 0.18);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
-}
-.collection-more-link:hover { background: #1f4a2f; box-shadow: 0 14px 30px rgba(22, 54, 36, 0.24); }
-.collection-more-link:focus-visible { outline: 2px solid #4f7f3a; outline-offset: 3px; }
-
-/* Pots grid: one step deeper than the plants, so the two grids read as distinct rooms of the
-   same house, and it hands off cleanly to the sage story section that follows */
-#pots-collection.collection-section {
-  /* flat warm ivory, the same surface as the Living Archive; the vine dividers blend into it */
-  background: #F7F3EA;
-}
-#pots-collection .collection-bg-text { color: rgba(240, 228, 208, 0.45); }
 #pots-collection .product-card {
   background: linear-gradient(180deg, rgba(255, 250, 243, 0.88), rgba(255, 248, 238, 0.68));
   border-color: rgba(140, 80, 45, 0.12);
@@ -120,7 +12,7 @@
 #pots-collection .product-stage-glow {
   background: radial-gradient(ellipse at 50% 100%, rgba(231, 185, 155, 0.55), rgba(231, 185, 155, 0) 70%);
 }
-#pots-collection .collection-subtitle,
+
 #pots-collection .product-latin,
 #pots-collection .product-care svg { color: #8f5130; }
 
@@ -241,27 +133,16 @@
 
 /* Mobile Responsive */
 @media (max-width: 900px) {
-  .collection-section {
-    padding: 8vh 5vw;
-  }
   
-  .collection-bg-text {
-    font-size: 30vw;
-    top: 2vh;
-  }
   
-  .collection-title {
-    font-size: 2.5rem;
-  }
   
-  .collection-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-  }
+  
+  
+  
+  
   .product-stage { height: 190px; padding: 0.9rem 0.9rem 0; }
   .product-body { padding: 0.85rem 0.95rem 1rem; }
-  .product-care { display: none; } /* keep phone cards to name + price */
-  .collection-lede { font-size: 0.95rem; }
+  .product-care { display: none; } 
 }
 
 /* keyboard focus on the card itself */

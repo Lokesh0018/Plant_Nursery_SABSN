@@ -101,15 +101,6 @@
 .cp-btn:focus-visible { outline: 2px solid var(--cp-lime); outline-offset: 3px; }
 .cp-main .cp-btn:focus-visible { outline-color: var(--cp-leaf); }
 
-/* what we help with, ruled off from the actions */
-.cp-help {
-  display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; max-width: 500px; margin: 2.4rem 0 0; padding: 1.3rem 0 0; list-style: none;
-  border-top: 1px solid rgba(201, 217, 138, 0.2);
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(244, 236, 217, 0.78);
-}
-.cp-help li { display: inline-flex; align-items: center; gap: 0.5rem; }
-.cp-help svg { color: var(--cp-lime); }
-
 @keyframes cp-rise { from { opacity: 0; transform: translateY(18px); } }
 @keyframes cp-pop { from { opacity: 0; transform: translateY(10px) scale(0.92); } }
 .cp-hero-copy > * { animation: cp-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
@@ -272,7 +263,6 @@
   .cp-stats span { letter-spacing: 0.08em; }
 }
 
-
 /* ---------- the contact panel: a cream card with a forest header, one row per way to reach us, and
    today's hours; a lime sheet peeks out behind it, over a soft glow ---------- */
 .cp-board { position: relative; justify-self: center; width: min(100%, 460px); padding: 0 0 1.2rem 0; }
@@ -409,7 +399,6 @@
 @media (prefers-reduced-motion: reduce) {
   .cp-float { animation: none; }
 }
-
 
 /* ---------- enquiry form, refined: a lime band and icon badge at the top, topic chips, fields with leading
    icons, a character count, a stronger send button, and a note on where the enquiry goes ---------- */

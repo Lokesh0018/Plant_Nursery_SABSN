@@ -10,5 +10,5 @@
 .indoor-dialog-layout>.plant-frame{align-self:start}
 .plant-presentation{display:block;font-size:11px;line-height:1.5;color:#526c4c;margin:8px 0}
 .product-stage>.plant-frame{width:100%;height:100%}
-.pm-stage>.plant-frame{width:100%;height:auto}
+
 @media(min-width:761px) and (max-width:1050px){.indoor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

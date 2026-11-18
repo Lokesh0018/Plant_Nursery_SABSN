@@ -44,3 +44,15 @@ export const galleryItems = [
   { cat: 'clients', src: '/gallery/team.webp', width: 2882, height: 3840, displayRatio: 2849 / 3840, fixedRow: true, pos: 'center 25%', tag: 'Our Team', title: 'Team & Stakeholder Interaction',
     alt: 'Three members of the nursery team standing together in an office.' },
 ];
+
+// Every photo also exists at 640, 1280 and 2400 px wide (as WebP, next to the original, wherever the original
+// is wider), so tiles and thumbnails download a size near what they show instead of the 4K original.
+const VARIANT_WIDTHS = [640, 1280, 2400];
+export function gallerySrcSet(item) {
+  if (item.cell !== undefined) return undefined;
+  const base = item.src.replace(/\.[a-z]+$/i, '');
+  return VARIANT_WIDTHS.filter((w) => w < item.width)
+    .map((w) => `${base}-${w}.webp ${w}w`)
+    .concat(`${item.src} ${item.width}w`)
+    .join(', ');
+}

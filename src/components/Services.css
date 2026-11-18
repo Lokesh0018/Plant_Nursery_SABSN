@@ -145,7 +145,6 @@
 }
 .services-btn--ghost:hover { background: none; color: #1f4a2f; text-decoration-color: #163624; }
 
-
 /* Every service has an equally prominent image and a direct enquiry. */
 .services-catalog-heading {
   display: flex;
@@ -161,8 +160,6 @@
 .svc-catalog-title { display: flex; flex-direction: column; gap: .35rem; }
 .svc-catalog-title span:first-child { font-weight: 700; text-transform: uppercase; letter-spacing: .16em; }
 
-/* carousel controls: counter + round arrow buttons */
-.svc-controls { display: flex; align-items: center; gap: .6rem; }
 .svc-counter { margin-right: .4rem; font-size: .85rem; color: #46574a; font-variant-numeric: tabular-nums; }
 .svc-counter strong { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; color: #163624; }
 .svc-arrow {
@@ -230,7 +227,7 @@
 .svc-dot span { width: 7px; height: 7px; border-radius: 50%; background: #849b78; transition: transform .25s, background .25s; }
 .svc-dot[aria-current] span { transform: scale(1.5); background: #254b31; box-shadow: 0 0 0 4px rgba(79,127,58,.12); }
 .svc-dot:focus-visible { outline: 2px solid #8f4724; outline-offset: 2px; border-radius: 8px; }
-.svc-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
 /* Service details dialog: photo on the left, details on the right; stacks on narrow screens */
 .svc-dialog {
   position: fixed; inset: 0; margin: auto; padding: 0; width: min(980px, calc(100vw - 32px)); max-height: min(90dvh, 680px);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image as ImageIcon, Camera, ArrowRight } from 'lucide-react';
-import { galleryItems } from '../data/gallery';
+import { galleryItems, gallerySrcSet } from '../data/gallery';
 import './LivingArchive.css';
 
 // The home page shows the five featured photos; the rest live on the /gallery page.
@@ -59,6 +59,7 @@ export default function LivingArchive() {
               <figure key={item.src} className={`archive-item ${spanClass}`} style={{ '--i': index }}>
                 <img
                   src={item.src}
+                  srcSet={gallerySrcSet(item)}
                   sizes={SIZES[spanClass]}
                   width={item.width}
                   height={item.height}
