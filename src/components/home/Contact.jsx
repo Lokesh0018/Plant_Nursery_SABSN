@@ -63,7 +63,7 @@ export default function Contact() {
               </a>
             </div>
           </div>
-          <p className="contact-form-note">+91 98499 36169 · +91 94903 78689 · uppadakumaraswamy@gmail.com</p>
+          <p className="contact-form-note">+91 98499 36169 · +91 94903 78689 · +91 98451 18946 · 0891 459 9555 · sabsnursery@gmail.com</p>
         </div>
 
       </div>

@@ -109,11 +109,17 @@ export default function PlantsPage() {
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
       io.disconnect();
+      // the next section is requested well before it scrolls into view and, while still off-screen, added at
+      // once, so nothing the visitor can see moves (no layout shift). Only someone who scrolls fast enough to
+      // reach the loader first sees it: the vine grows and the section follows after a short beat.
+      if (e.boundingClientRect.top > window.innerHeight) {
+        setProgress({ key: filterKey, loaded: loaded + 1, loading: false });
+        return;
+      }
       setProgress({ key: filterKey, loaded, loading: true });
-      // long enough to see the vine grow and the loader, short enough not to feel slow
       const wait = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 150 : 900;
       timer = setTimeout(() => setProgress({ key: filterKey, loaded: loaded + 1, loading: false }), wait);
-    }, { rootMargin: '0px 0px 120px 0px' });
+    }, { rootMargin: '0px 0px 150% 0px' });
     io.observe(el);
     return () => { io.disconnect(); clearTimeout(timer); };
   }, [progressive, loaded, visible.length, filterKey]);
@@ -237,6 +243,8 @@ export default function PlantsPage() {
       )}
       {groups && !count && <div className="pp-empty"><h2>No plants match your search</h2><button className="pp-btn" onClick={() => { setQuery(''); setCategory('all'); }}>Show all plants</button></div>}
     </main>
-    <Suspense fallback={null}><Footer /></Suspense><WhatsAppButton />
+    {/* while more sections are still to load, the loader ends the page: a footer below it would be pushed down
+        by every section that arrives (a layout shift each time) */}
+    {!nextGroup && <Suspense fallback={null}><Footer /></Suspense>}<WhatsAppButton />
   </div>;
 }

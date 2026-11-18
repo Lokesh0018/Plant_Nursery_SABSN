@@ -6,6 +6,7 @@ import Meadow from './Meadow';
 import FooterEdge from './FooterEdge';
 import useOffscreenPause from '../../hooks/useOffscreenPause';
 import { LOCATIONS, formatAddress } from '../../data/locations';
+import { BUSINESS } from '../../data/site';
 import { subscribeScroll } from '../../lib/scrollStore';
 import './Footer.css';
 
@@ -167,14 +168,13 @@ export default function Footer() {
             <a href="https://wa.me/919849936169" target="_blank" rel="noopener noreferrer" className="social-link">
               <MessageCircle size={14} /> WhatsApp
             </a>
-            <a href="tel:+919849936169" className="social-link">
-              <Phone size={14} /> +91 98499 36169
-            </a>
-            <a href="tel:+919490378689" className="social-link">
-              <Phone size={14} /> +91 94903 78689
-            </a>
-            <a href="mailto:uppadakumaraswamy@gmail.com" className="social-link">
-              <Mail size={14} /> uppadakumaraswamy@gmail.com
+            {BUSINESS.phones.map((p) => (
+              <a key={p.tel} href={`tel:${p.tel}`} className="social-link">
+                <Phone size={14} aria-hidden="true" /> {p.label}
+              </a>
+            ))}
+            <a href="mailto:sabsnursery@gmail.com" className="social-link">
+              <Mail size={14} /> sabsnursery@gmail.com
             </a>
           </div>
 

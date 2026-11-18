@@ -187,16 +187,19 @@
   position: absolute;
   top: -30%;
   bottom: -30%;
-  left: -40%;
+  left: -45%;
   width: 45%;
   background: linear-gradient(90deg, transparent, rgba(201, 217, 138, 0.07) 40%, rgba(241, 239, 184, 0.1) 50%, rgba(201, 217, 138, 0.07) 60%, transparent);
   transform: skewX(-14deg);
+  will-change: translate;
   animation: footer-light-band 26s linear infinite;
   pointer-events: none;
 }
+/* moved with `translate` (its own width: 145% of the footer = 322% of the band), never `left`, so the drift
+   is compositor-only and never counts as a layout shift */
 @keyframes footer-light-band {
-  from { left: -45%; }
-  to   { left: 100%; }
+  from { translate: 0 0; }
+  to   { translate: 322% 0; }
 }
 /* ---------- meadow ---------- */ .footer-meadow {
   position: absolute;

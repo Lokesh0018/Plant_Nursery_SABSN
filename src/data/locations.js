@@ -7,7 +7,7 @@ export const LOCATIONS = [
   {
     key: 'kadiyam',
     path: '/plant-nursery-rajahmundry/',
-    name: 'Sri Ayyappa Bala Sai Nursery – Kadiyam',
+    name: 'Sri Ayyappa Bala Sai Nursery (SABSN) – Kadiyam',
     shortName: 'SABSN Kadiyam',
     cardTitle: 'SABSN Kadiyam – Near Rajahmundry',
     cta: 'Explore Kadiyam Nursery',
@@ -43,7 +43,7 @@ export const LOCATIONS = [
     cardTitle: 'SABSN Visakhapatnam',
     cta: 'Explore Visakhapatnam Nursery',
     market: 'Visakhapatnam',
-    streetAddress: null,                // street / landmark line: awaiting owner input
+    streetAddress: 'D. No. 7-23, Revallapalem Road, Srinivasa Nagar', // as on the headquarters signboard
     locality: 'Madhurawada',
     district: 'Visakhapatnam',
     state: 'Andhra Pradesh',
@@ -55,7 +55,7 @@ export const LOCATIONS = [
     // the owner's original Google Maps Street View link, kept for reference; navigation uses the coordinates
     referenceMapUrl: 'https://www.google.com/maps/place/17%C2%B048%2758.0%22N+83%C2%B021%2718.9%22E/@17.8163184,83.3552226,63a,75y,181.41h,104.82t/data=!3m7!1e0',
     mapsQuery: null,
-    telephone: null,
+    telephone: '+918914599555',         // the Visakhapatnam (0891) landline on the headquarters signboard
     openingHours: null,
     // real photographs of this branch only (the first leads the branch card and the home-page card)
     photos: [

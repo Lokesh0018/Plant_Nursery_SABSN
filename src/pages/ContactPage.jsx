@@ -9,14 +9,14 @@ import VineDivider from '../components/shared/VineDivider';
 import VisitBadge from '../components/shared/VisitBadge';
 import './ContactPage.css';
 import { routeFor } from '../data/routes';
+import { BUSINESS } from '../data/site';
 import { LOCATIONS, formatAddress, directionsUrl, mapEmbedUrl } from '../data/locations';
 
 const Footer = lazy(() => import('../components/layout/Footer'));
 
 // the nursery's details, as given on the About page and in the footer
-const PHONE_1 = { label: '+91 98499 36169', tel: '+919849936169' };
-const PHONE_2 = { label: '+91 94903 78689', tel: '+919490378689' };
-const EMAIL = 'uppadakumaraswamy@gmail.com';
+const PHONE_1 = BUSINESS.phones[0];
+const EMAIL = 'sabsnursery@gmail.com';
 const WA_NUMBER = '919849936169';
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hello SABSN, I would like to know more about your plants and services.')}`;
 
@@ -183,8 +183,7 @@ export default function ContactPage() {
               <span className="cp-card-icon" aria-hidden="true"><Phone size={20} strokeWidth={2} /></span>
               <h3>Call us</h3>
               <p>Talk to the team about plants, sizes and prices.</p>
-              <a href={`tel:${PHONE_1.tel}`}>{PHONE_1.label}</a>
-              <a href={`tel:${PHONE_2.tel}`}>{PHONE_2.label}</a>
+              {BUSINESS.phones.map((p) => <a key={p.tel} href={`tel:${p.tel}`}>{p.label}</a>)}
             </li>
             <li className="cp-card cp-card--feature">
               <span className="cp-card-icon" aria-hidden="true"><MessageCircle size={20} strokeWidth={2} /></span>
