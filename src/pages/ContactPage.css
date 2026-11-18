@@ -157,7 +157,7 @@
 .cp-card--feature a:focus-visible { outline-color: var(--cp-lime); }
 
 /* the enquiry form beside the visit card */
-.cp-split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.95fr); gap: 1.5rem; align-items: start; margin-top: clamp(3rem, 6vw, 4.5rem); }
+.cp-split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.95fr); gap: 1.5rem; align-items: stretch; margin-top: clamp(3rem, 6vw, 4.5rem); }
 .cp-form { padding: clamp(1.6rem, 3vw, 2.4rem); border: 1px solid var(--cp-line); border-radius: 28px; background: var(--cp-paper); box-shadow: 0 18px 44px rgba(22, 54, 36, 0.07); }
 .cp-form-note { margin: 0.8rem 0 0; font-size: 0.92rem; line-height: 1.65; color: var(--cp-muted); }
 .cp-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.1rem; margin-top: 1.6rem; }
@@ -181,7 +181,7 @@
 .cp-form-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem; }
 
 .cp-visitcard {
-  position: sticky; top: 110px; padding: clamp(1.6rem, 3vw, 2.2rem); border-radius: 28px; color: #f4ecd9;
+  position: relative; display: flex; flex-direction: column; padding: clamp(1.6rem, 3vw, 2.2rem); border-radius: 28px; color: #f4ecd9;
   background: radial-gradient(circle at 100% 0%, rgba(201, 217, 138, 0.2), transparent 50%), linear-gradient(165deg, #1f4a32, var(--cp-forest) 60%);
   box-shadow: 0 26px 54px rgba(22, 54, 36, 0.22);
 }
@@ -192,8 +192,24 @@
 .cp-facts dt { display: flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cp-lime); }
 .cp-facts dd { margin: 0; font-size: 0.93rem; line-height: 1.55; color: rgba(244, 236, 217, 0.9); }
 .cp-visit-tip { margin: 0.4rem 0 1.1rem; padding: 0.75rem 0.9rem; border-radius: 14px; background: rgba(201, 217, 138, 0.12); font-size: 0.85rem; line-height: 1.55; color: rgba(244, 236, 217, 0.88); }
-.cp-map { overflow: hidden; aspect-ratio: 16 / 10; margin-bottom: 1rem; border: 1px solid rgba(201, 217, 138, 0.25); border-radius: 18px; background: #24452f; }
-.cp-map iframe { display: block; width: 100%; height: 100%; border: 0; filter: saturate(0.85); }
+.cp-map {
+  position: relative; flex: 1 1 auto; min-height: 240px; overflow: hidden; margin-bottom: 1rem;
+  border: 1px solid rgba(201, 217, 138, 0.3); border-radius: 18px; background: #24452f;
+  box-shadow: inset 0 0 0 1px rgba(4, 18, 10, 0.25);
+}
+/* the embedded map, tinted to the site's forest-and-lime palette: the filter cools and softens Google's
+   colours, then a forest layer blended in 'color' mode re-hues everything green while keeping the
+   map's light and dark (so roads, water and labels stay readable) */
+.cp-map iframe { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 0; filter: grayscale(0.35) contrast(0.95) brightness(0.98); }
+.cp-map::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: #3f6b33; mix-blend-mode: color; opacity: 0.55;
+}
+/* a soft forest vignette at the edges so the map sits inside the card */
+.cp-map::before {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit;
+  box-shadow: inset 0 0 28px rgba(11, 36, 21, 0.45);
+}
 
 /* FAQ link */
 .cp-faq {
@@ -226,7 +242,7 @@
   }
   .cp-watermark { display: none; }
   .cp-split { grid-template-columns: 1fr; }
-  .cp-visitcard { position: static; }
+  .cp-map { min-height: 260px; }
 }
 @media (max-width: 560px) {
   .cp-actions .cp-btn, .cp-form-actions .cp-btn { flex: 1 1 100%; }
@@ -394,3 +410,67 @@
   .cp-float { animation: none; }
 }
 
+
+/* ---------- enquiry form, refined: a lime band and icon badge at the top, topic chips, fields with leading
+   icons, a character count, a stronger send button, and a note on where the enquiry goes ---------- */
+.cp-form {
+  position: relative; overflow: hidden; padding: clamp(1.8rem, 3vw, 2.6rem);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(201, 217, 138, 0.2), transparent 40%),
+    var(--cp-paper);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 2px 6px rgba(22, 54, 36, 0.05), 0 24px 54px rgba(22, 54, 36, 0.09);
+}
+.cp-form::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: linear-gradient(90deg, var(--cp-lime), var(--cp-leaf)); }
+.cp-form-head { display: flex; align-items: flex-start; gap: 1rem; }
+.cp-form-head h2 { margin-top: 0.6rem; }
+.cp-form-badge { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: var(--cp-forest); color: var(--cp-lime); box-shadow: 0 10px 22px rgba(22, 54, 36, 0.22); }
+.cp-form-note { margin-top: 1rem; }
+
+/* topic chips */
+.cp-topics { margin: 1.6rem 0 0; padding: 0; border: 0; min-width: 0; }
+.cp-topics legend { margin-bottom: 0.6rem; padding: 0; font-size: 0.82rem; font-weight: 700; color: var(--cp-forest); }
+.cp-topic-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.cp-topic {
+  position: relative; display: inline-flex; align-items: center; gap: 0.45rem; min-height: 42px; padding: 0 0.95rem;
+  border: 1px solid rgba(22, 54, 36, 0.16); border-radius: 999px; background: #fff; color: var(--cp-forest);
+  font-size: 0.86rem; font-weight: 600; cursor: pointer; user-select: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.cp-topic svg { color: var(--cp-leaf); transition: color 0.2s ease; }
+.cp-topic input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.cp-topic:hover { border-color: var(--cp-leaf); background: rgba(201, 217, 138, 0.18); }
+.cp-topic.is-on { background: var(--cp-forest); border-color: var(--cp-forest); color: #f4ecd9; box-shadow: 0 8px 18px rgba(22, 54, 36, 0.2); }
+.cp-topic.is-on svg { color: var(--cp-lime); }
+.cp-topic:has(input:focus-visible) { outline: 2px solid var(--cp-leaf); outline-offset: 3px; }
+
+/* fields: a leading icon inside each input */
+.cp-fields { margin-top: 1.4rem; }
+.cp-input { position: relative; display: block; }
+.cp-input > svg { position: absolute; left: 0.95rem; top: 50%; translate: 0 -50%; color: #8a968b; pointer-events: none; transition: color 0.2s ease; }
+.cp-input input { padding-left: 2.7rem; }
+.cp-input:focus-within > svg { color: var(--cp-leaf); }
+.cp-field input, .cp-field textarea { background: #fff; border-color: rgba(22, 54, 36, 0.16); }
+.cp-field input:focus, .cp-field textarea:focus { background: #fff; }
+/* after the visitor has interacted, a missing required field shows in terracotta */
+.cp-field input:user-invalid, .cp-field textarea:user-invalid { border-color: #b4532a; box-shadow: 0 0 0 4px rgba(180, 83, 42, 0.12); }
+.cp-field-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.cp-field-row > span { font-size: 0.82rem; font-weight: 700; color: var(--cp-forest); }
+.cp-count { font-size: 0.72rem; font-weight: 600; color: #7a867b; font-variant-numeric: tabular-nums; }
+
+/* actions */
+.cp-form-actions { align-items: center; margin-top: 1.6rem; }
+.cp-btn--send { min-height: 52px; padding: 0 1.6rem; box-shadow: 0 12px 26px rgba(22, 54, 36, 0.22); }
+.cp-btn--send svg:last-child { transition: transform 0.2s ease; }
+.cp-btn--send:hover svg:last-child { transform: translateX(3px); }
+.cp-form-privacy { display: flex; align-items: flex-start; gap: 0.5rem; margin: 1.1rem 0 0; font-size: 0.8rem; line-height: 1.55; color: var(--cp-muted); }
+.cp-form-privacy svg { flex: none; margin-top: 0.1rem; color: var(--cp-leaf); }
+
+@media (max-width: 560px) {
+  .cp-form-head { gap: 0.75rem; }
+  .cp-form-badge { width: 44px; height: 44px; border-radius: 13px; }
+  .cp-topic { min-height: 40px; padding: 0 0.8rem; font-size: 0.82rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cp-topic, .cp-topic svg, .cp-input > svg, .cp-btn--send svg:last-child { transition: none; }
+  .cp-btn--send:hover svg:last-child { transform: none; }
+}

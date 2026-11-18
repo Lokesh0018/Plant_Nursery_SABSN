@@ -1,5 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
-import { Leaf, Clock, MapPin, Phone, Mail, MessageCircle, ArrowRight, ArrowUpRight, Navigation, Send, CircleHelp, Package } from 'lucide-react';
+import { Leaf, Clock, MapPin, Phone, Mail, MessageCircle, ArrowRight, ArrowUpRight, Navigation, Send, CircleHelp, Package, User, ShieldCheck, Sprout, Trees, Truck, Flower2 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 import VineOrnament from '../components/VineOrnament';
@@ -17,7 +17,15 @@ const ADDRESS = 'Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh';
 const MAP_QUERY = encodeURIComponent('Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh');
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hello SABSN, I would like to know more about your plants and services.')}`;
 
-const TOPICS = ['Plants for my home or garden', 'Landscaping project', 'Bulk or plantation order', 'Plant delivery', 'Pots & planters', 'Something else'];
+const TOPICS = [
+  { label: 'Plants for home', Icon: Sprout },
+  { label: 'Landscaping', Icon: Trees },
+  { label: 'Bulk order', Icon: Package },
+  { label: 'Delivery', Icon: Truck },
+  { label: 'Pots & planters', Icon: Flower2 },
+  { label: 'Something else', Icon: CircleHelp },
+];
+const MESSAGE_MAX = 600;
 
 // open or closed right now, from the posted hours (daily, 7 am to 6 pm) in India Standard Time, and
 // where "now" falls on the header's 6 am to 8 pm hours line (null outside it); re-checked every minute
@@ -46,7 +54,7 @@ function useOpenStatus() {
  * (or the visitor's email app); nothing is stored or sent anywhere else.
  */
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', phone: '', topic: TOPICS[0], place: '', message: '' });
+  const [form, setForm] = useState({ name: '', phone: '', topic: TOPICS[0].label, place: '', message: '' });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   useEffect(() => { document.title = 'Contact | SABSN Nursery'; }, []);
@@ -216,43 +224,71 @@ export default function ContactPage() {
         {/* enquiry form beside the visiting details */}
         <section className="cp-split" aria-label="Send an enquiry and visit the nursery">
           <form className="cp-form" onSubmit={sendWhatsApp}>
-            <p className="cp-kicker">Send an enquiry</p>
-            <h2>Tell us what <em>you need.</em></h2>
+            <div className="cp-form-head">
+              <span className="cp-form-badge" aria-hidden="true"><Send size={20} strokeWidth={2} /></span>
+              <div>
+                <p className="cp-kicker">Send an enquiry</p>
+                <h2>Tell us what <em>you need.</em></h2>
+              </div>
+            </div>
             <p className="cp-form-note">Fill this in and it opens in WhatsApp, ready to send. Prefer email? Use the email button instead.</p>
+
+            {/* what the enquiry is about: one tap, as chips (radio buttons underneath) */}
+            <fieldset className="cp-topics">
+              <legend>I’m asking about</legend>
+              <div className="cp-topic-list">
+                {TOPICS.map(({ label, Icon }) => (
+                  <label key={label} className={`cp-topic${form.topic === label ? ' is-on' : ''}`}>
+                    <input type="radio" name="topic" value={label} checked={form.topic === label} onChange={set('topic')} />
+                    <Icon size={16} strokeWidth={2} aria-hidden="true" />{label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
 
             <div className="cp-fields">
               <label className="cp-field">
                 <span>Your name <b aria-hidden="true">*</b></span>
-                <input type="text" name="name" autoComplete="name" required value={form.name} onChange={set('name')} />
+                <span className="cp-input">
+                  <User size={17} strokeWidth={2} aria-hidden="true" />
+                  <input type="text" name="name" autoComplete="name" required placeholder="Full name" value={form.name} onChange={set('name')} />
+                </span>
               </label>
               <label className="cp-field">
                 <span>Phone <i>(optional)</i></span>
-                <input type="tel" name="phone" autoComplete="tel" inputMode="tel" value={form.phone} onChange={set('phone')} />
-              </label>
-              <label className="cp-field">
-                <span>I’m asking about</span>
-                <select name="topic" value={form.topic} onChange={set('topic')}>
-                  {TOPICS.map((t) => <option key={t}>{t}</option>)}
-                </select>
-              </label>
-              <label className="cp-field">
-                <span>Town or city <i>(optional)</i></span>
-                <input type="text" name="place" autoComplete="address-level2" placeholder="e.g. Rajahmundry" value={form.place} onChange={set('place')} />
+                <span className="cp-input">
+                  <Phone size={17} strokeWidth={2} aria-hidden="true" />
+                  <input type="tel" name="phone" autoComplete="tel" inputMode="tel" placeholder="+91" value={form.phone} onChange={set('phone')} />
+                </span>
               </label>
               <label className="cp-field cp-field--wide">
-                <span>Message <b aria-hidden="true">*</b></span>
-                <textarea name="message" rows={5} required placeholder="Plants or services you need, quantities, sizes, your space…" value={form.message} onChange={set('message')} />
+                <span>Town or city <i>(optional)</i></span>
+                <span className="cp-input">
+                  <MapPin size={17} strokeWidth={2} aria-hidden="true" />
+                  <input type="text" name="place" autoComplete="address-level2" placeholder="e.g. Rajahmundry" value={form.place} onChange={set('place')} />
+                </span>
+              </label>
+              <label className="cp-field cp-field--wide">
+                <span className="cp-field-row">
+                  <span>Message <b aria-hidden="true">*</b></span>
+                  <small className="cp-count" aria-live="polite">{form.message.length} / {MESSAGE_MAX}</small>
+                </span>
+                <textarea name="message" rows={5} required maxLength={MESSAGE_MAX} placeholder="Plants or services you need, quantities, sizes, your space…" value={form.message} onChange={set('message')} />
               </label>
             </div>
 
             <div className="cp-form-actions">
-              <button type="submit" className="cp-btn cp-btn--forest">
-                <Send size={16} strokeWidth={2.2} aria-hidden="true" /> Send on WhatsApp
+              <button type="submit" className="cp-btn cp-btn--forest cp-btn--send">
+                <MessageCircle size={17} strokeWidth={2.2} aria-hidden="true" /> Send on WhatsApp <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
               </button>
               <a className={`cp-btn cp-btn--outline${ready ? '' : ' is-disabled'}`} href={ready ? mailHref : undefined} aria-disabled={!ready}>
                 <Mail size={16} strokeWidth={2.2} aria-hidden="true" /> Send by email
               </a>
             </div>
+            <p className="cp-form-privacy">
+              <ShieldCheck size={15} strokeWidth={2} aria-hidden="true" />
+              Nothing is stored on this site: your enquiry opens in WhatsApp or your email app, and you choose to send it.
+            </p>
           </form>
 
           <aside className="cp-visitcard" aria-labelledby="cp-visit-title">
