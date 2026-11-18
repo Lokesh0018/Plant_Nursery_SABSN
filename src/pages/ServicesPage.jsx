@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react';
-import { Leaf, ArrowRight, ArrowLeft, ArrowDown, ArrowUpRight, MessageCircle, Phone, Clock, MapPin, LayoutGrid, Building2, Briefcase, Home, Check, X, Users } from 'lucide-react';
+import useOffscreenPause from '../hooks/useOffscreenPause';
+import { Leaf, ArrowRight, ArrowLeft, ArrowDown, ArrowUpRight, MessageCircle, Phone, LayoutGrid, Building2, Briefcase, Home, Check, X, Users } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import WhatsAppButton from '../components/layout/WhatsAppButton';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
+import VisitBadge from '../components/shared/VisitBadge';
 import { SERVICES, SERVICE_IMAGES, SERVICE_DETAILS } from '../data/services';
 import './ServicesPage.css';
 
@@ -48,6 +50,8 @@ export default function ServicesPage() {
   // the mosaic's labels and figures card drift with the cursor (--mx / --my from -1 to 1); the photos stay still.
   // Mouse only, never for reduced motion.
   const heroRef = useRef(null);
+  // the hero's looping animations (status pulse, tickers, drifting tags) stop while it is scrolled away
+  useOffscreenPause(heroRef);
   const mosaicRef = useRef(null);
   useEffect(() => {
     const hero = heroRef.current;
@@ -97,11 +101,7 @@ export default function ServicesPage() {
         {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
         <Leaf className="sp-watermark" strokeWidth={0.6} aria-hidden="true" />
         <div className="sp-hero-copy">
-          <p className="sp-visit">
-            <span className="sp-visit-open"><span className="sp-visit-dot" aria-hidden="true" />Open daily</span>
-            <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
-          </p>
+          <VisitBadge />
           <p className="sp-kicker">What we do</p>
           <h1>Complete <em>landscape</em> services.</h1>
           <VineOrnament />

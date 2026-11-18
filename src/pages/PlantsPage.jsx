@@ -1,15 +1,20 @@
 import { Fragment, useEffect, useRef, useState, lazy, Suspense } from 'react';
-import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Armchair, Clock, MapPin, X, Sun, Trees, TreePine, Leaf, SlidersHorizontal } from 'lucide-react';
+import useOffscreenPause from '../hooks/useOffscreenPause';
+import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Armchair, X, Sun, Trees, TreePine, Leaf, SlidersHorizontal } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import IndoorPlants from '../components/plants/IndoorPlants';
 import WhatsAppButton from '../components/layout/WhatsAppButton';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
-import groups from '../data/plantCatalogue.json';
+import VisitBadge from '../components/shared/VisitBadge';
+import CATALOGUE_INDEX from 'virtual:plant-index';
 import './PlantsPage.css';
 
 const Footer = lazy(() => import('../components/layout/Footer'));
-const total = groups.reduce((sum, g) => sum + g.items.length, 0);
+// the full catalogue is its own chunk: start fetching it as soon as this page's code runs, in parallel with the
+// first render. The header, chips and counts only need the build-time index (slug, title, count).
+const cataloguePromise = import('../data/plantCatalogue.json').then((m) => m.default);
+const total = CATALOGUE_INDEX.reduce((sum, g) => sum + g.count, 0);
 // one icon per catalogue category, for the filter chips
 const CATEGORY_ICONS = {
   'indoor-plants': Armchair,
@@ -28,16 +33,18 @@ const HEADER_PICKS = [
   { slug: 'indoor-plants', label: 'Indoor', Icon: Armchair },
   { slug: 'ornamental-topiary-plants', label: 'Topiary', Icon: Shrub },
   { slug: 'fruit-plants', label: 'Fruit trees', Icon: Apple },
-].map((p) => ({ ...p, count: groups.find((g) => g.slug === p.slug)?.items.length ?? 0 }));
+].map((p) => ({ ...p, count: CATALOGUE_INDEX.find((g) => g.slug === p.slug)?.count ?? 0 }));
 export default function PlantsPage() {
   const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get('search') || '');
   const [category, setCategory] = useState(() => {
     const slug = new URLSearchParams(window.location.search).get('category');
-    return groups.some(g => g.slug === slug) ? slug : 'all';
+    return CATALOGUE_INDEX.some(g => g.slug === slug) ? slug : 'all';
   });
   // the category pills follow the cursor: --mx / --my run from -1 to 1 across the header (see .cha-pick in
   // PlantsPage.css); the glasshouse itself stays still. Mouse only, never for reduced motion.
   const headerRef = useRef(null);
+  // the hero's looping animations (status pulse, tickers, drifting tags) stop while it is scrolled away
+  useOffscreenPause(headerRef);
   const artRef = useRef(null);
   useEffect(() => {
     const header = headerRef.current;
@@ -77,7 +84,13 @@ export default function PlantsPage() {
     setCategory(slug);
     document.getElementById('plants')?.scrollIntoView({ behavior: 'smooth' });
   };
-  const visible = groups.filter(g => category === 'all' || category === g.slug);
+  const [groups, setGroups] = useState(null);
+  useEffect(() => {
+    let live = true;
+    cataloguePromise.then((g) => { if (live) setGroups(g); });
+    return () => { live = false; };
+  }, []);
+  const visible = (groups ?? []).filter(g => category === 'all' || category === g.slug);
   // "All plants" with no search loads one category at a time as the visitor scrolls: each next section
   // arrives after a vine divider and a short loader. A chosen category or a search shows everything at once.
   const progressive = category === 'all' && !query.trim() && typeof IntersectionObserver !== 'undefined';
@@ -105,7 +118,10 @@ export default function PlantsPage() {
   }, [progressive, loaded, visible.length, filterKey]);
   const shownGroups = progressive ? visible.slice(0, loaded) : visible;
   const nextGroup = progressive && loaded < visible.length ? visible[loaded] : null;
-  const count = visible.reduce((sum, g) => sum + g.items.filter(p => `${p.name} ${p.botanical} ${g.title}`.toLowerCase().includes(query.trim().toLowerCase())).length, 0);
+  // until the catalogue arrives, the index gives the unfiltered count
+  const count = groups
+    ? visible.reduce((sum, g) => sum + g.items.filter(p => `${p.name} ${p.botanical} ${g.title}`.toLowerCase().includes(query.trim().toLowerCase())).length, 0)
+    : CATALOGUE_INDEX.filter(g => category === 'all' || category === g.slug).reduce((sum, g) => sum + g.count, 0);
   return <div className="plants-page">
     <Navbar page="plants" />
     <header ref={headerRef} className="catalogue-header">
@@ -115,11 +131,7 @@ export default function PlantsPage() {
       <Leaf className="ch-watermark" strokeWidth={0.6} aria-hidden="true" />
       <div className="catalogue-header-copy">
         {/* visiting details, as given in the footer */}
-        <p className="ch-visit">
-          <span className="ch-visit-open"><span className="ch-visit-dot" aria-hidden="true" />Open daily</span>
-          <span className="ch-visit-item"><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-          <span className="ch-visit-item"><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
-        </p>
+        <VisitBadge />
         <p className="indoor-kicker">The nursery collection</p>
         <h1>Find your kind of <em>green.</em></h1>
         <VineOrnament />
@@ -134,7 +146,7 @@ export default function PlantsPage() {
         </div>
         {/* the catalogue in figures: serif numerals over small caps, ruled off from the copy above */}
         <ul className="catalogue-stats">
-          <li><strong>{groups.length}</strong><span>Categories</span></li>
+          <li><strong>{CATALOGUE_INDEX.length}</strong><span>Categories</span></li>
           <li><strong>{total}</strong><span>Plants listed</span></li>
           <li><strong>7</strong><span>Days a week</span></li>
         </ul>
@@ -179,17 +191,17 @@ export default function PlantsPage() {
           <button type="button" aria-pressed={category === 'all'} onClick={() => setCategory('all')}>
             <LayoutGrid size={15} strokeWidth={2} aria-hidden="true" />All plants <span>{total}</span>
           </button>
-          {groups.map(g => {
+          {CATALOGUE_INDEX.map(g => {
             const Icon = CATEGORY_ICONS[g.slug] || Leaf;
             return <button type="button" key={g.slug} aria-pressed={category === g.slug} onClick={() => setCategory(g.slug)}>
-              <Icon size={15} strokeWidth={2} aria-hidden="true" />{g.title} <span>{g.items.length}</span>
+              <Icon size={15} strokeWidth={2} aria-hidden="true" />{g.title} <span>{g.count}</span>
             </button>;
           })}
         </nav>
         <div className="cc-status">
           <p aria-live="polite">
             <strong>{count}</strong> {count === 1 ? 'plant' : 'plants'}
-            {category !== 'all' && <> in <strong>{groups.find(g => g.slug === category)?.title}</strong></>}
+            {category !== 'all' && <> in <strong>{CATALOGUE_INDEX.find(g => g.slug === category)?.title}</strong></>}
             {query.trim() && <> matching <q>{query.trim()}</q></>}
           </p>
           {(query || category !== 'all') && (
@@ -199,6 +211,13 @@ export default function PlantsPage() {
           )}
         </div>
       </div>
+      {!groups && (
+        <div className="pp-catalogue-loading">
+          <p className="pp-next-loader is-loading" role="status" aria-live="polite">
+            <span className="pp-next-spinner" aria-hidden="true"><Leaf size={16} /></span>Loading the catalogue…
+          </p>
+        </div>
+      )}
       {shownGroups.map((g, i) => (
         <Fragment key={g.slug}>
           {/* in the progressive "All plants" view, a vine divider separates each loaded category */}
@@ -215,7 +234,7 @@ export default function PlantsPage() {
           </p>
         </div>
       )}
-      {!count && <div className="pp-empty"><h2>No plants match your search</h2><button className="pp-btn" onClick={() => { setQuery(''); setCategory('all'); }}>Show all plants</button></div>}
+      {groups && !count && <div className="pp-empty"><h2>No plants match your search</h2><button className="pp-btn" onClick={() => { setQuery(''); setCategory('all'); }}>Show all plants</button></div>}
     </main>
     <Suspense fallback={null}><Footer /></Suspense><WhatsAppButton />
   </div>;

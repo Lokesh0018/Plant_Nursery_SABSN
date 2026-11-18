@@ -9,7 +9,7 @@
   --gp-ink: #17271d;
   --gp-muted: #4a5b4c;
   --gp-lime: #c9d98a;
-  --gp-leaf: #4f7f3a;
+  --gp-leaf: #4b7837;
   --gp-ivory: #F7F3EA;
   --gp-paper: #fffdf8;
   background: var(--gp-ivory);
@@ -50,17 +50,6 @@
 .gp-hero > :not(.gp-corner) { position: relative; z-index: 1; }
 .gp-corner { position: absolute; top: -20px; right: -40px; width: clamp(160px, 18vw, 280px); height: auto; opacity: 0.5; pointer-events: none; }
 
-.gp-visit {
-  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem; margin: 0 0 1.4rem; padding: 0.4rem 0.9rem 0.4rem 0.5rem;
-  border: 1px solid rgba(201, 217, 138, 0.22); border-radius: 999px; background: rgba(255, 255, 255, 0.05);
-  color: rgba(244, 236, 217, 0.88); font-size: 0.8rem; font-weight: 500;
-}
-.gp-visit > span { display: inline-flex; align-items: center; gap: 0.35rem; }
-.gp-visit svg { color: var(--gp-lime); }
-.gp-visit-open { padding: 0.2rem 0.6rem; border-radius: 999px; background: rgba(201, 217, 138, 0.16); color: var(--gp-lime); font-weight: 700; }
-.gp-visit-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #9fd36f; }
-.gp-visit-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(159, 211, 111, 0.5); animation: gp-pulse 2.4s ease-out infinite; }
-@keyframes gp-pulse { from { transform: scale(0.5); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
 
 .gp-eyebrow { margin: 0; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gp-lime); }
 .gp-title { margin: 1rem 0 0.4rem; font-family: var(--font-serif); font-weight: 400; font-size: clamp(3rem, 6.4vw, 5.4rem); line-height: 1.02; color: #f7f6f0; }
@@ -319,7 +308,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gp-tile, .gp-lightbox-figure, .gp-hero-copy > *, .gp-print, .gp-visit-dot::after { animation: none; }
+  .gp-tile, .gp-lightbox-figure, .gp-hero-copy > *, .gp-print { animation: none; }
   .gp-tile-media img, .gp-tile-zoom, .gp-print, .gp-hero-btn, .gp-collections button { transition: none; }
   .gp-tile-btn:hover .gp-tile-media img, .gp-print:hover { transform: none; scale: none; }
 }
@@ -348,3 +337,11 @@
   color: #c9d98a; opacity: 0.045; rotate: -24deg; pointer-events: none;
 }
 @media (max-width: 900px) { .gp-hero > .gp-watermark { display: none; } }
+
+/* the "Full photo" hint on tiles that crop a portrait: always shown (touch screens have no hover), quieter at rest */
+.gp-tile-zoom.gp-tile-zoom--label {
+  display: flex; align-items: center; width: auto; gap: 0.35rem; padding: 0 0.7rem 0 0.55rem; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap;
+  opacity: 0.9; transform: none;
+}
+

@@ -3,11 +3,7 @@ import { ArrowUpRight, Leaf, X, MessageCircle, Phone, LayoutGrid, Info, Check, S
 import { plantBenefits, plantCare } from '../../data/plantBenefits';
 import './IndoorPlants.css';
 import PlantFrame from '../shared/PlantFrame';
-import catalogue from '../../data/plantCatalogue.json';
-
-const plants = catalogue.find(group => group.slug === 'indoor-plants').items;
-
-export default function IndoorPlants({ query = '', items = plants, category = 'Indoor Plants', slug = 'indoor-plants', title = 'A little green, closer to home.', subtitle = 'Thoughtful foliage for your everyday spaces.', icon: KickerIcon = Leaf }) {
+export default function IndoorPlants({ query = '', items = [], category = 'Indoor Plants', slug = 'indoor-plants', title = 'A little green, closer to home.', subtitle = 'Thoughtful foliage for your everyday spaces.', icon: KickerIcon = Leaf }) {
   const [selected, setSelected] = useState(null);
   const dialog = useRef(null);
   const opener = useRef(null);

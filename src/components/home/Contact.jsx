@@ -1,73 +1,18 @@
-import React, { useState, useRef } from 'react';
-import gsap from 'gsap';
-import { ArrowRight, Check, Mail, ShieldCheck, Leaf, Sprout } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, MessageCircle, Phone, Clock, MapPin, Send } from 'lucide-react';
 import './Contact.css';
 
+const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I would like to know more about your plants and services.')}`;
+
+/*
+ * The home page's closing call to action: how to reach the nursery, with WhatsApp first (the quickest reply),
+ * a direct call, and the full contact page. (It replaces a newsletter form that had no list behind it.)
+ */
 export default function Contact() {
-  const [email, setEmail] = useState('');
-  const [isHovered, setIsHovered] = useState(false);
-  const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success'
-  const sectionRef = useRef(null);
-  const buttonRef = useRef(null);
-
-
-  // Magnetic button on mouse move
-  const handleMouseMove = (e) => {
-    if (!sectionRef.current) return;
-
-    // Magnetic Button logic
-    if (isHovered && buttonRef.current) {
-      const btnRect = buttonRef.current.getBoundingClientRect();
-      const btnCenterX = btnRect.left + btnRect.width / 2;
-      const btnCenterY = btnRect.top + btnRect.height / 2;
-
-      const distX = (e.clientX - btnCenterX) * 0.3;
-      const distY = (e.clientY - btnCenterY) * 0.3;
-
-      gsap.to(buttonRef.current, {
-        x: distX,
-        y: distY,
-        duration: 0.4,
-        ease: 'power2.out'
-      });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    if (buttonRef.current) {
-      gsap.to(buttonRef.current, {
-        x: 0,
-        y: 0,
-        duration: 0.7,
-        ease: 'elastic.out(1, 0.3)'
-      });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email && status === 'idle') {
-      setStatus('submitting');
-      // Simulate network request
-      setTimeout(() => {
-        setStatus('success');
-        setEmail('');
-        // Reset after 3 seconds
-        setTimeout(() => setStatus('idle'), 3000);
-      }, 800);
-    }
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="contact-premium-section"
-      onMouseMove={handleMouseMove}
-    >
+    <section id="contact" className="contact-premium-section" aria-labelledby="contact-title">
       {/* Editorial Watermark & Ambient Atmosphere */}
-      <div className="contact-watermark" aria-hidden="true">JOURNAL</div>
+      <div className="contact-watermark" aria-hidden="true">CONTACT</div>
       <div className="contact-ambient-orb contact-ambient-orb--left" aria-hidden="true" />
       <div className="contact-ambient-orb contact-ambient-orb--right" aria-hidden="true" />
 
@@ -88,62 +33,37 @@ export default function Contact() {
         <div className="contact-text-col">
           <div className="contact-handwriting">Stay rooted.</div>
           <span className="contact-eyebrow contact-reveal">
-            <Mail size={14} className="contact-eyebrow-icon" />
-            The Nursery Journal
+            <Send size={14} className="contact-eyebrow-icon" aria-hidden="true" />
+            Talk to the nursery
           </span>
-          <h2 className="contact-title contact-reveal">Let's grow together.</h2>
+          <h2 id="contact-title" className="contact-title contact-reveal">Let's grow together.</h2>
           <p className="contact-subtitle contact-reveal">
-            Subscribe to our journal for botanical insights, expert care guides, and exclusive early access to new collections.
+            Plants for your home, a landscape project or a bulk order: tell us what you have in mind and we will
+            help you choose.
           </p>
           <ul className="contact-perks contact-reveal">
-            <li><Leaf size={14} /> Seasonal care guides</li>
-            <li><Sprout size={14} /> First look at new stock</li>
-            <li><ShieldCheck size={14} /> No spam, unsubscribe anytime</li>
+            <li><Clock size={14} aria-hidden="true" /> Open daily, 7 am – 6 pm</li>
+            <li><MapPin size={14} aria-hidden="true" /> Madhurawada, Visakhapatnam</li>
+            <li><MessageCircle size={14} aria-hidden="true" /> Quickest reply on WhatsApp</li>
           </ul>
         </div>
 
         <div className="contact-form-col contact-reveal">
           <div className="form-glass-wrapper">
-            <form className="premium-form" onSubmit={handleSubmit}>
-              <div className="premium-input-group">
-                <label htmlFor="contact-email" className="contact-sr-only">Email address</label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="premium-input"
-                />
-                <button
-                  ref={buttonRef}
-                  type="submit"
-                  className={`premium-submit ${status !== 'idle' ? status : ''}`}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={handleMouseLeave}
-                  disabled={status !== 'idle'}
-                >
-                  <span className="submit-text">
-                    {status === 'idle' ? 'Subscribe' : status === 'submitting' ? 'Sending...' : 'Subscribed!'}
-                  </span>
-                  <span className={`submit-icon-wrapper ${isHovered && status === 'idle' ? 'hovered' : ''}`}>
-                    {status === 'success' ? (
-                      <Check size={18} strokeWidth={2} className="success-icon" />
-                    ) : (
-                      <ArrowRight size={18} strokeWidth={1.5} />
-                    )}
-                  </span>
-                </button>
-              </div>
-            </form>
+            <div className="contact-actions">
+              <a className="premium-submit contact-action-main" href={WA_LINK} target="_blank" rel="noopener noreferrer">
+                <MessageCircle size={18} strokeWidth={1.8} aria-hidden="true" />
+                <span className="submit-text">Chat on WhatsApp</span>
+              </a>
+              <a className="contact-action" href="tel:+919849936169">
+                <Phone size={16} strokeWidth={2} aria-hidden="true" /> Call
+              </a>
+              <a className="contact-action" href="/contact" aria-label="All contact options">
+                All options <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
+              </a>
+            </div>
           </div>
-          <p className="contact-form-note" aria-live="polite">
-            {status === 'success'
-              ? 'Welcome to the journal. Your first issue is on its way.'
-              : 'One short letter a month from the Kadiyam nursery floor.'}
-          </p>
+          <p className="contact-form-note">+91 98499 36169 · +91 94903 78689 · uppadakumaraswamy@gmail.com</p>
         </div>
 
       </div>

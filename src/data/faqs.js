@@ -5,7 +5,7 @@
 export const FAQS = [
   {
     q: 'Where is SABSN Plant Nursery located?',
-    a: 'Sri Ayyappa Bala Sai Nursery (SABSN) serves customers in Rajahmundry and Visakhapatnam, Andhra Pradesh, offering a wide range of plants and landscaping solutions.',
+    a: 'Sri Ayyappa Bala Sai Nursery (SABSN) is headquartered in Madhurawada, Visakhapatnam, Andhra Pradesh, with its nursery beds in Kadiyam. It serves customers in Rajahmundry and Visakhapatnam with a wide range of plants and landscaping solutions.',
   },
   {
     q: 'What types of plants are available at SABSN Nursery?',

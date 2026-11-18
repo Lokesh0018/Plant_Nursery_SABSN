@@ -110,7 +110,7 @@ export default function Footer() {
         <div className="footer-top-grid footer-reveal">
           <div className="footer-brand-col">
             <div className="footer-brand-row">
-              <img src="/images/brand/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery logo" className="footer-brand-logo" width="64" height="64" />
+              <img src="/images/brand/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery logo" className="footer-brand-logo" width="64" height="64" loading="lazy" decoding="async" />
               <h3 className="footer-brand-name">SABSN</h3>
             </div>
             <p className="footer-brand-desc">

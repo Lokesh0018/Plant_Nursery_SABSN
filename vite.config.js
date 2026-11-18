@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react'
+import { readFileSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import { faqJsonLd } from './src/data/faqs.js'
 
@@ -26,6 +27,24 @@ function slimPlantCatalogue() {
   }
 }
 
+// `virtual:plant-index`: each catalogue category's slug, title and plant count, a few hundred bytes. The Plants
+// page header, filter chips and counts read this, so the full catalogue (a separate chunk) is only needed for the grid.
+const PLANT_INDEX_ID = 'virtual:plant-index'
+function plantIndex() {
+  const file = new URL('./src/data/plantCatalogue.json', import.meta.url)
+  return {
+    name: 'plant-index',
+    resolveId(id) { return id === PLANT_INDEX_ID ? '\0' + PLANT_INDEX_ID : null },
+    load(id) {
+      if (id !== '\0' + PLANT_INDEX_ID) return null
+      this.addWatchFile(file.pathname.replace(/^\/([A-Za-z]:)/, '$1'))
+      const groups = JSON.parse(readFileSync(file, 'utf8'))
+      const index = groups.map((g) => ({ slug: g.slug, title: g.title, count: g.items.length }))
+      return `export default ${JSON.stringify(index)}`
+    },
+  }
+}
+
 // The home-page FAQ as schema.org FAQPage JSON-LD in the static HTML, so answer engines and crawlers
 // that do not run JavaScript still read the questions and answers (same source as Faq.jsx)
 function faqStructuredData() {
@@ -39,7 +58,7 @@ function faqStructuredData() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), slimPlantCatalogue(), faqStructuredData()],
+  plugins: [react(), slimPlantCatalogue(), plantIndex(), faqStructuredData()],
   build: {
     target: 'es2020', // no legacy transforms; every supported browser handles this natively
     rollupOptions: {

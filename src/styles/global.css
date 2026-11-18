@@ -113,3 +113,15 @@ section[id] {
 .is-offscreen * {
   animation-play-state: paused !important;
 }
+
+/* Performance on phones: backdrop blur is one of the costliest effects to composite on mobile GPUs, and
+   every glass surface here already sits on a dark or tinted background, so it is dropped below 760 px.
+   The navbar capsule, which floats over page content, gets a near-solid background in its place. */
+@media (max-width: 760px) {
+  *, *::before, *::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .navbar-container.scrolled { background: linear-gradient(180deg, rgba(10, 36, 20, 0.96), rgba(8, 30, 17, 0.93)) !important; }
+}
+

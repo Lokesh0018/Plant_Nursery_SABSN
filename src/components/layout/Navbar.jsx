@@ -15,12 +15,19 @@ function goToSection(page, id) {
   }
 }
 
+// the menu: `key` matches the active-section names; every item but Home is its own page
+const NAV_ITEMS = [
+  { label: 'Home', key: 'home', href: '/' },
+  { label: 'About', key: 'about', href: '/about' },
+  { label: 'Plants', key: 'plants', href: '/plants' },
+  { label: 'Services', key: 'services', href: '/services' },
+  { label: 'Pots', key: 'pots', href: '/pots' },
+  { label: 'Gallery', key: 'gallery', href: '/gallery' },
+];
+
 export default function Navbar({ page = 'home' }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  // One theme throughout: forest glass with cream text, matching the hero, scrollbar and WhatsApp button
-  const light = true;
-  const darkGreen = '#f4ecd9';
-  const textMuted = 'rgba(244, 236, 217, 0.78)';
+  // One theme throughout: forest glass with cream text, matching the hero, scrollbar and WhatsApp button (see Navbar.css)
 
   // on the home page the active item follows the scroll; other pages light up their own item
   const [activeSection, setActiveSection] = useState(page === 'home' ? 'home' : page);
@@ -98,94 +105,42 @@ export default function Navbar({ page = 'home' }) {
           else window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
       >
-        <img
-          src="/images/brand/logo-256.webp"
-          alt="Sri Ayyappa Bala Sai Nursery logo"
-          width="44"
-          height="44"
-          style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '50%',
-            background: '#f8f6ee',
-            boxShadow: '0 0 0 2px rgba(244, 236, 217, 0.35), 0 6px 16px rgba(0, 0, 0, 0.35)',
-            transition: 'box-shadow 0.3s ease',
-            flex: 'none',
-          }}
-        />
-        <div className="nav-brand-text" style={{ display: 'flex', flexDirection: 'column' }}>
-          <span style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '1.5rem',
-            fontWeight: '700',
-            color: darkGreen,
-            letterSpacing: '-0.02em',
-            lineHeight: 1
-          }}>
-            SABSN
-          </span>
-          <span style={{
-            fontSize: '0.45rem',
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: textMuted,
-            fontWeight: '600',
-            marginTop: '3px'
-          }}>
-            Sri Ayyappa Bala Sai Nursery
-          </span>
+        <img className="nav-logo" src="/images/brand/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery logo" width="44" height="44" />
+        <div className="nav-brand-text">
+          <span className="nav-brand-name">SABSN</span>
+          <span className="nav-brand-sub">Sri Ayyappa Bala Sai Nursery</span>
         </div>
       </a>
 
-      {/* Center Nav Links */}
+      {/* Center Nav Links: real links, so they are reachable by keyboard and open in a new tab if asked */}
       <ul ref={navRef} className={`nav-links ${isMobileOpen ? 'mobile-open' : ''}`}>
 
-        {/* Sliding Indicator Dot */}
-        <div className="nav-indicator" style={{
-          position: 'absolute',
-          bottom: '-7px',
-          height: '4px',
-          backgroundColor: darkGreen,
-          borderRadius: '50%',
-          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          pointerEvents: 'none',
-          ...indicatorStyle
-        }} />
+        {/* Sliding Indicator Dot (position comes from the active item) */}
+        <div className="nav-indicator" style={indicatorStyle} />
 
-        {['Home', 'About', 'Plants', 'Services', 'Pots', 'Gallery'].map((item) => {
-          const isActive = activeSection === item.toLowerCase();
+        {NAV_ITEMS.map(({ label, key, href }) => {
+          const isActive = activeSection === key;
           return (
-            <li
-              key={item}
-              className={isActive ? 'active-nav-item' : ''}
-              style={{
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                fontWeight: isActive ? '600' : '500',
-                color: isActive && !isMobileOpen ? darkGreen : (isMobileOpen ? '#fff' : textMuted),
-                transition: 'all 0.3s ease',
-                position: 'relative'
-              }}
-              onMouseEnter={(e) => { if(!isActive && !isMobileOpen) e.currentTarget.style.color = darkGreen }}
-              onMouseLeave={(e) => { if(!isActive && !isMobileOpen) e.currentTarget.style.color = textMuted }}
-              onClick={() => {
-                setIsMobileOpen(false);
-                setActiveSection(item.toLowerCase());
-                // About, Plants, Services and Gallery are their own pages (/about, /plants, /services, /gallery)
-                const own = { Pots: 'pots', About: 'about', Plants: 'plants', Services: 'services', Gallery: 'gallery' }[item];
-                if (own) {
-                  if (page === own) window.scrollTo({ top: 0, behavior: 'smooth' });
-                  else window.location.href = `/${own}`;
-                } else {
-                  goToSection(page, {
-                    Home: 'home', Pots: 'pots-collection',
-                  }[item]);
-                }
-              }}
-            >
-              <span>{item}</span>
+            <li key={label} className={isActive ? 'active-nav-item' : ''}>
+              <a
+                className="nav-link"
+                href={href}
+                aria-current={isActive && page === key ? 'page' : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMobileOpen(false);
+                  setActiveSection(key);
+                  // About, Plants, Services, Pots and Gallery are their own pages; Home scrolls on the home page
+                  if (key !== 'home') {
+                    if (page === key) window.scrollTo({ top: 0, behavior: 'smooth' });
+                    else window.location.href = href;
+                  } else {
+                    goToSection(page, 'home');
+                  }
+                }}
+              >
+                {label}
+              </a>
             </li>
           );
         })}
@@ -194,36 +149,18 @@ export default function Navbar({ page = 'home' }) {
       {/* Right Controls */}
       <div className="nav-right">
         {/* Animated Search Bar Wrapper */}
-        <div style={{ position: 'relative', width: '27px', height: '27px', display: 'flex', alignItems: 'center' }}>
-          <div className={`nav-search ${isSearchOpen ? 'open' : ''}`} style={{
-            position: 'absolute',
-            right: 0,
-            display: 'flex',
-            alignItems: 'center',
-            background: isSearchOpen ? 'rgba(244, 236, 217, 0.12)' : 'transparent',
-            borderRadius: '100px',
-            padding: isSearchOpen ? '0.4rem 0.8rem' : '4px',
-            transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-            width: isSearchOpen ? (window.innerWidth <= 900 ? '130px' : '180px') : '27px',
-            overflow: 'hidden'
-          }}>
-            <button style={{
-              border: 'none',
-              background: 'transparent',
-              cursor: 'pointer',
-              color: darkGreen,
-              display: 'flex',
-              alignItems: 'center',
-              padding: 0,
-              minWidth: '19px'
-            }}
-            aria-label="Search"
-            onClick={() => {
-              if (!isSearchOpen) {
-                setIsSearchOpen(true);
-                setTimeout(() => searchInputRef.current?.focus(), 100);
-              }
-            }}
+        <div className="nav-search-wrap">
+          <div className={`nav-search ${isSearchOpen ? 'open' : ''}`}>
+            <button
+              type="button"
+              className="nav-search-btn"
+              aria-label="Search"
+              onClick={() => {
+                if (!isSearchOpen) {
+                  setIsSearchOpen(true);
+                  setTimeout(() => searchInputRef.current?.focus(), 100);
+                }
+              }}
             >
               <Search size={19} strokeWidth={1.8} />
             </button>
@@ -231,19 +168,9 @@ export default function Navbar({ page = 'home' }) {
             <input
               ref={searchInputRef}
               type="text"
+              className="nav-search-input"
               placeholder="Find plants..."
-              style={{
-                border: 'none',
-                background: 'transparent',
-                outline: 'none',
-                width: isSearchOpen ? '100%' : '0',
-                opacity: isSearchOpen ? 1 : 0,
-                paddingLeft: isSearchOpen ? '0.6rem' : '0',
-                color: darkGreen,
-                fontSize: '0.85rem',
-                fontWeight: '500',
-                transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
-              }}
+              aria-label="Find plants"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && e.target.value.trim() !== '' && (page === 'plants' || page === 'pots')) {
                   // the plants page filters its own grid
@@ -281,40 +208,23 @@ export default function Navbar({ page = 'home' }) {
           </div>
         </div>
 
-        <button className="shop-now-btn" style={{
-          backgroundColor: darkGreen,
-          color: light ? '#163624' : '#ffffff',
-          padding: '0.65rem 1.3rem',
-          borderRadius: '100px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          fontSize: '0.85rem',
-          fontWeight: '500',
-          cursor: 'pointer',
-          transition: 'all 0.2s ease',
-          boxShadow: '0 4px 12px rgba(22, 54, 36, 0.15)',
-          border: 'none'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-1px)';
-          e.currentTarget.style.opacity = '0.94';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.opacity = '1';
-        }}
-        // the contact page; already there, it scrolls back to the top
-        aria-current={page === 'contact' ? 'page' : undefined}
-        onClick={() => { if (page === 'contact') window.scrollTo({ top: 0, behavior: 'smooth' }); else window.location.href = '/contact'; }}>
+        <button
+          type="button"
+          className="shop-now-btn"
+          // the contact page; already there, it scrolls back to the top
+          aria-current={page === 'contact' ? 'page' : undefined}
+          onClick={() => { if (page === 'contact') window.scrollTo({ top: 0, behavior: 'smooth' }); else window.location.href = '/contact'; }}
+        >
           <span>Contact</span>
           <ArrowRight size={14} />
         </button>
 
         {/* Mobile Menu Toggle */}
         <button
-          className="mobile-menu-btn"
-          style={{ color: isMobileOpen ? '#163624' : darkGreen }}
+          type="button"
+          className={`mobile-menu-btn${isMobileOpen ? ' is-open' : ''}`}
+          aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isMobileOpen}
           onClick={() => setIsMobileOpen(!isMobileOpen)}
         >
           {isMobileOpen ? <X size={24} /> : <Menu size={24} />}

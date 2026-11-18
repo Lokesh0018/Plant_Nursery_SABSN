@@ -1,0 +1,45 @@
+/* The page-header badge (VisitBadge.jsx): a glass pill on the forest headers, the live status picked out in lime
+   (open) or warm terracotta (closed), then the hours and the place. */
+.visit-badge {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.9rem;
+  margin: 0 0 1.4rem;
+  padding: 0.4rem 0.9rem 0.4rem 0.5rem;
+  border: 1px solid rgba(201, 217, 138, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(244, 236, 217, 0.88);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.visit-badge > span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.visit-badge svg { color: #c9d98a; }
+
+.visit-badge-status {
+  gap: 0.45rem !important;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(201, 217, 138, 0.16);
+  color: #c9d98a;
+  font-weight: 700;
+}
+.visit-badge-status.is-closed { background: rgba(231, 160, 120, 0.16); color: #f2c3a2; }
+
+.visit-badge-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #9fd36f; }
+.visit-badge-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(159, 211, 111, 0.5);
+  animation: visit-badge-pulse 2.4s ease-out infinite;
+}
+.is-closed .visit-badge-dot { background: currentColor; }
+.is-closed .visit-badge-dot::after { display: none; }
+@keyframes visit-badge-pulse { from { transform: scale(0.5); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .visit-badge-dot::after { animation: none; }
+}

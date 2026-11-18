@@ -8,7 +8,7 @@
   --pp-ink: #17271d;
   --pp-muted: #4a5b4c;
   --pp-lime: #c9d98a;
-  --pp-leaf: #4f7f3a;
+  --pp-leaf: #4b7837;
   --pp-ivory: #F7F3EA;
   --pp-paper: #fffdf8;
   background: var(--pp-ivory);
@@ -210,7 +210,7 @@
   .cha-pick > svg { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cha-arch, .cha-pick, .catalogue-header-copy > *, .ch-visit-dot::after { animation: none; }
+  .cha-arch, .cha-pick, .catalogue-header-copy > * { animation: none; }
   .catalogue-header-art * { translate: none !important; transition: none; }
   .ch-btn, .ch-btn svg { transition: none; }
   .ch-btn:hover svg { transform: none; }
@@ -232,18 +232,7 @@
 .plants-page .catalogue-stats strong { margin: 0; font-family: var(--font-serif); font-size: clamp(1.9rem, 2.5vw, 2.35rem); font-weight: 500; line-height: 1; font-variant-numeric: lining-nums; color: var(--pp-lime); }
 .plants-page .catalogue-stats span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 236, 217, 0.72); }
 
-/* visiting badge above the kicker */
-.ch-visit {
-  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem; margin: 0 0 1.4rem; padding: 0.4rem 0.9rem 0.4rem 0.5rem;
-  border: 1px solid rgba(201, 217, 138, 0.22); border-radius: 999px; background: rgba(255, 255, 255, 0.05);
-  color: rgba(244, 236, 217, 0.88); font-size: 0.8rem; font-weight: 500;
-}
-.ch-visit-open { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.2rem 0.6rem; border-radius: 999px; background: rgba(201, 217, 138, 0.16); color: var(--pp-lime); font-weight: 700; }
-.ch-visit-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #9fd36f; }
-.ch-visit-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(159, 211, 111, 0.5); animation: ch-pulse 2.4s ease-out infinite; }
 @keyframes ch-pulse { from { transform: scale(0.5); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
-.ch-visit-item { display: inline-flex; align-items: center; gap: 0.35rem; }
-.ch-visit-item svg { color: var(--pp-lime); }
 
 /* header actions */
 .ch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 2rem; }
@@ -378,7 +367,7 @@
 }
 .plants-page .catalogue-search > svg { flex: none; color: var(--pp-leaf); }
 .plants-page .catalogue-search input { font-size: 1rem; color: var(--pp-ink); }
-.plants-page .catalogue-search input::placeholder { color: #7b8a78; }
+.plants-page .catalogue-search input::placeholder { color: #647061; }
 /* the browser's own clear cross is replaced by ours */
 .plants-page .catalogue-search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
 .plants-page .catalogue-search:focus-within { outline: 0; border-color: var(--pp-leaf); background: #fff; box-shadow: 0 0 0 4px rgba(201, 217, 138, 0.45); }
@@ -564,7 +553,7 @@
 .plants-page .indoor-details .indoor-cta--ghost { background: transparent; color: var(--pp-forest); border-color: rgba(22, 54, 36, 0.25); }
 .plants-page .indoor-details .indoor-cta--ghost:hover { background: #eef3e4; border-color: var(--pp-leaf); color: var(--pp-forest); }
 .plants-page .indoor-details .indoor-cta:focus-visible { outline: 2px solid var(--pp-leaf); outline-offset: 3px; }
-.plants-page .indoor-details .indoor-note { display: flex; align-items: center; gap: 0.4rem; margin: 1rem 0 0; font-size: 0.78rem; color: #6b7d68; }
+.plants-page .indoor-details .indoor-note { display: flex; align-items: center; gap: 0.4rem; margin: 1rem 0 0; font-size: 0.78rem; color: #61725f; }
 .plants-page .indoor-close {
   top: 1rem; right: 1rem; z-index: 3; width: 44px; height: 44px; border: 1px solid rgba(22, 54, 36, 0.12);
   background: var(--pp-paper); color: var(--pp-forest); transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
@@ -670,4 +659,7 @@
 /* sections below the first are skipped by the browser's layout and paint work until they scroll near;
    the intrinsic size keeps the scrollbar steady meanwhile */
 .plants-page .indoor-category ~ .indoor-category { content-visibility: auto; contain-intrinsic-size: auto 1400px; }
+
+/* shown for the moment the catalogue chunk takes to arrive; reserves space so the footer does not jump */
+.pp-catalogue-loading { min-height: 60vh; padding-top: 3rem; }
 

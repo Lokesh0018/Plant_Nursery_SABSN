@@ -1,9 +1,11 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
-import { Leaf, ArrowLeft, ArrowRight, ArrowDown, X, Images, Expand, Clock, MapPin, MessageCircle } from 'lucide-react';
+import useOffscreenPause from '../hooks/useOffscreenPause';
+import { Leaf, ArrowLeft, ArrowRight, ArrowDown, X, Images, Expand, MessageCircle } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import WhatsAppButton from '../components/layout/WhatsAppButton';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
+import VisitBadge from '../components/shared/VisitBadge';
 import { GALLERY_GROUPS, galleryItems, gallerySrcSet } from '../data/gallery';
 import './GalleryPage.css';
 
@@ -86,6 +88,9 @@ function Lightbox({ items, index, onClose, onMove }) {
 }
 
 export default function GalleryPage() {
+  const heroRef = useRef(null);
+  // the hero's looping animations (status pulse, tickers, drifting tags) stop while it is scrolled away
+  useOffscreenPause(heroRef);
   const [filter, setFilter] = useState('all');
   const [open, setOpen] = useState(null); // index into `shown`, or null
 
@@ -111,16 +116,12 @@ export default function GalleryPage() {
     <div className="gallery-page">
       <Navbar page="gallery" />
 
-      <header className="gp-hero">
+      <header ref={heroRef} className="gp-hero">
         <img className="gp-corner" src="/images/home/hero/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
         {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
         <Leaf className="gp-watermark" strokeWidth={0.6} aria-hidden="true" />
         <div className="gp-hero-copy">
-          <p className="gp-visit">
-            <span className="gp-visit-open"><span className="gp-visit-dot" aria-hidden="true" />Open daily</span>
-            <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
-          </p>
+          <VisitBadge />
           <p className="gp-eyebrow">The living archive</p>
           <h1 className="gp-title">Our <em>Gallery</em></h1>
           <VineOrnament />
@@ -150,7 +151,7 @@ export default function GalleryPage() {
         <div className="gp-collage" aria-hidden="true">
           {PRINTS.map((item, i) => (
             <figure key={item.id || item.src} className={`gp-print gp-print--${'abc'[i]}`}>
-              <img src={item.src} srcSet={gallerySrcSet(item)} sizes="(max-width: 900px) 60vw, 420px" alt="" width={item.width} height={item.height} decoding="async" style={{ objectPosition: item.pos || 'center' }} />
+              <img src={item.src} srcSet={gallerySrcSet(item)} sizes="(max-width: 900px) 60vw, 420px" alt="" width={item.width} height={item.height} decoding="async" fetchPriority={i === 0 ? 'high' : undefined} style={{ objectPosition: item.pos || 'center' }} />
               <figcaption>{item.tag}</figcaption>
             </figure>
           ))}
@@ -209,7 +210,8 @@ export default function GalleryPage() {
                         <button type="button" className="gp-tile-btn" onClick={() => setOpen(at)} aria-label={`Open photo: ${item.title}`}>
                           <span className="gp-tile-media">
                             <GalleryPhoto item={item} lazy crop sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 640px" />
-                            <span className="gp-tile-zoom" aria-hidden="true"><Expand size={16} /></span>
+                            {/* tiles that crop a portrait say so, so it is clear the full photo opens on tap */}
+                            <span className={`gp-tile-zoom${item.fixedRow ? ' gp-tile-zoom--label' : ''}`} aria-hidden="true"><Expand size={16} />{item.fixedRow && 'Full photo'}</span>
                             <span className="gp-tile-caption">
                               <span className="gp-tag">{item.tag}</span>
                               <span className="gp-tile-title">{item.title}</span>

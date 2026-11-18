@@ -7,7 +7,7 @@
   --cp-forest: #163624;
   --cp-ink: #17271d;
   --cp-muted: #4a5b4c;
-  --cp-leaf: #4f7f3a;
+  --cp-leaf: #4b7837;
   --cp-lime: #c9d98a;
   --cp-ivory: #F7F3EA;
   --cp-paper: #fffdf8;
@@ -52,16 +52,6 @@
   color: var(--cp-lime); opacity: 0.045; rotate: -24deg; pointer-events: none;
 }
 
-.cp-visit {
-  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem; margin: 0 0 1.4rem; padding: 0.4rem 0.9rem 0.4rem 0.5rem;
-  border: 1px solid rgba(201, 217, 138, 0.22); border-radius: 999px; background: rgba(255, 255, 255, 0.05);
-  color: rgba(244, 236, 217, 0.88); font-size: 0.8rem; font-weight: 500;
-}
-.cp-visit > span { display: inline-flex; align-items: center; gap: 0.35rem; }
-.cp-visit svg { color: var(--cp-lime); }
-.cp-visit-open { padding: 0.2rem 0.6rem; border-radius: 999px; background: rgba(201, 217, 138, 0.16); color: var(--cp-lime); font-weight: 700; }
-.cp-visit-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #9fd36f; }
-.cp-visit-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(159, 211, 111, 0.5); animation: cp-pulse 2.4s ease-out infinite; }
 @keyframes cp-pulse { from { transform: scale(0.5); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
 
 /* small caps with a short lime rule in front, as on the other headers */
@@ -166,7 +156,7 @@
   appearance: none; padding-right: 2.6rem; cursor: pointer;
   background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23163624' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E") no-repeat right 0.95rem center;
 }
-.cp-field input::placeholder, .cp-field textarea::placeholder { color: #7a867b; }
+.cp-field input::placeholder, .cp-field textarea::placeholder { color: #656f66; }
 .cp-field input:hover, .cp-field select:hover, .cp-field textarea:hover { border-color: rgba(22, 54, 36, 0.35); }
 .cp-field input:focus, .cp-field select:focus, .cp-field textarea:focus { outline: none; border-color: var(--cp-leaf); box-shadow: 0 0 0 4px rgba(79, 127, 58, 0.16); }
 .cp-form-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem; }
@@ -245,7 +235,7 @@
   .cp-faq-go { grid-column: 1 / -1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cp-hero-copy > *, .cp-visit-dot::after { animation: none; }
+  .cp-hero-copy > * { animation: none; }
   .cp-btn, .cp-card, .cp-card a, .cp-faq, .cp-faq-go svg, .cp-field input, .cp-field select, .cp-field textarea { transition: none; }
 }
 
@@ -340,7 +330,7 @@
 /* 6 am to 8 pm; the open window (7 am to 6 pm) runs from 1/14 to 12/14 of the way along */
 .cp-hours-window { position: absolute; top: 0; bottom: 0; left: calc(100% / 14); right: calc(100% * 2 / 14); border-radius: 999px; background: linear-gradient(90deg, #9fc06a, var(--cp-leaf)); }
 .cp-hours-now { position: absolute; top: 50%; width: 14px; height: 14px; translate: -50% -50%; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px var(--cp-forest), 0 3px 8px rgba(22, 54, 36, 0.3); }
-.cp-hours-scale { display: flex; justify-content: space-between; margin-top: 0.45rem; font-size: 0.66rem; font-weight: 600; color: #7a867b; }
+.cp-hours-scale { display: flex; justify-content: space-between; margin-top: 0.45rem; font-size: 0.66rem; font-weight: 600; color: #656f66; }
 
 @media (max-width: 900px) {
   .cp-board { width: min(100%, 460px); margin-top: 0.5rem; }
@@ -435,7 +425,7 @@
 /* fields: a leading icon inside each input */
 .cp-fields { margin-top: 1.4rem; }
 .cp-input { position: relative; display: block; }
-.cp-input > svg { position: absolute; left: 0.95rem; top: 50%; translate: 0 -50%; color: #8a968b; pointer-events: none; transition: color 0.2s ease; }
+.cp-input > svg { position: absolute; left: 0.95rem; top: 50%; translate: 0 -50%; color: #657166; pointer-events: none; transition: color 0.2s ease; }
 .cp-input input { padding-left: 2.7rem; }
 .cp-input:focus-within > svg { color: var(--cp-leaf); }
 .cp-field input, .cp-field textarea { background: #fff; border-color: rgba(22, 54, 36, 0.16); }
@@ -444,7 +434,7 @@
 .cp-field input:user-invalid, .cp-field textarea:user-invalid { border-color: #b4532a; box-shadow: 0 0 0 4px rgba(180, 83, 42, 0.12); }
 .cp-field-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
 .cp-field-row > span { font-size: 0.82rem; font-weight: 700; color: var(--cp-forest); }
-.cp-count { font-size: 0.72rem; font-weight: 600; color: #7a867b; font-variant-numeric: tabular-nums; }
+.cp-count { font-size: 0.72rem; font-weight: 600; color: #656f66; font-variant-numeric: tabular-nums; }
 
 /* actions */
 .cp-form-actions { align-items: center; margin-top: 1.6rem; }

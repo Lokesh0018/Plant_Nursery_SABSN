@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Sprout, ArrowRight, Leaf, Flower2, Apple, TreeDeciduous, Shrub } from 'lucide-react';
 import FallingLeaves from '../shared/FallingLeaves';
 import useOffscreenPause from '../../hooks/useOffscreenPause';
+import { subscribeScroll } from '../../lib/scrollStore';
 import './Hero.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -145,17 +146,15 @@ export default function Hero() {
         };
         // on scroll the hero moves under a still cursor: re-evaluate so the layers settle to
         // centre once the hero has scrolled away, and pick up correctly when it returns
-        const onScroll = () => { if (!frame) frame = requestAnimationFrame(apply); };
+        // (the shared scroll store reports scroll and resize, so there is one listener for the whole app)
         window.addEventListener('mousemove', onMove, { passive: true });
         document.addEventListener('mouseleave', onLeave);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
+        const unsubscribe = subscribeScroll(() => { if (!frame) frame = requestAnimationFrame(apply); });
         return () => {
           if (frame) cancelAnimationFrame(frame);
           window.removeEventListener('mousemove', onMove);
           document.removeEventListener('mouseleave', onLeave);
-          window.removeEventListener('scroll', onScroll);
-          window.removeEventListener('resize', onScroll);
+          unsubscribe();
         };
       }
     }, sectionRef);

@@ -1,9 +1,12 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import useOffscreenPause from '../hooks/useOffscreenPause';
+import useOpenStatus from '../hooks/useOpenStatus';
 import { Leaf, Clock, MapPin, Phone, Mail, MessageCircle, ArrowRight, ArrowUpRight, Navigation, Send, CircleHelp, Package, User, ShieldCheck, Sprout, Trees, Truck, Flower2 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import WhatsAppButton from '../components/layout/WhatsAppButton';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
+import VisitBadge from '../components/shared/VisitBadge';
 import './ContactPage.css';
 
 const Footer = lazy(() => import('../components/layout/Footer'));
@@ -30,25 +33,6 @@ const TOPICS = [
 ];
 const MESSAGE_MAX = 600;
 
-// open or closed right now, from the posted hours (daily, 7 am to 6 pm) in India Standard Time, and
-// where "now" falls on the header's 6 am to 8 pm hours line (null outside it); re-checked every minute
-function useOpenStatus() {
-  const read = () => {
-    const [h, m] = new Intl.DateTimeFormat('en-GB', { hour: 'numeric', minute: 'numeric', hourCycle: 'h23', timeZone: 'Asia/Kolkata' })
-      .format(new Date()).split(':').map(Number);
-    const mins = h * 60 + m;
-    const now = mins >= 7 * 60 && mins < 18 * 60;
-    const mark = mins >= 6 * 60 && mins <= 20 * 60 ? ((mins - 6 * 60) / (14 * 60)) * 100 : null;
-    return { now, mark, label: now ? 'until 6 pm' : 'opens 7 am' };
-  };
-  const [status, setStatus] = useState(read);
-  useEffect(() => {
-    const id = setInterval(() => setStatus(read()), 60000);
-    return () => clearInterval(id);
-  }, []);
-  return status;
-}
-
 /*
  * /contact: the ways to reach the nursery in one place. A forest header (the same family as the Plants,
  * Services, Pots and Gallery headers) with a contact panel (live status, a row per channel, today's hours), a
@@ -62,6 +46,9 @@ export default function ContactPage() {
 
   useEffect(() => { document.title = 'Contact | SABSN Nursery'; }, []);
   const open = useOpenStatus();
+  const heroRef = useRef(null);
+  // the hero's looping animations (status pulse, tickers, drifting tags) stop while it is scrolled away
+  useOffscreenPause(heroRef);
 
   const enquiry = [
     `Hello SABSN, my name is ${form.name.trim()}.`,
@@ -83,16 +70,12 @@ export default function ContactPage() {
     <div className="contact-page">
       <Navbar page="contact" />
 
-      <header className="cp-hero">
+      <header ref={heroRef} className="cp-hero">
         <img className="cp-corner" src="/images/home/hero/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
         {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
         <Leaf className="cp-watermark" strokeWidth={0.6} aria-hidden="true" />
         <div className="cp-hero-copy">
-          <p className="cp-visit">
-            <span className="cp-visit-open"><span className="cp-visit-dot" aria-hidden="true" />Open daily</span>
-            <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
-          </p>
+          <VisitBadge />
           <p className="cp-eyebrow">Get in touch</p>
           <h1 className="cp-title">Let’s talk <em>plants.</em></h1>
           <VineOrnament />

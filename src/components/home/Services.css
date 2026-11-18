@@ -261,7 +261,7 @@
 .svc-dialog-body { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; padding: clamp(1.6rem, 3.5vw, 2.6rem) clamp(1.4rem, 3.5vw, 2.6rem) 1.4rem; }
 .svc-dialog-meta { display: flex; align-items: center; gap: 0.85rem; padding-right: 3rem; }
 .svc-dialog-meta .services-eyebrow { margin: 0; }
-.svc-dialog-meta .services-eyebrow span { color: #849b78; }
+.svc-dialog-meta .services-eyebrow span { color: #607356; }
 .svc-dialog-icon { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 14px; background: #e8eedf; color: #163624; }
 .svc-dialog-body h3 { margin: 1.2rem 0 0; font-family: var(--font-serif); font-size: clamp(1.7rem, 2.8vw, 2.25rem); font-weight: 400; line-height: 1.15; color: #163624; }
 .svc-dialog-text { margin: 0.9rem 0 0; max-width: 46ch; color: #46574a; font-size: 1rem; line-height: 1.8; }
@@ -278,7 +278,7 @@
 }
 .svc-dialog-nav button:hover { background: #eef3e4; border-color: #c9d6b8; color: #163624; }
 .svc-dialog-nav button:focus-visible { outline: 2px solid #8f4724; outline-offset: 2px; }
-.svc-dialog-nav > span { color: #6b7d68; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+.svc-dialog-nav > span { color: #61725f; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
 
 .svc-card-media { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: #e6e7d8; }
 .svc-card-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -447,7 +447,7 @@
   text-align: center;
   color: #2f4a35;
 }
-.services-registration svg { flex: none; color: #4f7f3a; }
+.services-registration svg { flex: none; color: #4b7837; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {

@@ -1,9 +1,11 @@
 import { Fragment, lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { Leaf, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Clock, MapPin, Phone, Droplets } from 'lucide-react';
+import useOffscreenPause from '../hooks/useOffscreenPause';
+import { Leaf, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Phone, Droplets } from 'lucide-react';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
 import Navbar from '../components/layout/Navbar';
 import WhatsAppButton from '../components/layout/WhatsAppButton';
+import VisitBadge from '../components/shared/VisitBadge';
 import groups from '../data/potCatalogue.json';
 import './PotsPage.css';
 
@@ -105,6 +107,8 @@ export default function PotsPage() {
   const [selected, setSelected] = useState(null);
   // header pots follow the cursor a little (--mx / --my from -1 to 1); mouse only, never for reduced motion
   const heroRef = useRef(null);
+  // the hero's looping animations (status pulse, tickers, drifting tags) stop while it is scrolled away
+  useOffscreenPause(heroRef);
   useEffect(() => {
     const hero = heroRef.current;
     if (!hero || !window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
@@ -131,11 +135,7 @@ export default function PotsPage() {
       {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
       <Leaf className="pots-watermark" strokeWidth={0.6} aria-hidden="true" />
       <div className="pots-hero-copy">
-        <p className="pots-visit">
-          <span className="pots-visit-open"><span className="pots-visit-dot" aria-hidden="true" />Open daily</span>
-          <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-          <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
-        </p>
+        <VisitBadge />
         <p className="pots-eyebrow">The planter collection</p>
         <h1>Good roots. <em>Beautiful pots.</em></h1>
         <VineOrnament />

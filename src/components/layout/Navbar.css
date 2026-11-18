@@ -166,3 +166,131 @@
     display: none !important;
   }
 }
+
+/* ---------- brand, links, search and buttons (formerly inline styles and mouse handlers in Navbar.jsx) ---------- */
+.nav-logo {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f8f6ee;
+  box-shadow: 0 0 0 2px rgba(244, 236, 217, 0.35), 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+.nav-brand-text { display: flex; flex-direction: column; }
+.nav-brand-name {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #f4ecd9;
+}
+.nav-brand-sub {
+  margin-top: 3px;
+  font-size: 0.45rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244, 236, 217, 0.78);
+}
+
+/* the dot under the active link; JS sets only its left, width and opacity */
+.nav-indicator {
+  position: absolute;
+  bottom: -7px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #f4ecd9;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links > li { position: relative; display: flex; flex-direction: column; align-items: center; }
+.nav-link {
+  color: rgba(244, 236, 217, 0.78);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: color 0.3s ease;
+}
+.nav-link:hover,
+.nav-link:focus-visible,
+.active-nav-item > .nav-link { color: #f4ecd9; }
+.active-nav-item > .nav-link { font-weight: 600; }
+.nav-link:focus-visible { outline: 2px solid #c9d98a; outline-offset: 6px; }
+
+/* search: a 27px icon that opens into a field */
+.nav-search-wrap { position: relative; display: flex; align-items: center; width: 27px; height: 27px; }
+.nav-search {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  width: 27px;
+  padding: 4px;
+  overflow: hidden;
+  border-radius: 100px;
+  background: transparent;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-search.open { width: 180px; padding: 0.4rem 0.8rem; background: rgba(244, 236, 217, 0.12); }
+.nav-search-btn {
+  display: flex;
+  align-items: center;
+  min-width: 19px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #f4ecd9;
+  cursor: pointer;
+}
+.nav-search-btn:focus-visible { outline: 2px solid #c9d98a; outline-offset: 4px; border-radius: 50%; }
+.nav-search-input {
+  width: 0;
+  padding-left: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #f4ecd9;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-search.open .nav-search-input { width: 100%; padding-left: 0.6rem; opacity: 1; }
+.nav-search-input::placeholder { color: rgba(244, 236, 217, 0.6); }
+
+/* Contact */
+.shop-now-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.3rem;
+  border: none;
+  border-radius: 100px;
+  background-color: #f4ecd9;
+  color: #163624;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(22, 54, 36, 0.15);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.shop-now-btn:hover { transform: translateY(-1px); opacity: 0.94; }
+.shop-now-btn:focus-visible { outline: 2px solid #c9d98a; outline-offset: 3px; }
+
+.mobile-menu-btn { color: #f4ecd9; }
+.mobile-menu-btn.is-open { color: #163624; }
+.mobile-menu-btn:focus-visible { outline: 2px solid #c9d98a; outline-offset: 2px; border-radius: 8px; }
+
+@media (max-width: 900px) {
+  .nav-search.open { width: 130px; }
+  /* the full-screen menu: white links on sage */
+  .nav-links.mobile-open .nav-link,
+  .nav-links.mobile-open .active-nav-item > .nav-link { color: #fff; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-link, .nav-search, .nav-search-input, .shop-now-btn, .nav-indicator { transition: none; }
+  .shop-now-btn:hover { transform: none; }
+}

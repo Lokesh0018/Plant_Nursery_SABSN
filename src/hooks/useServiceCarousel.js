@@ -28,6 +28,7 @@ export default function useServiceCarousel(count) {
   const held = useRef({ hover: false, focus: false, paused: false });
   const lastIndex = useRef(0);
   const visible = useRef(false);
+  const wake = useRef(null);        // restarts the parked frame loop when the track comes back into view
   const drag = useRef(null);
   const dragged = useRef(false);
 
@@ -80,7 +81,10 @@ export default function useServiceCarousel(count) {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const change = () => setReducedMotion(media.matches);
     media.addEventListener('change', change);
-    const observer = new IntersectionObserver(([entry]) => { visible.current = entry.isIntersecting; }, { threshold: 0.25 });
+    const observer = new IntersectionObserver(([entry]) => {
+      visible.current = entry.isIntersecting;
+      wake.current?.();
+    }, { threshold: 0.25 });
     if (trackRef.current) observer.observe(trackRef.current);
     return () => { media.removeEventListener('change', change); observer.disconnect(); };
   }, []);
@@ -90,7 +94,12 @@ export default function useServiceCarousel(count) {
     if (reducedMotion) return undefined;
     let raf = 0;
     let last = performance.now();
+    // the loop parks itself while the track is off screen (no frames scheduled at all) and the
+    // visibility observer wakes it again when the track comes back
+    const start = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+    wake.current = start;
     const frame = (now) => {
+      if (!visible.current) { raf = 0; return; }
       raf = requestAnimationFrame(frame);
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
@@ -111,8 +120,8 @@ export default function useServiceCarousel(count) {
       pos.current = (pos.current + DRIFT * dt) % count;
       apply();
     };
-    raf = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(raf);
+    start();
+    return () => { cancelAnimationFrame(raf); raf = 0; wake.current = null; };
   }, [reducedMotion, count, apply, hold]);
 
   // how many pixels one card's step in the fan is, from the stage's --spread
