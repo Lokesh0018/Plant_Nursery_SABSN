@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { MapPin, Phone, Mail, MessageCircle, ArrowUp, Clock } from 'lucide-react';
-import FallingLeaves from './FallingLeaves';
+import FallingLeaves from '../shared/FallingLeaves';
 import FooterStamp from './FooterStamp';
 import Meadow from './Meadow';
 import FooterEdge from './FooterEdge';
-import useOffscreenPause from '../hooks/useOffscreenPause';
-import { subscribeScroll } from '../lib/scrollStore';
+import useOffscreenPause from '../../hooks/useOffscreenPause';
+import { subscribeScroll } from '../../lib/scrollStore';
 import './Footer.css';
 
 // ink blots stamped along the wordmark (x %, y %), in stamping order
@@ -110,7 +110,7 @@ export default function Footer() {
         <div className="footer-top-grid footer-reveal">
           <div className="footer-brand-col">
             <div className="footer-brand-row">
-              <img src="/logo/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery logo" className="footer-brand-logo" width="64" height="64" />
+              <img src="/images/brand/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery logo" className="footer-brand-logo" width="64" height="64" />
               <h3 className="footer-brand-name">SABSN</h3>
             </div>
             <p className="footer-brand-desc">

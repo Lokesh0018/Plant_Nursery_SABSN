@@ -1,9 +1,9 @@
-import potCatalogue from '../data/potCatalogue.json';
+import potCatalogue from '../../data/potCatalogue.json';
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Sun, Sprout, Ruler, MapPin, Weight, MessageCircle, ArrowRight, ArrowLeft, Check, Leaf } from 'lucide-react';
-import { plantCategoryDetails, potCategoryDetails } from '../data/categoryDetails';
-import { atlasCell } from '../data/categories';
+import { plantCategoryDetails, potCategoryDetails } from '../../data/categoryDetails';
+import { atlasCell } from '../../data/categories';
 import './CategoryModal.css';
 
 const WA_NUMBER = '919849936169';
@@ -72,7 +72,7 @@ export default function CategoryModal({ kind, categories, index, onIndex, onClos
 
         <div className="cm-media" key={`media-${index}`}>
           <div className="cm-cell" style={{ '--r': cell.ratio }}>
-            <img src={`/categories/${kind}-atlas.webp`} alt="" width="1536" height="1024" decoding="async" style={cell.style} />
+            <img src={`/images/categories/${kind}-atlas.webp`} alt="" width="1536" height="1024" decoding="async" style={cell.style} />
           </div>
           <span className="cm-number" aria-hidden="true">{number}</span>
           <span className="cm-tag">{category.tag}</span>

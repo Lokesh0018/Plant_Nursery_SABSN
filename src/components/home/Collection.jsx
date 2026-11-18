@@ -1,9 +1,9 @@
-import PlantFrame from './PlantFrame';
-import './IndoorPlants.css';
+import PlantFrame from '../shared/PlantFrame';
+import '../plants/IndoorPlants.css';
 import React from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { plantCategories } from '../data/categories';
+import { plantCategories } from '../../data/categories';
 import CategoryCollection from './CategoryCollection';
 import { Sun, Droplets, Star } from 'lucide-react';
 import './Collection.css';

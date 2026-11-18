@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import useOffscreenPause from '../hooks/useOffscreenPause';
-import { subscribeScroll } from '../lib/scrollStore';
+import useOffscreenPause from '../../hooks/useOffscreenPause';
+import { subscribeScroll } from '../../lib/scrollStore';
 
 const ROLL = 380;  // px the seed rolls in from (to the right of its spot)
 const RANGE = 260; // px of scroll at the very bottom of the page that drive the whole animation

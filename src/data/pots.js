@@ -7,7 +7,7 @@ export const pots = [
     rating: 4.8,
     reviews: 56,
     description: 'A handcrafted terrazzo pot with beautiful speckles.',
-    image: '/pots/pot1-Photoroom.webp',
+    image: '/images/pots/pot1-Photoroom.webp',
     care: { light: 'Indoor/Out', water: 'Drainage' },
     finish: "Matte sealed",
     materials: [
@@ -24,7 +24,7 @@ export const pots = [
     rating: 4.9,
     reviews: 112,
     description: 'Breathable unglazed terracotta perfect for cacti and succulents.',
-    image: '/pots/pot2-Photoroom.webp',
+    image: '/images/pots/pot2-Photoroom.webp',
     care: { light: 'Indoor/Out', water: 'High Drain' },
     finish: "Natural, unglazed",
     materials: [
@@ -40,7 +40,7 @@ export const pots = [
     rating: 4.7,
     reviews: 45,
     description: 'A premium glossy pot in deep jade green.',
-    image: '/pots/pot3-Photoroom.webp',
+    image: '/images/pots/pot3-Photoroom.webp',
     care: { light: 'Indoor Use', water: 'Saucer Inc' },
     finish: "Jade gloss glaze",
     materials: [
@@ -57,7 +57,7 @@ export const pots = [
     rating: 4.9,
     reviews: 89,
     description: 'Textured stone composite pot for a modern architectural look.',
-    image: '/pots/pot4-Photoroom.webp',
+    image: '/images/pots/pot4-Photoroom.webp',
     care: { light: 'All Weather', water: 'Frost Proof' },
     finish: "Ribbed stone texture",
     materials: [

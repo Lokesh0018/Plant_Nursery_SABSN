@@ -1,12 +1,12 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
 import { Leaf, Clock, MapPin, Phone, Mail, MessageCircle, ArrowRight, ArrowUpRight, Navigation, Send, CircleHelp, Package, User, ShieldCheck, Sprout, Trees, Truck, Flower2 } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import WhatsAppButton from '../components/WhatsAppButton';
-import VineOrnament from '../components/VineOrnament';
-import VineDivider from '../components/VineDivider';
+import Navbar from '../components/layout/Navbar';
+import WhatsAppButton from '../components/layout/WhatsAppButton';
+import VineOrnament from '../components/shared/VineOrnament';
+import VineDivider from '../components/shared/VineDivider';
 import './ContactPage.css';
 
-const Footer = lazy(() => import('../components/Footer'));
+const Footer = lazy(() => import('../components/layout/Footer'));
 
 // the nursery's details, as given on the About page and in the footer
 const PHONE_1 = { label: '+91 98499 36169', tel: '+919849936169' };
@@ -84,7 +84,7 @@ export default function ContactPage() {
       <Navbar page="contact" />
 
       <header className="cp-hero">
-        <img className="cp-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+        <img className="cp-corner" src="/images/home/hero/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
         {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
         <Leaf className="cp-watermark" strokeWidth={0.6} aria-hidden="true" />
         <div className="cp-hero-copy">
@@ -132,7 +132,7 @@ export default function ContactPage() {
           </p>
           <section className="cp-panel" aria-label="Contact the nursery">
             <header className="cp-panel-head">
-              <img src="/logo/logo-256.webp" alt="" width="52" height="52" decoding="async" />
+              <img src="/images/brand/logo-256.webp" alt="" width="52" height="52" decoding="async" />
               <div className="cp-panel-name">
                 <strong>Sri Ayyappa Bala Sai Nursery</strong>
                 <span>Madhurawada, Visakhapatnam</span>

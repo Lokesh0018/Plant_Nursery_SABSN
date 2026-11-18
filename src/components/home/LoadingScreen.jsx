@@ -170,7 +170,7 @@ export default function LoadingScreen({ onDone }) {
         ))}
 
         <div className="ls-logo-wrap">
-          <img className="ls-logo" src="/logo/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery" width="256" height="256" decoding="async" fetchPriority="high" />
+          <img className="ls-logo" src="/images/brand/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery" width="256" height="256" decoding="async" fetchPriority="high" />
           {/* the seedling: a stem that draws itself and two leaves that unfold */}
           <svg className="ls-seedling" viewBox="0 0 80 60" width="80" height="60" aria-hidden="true">
             <path className="ls-stem" d="M40 58 C 40 46, 38 36, 40 22" fill="none" stroke="#174D35" strokeWidth="2.4" strokeLinecap="round" strokeDasharray="60" strokeDashoffset="60" />

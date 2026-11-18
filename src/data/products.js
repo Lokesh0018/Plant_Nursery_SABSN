@@ -1,7 +1,7 @@
 export const products = [
   {
     id: 'p1',
-    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    sheet: '/images/plants/catalogue/indoor-legacy-v2.webp',
     cell: 0, columns: 3, rows: 3,
     imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Fiddle Leaf Fig',
@@ -10,7 +10,7 @@ export const products = [
     rating: 4.9,
     reviews: 124,
     description: 'An architectural statement piece with massive, violin-shaped leaves. A stunning premium plant, carefully nurtured to bring natural elegance into your home.',
-    image: '/Main Hero Plant.webp',
+    image: '/images/plants/main-hero-plant.webp',
     care: { light: 'Bright Indirect', water: '1x Week' },
     uses: "Statement plant for living rooms, entryways and bright offices",
     positives: [
@@ -21,7 +21,7 @@ export const products = [
   },
   {
     id: 'p2',
-    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    sheet: '/images/plants/catalogue/indoor-legacy-v2.webp',
     cell: 1, columns: 3, rows: 3,
     imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Monstera Deliciosa',
@@ -30,7 +30,7 @@ export const products = [
     rating: 4.8,
     reviews: 89,
     description: 'Famous for its natural leaf holes, this tropical beauty brings a dramatic jungle vibe to any bright indoor space.',
-    image: '/plants/plant2-Photoroom.webp',
+    image: '/images/plants/plant2-Photoroom.webp',
     care: { light: 'Medium Light', water: '1-2x Week' },
     uses: "Feature plant for bright corners, studios and cafés",
     positives: [
@@ -41,7 +41,7 @@ export const products = [
   },
   {
     id: 'p3',
-    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    sheet: '/images/plants/catalogue/indoor-legacy-v2.webp',
     cell: 2, columns: 3, rows: 3,
     imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Rubber Plant',
@@ -50,7 +50,7 @@ export const products = [
     rating: 4.7,
     reviews: 210,
     description: 'Features striking, glossy burgundy leaves. A robust grower that adds instant sophistication to your home decor.',
-    image: '/plants/plant3-Photoroom.webp',
+    image: '/images/plants/plant3-Photoroom.webp',
     care: { light: 'Bright Light', water: 'When Dry' },
     uses: "Hardy choice for homes, offices and shaded balconies",
     positives: [
@@ -61,7 +61,7 @@ export const products = [
   },
   {
     id: 'p4',
-    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    sheet: '/images/plants/catalogue/indoor-legacy-v2.webp',
     cell: 3, columns: 3, rows: 3,
     imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Snake Plant',
@@ -70,7 +70,7 @@ export const products = [
     rating: 4.9,
     reviews: 315,
     description: 'Nearly indestructible and an excellent air purifier. The perfect structural plant for beginners and experts alike.',
-    image: '/plants/plant4-Photoroom.webp',
+    image: '/images/plants/plant4-Photoroom.webp',
     care: { light: 'Low to Bright', water: 'Every 2 Weeks' },
     uses: "Bedrooms, desks and low-light hallways",
     positives: [
@@ -81,7 +81,7 @@ export const products = [
   },
   {
     id: 'p5',
-    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    sheet: '/images/plants/catalogue/indoor-legacy-v2.webp',
     cell: 4, columns: 3, rows: 3,
     imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Peace Lily',
@@ -90,7 +90,7 @@ export const products = [
     rating: 4.6,
     reviews: 78,
     description: 'A graceful shade-loving plant that produces elegant white spathes and excels at filtering indoor air pollutants.',
-    image: '/plants/plant5-Photoroom.webp',
+    image: '/images/plants/plant5-Photoroom.webp',
     care: { light: 'Low Light', water: 'When Drooping' },
     uses: "Bathrooms, offices and shaded living spaces",
     positives: [
@@ -101,7 +101,7 @@ export const products = [
   },
   {
     id: 'p6',
-    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    sheet: '/images/plants/catalogue/indoor-legacy-v2.webp',
     cell: 5, columns: 3, rows: 3,
     imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Bird of Paradise',
@@ -110,7 +110,7 @@ export const products = [
     rating: 4.8,
     reviews: 142,
     description: 'Transform your space into a tropical oasis with these majestic, paddle-shaped leaves that can reach up to the ceiling.',
-    image: '/plants/plant6-Photoroom.webp',
+    image: '/images/plants/plant6-Photoroom.webp',
     care: { light: 'Direct Sun', water: '1x Week' },
     uses: "Bright rooms, sunrooms and sheltered patios",
     positives: [
@@ -121,7 +121,7 @@ export const products = [
   },
   {
     id: 'p7',
-    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    sheet: '/images/plants/catalogue/indoor-legacy-v2.webp',
     cell: 6, columns: 3, rows: 3,
     imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'Golden Pothos',
@@ -130,7 +130,7 @@ export const products = [
     rating: 4.9,
     reviews: 420,
     description: 'A beautiful trailing vine that is incredibly easy to care for and highly adaptable to various lighting conditions.',
-    image: '/plants/plant7-Photoroom.webp',
+    image: '/images/plants/plant7-Photoroom.webp',
     care: { light: 'Any Light', water: 'When Dry' },
     uses: "Shelves, hanging planters and trailing over cabinets",
     positives: [
@@ -141,7 +141,7 @@ export const products = [
   },
   {
     id: 'p8',
-    sheet: '/plants/catalogue/indoor-legacy-v2.webp',
+    sheet: '/images/plants/catalogue/indoor-legacy-v2.webp',
     cell: 7, columns: 3, rows: 3,
     imagePresentation: {"growthForm": "indoor-ornamental", "maturity": "young-nursery-stock", "displayStyle": "nursery-container", "allowNurseryPot": true, "imageAspectRatio": "4:5", "cellAspectRatio": 1, "label": "Container-grown illustration", "identityStatus": "illustrative-not-stock-verification", "actualProductSize": "not-specified"},
     name: 'ZZ Plant',
@@ -150,7 +150,7 @@ export const products = [
     rating: 4.8,
     reviews: 156,
     description: 'Known for its wide, dark green leaves, this plant thrives on neglect and adds an architectural element to any room.',
-    image: '/plants/plant8-Photoroom.webp',
+    image: '/images/plants/plant8-Photoroom.webp',
     care: { light: 'Low Light', water: '1x Month' },
     uses: "Offices, desks and rooms with little natural light",
     positives: [

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, MessageCircle, Phone, Leaf } from 'lucide-react';
-import VineOrnament from './VineOrnament';
-import { FAQS } from '../data/faqs';
+import VineOrnament from '../shared/VineOrnament';
+import { FAQS } from '../../data/faqs';
 import './Faq.css';
 
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I have a question about your plants.')}`;

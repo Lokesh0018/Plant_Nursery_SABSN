@@ -2,8 +2,8 @@ import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Quote, Sparkles, Award, MapPin, Trees, Sprout, CheckCircle2, Leaf } from 'lucide-react';
-import VineOrnament from './VineOrnament';
-import useOffscreenPause from '../hooks/useOffscreenPause';
+import VineOrnament from '../shared/VineOrnament';
+import useOffscreenPause from '../../hooks/useOffscreenPause';
 import './StorySection.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -125,7 +125,7 @@ export default function StorySection() {
             ref={imageRef}
             alt="Sri Uppada Kumaraswamy, Master Horticulturist and Founder holding a blooming Jasmine sapling"
             className="founder-portrait-img"
-            src="/sabsn-founder.webp"
+            src="/images/about/sabsn-founder.webp"
             width="800"
             height="1073"
             loading="lazy"

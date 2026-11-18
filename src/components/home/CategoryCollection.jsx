@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useRef, useState } from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
-import VineOrnament from './VineOrnament';
-import { atlasCell } from '../data/categories';
+import VineOrnament from '../shared/VineOrnament';
+import { atlasCell } from '../../data/categories';
 import './CategoryCollection.css';
 
 const CategoryModal = lazy(() => import('./CategoryModal')); // only fetched when a category is opened
@@ -35,7 +35,7 @@ export default function CategoryCollection({ kind, categories }) {
               <button type="button" ref={(el) => { cards.current[i] = el; }} onClick={() => setOpen(i)} aria-haspopup="dialog" aria-label={`View details for ${title}`}>
                 <div className="category-media">
                   <div className="category-photo">
-                    <img src={`/categories/${kind}-atlas.webp`} alt={`Illustration of ${alt.charAt(0).toLowerCase() + alt.slice(1)}`} loading="lazy" decoding="async" width="1536" height="1024"
+                    <img src={`/images/categories/${kind}-atlas.webp`} alt={`Illustration of ${alt.charAt(0).toLowerCase() + alt.slice(1)}`} loading="lazy" decoding="async" width="1536" height="1024"
                       style={atlasCell(kind, i).style} />
                   </div>
                   <span className="category-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>

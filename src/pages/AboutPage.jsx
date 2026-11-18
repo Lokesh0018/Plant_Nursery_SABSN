@@ -7,16 +7,16 @@ import {
   Layers, Recycle, Amphora, BrickWall, LayoutGrid, Workflow, Info,
   ClipboardList, Palette, Calculator, HardHat, Truck, Droplets, Handshake,
 } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import WhatsAppButton from '../components/WhatsAppButton';
-import VineOrnament from '../components/VineOrnament';
-import VineDivider from '../components/VineDivider';
-import AboutHero from '../components/AboutHero';
+import Navbar from '../components/layout/Navbar';
+import WhatsAppButton from '../components/layout/WhatsAppButton';
+import VineOrnament from '../components/shared/VineOrnament';
+import VineDivider from '../components/shared/VineDivider';
+import AboutHero from '../components/about/AboutHero';
 import './AboutPage.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Footer = lazy(() => import('../components/Footer'));
+const Footer = lazy(() => import('../components/layout/Footer'));
 
 // Everything on this page comes from the nursery's company profile (Sri_Ayyappa_Bala_Sai_Nursery_CompanyProfile.pdf).
 const STATS = [
@@ -28,7 +28,7 @@ const STATS = [
 const MOTTO = ['Green Plants', 'Healthy Life', 'Happy Life'];
 
 const PILLARS = [
-  // `atlas` picks a panel of the illustrative service atlas (public/services/service-atlas-six.webp)
+  // `atlas` picks a panel of the illustrative service atlas (public/images/services/service-atlas-six.webp)
   { icon: Sprout, atlas: 'planting', title: 'Plant supply', text: 'Indoor, outdoor and ornamental plant selections for projects and customers.' },
   { icon: Shovel, atlas: 'landscape', title: 'Landscaping', text: 'Garden establishment, planting, lawn design and landscape development.' },
   { icon: Scissors, atlas: 'lawn', title: 'Maintenance', text: 'Ongoing gardening, plant care and landscape maintenance support.' },
@@ -41,7 +41,7 @@ const STRENGTHS = [
   'Nursery supply that can be combined with planting, establishment and maintenance.',
 ];
 
-// `atlas` = [sheet, column, row] of a panel in the illustrative service atlases (public/services)
+// `atlas` = [sheet, column, row] of a panel in the illustrative service atlases (public/images/services)
 const SUPPLY = [
   { icon: Layers, atlas: ['four', 0, 0], title: 'Cocopeat / Coco-fibre', text: 'Growing media for potting, nursery propagation and soil-mix preparation.' },
   { icon: Recycle, atlas: ['six', 0, 2], title: 'Vermi Compost', text: 'Organic matter for planting beds, potting mixes and landscape soil improvement.' },
@@ -53,7 +53,7 @@ const INTEGRATED = {
   title: 'Integrated Delivery', text: 'Plants, media, pots, civil work, planting and maintenance, coordinated as one.',
   parts: ['Plants', 'Media', 'Pots', 'Civil work', 'Planting', 'Maintenance'],
 };
-const ATLAS_SRC = { four: '/services/service-atlas.webp', six: '/services/service-atlas-six.webp' };
+const ATLAS_SRC = { four: '/images/services/service-atlas.webp', six: '/images/services/service-atlas-six.webp' };
 
 // the seven steps, grouped into the same Plan / Build / Care phases the home page uses
 const PHASES = [
@@ -74,13 +74,13 @@ const PHASES = [
 
 const CLIENTS = [
   { icon: Building2, name: 'Renaatus', work: 'Plant supply, gardening and maintenance',
-    photo: '/clients/renaatus.webp', size: [678, 900], focus: '50% 40%', alt: 'Renaatus office building with landscaped planting at its base' },
+    photo: '/images/clients/renaatus.webp', size: [678, 900], focus: '50% 40%', alt: 'Renaatus office building with landscaped planting at its base' },
   { icon: Plane, name: 'Airports Authority of India', work: 'Rajahmundry airport landscape support',
-    photo: '/gallery/airport-1280.webp', size: [1280, 960], focus: '60% 55%', alt: 'Rajahmundry airport terminal with landscaped lawns, palms and flowering shrubs' },
+    photo: '/images/gallery/airport-1280.webp', size: [1280, 960], focus: '60% 55%', alt: 'Rajahmundry airport terminal with landscaped lawns, palms and flowering shrubs' },
   { icon: Factory, name: 'Sri Sarvaraya Sugars Ltd.', work: 'Gopalapuram: plant and garden requirements',
-    photo: '/clients/sri-sarvaraya.webp', size: [600, 376], focus: '50% 50%', alt: 'Sri Sarvaraya Sugars building with a planted hedge and garden in front' },
+    photo: '/images/clients/sri-sarvaraya.webp', size: [600, 376], focus: '50% 50%', alt: 'Sri Sarvaraya Sugars building with a planted hedge and garden in front' },
   { icon: Factory, name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Baladrapuram',
-    photo: '/clients/grasim.webp', size: [488, 600], focus: '40% 72%', alt: 'Grasim Industries plant entrance with its sign, trees and factory chimneys' },
+    photo: '/images/clients/grasim.webp', size: [488, 600], focus: '40% 72%', alt: 'Grasim Industries plant entrance with its sign, trees and factory chimneys' },
 ];
 
 const PALETTE = [
@@ -166,7 +166,7 @@ export default function AboutPage() {
             </blockquote>
           </div>
           <figure className="ap-intro-media">
-            <img src="/nursery.webp" srcSet="/nursery-800.webp 800w, /nursery.webp 1200w" sizes="(max-width: 900px) 92vw, 44vw"
+            <img src="/images/about/nursery.webp" srcSet="/images/about/nursery-800.webp 800w, /images/about/nursery.webp 1200w" sizes="(max-width: 900px) 92vw, 44vw"
               width="1200" height="673" loading="lazy" decoding="async"
               alt="Rows of nursery plants growing at Sri Ayyappa Bala Sai Nursery in Kadiyam" />
             <figcaption className="ap-intro-badge">
@@ -202,7 +202,7 @@ export default function AboutPage() {
             {PILLARS.map(({ icon: Icon, atlas, title, text }, i) => (
               <li key={title}>
                 <div className="ap-pillar-media" aria-hidden="true">
-                  <img className={`ap-pillar-atlas ap-pillar-atlas--${atlas}`} src="/services/service-atlas-six.webp"
+                  <img className={`ap-pillar-atlas ap-pillar-atlas--${atlas}`} src="/images/services/service-atlas-six.webp"
                     width="1254" height="1254" loading="lazy" decoding="async" alt="" draggable="false" />
                   <span className="ap-pillar-num">{String(i + 1).padStart(2, '0')}</span>
                 </div>
@@ -217,7 +217,7 @@ export default function AboutPage() {
           </ol>
           <div className="ap-strengths">
             <div className="ap-strengths-media">
-              <img src="/gallery/palms-1280.webp" srcSet="/gallery/palms-640.webp 640w, /gallery/palms-1280.webp 1280w, /gallery/palms-2400.webp 2400w" sizes="(max-width: 900px) 92vw, 50vw" width="1280" height="720" loading="lazy" decoding="async"
+              <img src="/images/gallery/palms-1280.webp" srcSet="/images/gallery/palms-640.webp 640w, /images/gallery/palms-1280.webp 1280w, /images/gallery/palms-2400.webp 2400w" sizes="(max-width: 900px) 92vw, 50vw" width="1280" height="720" loading="lazy" decoding="async"
                 alt="Rows of young potted palms lined up along a nursery path" />
               <h3 className="ap-strengths-head">What our capacity <em>enables</em></h3>
             </div>
@@ -377,7 +377,7 @@ export default function AboutPage() {
 
         {/* Leadership & contact */}
         <section className="ap-section ap-contact" aria-labelledby="ap-contact">
-          <img className="ap-contact-photo" src="/sabsn-founder-greenhouse.webp" width="800" height="1421" loading="lazy" decoding="async"
+          <img className="ap-contact-photo" src="/images/about/sabsn-founder-greenhouse.webp" width="800" height="1421" loading="lazy" decoding="async"
             alt="Uppada Kumara Swamy, Managing Partner of Sri Ayyappa Bala Sai Nursery, holding a potted succulent in a greenhouse" />
           <div className="ap-contact-body">
             <p className="ap-kicker ap-kicker--light">Let’s grow something great</p>

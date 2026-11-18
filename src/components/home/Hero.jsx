@@ -2,8 +2,8 @@ import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Sprout, ArrowRight, Leaf, Flower2, Apple, TreeDeciduous, Shrub } from 'lucide-react';
-import FallingLeaves from './FallingLeaves';
-import useOffscreenPause from '../hooks/useOffscreenPause';
+import FallingLeaves from '../shared/FallingLeaves';
+import useOffscreenPause from '../../hooks/useOffscreenPause';
 import './Hero.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,17 +16,17 @@ gsap.registerPlugin(ScrollTrigger);
  * `depth` drives scroll parallax, mouse parallax and the idle sway.
  */
 const LAYERS = [
-  { id: 'bg',      src: '/hero-tree/background.webp', depth: 0,    cls: 'tl-bg', priority: true },
+  { id: 'bg',      src: '/images/home/hero/background.webp', depth: 0,    cls: 'tl-bg', priority: true },
   { id: 'rays',    src: null,                         depth: 0.12, cls: 'tl-rays' },
-  { id: 'ground',  src: '/hero-tree/ground.webp',     depth: 0.3,  cls: 'tl-ground' },
+  { id: 'ground',  src: '/images/home/hero/ground.webp',     depth: 0.3,  cls: 'tl-ground' },
   // the banyan is the LCP element: three widths, highest fetch priority, and a preload in index.html
-  { id: 'banyan',  src: '/hero-tree/banyan.webp',     depth: 0.42, cls: 'tl-banyan', priority: true,
-    srcSet: '/hero-tree/banyan-600.webp 600w, /hero-tree/banyan-800.webp 800w, /hero-tree/banyan-1200.webp 1200w, /hero-tree/banyan.webp 1534w',
+  { id: 'banyan',  src: '/images/home/hero/banyan.webp',     depth: 0.42, cls: 'tl-banyan', priority: true,
+    srcSet: '/images/home/hero/banyan-600.webp 600w, /images/home/hero/banyan-800.webp 800w, /images/home/hero/banyan-1200.webp 1200w, /images/home/hero/banyan.webp 1534w',
     sizes: '(max-width: 900px) 130vw, min(78vw, 1150px)' },
-  { id: 'fol-tr',  src: '/hero-tree/foliage-tr.webp', depth: 0.7,  cls: 'tl-fol-tr' },
-  { id: 'fol-tl',  src: '/hero-tree/foliage-tl.webp', depth: 0.8,  cls: 'tl-fol-tl' },
-  { id: 'flw-br',  src: '/hero-tree/flowers-br.webp', depth: 0.92, cls: 'tl-flw-br' },
-  { id: 'flw-bl',  src: '/hero-tree/flowers-bl.webp', depth: 1,    cls: 'tl-flw-bl' },
+  { id: 'fol-tr',  src: '/images/home/hero/foliage-tr.webp', depth: 0.7,  cls: 'tl-fol-tr' },
+  { id: 'fol-tl',  src: '/images/home/hero/foliage-tl.webp', depth: 0.8,  cls: 'tl-fol-tl' },
+  { id: 'flw-br',  src: '/images/home/hero/flowers-br.webp', depth: 0.92, cls: 'tl-flw-br' },
+  { id: 'flw-bl',  src: '/images/home/hero/flowers-bl.webp', depth: 1,    cls: 'tl-flw-bl' },
 ];
 
 export default function Hero() {

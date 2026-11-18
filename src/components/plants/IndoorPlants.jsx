@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Leaf, X, MessageCircle, Phone, LayoutGrid, Info, Check, Sprout, Sun, Droplets, TreeDeciduous } from 'lucide-react';
-import { plantBenefits, plantCare } from '../data/plantBenefits';
+import { plantBenefits, plantCare } from '../../data/plantBenefits';
 import './IndoorPlants.css';
-import PlantFrame from './PlantFrame';
-import catalogue from '../data/plantCatalogue.json';
+import PlantFrame from '../shared/PlantFrame';
+import catalogue from '../../data/plantCatalogue.json';
 
 const plants = catalogue.find(group => group.slug === 'indoor-plants').items;
 

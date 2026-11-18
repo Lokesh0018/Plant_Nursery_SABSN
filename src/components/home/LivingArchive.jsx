@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image as ImageIcon, Camera, ArrowRight } from 'lucide-react';
-import { galleryItems, gallerySrcSet } from '../data/gallery';
+import { galleryItems, gallerySrcSet } from '../../data/gallery';
 import './LivingArchive.css';
 
 // The home page shows the five featured photos; the rest live on the /gallery page.

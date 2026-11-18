@@ -1,18 +1,18 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { Leaf, ArrowLeft, ArrowRight, ArrowDown, X, Images, Expand, Clock, MapPin, MessageCircle } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import WhatsAppButton from '../components/WhatsAppButton';
-import VineOrnament from '../components/VineOrnament';
-import VineDivider from '../components/VineDivider';
+import Navbar from '../components/layout/Navbar';
+import WhatsAppButton from '../components/layout/WhatsAppButton';
+import VineOrnament from '../components/shared/VineOrnament';
+import VineDivider from '../components/shared/VineDivider';
 import { GALLERY_GROUPS, galleryItems, gallerySrcSet } from '../data/gallery';
 import './GalleryPage.css';
 
-const Footer = lazy(() => import('../components/Footer'));
+const Footer = lazy(() => import('../components/layout/Footer'));
 
 const FILTERS = [{ key: 'all', label: 'All' }, ...GALLERY_GROUPS.map(({ key, label }) => ({ key, label }))];
 const countOf = (key) => (key === 'all' ? galleryItems.length : galleryItems.filter((g) => g.cat === key).length);
 // three photographs pinned up in the header like prints
-const PRINTS = ['/gallery/airport.webp', '/gallery/ficus.webp', '/gallery/palms.webp'].map((src) => galleryItems.find((g) => g.src === src)).filter(Boolean);
+const PRINTS = ['/images/gallery/airport.webp', '/images/gallery/ficus.webp', '/images/gallery/palms.webp'].map((src) => galleryItems.find((g) => g.src === src)).filter(Boolean);
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I saw your gallery and would like to discuss a landscaping project.')}`;
 
 // `sizes` says how wide the photo is drawn, so the browser picks the nearest of its 640 / 1280 / 2400 px versions
@@ -112,7 +112,7 @@ export default function GalleryPage() {
       <Navbar page="gallery" />
 
       <header className="gp-hero">
-        <img className="gp-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+        <img className="gp-corner" src="/images/home/hero/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
         {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
         <Leaf className="gp-watermark" strokeWidth={0.6} aria-hidden="true" />
         <div className="gp-hero-copy">

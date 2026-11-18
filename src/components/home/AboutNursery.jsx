@@ -96,8 +96,8 @@ export default function AboutNursery() {
                 <div className="about-nursery-img-wrapper">
                   <img
                     ref={imageRef}
-                    src="/nursery.webp"
-                    srcSet="/nursery-800.webp 800w, /nursery.webp 1200w"
+                    src="/images/about/nursery.webp"
+                    srcSet="/images/about/nursery-800.webp 800w, /images/about/nursery.webp 1200w"
                     sizes="(max-width: 768px) 92vw, min(50vw, 680px)"
                     width="1200"
                     height="673"

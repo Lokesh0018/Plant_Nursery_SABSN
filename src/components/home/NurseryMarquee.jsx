@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Package, Sprout, Handshake, MapPinned } from 'lucide-react';
-import useOffscreenPause from '../hooks/useOffscreenPause';
+import useOffscreenPause from '../../hooks/useOffscreenPause';
 import './NurseryMarquee.css';
 
 const CAPABILITIES = [

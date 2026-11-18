@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { Leaf, ArrowRight, ArrowLeft, ArrowDown, ArrowUpRight, MessageCircle, Phone, Clock, MapPin, LayoutGrid, Building2, Briefcase, Home, Check, X, Users } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import WhatsAppButton from '../components/WhatsAppButton';
-import VineOrnament from '../components/VineOrnament';
-import VineDivider from '../components/VineDivider';
+import Navbar from '../components/layout/Navbar';
+import WhatsAppButton from '../components/layout/WhatsAppButton';
+import VineOrnament from '../components/shared/VineOrnament';
+import VineDivider from '../components/shared/VineDivider';
 import { SERVICES, SERVICE_IMAGES, SERVICE_DETAILS } from '../data/services';
 import './ServicesPage.css';
 
-const Footer = lazy(() => import('../components/Footer'));
+const Footer = lazy(() => import('../components/layout/Footer'));
 
 const PHONE = '+919849936169';
 const waLink = (text) => `https://wa.me/919849936169?text=${encodeURIComponent(text)}`;
@@ -18,7 +18,7 @@ const CELLS = {
   landscape: ['six', 0, 0], planting: ['six', 1, 0], lawn: ['six', 0, 1], flowers: ['six', 1, 1], compost: ['six', 0, 2], planters: ['six', 1, 2],
   cocopeat: ['four', 0, 0], vertical: ['four', 1, 0], civil: ['four', 0, 1], research: ['four', 1, 1],
 };
-const SHEETS = { six: '/services/service-atlas-six.webp', four: '/services/service-atlas.webp' };
+const SHEETS = { six: '/images/services/service-atlas-six.webp', four: '/images/services/service-atlas.webp' };
 
 // one picture from a sheet, scaled to cover whatever frame it sits in
 function ServicePicture({ atlas, alt }) {
@@ -93,7 +93,7 @@ export default function ServicesPage() {
       <Navbar page="services" />
 
       <header ref={heroRef} className="sp-hero">
-        <img className="sp-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+        <img className="sp-corner" src="/images/home/hero/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
         {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
         <Leaf className="sp-watermark" strokeWidth={0.6} aria-hidden="true" />
         <div className="sp-hero-copy">

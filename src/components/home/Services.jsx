@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, ArrowLeft, MessageCircle, BadgeCheck, X } from 'lucide-react';
-import { SERVICES, SERVICE_IMAGES } from '../data/services';
-import VineOrnament from './VineOrnament';
-import useServiceCarousel from '../hooks/useServiceCarousel';
+import { SERVICES, SERVICE_IMAGES } from '../../data/services';
+import VineOrnament from '../shared/VineOrnament';
+import useServiceCarousel from '../../hooks/useServiceCarousel';
 import './Services.css';
 
 // How a project runs, as set out in the nursery's company profile
@@ -53,7 +53,7 @@ const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SAB
 function ServiceImage({ media }) {
   return <div className="svc-card-media">
     <img className={`svc-atlas${media.sheet === 'six' ? ' svc-atlas--six' : ''} svc-atlas--${media.atlas}`}
-      src={media.sheet === 'six' ? '/services/service-atlas-six.webp' : '/services/service-atlas.webp'}
+      src={media.sheet === 'six' ? '/images/services/service-atlas-six.webp' : '/images/services/service-atlas.webp'}
       alt={media.alt} width={media.sheet === 'six' ? 1254 : 1536} height={media.sheet === 'six' ? 1254 : 1024}
       loading="lazy" decoding="async" draggable="false" />
     <span className="svc-card-category">{media.category}</span>

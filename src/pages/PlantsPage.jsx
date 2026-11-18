@@ -1,14 +1,14 @@
 import { Fragment, useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { Search, Flower2, Shrub, Apple, ArrowRight, ArrowDown, MessageCircle, LayoutGrid, Armchair, Clock, MapPin, X, Sun, Trees, TreePine, Leaf, SlidersHorizontal } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import IndoorPlants from '../components/IndoorPlants';
-import WhatsAppButton from '../components/WhatsAppButton';
-import VineOrnament from '../components/VineOrnament';
-import VineDivider from '../components/VineDivider';
+import Navbar from '../components/layout/Navbar';
+import IndoorPlants from '../components/plants/IndoorPlants';
+import WhatsAppButton from '../components/layout/WhatsAppButton';
+import VineOrnament from '../components/shared/VineOrnament';
+import VineDivider from '../components/shared/VineDivider';
 import groups from '../data/plantCatalogue.json';
 import './PlantsPage.css';
 
-const Footer = lazy(() => import('../components/Footer'));
+const Footer = lazy(() => import('../components/layout/Footer'));
 const total = groups.reduce((sum, g) => sum + g.items.length, 0);
 // one icon per catalogue category, for the filter chips
 const CATEGORY_ICONS = {
@@ -110,7 +110,7 @@ export default function PlantsPage() {
     <Navbar page="plants" />
     <header ref={headerRef} className="catalogue-header">
       {/* the home hero's own foliage, framing the top-right corner */}
-      <img className="ch-corner ch-corner--tr" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+      <img className="ch-corner ch-corner--tr" src="/images/home/hero/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
       {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
       <Leaf className="ch-watermark" strokeWidth={0.6} aria-hidden="true" />
       <div className="catalogue-header-copy">
@@ -145,11 +145,11 @@ export default function PlantsPage() {
         <div className="cha-arch" aria-hidden="true">
           <span className="cha-glow" />
           <span className="cha-shelf cha-shelf--back" />
-          <img className="cha-plant cha-back cha-back--1" src="/plants/header/plant6.webp" alt="" width="320" height="594" decoding="async" />
-          <img className="cha-plant cha-back cha-back--2" src="/plants/header/red-leaf.webp" alt="" width="320" height="316" decoding="async" />
-          <img className="cha-plant cha-front cha-front--1" src="/plants/header/plant2.webp" alt="" width="320" height="569" decoding="async" />
-          <img className="cha-plant cha-front cha-front--2" src="/plants/header/plant3.webp" alt="" width="320" height="483" decoding="async" />
-          <img className="cha-plant cha-front cha-front--3" src="/plants/header/plant5.webp" alt="" width="320" height="320" decoding="async" />
+          <img className="cha-plant cha-back cha-back--1" src="/images/plants/header/plant6.webp" alt="" width="320" height="594" decoding="async" />
+          <img className="cha-plant cha-back cha-back--2" src="/images/plants/header/red-leaf.webp" alt="" width="320" height="316" decoding="async" />
+          <img className="cha-plant cha-front cha-front--1" src="/images/plants/header/plant2.webp" alt="" width="320" height="569" decoding="async" />
+          <img className="cha-plant cha-front cha-front--2" src="/images/plants/header/plant3.webp" alt="" width="320" height="483" decoding="async" />
+          <img className="cha-plant cha-front cha-front--3" src="/images/plants/header/plant5.webp" alt="" width="320" height="320" decoding="async" />
           <span className="cha-ledge" />
         </div>
         <nav className="cha-picks" aria-label="Jump to a category">

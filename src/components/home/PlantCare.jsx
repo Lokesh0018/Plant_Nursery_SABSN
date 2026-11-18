@@ -12,7 +12,7 @@ import {
   Wind,
   Headphones
 } from 'lucide-react';
-import VineOrnament from './VineOrnament';
+import VineOrnament from '../shared/VineOrnament';
 import './PlantCare.css';
 
 const protocolCards = [
@@ -24,7 +24,7 @@ const protocolCards = [
     icon: Repeat,
     accentIcon: Flower2,
     badgeColor: '#4f7f3a',
-    image: '/care-microclimate.webp',
+    image: '/images/home/care/care-microclimate.webp',
     imageAlt: 'Nursery beds of young plants hardening off under green shade netting'
   },
   {
@@ -35,7 +35,7 @@ const protocolCards = [
     icon: Sprout,
     accentIcon: Layers,
     badgeColor: '#7a6348',
-    image: '/care-soil.webp',
+    image: '/images/home/care/care-soil.webp',
     imageAlt: 'Rows of seedlings emerging from dark, crumbly compost-rich soil'
   },
   {
@@ -46,7 +46,7 @@ const protocolCards = [
     icon: Droplets,
     accentIcon: Wind,
     badgeColor: '#367a8f',
-    image: '/care-aeration.webp',
+    image: '/images/home/care/care-aeration.webp',
     imageAlt: 'Fine-mist sprinklers irrigating a lawn at the nursery'
   },
   {
@@ -57,7 +57,7 @@ const protocolCards = [
     icon: Handshake,
     accentIcon: Headphones,
     badgeColor: '#2b5a38',
-    image: '/care-guidance.webp',
+    image: '/images/home/care/care-guidance.webp',
     imageAlt: 'A horticulturist advising a client over a planting plan in a garden bed'
   }
 ];

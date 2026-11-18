@@ -1,13 +1,13 @@
 import { Fragment, lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Leaf, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Search, X, MessageCircle, Layers, MoveDiagonal, Flower2, Clock, MapPin, Phone, Droplets } from 'lucide-react';
-import VineOrnament from '../components/VineOrnament';
-import VineDivider from '../components/VineDivider';
-import Navbar from '../components/Navbar';
-import WhatsAppButton from '../components/WhatsAppButton';
+import VineOrnament from '../components/shared/VineOrnament';
+import VineDivider from '../components/shared/VineDivider';
+import Navbar from '../components/layout/Navbar';
+import WhatsAppButton from '../components/layout/WhatsAppButton';
 import groups from '../data/potCatalogue.json';
 import './PotsPage.css';
 
-const Footer = lazy(() => import('../components/Footer'));
+const Footer = lazy(() => import('../components/layout/Footer'));
 const total = groups.reduce((sum, group) => sum + group.items.length, 0);
 // materials offered as shortcuts in the header (each opens that category in the catalogue)
 const HERO_MATERIALS = ['terracotta-clay-pots', 'ceramic-pots', 'cement-pots', 'designer-decorative-pots'].map(slug => groups.find(g => g.slug === slug)).filter(Boolean);
@@ -127,7 +127,7 @@ export default function PotsPage() {
   const toCatalogue = () => document.getElementById('pots-catalogue')?.scrollIntoView({ behavior: 'smooth' });
   return <div className="pots-page"><Navbar page="pots" />
     <header ref={heroRef} className="pots-hero">
-      <img className="pots-corner" src="/hero-tree/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
+      <img className="pots-corner" src="/images/home/hero/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
       {/* a large outline leaf, barely there, so the lower left of the copy column is not flat green */}
       <Leaf className="pots-watermark" strokeWidth={0.6} aria-hidden="true" />
       <div className="pots-hero-copy">
@@ -153,9 +153,9 @@ export default function PotsPage() {
       {/* three planters on a stone plinth inside a glass arch; the pots drift a little with the cursor */}
       <div className="pots-stage" aria-hidden="true">
         <div className="pots-arch" />
-        <img className="pots-stage-pot pots-stage-pot--l" src="/pots/hero/facet.webp" alt="" width="361" height="397" decoding="async" fetchPriority="high" />
-        <img className="pots-stage-pot pots-stage-pot--c" src="/pots/hero/curve.webp" alt="" width="359" height="537" decoding="async" fetchPriority="high" />
-        <img className="pots-stage-pot pots-stage-pot--r" src="/pots/hero/slim.webp" alt="" width="220" height="565" decoding="async" fetchPriority="high" />
+        <img className="pots-stage-pot pots-stage-pot--l" src="/images/pots/hero/facet.webp" alt="" width="361" height="397" decoding="async" fetchPriority="high" />
+        <img className="pots-stage-pot pots-stage-pot--c" src="/images/pots/hero/curve.webp" alt="" width="359" height="537" decoding="async" fetchPriority="high" />
+        <img className="pots-stage-pot pots-stage-pot--r" src="/images/pots/hero/slim.webp" alt="" width="220" height="565" decoding="async" fetchPriority="high" />
         <div className="pots-light" />
         <div className="pots-plinth"><span /></div>
         <div className="pots-stage-card"><strong>Form. Texture. Character.</strong><span>Made for your green spaces</span></div>

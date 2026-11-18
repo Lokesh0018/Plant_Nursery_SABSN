@@ -39,7 +39,7 @@
        the VineDivider), then the home hero's forest photo; see docs/plants-hero-background.md */
     linear-gradient(90deg, rgba(11, 36, 21, 0.94) 0%, rgba(11, 36, 21, 0.82) 45%, rgba(11, 36, 21, 0.6) 100%),
     linear-gradient(180deg, rgba(11, 36, 21, 0.55) 0%, transparent 28%, transparent 62%, #163624 100%),
-    url('/hero-tree/background.webp') center 30% / cover no-repeat,
+    url('/images/home/hero/background.webp') center 30% / cover no-repeat,
     #0f2d1b;
 }
 .gp-hero::before {
@@ -290,7 +290,7 @@
       linear-gradient(180deg, transparent 82%, #163624 100%), /* top-most: the bottom edge is exactly #163624, where the vine divider starts */
       radial-gradient(ellipse 70% 40% at 50% 78%, rgba(201, 217, 138, 0.16), transparent 70%),
       linear-gradient(180deg, rgba(11, 36, 21, 0.9) 0%, rgba(11, 36, 21, 0.84) 55%, #163624 100%),
-      url('/hero-tree/background.webp') center 30% / cover no-repeat,
+      url('/images/home/hero/background.webp') center 30% / cover no-repeat,
       #0f2d1b;
   }
   .gp-collage { justify-self: start; width: min(100%, 500px); }

@@ -2,25 +2,25 @@ import React, { useEffect, useState, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import VineDivider from './components/VineDivider';
-import NurseryMarquee from './components/NurseryMarquee';
-import Collection from './components/Collection';
-import PotsCollection from './components/PotsCollection';
-import AboutNursery from './components/AboutNursery';
-import StorySection from './components/StorySection';
-import WhatsAppButton from './components/WhatsAppButton';
-import LoadingScreen from './components/LoadingScreen';
+import Navbar from './components/layout/Navbar';
+import Hero from './components/home/Hero';
+import VineDivider from './components/shared/VineDivider';
+import NurseryMarquee from './components/home/NurseryMarquee';
+import Collection from './components/home/Collection';
+import PotsCollection from './components/home/PotsCollection';
+import AboutNursery from './components/home/AboutNursery';
+import StorySection from './components/home/StorySection';
+import WhatsAppButton from './components/layout/WhatsAppButton';
+import LoadingScreen from './components/home/LoadingScreen';
 
 // Below-the-fold sections load in their own chunks so the first paint only needs the navbar,
 // hero, plant grid and the sections just beneath it.
-const Services = lazy(() => import('./components/Services'));
-const PlantCare = lazy(() => import('./components/PlantCare'));
-const LivingArchive = lazy(() => import('./components/LivingArchive'));
-const Faq = lazy(() => import('./components/Faq'));
-const Contact = lazy(() => import('./components/Contact'));
-const Footer = lazy(() => import('./components/Footer'));
+const Services = lazy(() => import('./components/home/Services'));
+const PlantCare = lazy(() => import('./components/home/PlantCare'));
+const LivingArchive = lazy(() => import('./components/home/LivingArchive'));
+const Faq = lazy(() => import('./components/home/Faq'));
+const Contact = lazy(() => import('./components/home/Contact'));
+const Footer = lazy(() => import('./components/layout/Footer'));
 
 // Once a lazy section mounts, scroll-trigger positions of everything below it have moved.
 function RefreshTriggers() {

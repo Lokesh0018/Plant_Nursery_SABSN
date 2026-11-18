@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ArrowRight, Menu, X } from 'lucide-react';
 import './Navbar.css';
-import { subscribeScroll } from '../lib/scrollStore';
-import { products } from '../data/products';
-import { pots } from '../data/pots';
+import { subscribeScroll } from '../../lib/scrollStore';
+import { products } from '../../data/products';
+import { pots } from '../../data/pots';
 
 // Section ids on the home page; from any other page a link reloads home and scrolls there
 function goToSection(page, id) {
@@ -99,7 +99,7 @@ export default function Navbar({ page = 'home' }) {
         }}
       >
         <img
-          src="/logo/logo-256.webp"
+          src="/images/brand/logo-256.webp"
           alt="Sri Ayyappa Bala Sai Nursery logo"
           width="44"
           height="44"
