@@ -84,7 +84,7 @@ export default function AboutNursery() {
           </div>
           <div className="about-nursery-location">
             <MapPin size={13} />
-            <span>Jakkampudi Nagar, Kadiyam, East Godavari</span>
+            <span>Madhurawada, Visakhapatnam, Andhra Pradesh</span>
           </div>
         </div>
 

@@ -100,7 +100,7 @@ export default function ServicesPage() {
           <p className="sp-visit">
             <span className="sp-visit-open"><span className="sp-visit-dot" aria-hidden="true" />Open daily</span>
             <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
           </p>
           <p className="sp-kicker">What we do</p>
           <h1>Complete <em>landscape</em> services.</h1>

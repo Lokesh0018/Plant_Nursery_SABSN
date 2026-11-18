@@ -156,7 +156,7 @@ export default function AboutPage() {
             <h1 id="ap-who" className="ap-h1">Built around plants. <em>Delivered with care.</em></h1>
             <VineOrnament />
             <p className="ap-lead">
-              Sri Ayyappa Bala Sai Nursery is a complete nursery and landscape partner in Kadiyam, East Godavari. We supply
+              Sri Ayyappa Bala Sai Nursery is a complete nursery and landscape partner headquartered in Madhurawada, Visakhapatnam, with nursery beds in Kadiyam. We supply
               indoor, outdoor and ornamental plants, and handle landscaping, garden establishment, planting and ongoing
               maintenance for corporate, public-sector and private clients.
             </p>
@@ -171,7 +171,7 @@ export default function AboutPage() {
               alt="Rows of nursery plants growing at Sri Ayyappa Bala Sai Nursery in Kadiyam" />
             <figcaption className="ap-intro-badge">
               <span className="ap-intro-badge-icon"><MapPin size={16} aria-hidden="true" /></span>
-              <span><strong>Kadiyam, East Godavari</strong>Jakkampudi Nagar, Andhra Pradesh</span>
+              <span><strong>Madhurawada, Visakhapatnam</strong>Andhra Pradesh</span>
             </figcaption>
           </figure>
           <div className="ap-glance">
@@ -384,7 +384,7 @@ export default function AboutPage() {
             <h2 id="ap-contact" className="ap-h2">Talk to <em>Uppada Kumara Swamy</em></h2>
             <p className="ap-role">Managing Partner</p>
             <ul className="ap-contact-list">
-              <li><MapPin size={18} aria-hidden="true" /><span>Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh</span></li>
+              <li><MapPin size={18} aria-hidden="true" /><span>Madhurawada, Visakhapatnam, Andhra Pradesh</span></li>
               <li><Phone size={18} aria-hidden="true" /><span><a href="tel:+919849936169">98499 36169</a> / <a href="tel:+919490378689">94903 78689</a></span></li>
               <li><Mail size={18} aria-hidden="true" /><a href="mailto:uppadakumaraswamy@gmail.com">uppadakumaraswamy@gmail.com</a></li>
             </ul>

@@ -134,7 +134,7 @@ export default function PotsPage() {
         <p className="pots-visit">
           <span className="pots-visit-open"><span className="pots-visit-dot" aria-hidden="true" />Open daily</span>
           <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-          <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+          <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
         </p>
         <p className="pots-eyebrow">The planter collection</p>
         <h1>Good roots. <em>Beautiful pots.</em></h1>

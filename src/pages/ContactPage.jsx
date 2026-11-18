@@ -13,8 +13,11 @@ const PHONE_1 = { label: '+91 98499 36169', tel: '+919849936169' };
 const PHONE_2 = { label: '+91 94903 78689', tel: '+919490378689' };
 const EMAIL = 'uppadakumaraswamy@gmail.com';
 const WA_NUMBER = '919849936169';
-const ADDRESS = 'Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh';
-const MAP_QUERY = encodeURIComponent('Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh');
+const ADDRESS = 'Madhurawada, Visakhapatnam, Andhra Pradesh';
+// the headquarters' exact pin in Madhurawada (from the Google Maps link the nursery shared)
+const HQ_COORDS = '17.816306,83.355355';
+const MAP_QUERY = encodeURIComponent(HQ_COORDS);
+const DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${MAP_QUERY}`;
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hello SABSN, I would like to know more about your plants and services.')}`;
 
 const TOPICS = [
@@ -88,7 +91,7 @@ export default function ContactPage() {
           <p className="cp-visit">
             <span className="cp-visit-open"><span className="cp-visit-dot" aria-hidden="true" />Open daily</span>
             <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
           </p>
           <p className="cp-eyebrow">Get in touch</p>
           <h1 className="cp-title">Let’s talk <em>plants.</em></h1>
@@ -132,7 +135,7 @@ export default function ContactPage() {
               <img src="/logo/logo-256.webp" alt="" width="52" height="52" decoding="async" />
               <div className="cp-panel-name">
                 <strong>Sri Ayyappa Bala Sai Nursery</strong>
-                <span>Kadiyam, East Godavari</span>
+                <span>Madhurawada, Visakhapatnam</span>
               </div>
               <p className={`cp-panel-status${open.now ? ' is-open' : ''}`}>
                 <span className="cp-panel-dot" aria-hidden="true" />{open.now ? 'Open now' : 'Closed now'}
@@ -162,9 +165,9 @@ export default function ContactPage() {
                 </a>
               </li>
               <li>
-                <a className="cp-action" href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`} target="_blank" rel="noopener noreferrer">
+                <a className="cp-action" href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer">
                   <span className="cp-action-icon" aria-hidden="true"><MapPin size={18} strokeWidth={2} /></span>
-                  <span className="cp-action-text"><small>Visit · get directions</small>Jakkampudi Nagar, Kadiyam</span>
+                  <span className="cp-action-text"><small>Visit · get directions</small>Madhurawada, Visakhapatnam</span>
                   <span className="cp-action-go" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
                 </a>
               </li>
@@ -216,7 +219,7 @@ export default function ContactPage() {
               <span className="cp-card-icon" aria-hidden="true"><MapPin size={20} strokeWidth={2} /></span>
               <h3>Visit</h3>
               <p>{ADDRESS}.</p>
-              <a className="cp-card-cta" href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`} target="_blank" rel="noopener noreferrer">Get directions <ArrowUpRight size={16} aria-hidden="true" /></a>
+              <a className="cp-card-cta" href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer">Get directions <ArrowUpRight size={16} aria-hidden="true" /></a>
             </li>
           </ul>
         </section>
@@ -302,13 +305,13 @@ export default function ContactPage() {
             <p className="cp-visit-tip">Call ahead and we can have plants ready for you to see.</p>
             <div className="cp-map">
               <iframe
-                title="Map: Jakkampudi Nagar, Kadiyam, East Godavari"
-                src={`https://maps.google.com/maps?q=${MAP_QUERY}&z=14&output=embed`}
+                title="Map: Madhurawada, Visakhapatnam, Andhra Pradesh"
+                src={`https://maps.google.com/maps?q=${MAP_QUERY}&z=16&output=embed`}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
-            <a className="cp-btn cp-btn--light" href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`} target="_blank" rel="noopener noreferrer">
+            <a className="cp-btn cp-btn--light" href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer">
               <Navigation size={16} strokeWidth={2.2} aria-hidden="true" /> Open in Google Maps
             </a>
           </aside>

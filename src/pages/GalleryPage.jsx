@@ -118,7 +118,7 @@ export default function GalleryPage() {
           <p className="gp-visit">
             <span className="gp-visit-open"><span className="gp-visit-dot" aria-hidden="true" />Open daily</span>
             <span><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+            <span><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
           </p>
           <p className="gp-eyebrow">The living archive</p>
           <h1 className="gp-title">Our <em>Gallery</em></h1>

@@ -44,7 +44,7 @@ export default function LivingArchive() {
             </p>
           </div>
           <div className="archive-location">
-            <span>Kadiyam, Andhra Pradesh</span>
+            <span>Visakhapatnam, Andhra Pradesh</span>
             <span className="archive-location-icon" aria-hidden="true">
               <ImageIcon size={16} />
             </span>

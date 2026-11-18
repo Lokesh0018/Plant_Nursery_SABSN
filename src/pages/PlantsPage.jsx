@@ -118,7 +118,7 @@ export default function PlantsPage() {
         <p className="ch-visit">
           <span className="ch-visit-open"><span className="ch-visit-dot" aria-hidden="true" />Open daily</span>
           <span className="ch-visit-item"><Clock size={13} strokeWidth={2.2} aria-hidden="true" />7 am – 6 pm</span>
-          <span className="ch-visit-item"><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Kadiyam, East Godavari</span>
+          <span className="ch-visit-item"><MapPin size={13} strokeWidth={2.2} aria-hidden="true" />Madhurawada, Visakhapatnam</span>
         </p>
         <p className="indoor-kicker">The nursery collection</p>
         <h1>Find your kind of <em>green.</em></h1>

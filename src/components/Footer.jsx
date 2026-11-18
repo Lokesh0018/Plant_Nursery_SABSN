@@ -117,7 +117,7 @@ export default function Footer() {
               Sri Ayyappa Bala Sai Nursery — indoor, outdoor and ornamental plants, landscaping, planting and garden maintenance. Green Plants · Healthy Life · Happy Life.
             </p>
             <ul className="footer-meta">
-              <li><MapPin size={14} /> Jakkampudi Nagar, Kadiyam, East Godavari, Andhra Pradesh</li>
+              <li><MapPin size={14} /> Madhurawada, Visakhapatnam, Andhra Pradesh</li>
               <li><Clock size={14} /> Open daily, 7 am to 6 pm</li>
             </ul>
           </div>
