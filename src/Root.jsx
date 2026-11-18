@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from 'react';
-import App from './App.jsx';
 
+// Every page, the home page included, is its own chunk, so a visit to /plants or /contact never downloads
+// the home page's sections, styles or its GSAP-driven intro
+const App = lazy(() => import('./App.jsx'));
 const PotsPage = lazy(() => import('./pages/PotsPage.jsx'));
 const PlantsPage = lazy(() => import('./pages/PlantsPage.jsx'));
 const GalleryPage = lazy(() => import('./pages/GalleryPage.jsx'));
@@ -13,7 +15,14 @@ const PAGES = { '/pots': PotsPage, '/plants': PlantsPage, '/services': ServicesP
 
 export default function Root() {
   const Page = PAGES[window.location.pathname.replace(/\/+$/, '')];
-  if (!Page) return <App />;
+  if (!Page) {
+    // while the home chunk loads, the loading screen's own background, so the wait runs straight into it
+    return (
+      <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#F7F8EF' }} aria-hidden="true" />}>
+        <App />
+      </Suspense>
+    );
+  }
   return (
     <Suspense fallback={<div style={{ minHeight: '100vh', background: '#0d2a18' }} />}>
       <Page />
