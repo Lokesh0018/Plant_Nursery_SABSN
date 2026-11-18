@@ -18,19 +18,21 @@
   <FilesMatch "\.(webp|png|jpg|jpeg|ico|woff2)$">
     Header set Cache-Control "public, max-age=2592000"
   </FilesMatch>
-  # the entry document must always be revalidated so new deploys are picked up
-  <FilesMatch "^(index\.html)$">
+  # pages, the sitemap and robots must always be revalidated so new deploys are picked up
+  <FilesMatch "\.(html|xml|txt)$">
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# --- Single-page app: serve index.html for unknown paths ---
+# --- Pages and errors ---
+# Every page is a real file in the build (dist/<page>/index.html). Apache's DirectorySlash sends /plants to the
+# canonical /plants/; /index.html goes to /; anything that is not a page gets the build's 404.html with a 404 status.
+ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteCond %{THE_REQUEST} \s/index\.html[\s?]
+  RewriteRule ^index\.html$ / [R=301,L]
 </IfModule>

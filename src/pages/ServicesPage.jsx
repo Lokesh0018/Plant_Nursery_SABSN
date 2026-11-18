@@ -8,6 +8,7 @@ import VineDivider from '../components/shared/VineDivider';
 import VisitBadge from '../components/shared/VisitBadge';
 import { SERVICES, SERVICE_IMAGES, SERVICE_DETAILS } from '../data/services';
 import './ServicesPage.css';
+import { routeFor } from '../data/routes';
 
 const Footer = lazy(() => import('../components/layout/Footer'));
 
@@ -46,7 +47,7 @@ const SECTORS = [[Building2, 'Institutional'], [Briefcase, 'Commercial'], [Home,
 
 export default function ServicesPage() {
   const [category, setCategory] = useState('All');
-  useEffect(() => { document.title = 'Services | SABSN Nursery'; }, []);
+  useEffect(() => { document.title = routeFor('/services/').title; }, []);
   // the mosaic's labels and figures card drift with the cursor (--mx / --my from -1 to 1); the photos stay still.
   // Mouse only, never for reduced motion.
   const heroRef = useRef(null);

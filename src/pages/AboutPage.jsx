@@ -156,7 +156,7 @@ export default function AboutPage() {
             <h1 id="ap-who" className="ap-h1">Built around plants. <em>Delivered with care.</em></h1>
             <VineOrnament />
             <p className="ap-lead">
-              Sri Ayyappa Bala Sai Nursery is a complete nursery and landscape partner headquartered in Madhurawada, Visakhapatnam, with nursery beds in Kadiyam. We supply
+              Sri Ayyappa Bala Sai Nursery is a complete nursery and landscape partner headquartered in Madhurawada, Visakhapatnam, with a second nursery in Kadiyam, near Rajahmundry. We supply
               indoor, outdoor and ornamental plants, and handle landscaping, garden establishment, planting and ongoing
               maintenance for corporate, public-sector and private clients.
             </p>
@@ -166,12 +166,12 @@ export default function AboutPage() {
             </blockquote>
           </div>
           <figure className="ap-intro-media">
-            <img src="/images/about/nursery.webp" srcSet="/images/about/nursery-800.webp 800w, /images/about/nursery.webp 1200w" sizes="(max-width: 900px) 92vw, 44vw"
+            <img src="/images/about/rajahmundry-nursery.webp" srcSet="/images/about/rajahmundry-nursery-800.webp 800w, /images/about/rajahmundry-nursery.webp 1200w" sizes="(max-width: 900px) 92vw, 44vw"
               width="1200" height="673" loading="lazy" decoding="async"
               alt="Rows of nursery plants growing at Sri Ayyappa Bala Sai Nursery in Kadiyam" />
             <figcaption className="ap-intro-badge">
               <span className="ap-intro-badge-icon"><MapPin size={16} aria-hidden="true" /></span>
-              <span><strong>Madhurawada, Visakhapatnam</strong>Andhra Pradesh</span>
+              <span><strong>Kadiyam &amp; Visakhapatnam</strong>Andhra Pradesh</span>
             </figcaption>
           </figure>
           <div className="ap-glance">
@@ -384,13 +384,13 @@ export default function AboutPage() {
             <h2 id="ap-contact" className="ap-h2">Talk to <em>Uppada Kumara Swamy</em></h2>
             <p className="ap-role">Managing Partner</p>
             <ul className="ap-contact-list">
-              <li><MapPin size={18} aria-hidden="true" /><span>Madhurawada, Visakhapatnam, Andhra Pradesh</span></li>
+              <li><MapPin size={18} aria-hidden="true" /><span><a href="/plant-nursery-rajahmundry/">Jakkampudi Nagar, Kadiyam, East Godavari – 533125</a><br /><a href="/plant-nursery-visakhapatnam/">Madhurawada, Visakhapatnam – 530048</a></span></li>
               <li><Phone size={18} aria-hidden="true" /><span><a href="tel:+919849936169">98499 36169</a> / <a href="tel:+919490378689">94903 78689</a></span></li>
               <li><Mail size={18} aria-hidden="true" /><a href="mailto:uppadakumaraswamy@gmail.com">uppadakumaraswamy@gmail.com</a></li>
             </ul>
             <div className="ap-actions">
               <a className="ap-btn ap-btn--light" href={WA_LINK} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} aria-hidden="true" />Enquire on WhatsApp</a>
-              <a className="ap-btn ap-btn--outline" href="/gallery">See our work <ArrowRight size={17} aria-hidden="true" /></a>
+              <a className="ap-btn ap-btn--outline" href="/gallery/">See our work <ArrowRight size={17} aria-hidden="true" /></a>
             </div>
           </div>
         </section>

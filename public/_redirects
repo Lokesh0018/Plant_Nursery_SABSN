@@ -1,6 +1,12 @@
-/plants  /index.html  200
-/services  /index.html  200
-/gallery  /index.html  200
-/about  /index.html  200
-/contact  /index.html  200
-/*  /index.html  200
+# Netlify-style hosts. Every page is a real file in the build (dist/<page>/index.html), so no rewrites are needed.
+# Paths without the trailing slash go to the canonical URL; anything that is not a page is a real 404.
+/plants                        /plants/                        301
+/services                      /services/                      301
+/pots                          /pots/                          301
+/gallery                       /gallery/                       301
+/about                         /about/                         301
+/contact                       /contact/                       301
+/plant-nursery-rajahmundry     /plant-nursery-rajahmundry/     301
+/plant-nursery-visakhapatnam   /plant-nursery-visakhapatnam/   301
+/index.html                    /                               301
+/*                             /404.html                       404

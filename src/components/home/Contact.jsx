@@ -43,7 +43,7 @@ export default function Contact() {
           </p>
           <ul className="contact-perks contact-reveal">
             <li><Clock size={14} aria-hidden="true" /> Open daily, 7 am – 6 pm</li>
-            <li><MapPin size={14} aria-hidden="true" /> Madhurawada, Visakhapatnam</li>
+            <li><MapPin size={14} aria-hidden="true" /> Kadiyam &amp; Visakhapatnam</li>
             <li><MessageCircle size={14} aria-hidden="true" /> Quickest reply on WhatsApp</li>
           </ul>
         </div>
@@ -58,7 +58,7 @@ export default function Contact() {
               <a className="contact-action" href="tel:+919849936169">
                 <Phone size={16} strokeWidth={2} aria-hidden="true" /> Call
               </a>
-              <a className="contact-action" href="/contact" aria-label="All contact options">
+              <a className="contact-action" href="/contact/" aria-label="All contact options">
                 All options <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
               </a>
             </div>

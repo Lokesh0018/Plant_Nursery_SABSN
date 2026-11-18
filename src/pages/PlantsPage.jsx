@@ -9,6 +9,7 @@ import VineDivider from '../components/shared/VineDivider';
 import VisitBadge from '../components/shared/VisitBadge';
 import CATALOGUE_INDEX from 'virtual:plant-index';
 import './PlantsPage.css';
+import { routeFor } from '../data/routes';
 
 const Footer = lazy(() => import('../components/layout/Footer'));
 // the full catalogue is its own chunk: start fetching it as soon as this page's code runs, in parallel with the
@@ -74,7 +75,7 @@ export default function PlantsPage() {
     };
   }, []);
   useEffect(() => {
-    document.title = 'Plant Catalogue | SABSN Nursery';
+    document.title = routeFor('/plants/').title;
     const search = e => { setQuery(e.detail || ''); setCategory('all'); document.getElementById('plants')?.scrollIntoView({ behavior: 'smooth' }); };
     window.addEventListener('plants-search', search);
     return () => window.removeEventListener('plants-search', search);

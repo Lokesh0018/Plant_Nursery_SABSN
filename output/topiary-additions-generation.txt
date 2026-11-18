@@ -1,4 +1,0 @@
-Generated with built-in imagegen from four owner-supplied photographs and ornamental-topiary-plants-4-v2.webp style reference.
-Output: public/plants/catalogue/ornamental-topiary-plants-4-v3.webp
-Square 3x3 shared sheet. Preserve cells 0 and 1 (Multi-tier and Umbrella). Add cloud topiary in cell 2, variegated ficus in cell 3, living ficus arch in cell 4, sculpted ball topiary in cell 5. Bottom row empty.
-Match sage wall, beige floor, gentle dappled daylight, photorealistic catalogue presentation. Show complete specimens, preserve distinctive foliage and trunk shapes, remove people, background clutter and labels. Substantial root balls for large specimens; rooted garden arch; proportionate container for ball topiary. No text. Render cards from this single sheet without splitting into separate image files.

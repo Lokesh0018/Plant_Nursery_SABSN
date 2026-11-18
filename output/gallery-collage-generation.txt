@@ -1,3 +1,0 @@
-Built-in imagegen edit of four user-supplied photos, 17 November 2026.
-Asset: public/gallery/nursery-moments-collage.webp (1920x1080).
-Prompt: One landscape 16:9 collage, clean 2x2 arrangement and thin ivory dividers. Office plant presentation top-left, three men presenting tree top-right, man beside bougainvillea bottom-left, man beside car bottom-right. Preserve identities, ages, facial structures, skin colours, clothing and gestures. Gentle beauty retouch with balanced exposure, natural skin texture, minor blemish reduction, subtle sharpening and noise cleanup. Remove screenshot caption, watermark, timestamp and signage lettering. Preserve people and held plants; no added text or logos. Four distinct scenes.

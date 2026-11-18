@@ -44,7 +44,7 @@ export default function LivingArchive() {
             </p>
           </div>
           <div className="archive-location">
-            <span>Visakhapatnam, Andhra Pradesh</span>
+            <span>Kadiyam &amp; Visakhapatnam</span>
             <span className="archive-location-icon" aria-hidden="true">
               <ImageIcon size={16} />
             </span>
@@ -81,7 +81,7 @@ export default function LivingArchive() {
         </div>
 
         <div className="archive-more">
-          <a className="archive-more-link" href="/gallery">
+          <a className="archive-more-link" href="/gallery/">
             View the full gallery <span className="archive-more-count">{galleryItems.length} photos</span>
             <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
           </a>

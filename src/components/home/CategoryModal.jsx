@@ -117,8 +117,8 @@ export default function CategoryModal({ kind, categories, index, onIndex, onClos
                 <MessageCircle size={18} aria-hidden="true" /> Enquire on WhatsApp
               </a>
               {pots
-                ? <a className="cm-btn cm-btn--ghost" href={`/pots?category=${potCatalogue.find(g => g.title === category.title)?.slug || 'all'}`}>Browse this category <ArrowRight size={17} aria-hidden="true" /></a>
-                : <a className="cm-btn cm-btn--ghost" href="/plants">Browse all plants <ArrowRight size={17} aria-hidden="true" /></a>}
+                ? <a className="cm-btn cm-btn--ghost" href={`/pots/?category=${potCatalogue.find(g => g.title === category.title)?.slug || 'all'}`}>Browse this category <ArrowRight size={17} aria-hidden="true" /></a>
+                : <a className="cm-btn cm-btn--ghost" href="/plants/">Browse all plants <ArrowRight size={17} aria-hidden="true" /></a>}
             </div>
             <nav className="cm-nav" aria-label={`${pots ? 'Pot' : 'Plant'} categories`}>
               <button type="button" onClick={() => go(-1)} aria-label={`Previous: ${categories[(index - 1 + total) % total].title}`}><ArrowLeft size={17} aria-hidden="true" /></button>

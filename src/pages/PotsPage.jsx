@@ -8,6 +8,7 @@ import WhatsAppButton from '../components/layout/WhatsAppButton';
 import VisitBadge from '../components/shared/VisitBadge';
 import groups from '../data/potCatalogue.json';
 import './PotsPage.css';
+import { routeFor } from '../data/routes';
 
 const Footer = lazy(() => import('../components/layout/Footer'));
 const total = groups.reduce((sum, group) => sum + group.items.length, 0);
@@ -121,7 +122,7 @@ export default function PotsPage() {
     return () => { cancelAnimationFrame(raf); hero.removeEventListener('pointermove', onMove); hero.removeEventListener('pointerleave', onLeave); };
   }, []);
   useEffect(() => {
-    document.title = 'Pots & Planters | SABSN Nursery';
+    document.title = routeFor('/pots/').title;
     const search = e => { setQuery(e.detail || ''); setCategory('all'); document.getElementById('pots-catalogue')?.scrollIntoView({ behavior: 'smooth' }); };
     window.addEventListener('pots-search', search);
     return () => window.removeEventListener('pots-search', search);

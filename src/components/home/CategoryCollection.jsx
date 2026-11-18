@@ -51,7 +51,7 @@ export default function CategoryCollection({ kind, categories }) {
         </ul>
         <div className="category-bottom">
           <p>{pots ? 'Need help choosing a size or finish? Let’s find the right fit.' : 'Not sure where to start? We’ll help you choose the right plants.'}</p>
-          <a href={pots ? '/pots' : '/plants'}>
+          <a href={pots ? '/pots/' : '/plants/'}>
             {pots ? 'Browse all pots' : 'Browse all plants'} <ArrowRight size={17} aria-hidden="true" />
           </a>
         </div>

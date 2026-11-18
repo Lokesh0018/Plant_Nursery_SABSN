@@ -84,7 +84,7 @@ export default function AboutNursery() {
           </div>
           <div className="about-nursery-location">
             <MapPin size={13} />
-            <span>Madhurawada, Visakhapatnam, Andhra Pradesh</span>
+            <span>Kadiyam &amp; Madhurawada, Visakhapatnam</span>
           </div>
         </div>
 
@@ -96,8 +96,8 @@ export default function AboutNursery() {
                 <div className="about-nursery-img-wrapper">
                   <img
                     ref={imageRef}
-                    src="/images/about/nursery.webp"
-                    srcSet="/images/about/nursery-800.webp 800w, /images/about/nursery.webp 1200w"
+                    src="/images/about/rajahmundry-nursery.webp"
+                    srcSet="/images/about/rajahmundry-nursery-800.webp 800w, /images/about/rajahmundry-nursery.webp 1200w"
                     sizes="(max-width: 768px) 92vw, min(50vw, 680px)"
                     width="1200"
                     height="673"
@@ -183,7 +183,7 @@ export default function AboutNursery() {
                 <Mail size={15} />
                 <span>uppadakumaraswamy@gmail.com</span>
               </a>
-              <a href="/about" className="about-contact-btn about-contact-btn--secondary">
+              <a href="/about/" className="about-contact-btn about-contact-btn--secondary">
                 <span>Read our full story</span>
                 <ArrowRight size={15} />
               </a>

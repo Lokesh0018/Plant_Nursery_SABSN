@@ -8,6 +8,7 @@ import VineDivider from '../components/shared/VineDivider';
 import VisitBadge from '../components/shared/VisitBadge';
 import { GALLERY_GROUPS, galleryItems, gallerySrcSet } from '../data/gallery';
 import './GalleryPage.css';
+import { routeFor } from '../data/routes';
 
 const Footer = lazy(() => import('../components/layout/Footer'));
 
@@ -94,7 +95,7 @@ export default function GalleryPage() {
   const [filter, setFilter] = useState('all');
   const [open, setOpen] = useState(null); // index into `shown`, or null
 
-  useEffect(() => { document.title = 'Gallery | SABSN — Sri Ayyappa Bala Sai Nursery'; }, []);
+  useEffect(() => { document.title = routeFor('/gallery/').title; }, []);
 
   const groups = useMemo(
     () => GALLERY_GROUPS
@@ -236,7 +237,7 @@ export default function GalleryPage() {
           </div>
           <div className="gp-cta-actions">
             <a className="gp-hero-btn" href={WA_LINK} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} strokeWidth={2.2} aria-hidden="true" /> Chat on WhatsApp</a>
-            <a className="gp-hero-btn gp-hero-btn--ghost" href="/contact">Contact details <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" /></a>
+            <a className="gp-hero-btn gp-hero-btn--ghost" href="/contact/">Contact details <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" /></a>
           </div>
         </section>
       </main>

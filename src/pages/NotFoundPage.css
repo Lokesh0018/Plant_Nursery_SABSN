@@ -1,0 +1,27 @@
+/* 404 page (NotFoundPage.jsx): the forest header on its own, with links back into the site */
+.nf-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  color: #f4ecd9;
+  background:
+    radial-gradient(ellipse 50% 50% at 75% 40%, rgba(201, 217, 138, 0.16), transparent 70%),
+    linear-gradient(90deg, rgba(11, 36, 21, 0.94), rgba(11, 36, 21, 0.75)),
+    url('/images/home/hero/background.webp') center 30% / cover no-repeat,
+    #0f2d1b;
+}
+.nf-main { max-width: 760px; margin: 0 auto; padding: 150px max(5vw, 16px) 5rem; }
+.nf-code { margin: 0; font-family: var(--font-serif); font-size: clamp(4rem, 12vw, 7rem); line-height: 1; color: #c9d98a; }
+.nf-main h1 { margin: 0.6rem 0 0; font-family: var(--font-serif); font-weight: 400; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.1; color: #f7f6f0; }
+.nf-main h1 em { color: #c9d98a; }
+.nf-text { margin: 1rem 0 0; font-size: 1.05rem; line-height: 1.7; color: rgba(244, 236, 217, 0.85); }
+.nf-links { display: grid; gap: 0.6rem; margin: 1.8rem 0 0; padding: 0; list-style: none; }
+.nf-links a {
+  display: flex; align-items: center; gap: 0.7rem; min-height: 52px; padding: 0 1.1rem; border: 1px solid rgba(201, 217, 138, 0.3);
+  border-radius: 16px; background: rgba(255, 255, 255, 0.05); color: #f4ecd9; font-weight: 600; text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.nf-links a svg:first-child { color: #c9d98a; }
+.nf-links a svg:last-child { margin-left: auto; color: #c9d98a; }
+.nf-links a:hover { border-color: #c9d98a; background: rgba(201, 217, 138, 0.1); }
+.nf-links a:focus-visible { outline: 2px solid #c9d98a; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .nf-links a { transition: none; } }

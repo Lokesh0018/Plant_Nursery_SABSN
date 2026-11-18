@@ -1,0 +1,54 @@
+/* Home: OUR NURSERY LOCATIONS (Locations.jsx). On the gallery's warm ivory (#F7F3EA), so it sits between the
+   gallery and the FAQ divider with no seams of its own. */
+.hl-section {
+  padding: clamp(3.5rem, 7vw, 5.5rem) max(5vw, 16px, calc((100% - 1280px) / 2)) clamp(3.5rem, 7vw, 5rem);
+  background: #F7F3EA;
+  color: #17271d;
+}
+.hl-head { max-width: 720px; }
+.hl-kicker {
+  display: flex; align-items: center; gap: 0.75rem; margin: 0;
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #4b7837;
+}
+.hl-kicker::before { content: ''; flex: none; width: 28px; height: 1px; background: currentColor; }
+.hl-head h2 { margin: 0.9rem 0 0.5rem; font-family: var(--font-serif); font-weight: 400; font-size: clamp(2.1rem, 4vw, 3.2rem); line-height: 1.08; letter-spacing: -0.015em; color: #163624; }
+.hl-head h2 em { color: #4b7837; }
+.hl-head .vine-ornament { margin: 0.2rem 0 0; }
+.hl-lede { margin: 1rem 0 0; font-size: 1rem; line-height: 1.75; color: #4a5b4c; }
+
+.hl-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; margin: 2.2rem 0 0; padding: 0; list-style: none; }
+.hl-card {
+  display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(22, 54, 36, 0.12); border-radius: 26px;
+  background: #fffdf8; box-shadow: 0 14px 36px rgba(22, 54, 36, 0.07); transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.hl-card:hover { border-color: rgba(75, 120, 55, 0.35); box-shadow: 0 24px 50px rgba(22, 54, 36, 0.12); }
+.hl-card-media { display: block; aspect-ratio: 16 / 8; overflow: hidden; background: #24452f; }
+.hl-card-media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.hl-card:hover .hl-card-media img { transform: scale(1.03); }
+.hl-card-plain {
+  display: grid; place-items: center; width: 100%; height: 100%; color: #c9d98a;
+  background: radial-gradient(circle at 75% 20%, rgba(201, 217, 138, 0.25), transparent 55%), linear-gradient(160deg, #1f4a32, #163624);
+}
+.hl-card-body { display: flex; flex-direction: column; flex: 1; padding: 1.4rem 1.5rem 1.5rem; }
+.hl-card-body h3 { margin: 0; font-family: var(--font-serif); font-weight: 500; font-size: 1.5rem; line-height: 1.2; color: #163624; }
+.hl-card-address { display: flex; gap: 0.5rem; margin: 0.7rem 0 0; font-size: 0.95rem; line-height: 1.55; color: #4a5b4c; }
+.hl-card-address svg { flex: none; margin-top: 0.2rem; color: #4b7837; }
+.hl-card-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.1rem; margin-top: auto; padding-top: 1.3rem; }
+.hl-btn {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 48px; padding: 0 1.3rem; border-radius: 999px;
+  background: #163624; color: #f4ecd9; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: background-color 0.2s ease;
+}
+.hl-btn:hover { background: #1f4a32; }
+.hl-btn:focus-visible, .hl-link:focus-visible { outline: 2px solid #4b7837; outline-offset: 3px; }
+.hl-link { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 44px; font-size: 0.9rem; font-weight: 700; color: #163624; text-decoration: none; }
+.hl-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 860px) {
+  .hl-cards { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hl-card, .hl-card-media img, .hl-btn { transition: none; }
+  .hl-card:hover .hl-card-media img { transform: none; }
+}
+
+.hl-tag { align-self: flex-start; margin: 0 0 0.6rem; padding: 0.25rem 0.7rem; border-radius: 999px; background: rgba(201, 217, 138, 0.5); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #163624; }

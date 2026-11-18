@@ -21,23 +21,21 @@ function Answer({ text }) {
  * A vine divider above (App.jsx) brings the gallery's ivory into this section's light sage, which
  * eases back to ivory at the bottom for the contact divider.
  */
-export default function Faq() {
+// `items`, `title`, `lede` and `id` let the location pages reuse the same accordion with their own questions
+export default function Faq({ items = FAQS, id = 'faq', title = <>Questions, <em>answered.</em></>, lede = 'Plants, landscaping, delivery and visits: quick answers to what customers in Rajahmundry and Visakhapatnam ask us most.' }) {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" className="faq" aria-labelledby="faq-title">
+    <section id={id} className="faq" aria-labelledby={`${id}-title`}>
       {/* a large outline leaf, barely there, as on the page headers */}
       <Leaf className="faq-watermark" strokeWidth={0.6} aria-hidden="true" />
 
       <div className="faq-intro">
         <p className="faq-kicker">FAQ</p>
-        <h2 id="faq-title">Questions, <em>answered.</em></h2>
+        <h2 id={`${id}-title`}>{title}</h2>
         <VineOrnament />
-        <p className="faq-lede">
-          Plants, landscaping, delivery and visits: quick answers to what customers in Rajahmundry and
-          Visakhapatnam ask us most.
-        </p>
-        <p className="faq-count"><strong>{FAQS.length}</strong> questions answered below</p>
+        <p className="faq-lede">{lede}</p>
+        <p className="faq-count"><strong>{items.length}</strong> questions answered below</p>
         <div className="faq-ask">
           <span className="faq-ask-icon" aria-hidden="true"><MessageCircle size={20} strokeWidth={2} /></span>
           <p className="faq-ask-title">Still have a question?</p>
@@ -54,7 +52,7 @@ export default function Faq() {
       </div>
 
       <div className="faq-list">
-        {FAQS.map(({ q, a }, i) => (
+        {items.map(({ q, a }, i) => (
           <details
             key={q}
             className="faq-item"

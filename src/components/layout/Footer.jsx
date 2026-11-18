@@ -5,6 +5,7 @@ import FooterStamp from './FooterStamp';
 import Meadow from './Meadow';
 import FooterEdge from './FooterEdge';
 import useOffscreenPause from '../../hooks/useOffscreenPause';
+import { LOCATIONS, formatAddress } from '../../data/locations';
 import { subscribeScroll } from '../../lib/scrollStore';
 import './Footer.css';
 
@@ -117,24 +118,30 @@ export default function Footer() {
               Sri Ayyappa Bala Sai Nursery — indoor, outdoor and ornamental plants, landscaping, planting and garden maintenance. Green Plants · Healthy Life · Happy Life.
             </p>
             <ul className="footer-meta">
-              <li><MapPin size={14} /> Madhurawada, Visakhapatnam, Andhra Pradesh</li>
+              {/* both nurseries, from src/data/locations.js, each linking to its own page */}
+              {LOCATIONS.map((loc) => (
+                <li key={loc.key} className="footer-branch">
+                  <MapPin size={14} aria-hidden="true" />
+                  <a href={loc.path} className="footer-branch-link"><strong>{loc.cardTitle}</strong>{formatAddress(loc, { country: false })}</a>
+                </li>
+              ))}
               <li><Clock size={14} /> Open daily, 7 am to 6 pm</li>
             </ul>
           </div>
 
           <div className="footer-links-col">
             <h4 className="footer-col-header">Shop</h4>
-            <a href="/plants" className="footer-link">All Plants</a>
+            <a href="/plants/" className="footer-link">All Plants</a>
             <a href="#collection" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('collection'); }}>Collections</a>
-            <a href="/pots" className="footer-link">Pots & Planters</a>
+            <a href="/pots/" className="footer-link">Pots & Planters</a>
             <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('care'); }}>Care Tools</a>
           </div>
 
           <div className="footer-links-col">
             <h4 className="footer-col-header">About</h4>
-            <a href="/about" className="footer-link">Our Story</a>
-            <a href="/services" className="footer-link">Services</a>
-            <a href="/gallery" className="footer-link">Gallery</a>
+            <a href="/about/" className="footer-link">Our Story</a>
+            <a href="/services/" className="footer-link">Services</a>
+            <a href="/gallery/" className="footer-link">Gallery</a>
             <a href="#contact" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('contact'); }}>Careers</a>
           </div>
 
@@ -142,7 +149,7 @@ export default function Footer() {
             <h4 className="footer-col-header">Support</h4>
             <a href="#care" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('care'); }}>Plant Care</a>
             <a href="#faq" className="footer-link" onClick={(e) => { e.preventDefault(); jumpTo('faq'); }}>FAQ</a>
-            <a href="/contact" className="footer-link">Contact Us</a>
+            <a href="/contact/" className="footer-link">Contact Us</a>
           </div>
 
           {/* finale: the seed rolls in from the page edge and becomes the nursery stamp */}

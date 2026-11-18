@@ -1,7 +1,8 @@
 import react from '@vitejs/plugin-react'
-import { readFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { join } from 'node:path'
 import { defineConfig } from 'vite'
-import { faqJsonLd } from './src/data/faqs.js'
+import { ROUTES, headBlock, locationShell, SHELL_STYLE, sitemapXml } from './seo/build-seo.js'
 
 const BACKSLASH = String.fromCharCode(92)
 
@@ -45,20 +46,46 @@ function plantIndex() {
   }
 }
 
-// The home-page FAQ as schema.org FAQPage JSON-LD in the static HTML, so answer engines and crawlers
-// that do not run JavaScript still read the questions and answers (same source as Faq.jsx)
-function faqStructuredData() {
+// Static SEO for every page. index.html carries the home page's head between the <!-- seo:start/end --> markers
+// (title, description, canonical, Open Graph, Twitter, JSON-LD). After the build, each other route gets its own
+// dist/<route>/index.html with its own head, the location pages also get their key content as plain HTML inside
+// #root, and the build writes a real 404.html and sitemap.xml. All of it comes from src/data (see seo/build-seo.js).
+const SEO_BLOCK = /<!-- seo:start -->[\s\S]*?<!-- seo:end -->/
+const seoBlock = (route, opts) => `<!-- seo:start -->
+${headBlock(route, opts)}
+    <!-- seo:end -->`
+function seoPages() {
+  let outDir = 'dist'
   return {
-    name: 'faq-structured-data',
-    transformIndexHtml() {
-      return [{ tag: 'script', attrs: { type: 'application/ld+json', 'data-faq': '' }, children: JSON.stringify(faqJsonLd()), injectTo: 'head' }]
+    name: 'seo-pages',
+    configResolved(config) { outDir = config.build.outDir },
+    transformIndexHtml(html) {
+      return html.replace(SEO_BLOCK, seoBlock(ROUTES[0]))
+    },
+    closeBundle() {
+      const indexFile = join(outDir, 'index.html')
+      let html
+      try { html = readFileSync(indexFile, 'utf8') } catch { return } // not a client build
+      for (const route of ROUTES.slice(1)) {
+        let page = html.replace(SEO_BLOCK, seoBlock(route))
+        if (route.location) {
+          page = page.replace('</head>', `    ${SHELL_STYLE}
+  </head>`).replace('<div id="root"></div>', `<div id="root">${locationShell(route)}</div>`)
+        }
+        const dir = join(outDir, route.path)
+        mkdirSync(dir, { recursive: true })
+        writeFileSync(join(dir, 'index.html'), page)
+      }
+      const notFound = { path: '/404/', title: 'Page not found | SABSN – Sri Ayyappa Bala Sai Nursery', description: 'This page could not be found. Browse the SABSN plant catalogue, our nursery locations or contact the nursery.' }
+      writeFileSync(join(outDir, '404.html'), html.replace(SEO_BLOCK, seoBlock(notFound, { noindex: true })))
+      writeFileSync(join(outDir, 'sitemap.xml'), sitemapXml(new Date().toISOString().slice(0, 10)))
     },
   }
 }
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), slimPlantCatalogue(), plantIndex(), faqStructuredData()],
+  plugins: [react(), slimPlantCatalogue(), plantIndex(), seoPages()],
   build: {
     target: 'es2020', // no legacy transforms; every supported browser handles this natively
     rollupOptions: {

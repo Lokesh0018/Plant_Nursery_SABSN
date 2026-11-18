@@ -18,6 +18,7 @@ import LoadingScreen from './components/home/LoadingScreen';
 const Services = lazy(() => import('./components/home/Services'));
 const PlantCare = lazy(() => import('./components/home/PlantCare'));
 const LivingArchive = lazy(() => import('./components/home/LivingArchive'));
+const Locations = lazy(() => import('./components/home/Locations'));
 const Faq = lazy(() => import('./components/home/Faq'));
 const Contact = lazy(() => import('./components/home/Contact'));
 const Footer = lazy(() => import('./components/layout/Footer'));
@@ -85,6 +86,8 @@ function App() {
       <PotsCollection />
       <VineDivider variant="pots" />
       <LazySection height="120vh" color="#F7F3EA"><LivingArchive /></LazySection>
+      {/* both nurseries, linking to their location pages (same ivory as the gallery above) */}
+      <LazySection height="90vh" color="#F7F3EA"><Locations /></LazySection>
       {/* the gallery's ivory into the FAQ's light sage; the FAQ eases back to ivory for the contact divider */}
       <VineDivider variant="ramp" id="faq-top" from="#F7F3EA" to="#eef3e4" />
       <LazySection height="100vh" color="#eef3e4"><Faq /></LazySection>

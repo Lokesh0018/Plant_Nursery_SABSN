@@ -18,11 +18,11 @@ function goToSection(page, id) {
 // the menu: `key` matches the active-section names; every item but Home is its own page
 const NAV_ITEMS = [
   { label: 'Home', key: 'home', href: '/' },
-  { label: 'About', key: 'about', href: '/about' },
-  { label: 'Plants', key: 'plants', href: '/plants' },
-  { label: 'Services', key: 'services', href: '/services' },
-  { label: 'Pots', key: 'pots', href: '/pots' },
-  { label: 'Gallery', key: 'gallery', href: '/gallery' },
+  { label: 'About', key: 'about', href: '/about/' },
+  { label: 'Plants', key: 'plants', href: '/plants/' },
+  { label: 'Services', key: 'services', href: '/services/' },
+  { label: 'Pots', key: 'pots', href: '/pots/' },
+  { label: 'Gallery', key: 'gallery', href: '/gallery/' },
 ];
 
 export default function Navbar({ page = 'home' }) {
@@ -213,7 +213,7 @@ export default function Navbar({ page = 'home' }) {
           className="shop-now-btn"
           // the contact page; already there, it scrolls back to the top
           aria-current={page === 'contact' ? 'page' : undefined}
-          onClick={() => { if (page === 'contact') window.scrollTo({ top: 0, behavior: 'smooth' }); else window.location.href = '/contact'; }}
+          onClick={() => { if (page === 'contact') window.scrollTo({ top: 0, behavior: 'smooth' }); else window.location.href = '/contact/'; }}
         >
           <span>Contact</span>
           <ArrowRight size={14} />

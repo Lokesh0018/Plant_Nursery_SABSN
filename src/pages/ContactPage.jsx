@@ -8,6 +8,8 @@ import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
 import VisitBadge from '../components/shared/VisitBadge';
 import './ContactPage.css';
+import { routeFor } from '../data/routes';
+import { LOCATIONS, formatAddress, directionsUrl, mapEmbedUrl } from '../data/locations';
 
 const Footer = lazy(() => import('../components/layout/Footer'));
 
@@ -16,11 +18,6 @@ const PHONE_1 = { label: '+91 98499 36169', tel: '+919849936169' };
 const PHONE_2 = { label: '+91 94903 78689', tel: '+919490378689' };
 const EMAIL = 'uppadakumaraswamy@gmail.com';
 const WA_NUMBER = '919849936169';
-const ADDRESS = 'Madhurawada, Visakhapatnam, Andhra Pradesh';
-// the headquarters' exact pin in Madhurawada (from the Google Maps link the nursery shared)
-const HQ_COORDS = '17.816306,83.355355';
-const MAP_QUERY = encodeURIComponent(HQ_COORDS);
-const DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${MAP_QUERY}`;
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hello SABSN, I would like to know more about your plants and services.')}`;
 
 const TOPICS = [
@@ -42,9 +39,10 @@ const MESSAGE_MAX = 600;
  */
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', phone: '', topic: TOPICS[0].label, place: '', message: '' });
+  const [branch, setBranch] = useState(0); // which nursery the visit card's map shows
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  useEffect(() => { document.title = 'Contact | SABSN Nursery'; }, []);
+  useEffect(() => { document.title = routeFor('/contact/').title; }, []);
   const open = useOpenStatus();
   const heroRef = useRef(null);
   // the hero's looping animations (status pulse, tickers, drifting tags) stop while it is scrolled away
@@ -118,7 +116,7 @@ export default function ContactPage() {
               <img src="/images/brand/logo-256.webp" alt="" width="52" height="52" decoding="async" />
               <div className="cp-panel-name">
                 <strong>Sri Ayyappa Bala Sai Nursery</strong>
-                <span>Madhurawada, Visakhapatnam</span>
+                <span>Kadiyam &amp; Visakhapatnam</span>
               </div>
               <p className={`cp-panel-status${open.now ? ' is-open' : ''}`}>
                 <span className="cp-panel-dot" aria-hidden="true" />{open.now ? 'Open now' : 'Closed now'}
@@ -147,13 +145,15 @@ export default function ContactPage() {
                   <span className="cp-action-go" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
                 </a>
               </li>
-              <li>
-                <a className="cp-action" href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer">
-                  <span className="cp-action-icon" aria-hidden="true"><MapPin size={18} strokeWidth={2} /></span>
-                  <span className="cp-action-text"><small>Visit · get directions</small>Madhurawada, Visakhapatnam</span>
-                  <span className="cp-action-go" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
-                </a>
-              </li>
+              {LOCATIONS.map((loc) => (
+                <li key={loc.key}>
+                  <a className="cp-action" href={directionsUrl(loc)} target="_blank" rel="noopener noreferrer">
+                    <span className="cp-action-icon" aria-hidden="true"><MapPin size={18} strokeWidth={2} /></span>
+                    <span className="cp-action-text"><small>Visit · get directions</small>{loc.locality}{loc.locality === loc.district ? '' : `, ${loc.market}`}</span>
+                    <span className="cp-action-go" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
+                  </a>
+                </li>
+              ))}
             </ul>
 
             <footer className="cp-panel-hours">
@@ -201,8 +201,8 @@ export default function ContactPage() {
             <li className="cp-card">
               <span className="cp-card-icon" aria-hidden="true"><MapPin size={20} strokeWidth={2} /></span>
               <h3>Visit</h3>
-              <p>{ADDRESS}.</p>
-              <a className="cp-card-cta" href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer">Get directions <ArrowUpRight size={16} aria-hidden="true" /></a>
+              <p>Two nurseries: Kadiyam, near Rajahmundry, and Madhurawada, Visakhapatnam.</p>
+              <a className="cp-card-cta" href="#cp-visit-title">See both addresses <ArrowRight size={16} aria-hidden="true" /></a>
             </li>
           </ul>
         </section>
@@ -282,20 +282,32 @@ export default function ContactPage() {
             <h2 id="cp-visit-title">Come and <em>walk the beds.</em></h2>
             <dl className="cp-facts">
               <div><dt><Clock size={16} aria-hidden="true" />Hours</dt><dd>Open daily, 7 am – 6 pm</dd></div>
-              <div><dt><MapPin size={16} aria-hidden="true" />Address</dt><dd>{ADDRESS}</dd></div>
+              {LOCATIONS.map((loc) => (
+                <div key={loc.key}>
+                  <dt><MapPin size={16} aria-hidden="true" />{loc.locality}</dt>
+                  <dd><a className="cp-branch-link" href={loc.path}>{loc.cardTitle}</a><br />{formatAddress(loc)}</dd>
+                </div>
+              ))}
               <div><dt><Navigation size={16} aria-hidden="true" />We serve</dt><dd>Rajahmundry, Visakhapatnam and across Andhra Pradesh</dd></div>
             </dl>
             <p className="cp-visit-tip">Call ahead and we can have plants ready for you to see.</p>
+            {/* one map, switched between the two nurseries */}
+            <div className="cp-branch-tabs" role="group" aria-label="Show on the map">
+              {LOCATIONS.map((loc, i) => (
+                <button key={loc.key} type="button" className="cp-branch-tab" aria-pressed={branch === i} onClick={() => setBranch(i)}>{loc.locality}</button>
+              ))}
+            </div>
             <div className="cp-map">
               <iframe
-                title="Map: Madhurawada, Visakhapatnam, Andhra Pradesh"
-                src={`https://maps.google.com/maps?q=${MAP_QUERY}&z=16&output=embed`}
+                key={LOCATIONS[branch].key}
+                title={`Map: ${LOCATIONS[branch].name}, ${formatAddress(LOCATIONS[branch])}`}
+                src={mapEmbedUrl(LOCATIONS[branch])}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
-            <a className="cp-btn cp-btn--light" href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer">
-              <Navigation size={16} strokeWidth={2.2} aria-hidden="true" /> Open in Google Maps
+            <a className="cp-btn cp-btn--light" href={directionsUrl(LOCATIONS[branch])} target="_blank" rel="noopener noreferrer">
+              <Navigation size={16} strokeWidth={2.2} aria-hidden="true" /> Directions to {LOCATIONS[branch].locality}
             </a>
           </aside>
         </section>
