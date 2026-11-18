@@ -226,7 +226,7 @@ export default function ServicesPage() {
                   <a className="sp-dialog-cta" href={waLink(`Hello SABSN, I would like to enquire about ${title}.`)} target="_blank" rel="noopener noreferrer">
                     <MessageCircle size={16} strokeWidth={2.2} aria-hidden="true" />Enquire on WhatsApp
                   </a>
-                  <a className="sp-dialog-call" href={`tel:${PHONE}`}><Phone size={15} strokeWidth={2.2} aria-hidden="true" />Call us</a>
+                  <a className="sp-dialog-call" href={`tel:${PHONE}`}><Phone size={15} strokeWidth={2.2} aria-hidden="true" /><span className="sp-dialog-call-label">Call us</span></a>
                   {shown.length > 1 && (
                     <div className="sp-dialog-nav">
                       <button type="button" onClick={() => step(-1)} aria-label={`Previous service: ${shown[(at - 1 + shown.length) % shown.length].title}`}><ArrowLeft size={17} aria-hidden="true" /></button>

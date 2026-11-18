@@ -3,6 +3,9 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 // drift speed in cards per second, and how long a click / drag / hover holds it before drifting on
 const DRIFT = 0.32;
 const HOLD_AFTER_MS = 2600;
+// Phones and touch screens: no idle drift. The card being read must not slide away under the thumb;
+// swiping, arrows and dots still move it (with the same easing).
+const NO_DRIFT_QUERY = '(max-width: 640px), (hover: none) and (pointer: coarse)';
 
 /**
  * A centred, endlessly looping card carousel that glides continuously while it is on screen.
@@ -21,6 +24,7 @@ export default function useServiceCarousel(count) {
   const cards = useRef([]);
   const [index, setIndex] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const noDrift = useRef(window.matchMedia(NO_DRIFT_QUERY).matches);
 
   const pos = useRef(0);          // fractional position, in cards
   const target = useRef(null);    // card position being eased to, if any
@@ -81,12 +85,15 @@ export default function useServiceCarousel(count) {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const change = () => setReducedMotion(media.matches);
     media.addEventListener('change', change);
+    const driftMedia = window.matchMedia(NO_DRIFT_QUERY);
+    const driftChange = () => { noDrift.current = driftMedia.matches; };
+    driftMedia.addEventListener('change', driftChange);
     const observer = new IntersectionObserver(([entry]) => {
       visible.current = entry.isIntersecting;
       wake.current?.();
     }, { threshold: 0.25 });
     if (trackRef.current) observer.observe(trackRef.current);
-    return () => { media.removeEventListener('change', change); observer.disconnect(); };
+    return () => { media.removeEventListener('change', change); driftMedia.removeEventListener('change', driftChange); observer.disconnect(); };
   }, []);
 
   // the motion loop: eases toward a chosen card, otherwise drifts
@@ -116,7 +123,7 @@ export default function useServiceCarousel(count) {
         return;
       }
       const h = held.current;
-      if (h.hover || h.focus || h.paused || now < holdUntil.current) return;
+      if (noDrift.current || h.hover || h.focus || h.paused || now < holdUntil.current) return;
       pos.current = (pos.current + DRIFT * dt) % count;
       apply();
     };
@@ -127,6 +134,11 @@ export default function useServiceCarousel(count) {
   // how many pixels one card's step in the fan is, from the stage's --spread
   const spreadPx = () => {
     const raw = getComputedStyle(trackRef.current).getPropertyValue('--spread').trim();
+    // a calc() (the phone layout: one card plus a gap) can't be parsed, so measure it from a card
+    if (raw.startsWith('calc')) {
+      const card = cards.current.find(Boolean);
+      return card ? card.offsetWidth * 0.97 + 12 : 300;
+    }
     const n = parseFloat(raw) || 225;
     return raw.endsWith('vw') ? (n * window.innerWidth) / 100 : n;
   };

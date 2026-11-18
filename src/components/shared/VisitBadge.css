@@ -1,44 +1,153 @@
-/* The page-header badge (VisitBadge.jsx): a glass pill on the forest headers, the live status picked out in lime
-   (open) or warm terracotta (closed), then the hours and the place. */
+/* The page-header badge (VisitBadge.jsx): a forest-glass capsule on the dark headers. The live status sits in a
+   lime (open) or terracotta (closed) chip, then the hours and the place, each with an icon in a small disc and
+   split by hairline dividers. Below 640px it becomes a compact card. */
 .visit-badge {
+  --vb-lime: #c9d98a;
+  --vb-dot: #9fd36f;
+  --vb-text: rgba(244, 236, 217, 0.92);
+  --vb-muted: rgba(244, 236, 217, 0.66);
+  --vb-line: rgba(244, 236, 217, 0.14);
+
   display: inline-flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem 0.9rem;
-  margin: 0 0 1.4rem;
-  padding: 0.4rem 0.9rem 0.4rem 0.5rem;
-  border: 1px solid rgba(201, 217, 138, 0.22);
+  max-width: 100%;
+  margin: 0 0 1.5rem;
+  padding: 0.35rem;
+  border: 1px solid rgba(201, 217, 138, 0.24);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(244, 236, 217, 0.88);
-  font-size: 0.8rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  backdrop-filter: blur(8px) saturate(1.2);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: var(--vb-text);
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.visit-badge.is-closed {
+  --vb-lime: #f2c3a2;
+  --vb-dot: #e7a078;
+  border-color: rgba(231, 160, 120, 0.26);
+}
+
+/* status chip */
+.visit-badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem 0.45rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(201, 217, 138, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(201, 217, 138, 0.22);
+  color: var(--vb-lime);
+  white-space: nowrap;
+}
+.is-closed .visit-badge-status {
+  background: rgba(231, 160, 120, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(231, 160, 120, 0.24);
+}
+.visit-badge-status strong { font-weight: 700; letter-spacing: 0.01em; }
+.visit-badge-when {
+  padding-left: 0.5rem;
+  border-left: 1px solid currentColor;
+  border-left-color: rgba(201, 217, 138, 0.35);
+  color: var(--vb-muted);
   font-weight: 500;
 }
-.visit-badge > span { display: inline-flex; align-items: center; gap: 0.35rem; }
-.visit-badge svg { color: #c9d98a; }
+.is-closed .visit-badge-when { border-left-color: rgba(231, 160, 120, 0.35); }
 
-.visit-badge-status {
-  gap: 0.45rem !important;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(201, 217, 138, 0.16);
-  color: #c9d98a;
-  font-weight: 700;
+/* live dot with a soft pulse while open */
+.visit-badge-dot {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--vb-dot);
+  box-shadow: 0 0 10px rgba(159, 211, 111, 0.7);
 }
-.visit-badge-status.is-closed { background: rgba(231, 160, 120, 0.16); color: #f2c3a2; }
-
-.visit-badge-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #9fd36f; }
 .visit-badge-dot::after {
   content: '';
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 2px solid rgba(159, 211, 111, 0.5);
+  border: 2px solid rgba(159, 211, 111, 0.55);
   animation: visit-badge-pulse 2.4s ease-out infinite;
 }
-.is-closed .visit-badge-dot { background: currentColor; }
+.is-closed .visit-badge-dot { box-shadow: none; }
 .is-closed .visit-badge-dot::after { display: none; }
-@keyframes visit-badge-pulse { from { transform: scale(0.5); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+@keyframes visit-badge-pulse { from { transform: scale(0.5); opacity: 1; } to { transform: scale(1.7); opacity: 0; } }
+
+/* hours and place */
+.visit-badge-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.95rem;
+  white-space: nowrap;
+}
+.visit-badge-status + .visit-badge-item { margin-left: 0.25rem; }
+.visit-badge-item + .visit-badge-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 22%;
+  bottom: 22%;
+  width: 1px;
+  background: var(--vb-line);
+}
+.visit-badge-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(201, 217, 138, 0.12);
+  color: #c9d98a;
+}
+.visit-badge time { font-variant-numeric: tabular-nums; }
+
+/* Tablet: let the capsule wrap cleanly instead of overflowing */
+@media (max-width: 900px) {
+  .visit-badge { flex-wrap: wrap; row-gap: 0.25rem; }
+}
+
+/* Mobile: a compact card. Status row across the top, hours and place stacked beneath with a divider. */
+@media (max-width: 640px) {
+  .visit-badge {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: min(100%, 360px);
+    padding: 0.4rem;
+    border-radius: 18px;
+    font-size: 0.85rem;
+  }
+  .visit-badge-status {
+    justify-content: flex-start;
+    border-radius: 13px;
+    padding: 0.6rem 0.8rem;
+  }
+  .visit-badge-when { margin-left: auto; }
+  .visit-badge-item {
+    padding: 0.55rem 0.6rem;
+    margin-left: 0 !important;
+    white-space: normal;
+  }
+  .visit-badge-item + .visit-badge-item::before {
+    top: 0;
+    bottom: auto;
+    left: 0.6rem;
+    right: 0.6rem;
+    width: auto;
+    height: 1px;
+  }
+  .visit-badge-status + .visit-badge-item { margin-top: 0.15rem; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .visit-badge-dot::after { animation: none; }

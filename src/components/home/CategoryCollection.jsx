@@ -31,12 +31,14 @@ export default function CategoryCollection({ kind, categories }) {
         </header>
         <ul className="category-grid">
           {categories.map(({ title, text, alt, tag }, i) => {
+            const cell = atlasCell(kind, i);
             return <li key={title} className="category-card">
               <button type="button" ref={(el) => { cards.current[i] = el; }} onClick={() => setOpen(i)} aria-haspopup="dialog" aria-label={`View details for ${title}`}>
                 <div className="category-media">
-                  <div className="category-photo">
+                  {/* the atlas cell at its true shape (--r), centred and cropped to the frame like object-fit: cover */}
+                  <div className="category-photo" style={{ '--r': cell.ratio }}>
                     <img src={`/images/categories/${kind}-atlas.webp`} alt={`Illustration of ${alt.charAt(0).toLowerCase() + alt.slice(1)}`} loading="lazy" decoding="async" width="1536" height="1024"
-                      style={atlasCell(kind, i).style} />
+                      style={cell.style} />
                   </div>
                   <span className="category-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                   <span className="category-tag">{tag}</span>

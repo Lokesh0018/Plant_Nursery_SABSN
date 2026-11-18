@@ -397,9 +397,19 @@
   .ap-intro-media { min-height: 0; aspect-ratio: 4 / 3; }
   .ap-stats li { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
   .ap-contact-photo { max-width: 280px; }
-  .ap-pillars { grid-template-columns: 1fr; }
-  .ap-pillar-media { aspect-ratio: 16 / 7; }
-  .ap-pillar-next { top: auto; right: auto; bottom: calc(-18px - 0.625rem - 0.6rem - 1px); left: 50%; transform: translateX(-50%) rotate(90deg); }
+  /* Tablet: the three services stack, each card laid out sideways: photo panel left (kept at the atlas's
+     own 3:2, so it is never stretched), text right. */
+  .ap-pillars { grid-template-columns: 1fr; gap: 1.5rem; }
+  .ap-pillars li { flex-direction: row; align-items: center; gap: 1.25rem; }
+  .ap-pillar-media { flex: 0 0 42%; aspect-ratio: 3 / 2; }
+  .ap-pillar-body { position: static; padding: 0.6rem 1rem 0.6rem 0; }
+  .ap-pillar-body .ap-icon { margin: 0 0 0.8rem; width: 46px; height: 46px; border-width: 0; }
+  .ap-pillars h3 { font-size: 1.4rem; }
+  /* the connector chip drops into the gap below each card, centred under the photo */
+  .ap-pillar-next {
+    top: auto; right: auto; bottom: calc(-18px - 0.75rem - 1px); left: calc(0.6rem + 21%);
+    transform: translateX(-50%) rotate(90deg);
+  }
   .ap-strengths { grid-template-columns: 1fr; gap: 0; }
   .ap-strengths-media { min-height: 220px; }
   .ap-strengths ul { padding: 0.5rem 1rem; }
@@ -432,6 +442,24 @@
   .ap-motto { margin-top: 0.4rem; }
   .ap-intro-media { margin: 0 0.75rem 0.75rem 0; }
   .ap-intro-media::before { inset: 0.75rem -0.75rem -0.75rem 0.75rem; }
+  /* Phone: cards stack photo-over-text again. The photo is a wide 16:9 strip; the atlas is drawn at its true
+     square shape (height: auto) and slid so the wanted cell sits centred in the strip, a crop rather than a
+     stretch. `translate` composes with the hover `transform: scale`, so the two never fight. */
+  .ap-pillars { gap: 1.25rem; }
+  .ap-pillars li { flex-direction: column; align-items: stretch; gap: 0; }
+  .ap-pillar-media { flex: none; aspect-ratio: 16 / 9; }
+  .ap-pillar-atlas { height: auto; top: 50%; }
+  .ap-pillar-atlas--landscape, .ap-pillar-atlas--planting { top: 50%; translate: 0 -16.667%; }
+  .ap-pillar-atlas--lawn { top: 50%; translate: 0 -50%; }
+  .ap-pillar-num { font-size: 1.6rem; left: 0.9rem; bottom: 0.7rem; }
+  .ap-pillar-body { position: relative; padding: 0 0.9rem 1.15rem; }
+  .ap-pillar-body .ap-icon { margin: -24px 0 0 auto; width: 48px; height: 48px; border-width: 4px; }
+  .ap-pillars h3 { font-size: 1.35rem; margin-top: -0.4rem; padding-right: 3.5rem; }
+  .ap-pillars p { font-size: 0.95rem; line-height: 1.65; }
+  .ap-pillar-next { bottom: calc(-18px - 0.625rem - 0.6rem - 1px); left: 50%; }
+  .ap-strengths-head { padding: 1.25rem 1.2rem; }
+  .ap-strengths ul { padding: 0.25rem 0.6rem 0.5rem; }
+  .ap-strengths li { padding: 1rem 0; font-size: 0.94rem; }
   .ap-strengths ul { grid-template-columns: 1fr; }
   .ap-strengths li:nth-last-child(-n+2) { border-bottom: 1px solid var(--ap-line); }
   .ap-strengths li:last-child { border-bottom: 0; }

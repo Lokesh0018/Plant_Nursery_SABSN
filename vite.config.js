@@ -51,6 +51,8 @@ function plantIndex() {
 // dist/<route>/index.html with its own head, the location pages also get their key content as plain HTML inside
 // #root, and the build writes a real 404.html and sitemap.xml. All of it comes from src/data (see seo/build-seo.js).
 const SEO_BLOCK = /<!-- seo:start -->[\s\S]*?<!-- seo:end -->/
+// the home page's loading screen and hero preloads: stripped from every other page's copy (they only run on /)
+const HOME_ONLY = /\s*<!-- (boot-loader|hero-preload):start -->[\s\S]*?<!-- \1:end -->/g
 const seoBlock = (route, opts) => `<!-- seo:start -->
 ${headBlock(route, opts)}
     <!-- seo:end -->`
@@ -67,7 +69,7 @@ function seoPages() {
       let html
       try { html = readFileSync(indexFile, 'utf8') } catch { return } // not a client build
       for (const route of ROUTES.slice(1)) {
-        let page = html.replace(SEO_BLOCK, seoBlock(route))
+        let page = html.replace(SEO_BLOCK, seoBlock(route)).replace(HOME_ONLY, '')
         if (route.location) {
           page = page.replace('</head>', `    ${SHELL_STYLE}
   </head>`).replace('<div id="root"></div>', `<div id="root">${locationShell(route)}</div>`)
@@ -77,7 +79,7 @@ function seoPages() {
         writeFileSync(join(dir, 'index.html'), page)
       }
       const notFound = { path: '/404/', title: 'Page not found | SABSN – Sri Ayyappa Bala Sai Nursery', description: 'This page could not be found. Browse the SABSN plant catalogue, our nursery locations or contact the nursery.' }
-      writeFileSync(join(outDir, '404.html'), html.replace(SEO_BLOCK, seoBlock(notFound, { noindex: true })))
+      writeFileSync(join(outDir, '404.html'), html.replace(SEO_BLOCK, seoBlock(notFound, { noindex: true })).replace(HOME_ONLY, ''))
       writeFileSync(join(outDir, 'sitemap.xml'), sitemapXml(new Date().toISOString().slice(0, 10)))
     },
   }

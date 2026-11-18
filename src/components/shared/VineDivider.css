@@ -242,7 +242,30 @@
 @media (max-width: 1200px) {
   .vine-stem.sub, .vine-stem.wisp { display: none; } /* tablets and phones: one stem per side */
 }
+/* Tablets and phones. The JS draws at the band's real height (no vertical squash), uses fewer, gentler waves,
+   and builds smaller, better-spaced leaves; the CSS slims the band and the strokes to match. */
 @media (max-width: 900px) {
-  .vine-divider { height: 100px; }
+  .vine-divider { height: 104px; }
   .vine-stem.main { stroke-width: 3.4; }
+  .vine-stem-highlight { stroke-width: 0.9; }
+  .vine-tendril { stroke-width: 1.3; }
+}
+@media (max-width: 600px) {
+  .vine-divider { height: 92px; }
+  .vine-stem.main { stroke-width: 2.8; }
+  .vine-stem-highlight { stroke-width: 0.8; transform: translateY(-0.8px); }
+  .vine-leaf-blade { stroke-width: 0.7; }
+  /* a lighter shadow reads better at this scale */
+  .vine-divider.is-grown .vine-svg { filter: drop-shadow(0 2px 2px rgba(22, 54, 36, 0.16)); }
+  /* the lime glow on the ramp and top bands narrows with the screen, so it still fades out before the edges */
+  .vine-divider.vine-divider--ramp {
+    background:
+      radial-gradient(ellipse 60% 38% at 50% 50%, rgba(201, 217, 138, 0.2), transparent 100%),
+      linear-gradient(180deg,
+        var(--vd-from) 0%,
+        color-mix(in srgb, var(--vd-from) 92%, var(--vd-to)) 12%,
+        color-mix(in srgb, var(--vd-from) 50%, var(--vd-to)) 50%,
+        color-mix(in srgb, var(--vd-from) 8%, var(--vd-to)) 88%,
+        var(--vd-to) 100%);
+  }
 }

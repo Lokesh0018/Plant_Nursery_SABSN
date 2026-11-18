@@ -36,8 +36,23 @@ export default function CategoryModal({ kind, categories, index, onIndex, onClos
     return () => { document.body.style.overflow = overflow; };
   }, []);
 
-  // new category: start reading from the top
-  useEffect(() => { bodyRef.current?.scrollTo({ top: 0 }); }, [index]);
+  // new category: start reading from the top (on phones the whole sheet scrolls, on wider screens the text column)
+  useEffect(() => {
+    bodyRef.current?.scrollTo({ top: 0 });
+    panelRef.current?.scrollTo({ top: 0 });
+  }, [index]);
+
+  // phones: swipe the photo sideways to step through the categories
+  const touch = useRef(null);
+  const onTouchStart = (e) => { const t = e.touches[0]; touch.current = { x: t.clientX, y: t.clientY }; };
+  const onTouchEnd = (e) => {
+    if (!touch.current) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touch.current.x;
+    const dy = t.clientY - touch.current.y;
+    touch.current = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go(dx < 0 ? 1 : -1);
+  };
 
   useEffect(() => {
     const onKey = (e) => {
@@ -70,7 +85,8 @@ export default function CategoryModal({ kind, categories, index, onIndex, onClos
       <div ref={panelRef} className="cm-panel">
         <button ref={closeRef} className="cm-close" onClick={close} aria-label="Close category details"><X size={20} aria-hidden="true" /></button>
 
-        <div className="cm-media" key={`media-${index}`}>
+        <span className="cm-handle" aria-hidden="true" />
+        <div className="cm-media" key={`media-${index}`} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div className="cm-cell" style={{ '--r': cell.ratio }}>
             <img src={`/images/categories/${kind}-atlas.webp`} alt="" width="1536" height="1024" decoding="async" style={cell.style} />
           </div>
@@ -82,7 +98,7 @@ export default function CategoryModal({ kind, categories, index, onIndex, onClos
           <div className="cm-content" key={`body-${index}`}>
             <p className="cm-kicker"><Leaf size={13} strokeWidth={2.2} aria-hidden="true" />{pots ? 'Pot category' : 'Plant category'} · {number} of {String(total).padStart(2, '0')}</p>
             <h2 id="cm-title" className="cm-title">{category.title}</h2>
-            <p className="cm-lead">{category.text}</p>
+            {/* the card's one-line summary is not repeated here: the intro says the same thing, in full */}
             <p id="cm-intro" className="cm-intro">{details.intro}</p>
 
             <ul className="cm-facts" aria-label={pots ? 'At a glance' : 'Growing at a glance'}>
@@ -108,6 +124,11 @@ export default function CategoryModal({ kind, categories, index, onIndex, onClos
               <h3 id="cm-tips-title" className="cm-label">{pots ? 'Good to know' : 'Care tips'}</h3>
               <ul className="cm-tips">{details.tips.map((t) => <li key={t}><Check size={14} strokeWidth={2.6} aria-hidden="true" /><span>{t}</span></li>)}</ul>
             </section>
+
+            {/* phones: the browse link sits at the end of the text, keeping the sticky bar to one row */}
+            {pots
+              ? <a className="cm-browse-inline" href={`/pots/?category=${potCatalogue.find(g => g.title === category.title)?.slug || 'all'}`}>Browse this category <ArrowRight size={16} aria-hidden="true" /></a>
+              : <a className="cm-browse-inline" href="/plants/">Browse all plants <ArrowRight size={16} aria-hidden="true" /></a>}
           </div>
 
           <div className="cm-foot">

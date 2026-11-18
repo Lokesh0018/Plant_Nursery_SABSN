@@ -13,8 +13,13 @@
 .category-card { min-width: 0; border-radius: 19px; background: #fffdf7; border: 1px solid rgba(40,62,36,.11); overflow: hidden; box-shadow: 0 5px 18px #16362406; transition: transform .3s ease, box-shadow .3s ease; }
 .category-card > button { display: flex; width: 100%; height: 100%; flex-direction: column; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .category-card > button:focus-visible { outline: 3px solid var(--category-accent); outline-offset: -5px; border-radius: 19px; }
-.category-media { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--category-tint); }
-.category-photo { position: absolute; inset: 0; transition: transform .65s cubic-bezier(.2,.8,.2,1); }
+.category-media { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--category-tint); container-type: size; }
+/* the cell keeps the atlas panel's own ratio (--r) and covers the frame, so a frame of any shape crops instead of stretching */
+.category-photo {
+  position: absolute; top: 50%; left: 50%; overflow: hidden;
+  width: max(100cqw, calc(100cqh * var(--r, .75))); aspect-ratio: var(--r, .75); translate: -50% -50%;
+  transition: transform .65s cubic-bezier(.2,.8,.2,1);
+}
 .category-photo img { position: absolute; display: block; width: 400%; max-width: none; object-fit: fill; }
 .category-media::after { content: ''; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, #0d271ab3); pointer-events: none; }
 .category-number { position: absolute; top: .9rem; left: .9rem; display: grid; place-items: center; width: 31px; height: 31px; border-radius: 50%; background: #fffdf3ed; color: #27422c; font-size: .68rem; font-weight: 700; }
@@ -31,5 +36,30 @@
 @media (hover:hover) { .category-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px #16362414; } .category-card:hover .category-photo { transform: scale(1.04); } .category-card:hover .category-enquire > span { background: var(--category-accent); color: #fff; } }
 @media (max-width: 1050px) { .category-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .category-media { aspect-ratio: 3 / 4; } }
 @media (max-width: 700px) { .category-heading { grid-template-columns: 1fr; gap: .75rem; margin-bottom: 2rem; } .category-heading-side { justify-self: start; } .category-grid { gap: 1rem; } .category-body { padding: 1rem .9rem; } .category-bottom { flex-direction: column; align-items: flex-start; } }
-@media (max-width: 480px) { .category-grid { grid-template-columns: 1fr; gap: 1.4rem; } .category-media { aspect-ratio: 3 / 4; max-height: 440px; } .category-body { padding: 1.25rem; } .category-body h3 { font-size: 1.4rem; } .category-body p { font-size: .88rem; } .category-enquire { font-size: .73rem; } .category-bottom a { width: 100%; } }
+/* Phones: compact horizontal cards (photo left, text right) instead of eight full-height portrait cards,
+   roughly a third of the scrolling, with readable text and a clear tap affordance. */
+@media (max-width: 560px) {
+  .category-grid { grid-template-columns: 1fr; gap: .85rem; }
+  .category-card { border-radius: 18px; }
+  .category-card > button { flex-direction: row; align-items: stretch; min-height: 168px; }
+  .category-card > button:focus-visible { border-radius: 18px; }
+  .category-media { flex: 0 0 38%; aspect-ratio: auto; min-height: 168px; }
+  .category-media::after { inset: 60% 0 0; }
+  .category-number { top: .6rem; left: .6rem; width: 28px; height: 28px; font-size: .64rem; }
+  .category-tag { display: none; } /* too small to read on a narrow photo; the modal shows it */
+  .category-body { padding: .95rem 1rem .85rem; min-width: 0; }
+  .category-body h3 { font-size: 1.2rem; line-height: 1.25; }
+  .category-body p {
+    margin: .4rem 0 .75rem; font-size: .86rem; line-height: 1.55;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .category-enquire { font-size: .74rem; padding-top: .6rem; }
+  .category-enquire > span { width: 30px; height: 30px; background: var(--category-accent); color: #fff; }
+  .category-card:active { transform: scale(.985); }
+  .category-bottom a { width: 100%; }
+}
+@media (max-width: 360px) {
+  .category-media { flex-basis: 34%; }
+  .category-body p { -webkit-line-clamp: 2; }
+}
 @media (prefers-reduced-motion: reduce) { .category-card, .category-photo, .category-enquire > span { transition: none; } .category-card:hover, .category-card:hover .category-photo { transform: none; } }

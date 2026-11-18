@@ -87,6 +87,37 @@ export default function Navbar({ page = 'home' }) {
     }
   }, [activeSection, isScrolled, isMobileOpen]);
 
+  // While the mobile menu is open: lock page scroll, close on Escape, and close if the viewport grows to desktop
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e) => { if (e.key === 'Escape') setIsMobileOpen(false); };
+    const mq = window.matchMedia('(min-width: 901px)');
+    const onMq = (e) => { if (e.matches) setIsMobileOpen(false); };
+    window.addEventListener('keydown', onKey);
+    mq.addEventListener('change', onMq);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+      mq.removeEventListener('change', onMq);
+    };
+  }, [isMobileOpen]);
+
+  // shared click behaviour for desktop and mobile links
+  const handleNavClick = (e, key, href) => {
+    e.preventDefault();
+    setIsMobileOpen(false);
+    setActiveSection(key);
+    // About, Plants, Services, Pots and Gallery are their own pages; Home scrolls on the home page
+    if (key !== 'home') {
+      if (page === key) window.scrollTo({ top: 0, behavior: 'smooth' });
+      else window.location.href = href;
+    } else {
+      goToSection(page, 'home');
+    }
+  };
+
   return (
     <>
     <nav className={`navbar-container ${isScrolled ? 'scrolled' : ''} on-dark ${isSearchOpen ? 'search-open' : ''}`}>
@@ -113,7 +144,7 @@ export default function Navbar({ page = 'home' }) {
       </a>
 
       {/* Center Nav Links: real links, so they are reachable by keyboard and open in a new tab if asked */}
-      <ul ref={navRef} className={`nav-links ${isMobileOpen ? 'mobile-open' : ''}`}>
+      <ul ref={navRef} className="nav-links">
 
         {/* Sliding Indicator Dot (position comes from the active item) */}
         <div className="nav-indicator" style={indicatorStyle} />
@@ -126,18 +157,7 @@ export default function Navbar({ page = 'home' }) {
                 className="nav-link"
                 href={href}
                 aria-current={isActive && page === key ? 'page' : undefined}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsMobileOpen(false);
-                  setActiveSection(key);
-                  // About, Plants, Services, Pots and Gallery are their own pages; Home scrolls on the home page
-                  if (key !== 'home') {
-                    if (page === key) window.scrollTo({ top: 0, behavior: 'smooth' });
-                    else window.location.href = href;
-                  } else {
-                    goToSection(page, 'home');
-                  }
-                }}
+                onClick={(e) => handleNavClick(e, key, href)}
               >
                 {label}
               </a>
@@ -225,6 +245,7 @@ export default function Navbar({ page = 'home' }) {
           className={`mobile-menu-btn${isMobileOpen ? ' is-open' : ''}`}
           aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isMobileOpen}
+          aria-controls="mobile-menu"
           onClick={() => setIsMobileOpen(!isMobileOpen)}
         >
           {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -232,6 +253,54 @@ export default function Navbar({ page = 'home' }) {
 
       </div>
     </nav>
+
+    {/* Mobile menu: rendered OUTSIDE the <nav>. The scrolled nav uses transform, backdrop-filter and
+        contain: paint, which turn it into the containing block for fixed children and clip them to the
+        capsule, so a menu nested inside it could only appear at the very top of the page. */}
+    <div
+      id="mobile-menu"
+      className={`mobile-menu${isMobileOpen ? ' is-open' : ''}`}
+      aria-hidden={!isMobileOpen}
+      inert={!isMobileOpen}
+    >
+      <div className="mobile-menu-backdrop" onClick={() => setIsMobileOpen(false)} />
+      <div className="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="Site menu">
+        <p className="mobile-menu-eyebrow">Menu</p>
+        <ul className="mobile-menu-list">
+          {NAV_ITEMS.map(({ label, key, href }, i) => {
+            const isActive = activeSection === key;
+            return (
+              <li key={label} style={{ '--i': i }}>
+                <a
+                  className={`mobile-menu-link${isActive ? ' is-active' : ''}`}
+                  href={href}
+                  aria-current={isActive && page === key ? 'page' : undefined}
+                  onClick={(e) => handleNavClick(e, key, href)}
+                >
+                  <span className="mobile-menu-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="mobile-menu-label">{label}</span>
+                  <ArrowRight className="mobile-menu-arrow" size={18} strokeWidth={1.8} />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+        <button
+          type="button"
+          className="mobile-menu-cta"
+          style={{ '--i': NAV_ITEMS.length }}
+          onClick={() => {
+            setIsMobileOpen(false);
+            if (page === 'contact') window.scrollTo({ top: 0, behavior: 'smooth' });
+            else window.location.href = '/contact/';
+          }}
+        >
+          <span>Contact Us</span>
+          <ArrowRight size={16} />
+        </button>
+        <p className="mobile-menu-foot">Sri Ayyappa Bala Sai Nursery</p>
+      </div>
+    </div>
     </>
   );
 }

@@ -32,31 +32,32 @@ function el(tag, attrs = {}) {
   return n;
 }
 
-// wavy stem from an edge toward the centre. `phase` flips the wave for the secondary stem
-function buildStem(width, mirror, { amp = 24, phase = 0, inset = 34, y = MID } = {}) {
+// wavy stem from an edge toward the centre. `phase` flips the wave for the secondary stem;
+// `segs` sets how many waves it makes (fewer on phones, so the curve stays relaxed instead of zigzagging)
+function buildStem(width, mirror, { amp = 24, phase = 0, inset = 34, y = MID, segs = 5 } = {}) {
   const cx = width / 2;
   const end = mirror ? cx + inset : cx - inset;
   const start = mirror ? width + 12 : -12;
   const dir = mirror ? -1 : 1;
-  const segs = 5;
   const span = Math.abs(end - start) / segs;
+  const taper = (amp * 0.5) / segs; // waves calm toward the centre, whatever the count
   let d = `M ${start} ${y}`;
   let x = start;
   for (let i = 0; i < segs; i++) {
     const nx = x + dir * span;
     const up = (i + phase) % 2 === 0 ? -1 : 1;
-    const a = amp - i * 2.5;
+    const a = amp - i * taper;
     d += ` C ${x + dir * span * 0.38} ${y + up * a}, ${nx - dir * span * 0.38} ${y + up * a}, ${nx} ${y}`;
     x = nx;
   }
   return d;
 }
 
-function decorate(svg, stem, mirror, { density = 95, size = 1.35, tendrils = true, berries = true }) {
+function decorate(svg, stem, mirror, { density = 95, size = 1.35, tendrils = true, berries = true, min = 5 }) {
   const len = stem.getTotalLength();
   const g = el('g', { class: 'vine-growth' });
   const items = [];
-  const count = Math.max(5, Math.round(len / density));
+  const count = Math.max(min, Math.round(len / density));
   for (let i = 1; i <= count; i++) {
     const t = (i / (count + 1)) * len;
     const p = stem.getPointAtLength(t);
@@ -133,29 +134,56 @@ export default function VineDivider({ variant = 'top', id = variant, from, to })
     const svg = host.querySelector('svg');
     let ctx;
 
+    let builtWidth = -1;
     const build = () => {
+      const rect = host.getBoundingClientRect();
+      const width = rect.width;
+      // Phones fire `resize` whenever the address bar slides in or out while scrolling; the width does not
+      // change then, so skip the rebuild (it would wipe and regrow the vines mid-scroll).
+      if (Math.abs(width - builtWidth) < 1) return;
+      builtWidth = width;
+
       ctx?.revert();
       svg.querySelectorAll('.vine-growth').forEach((g) => g.remove());
-      const width = host.getBoundingClientRect().width;
-      svg.setAttribute('viewBox', `0 0 ${width} ${H}`);
+
+      // Draw at the band's real height (it is shorter on tablets and phones) so nothing is squashed by the
+      // preserveAspectRatio="none" stretch; every vertical measure scales with it.
+      const height = rect.height || H;
+      const k = height / H;
+      const mid = height * 0.55;
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+      // Breakpoints match VineDivider.css: below 1200px only the main stems are drawn (the secondary and
+      // wisp stems are hidden there, so their leaves must not be built either, or they float stemless).
+      const single = width <= 1200;
+      const phone = width <= 600;
+      const segs = phone ? 3 : width <= 900 ? 4 : 5;
 
       // [left main, right main, left secondary, right secondary]
       const mains = Array.from(svg.querySelectorAll('.vine-stem.main'));
       const subs = Array.from(svg.querySelectorAll('.vine-stem.sub'));
       const wisps = Array.from(svg.querySelectorAll('.vine-stem.wisp'));
       const hi = Array.from(svg.querySelectorAll('.vine-stem-highlight'));
-      mains.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 20 })));
-      hi.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 20 })));
-      subs.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 15, phase: 1, inset: 70, y: MID + 2 })));
-      wisps.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, { amp: 26, phase: 0, inset: 150, y: MID - 5 })));
-      svg.querySelector('.vine-bloom').setAttribute('transform', `translate(${width / 2} ${MID})`);
+      const mainOpts = { amp: 20 * k, y: mid, segs, inset: phone ? 26 : 34 };
+      mains.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, mainOpts)));
+      hi.forEach((s, i) => s.setAttribute('d', buildStem(width, i === 1, mainOpts)));
+      subs.forEach((s, i) => s.setAttribute('d', single ? '' : buildStem(width, i === 1, { amp: 15 * k, phase: 1, inset: 70, y: mid + 2 * k, segs })));
+      wisps.forEach((s, i) => s.setAttribute('d', single ? '' : buildStem(width, i === 1, { amp: 26 * k, phase: 0, inset: 150, y: mid - 5 * k, segs })));
+      // the centre bloom is a touch smaller on phones so it stays in proportion with the shorter band
+      svg.querySelector('.vine-bloom').setAttribute('transform', `translate(${width / 2} ${mid}) scale(${phone ? 0.85 : k < 1 ? 0.92 : 1})`);
 
+      // leaves are smaller and a little more spaced out on narrow screens, so the short stems are not crowded
+      const mainLeaf = phone
+        ? { density: 52, size: 1.12, min: 4 }
+        : width <= 900
+          ? { density: 62, size: 1.28 }
+          : { density: 70, size: 1.5 };
       const growth = [
-        ...mains.map((s, i) => decorate(svg, s, i === 1, { density: 70, size: 1.5 })),
-        ...subs.map((s, i) => decorate(svg, s, i === 1, { density: 105, size: 1.05, tendrils: false })),
-        ...wisps.map((s, i) => decorate(svg, s, i === 1, { density: 140, size: 0.8, tendrils: true, berries: false })),
+        ...mains.map((s, i) => decorate(svg, s, i === 1, mainLeaf)),
+        ...(single ? [] : subs.map((s, i) => decorate(svg, s, i === 1, { density: 105, size: 1.05, tendrils: false }))),
+        ...(single ? [] : wisps.map((s, i) => decorate(svg, s, i === 1, { density: 140, size: 0.8, tendrils: true, berries: false }))),
       ];
-      const allStems = [...mains, ...hi, ...subs, ...wisps];
+      const allStems = [...mains, ...hi, ...(single ? [] : [...subs, ...wisps])];
 
       ctx = gsap.context(() => {
         if (reduce) { host.classList.add('is-grown'); return; } // fully grown, static

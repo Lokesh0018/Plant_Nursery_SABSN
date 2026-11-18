@@ -106,6 +106,18 @@ export default function PotsPage() {
     return groups.some(g => g.slug === value) ? value : 'all';
   });
   const [selected, setSelected] = useState(null);
+  // the category rail: on phones it scrolls sideways, so keep the chosen chip centred in view
+  // (also when the category is set from the hero material buttons or a search)
+  const filtersRef = useRef(null);
+  useEffect(() => {
+    const rail = filtersRef.current;
+    const track = rail?.firstElementChild;
+    const chip = track?.querySelector('[aria-pressed="true"]');
+    if (!track || !chip || track.scrollWidth <= track.clientWidth) return;
+    const left = chip.offsetLeft - (track.clientWidth - chip.offsetWidth) / 2;
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.scrollTo({ left: Math.max(0, left), behavior: smooth ? 'smooth' : 'auto' });
+  }, [category]);
   // header pots follow the cursor a little (--mx / --my from -1 to 1); mouse only, never for reduced motion
   const heroRef = useRef(null);
   // the hero's looping animations (status pulse, tickers, drifting tags) stop while it is scrolled away
@@ -130,6 +142,15 @@ export default function PotsPage() {
   const filtered = groups.filter(g => category === 'all' || category === g.slug).map(g => ({ ...g, items: g.items.filter(p => `${p.name} ${p.description} ${g.title} ${p.material}`.toLowerCase().includes(query.trim().toLowerCase())) })).filter(g => g.items.length);
   const count = filtered.reduce((sum, g) => sum + g.items.length, 0);
   const toCatalogue = () => document.getElementById('pots-catalogue')?.scrollIntoView({ behavior: 'smooth' });
+  // Picking a category: if the filter rail is stuck to the top (mobile, scrolled into the list), bring the start of
+  // the new results back into view, otherwise the reader is left mid-way down a list that just changed.
+  const pickCategory = slug => {
+    setCategory(slug);
+    const rail = filtersRef.current;
+    if (rail && getComputedStyle(rail).position === 'sticky' && rail.getBoundingClientRect().top < 120) {
+      requestAnimationFrame(() => document.querySelector('.pots-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    }
+  };
   return <div className="pots-page"><Navbar page="pots" />
     <header ref={heroRef} className="pots-hero">
       <img className="pots-corner" src="/images/home/hero/foliage-tr.webp" alt="" width="372" height="420" aria-hidden="true" decoding="async" />
@@ -175,7 +196,12 @@ export default function PotsPage() {
     <VineDivider variant="ramp" id="pots-top" from="#163624" to="#FAF8F2" />
     <main id="pots-catalogue" className="pots-main">
       <div className="pots-toolbar"><div><p className="pots-eyebrow">Find your favourite</p><h2>Pots for every setting.</h2></div><label className="pots-search"><Search size={19} /><input type="search" aria-label="Search pots" placeholder="Search styles, materials or finishes" value={query} onChange={e => setQuery(e.target.value)} />{query && <button onClick={() => setQuery('')} aria-label="Clear pot search"><X size={17} /></button>}</label></div>
-      <nav className="pots-filters" aria-label="Pot categories"><button aria-pressed={category === 'all'} onClick={() => setCategory('all')}>All pots <span>{total}</span></button>{groups.map(g => <button key={g.slug} aria-pressed={category === g.slug} onClick={() => setCategory(g.slug)}>{g.title}<span>{g.items.length}</span></button>)}</nav>
+      <nav ref={filtersRef} className="pots-filters" aria-label="Pot categories">
+        <div className="pots-filters-track">
+          <button type="button" aria-pressed={category === 'all'} onClick={() => pickCategory('all')}>All pots<span>{total}</span></button>
+          {groups.map(g => <button type="button" key={g.slug} aria-pressed={category === g.slug} onClick={() => pickCategory(g.slug)}>{g.title}<span>{g.items.length}</span></button>)}
+        </div>
+      </nav>
       <p className="pots-results" aria-live="polite">{count} {count === 1 ? 'style' : 'styles'}{query && <> matching “{query}”</>}</p>
       {filtered.map((g, gi) => <Fragment key={g.slug}>
       {/* a vine divider between categories, and one after the last before the help panel */}
