@@ -15,14 +15,19 @@ const H = 130; // slim band: the vines carry the seam, not empty space
 const MID = H * 0.55;
 const NS = 'http://www.w3.org/2000/svg';
 
-// leaf silhouettes, origin at the stalk, pointing +x
+// money plant (pothos) leaf silhouettes: heart-shaped, two rounded lobes around the stalk notch
+// tapering to a drip tip. Origin at the notch, pointing +x
 const LEAVES = [
-  'M0 0 C 7 -11, 22 -15, 28 -2 C 22 9, 7 11, 0 0 Z',               // oval
-  'M0 0 C 5 -7, 16 -16, 30 -6 C 18 -2, 10 6, 0 0 Z',               // slender, swept
-  'M0 0 C 8 -14, 24 -14, 26 -4 C 30 2, 20 12, 8 8 C 3 6, 1 3, 0 0 Z', // broad with a tip
+  'M0 0 C -3 -5, 1 -13, 9 -12 C 18 -11, 23 -3, 30 0 C 23 3, 18 11, 9 12 C 1 13, -3 5, 0 0 Z',     // full heart
+  'M0 0 C -4 -6, 1 -14, 10 -12.5 C 19 -11, 23 -3, 30 0 C 24 3, 18 10, 9 10.5 C 2 11, -2 4, 0 0 Z', // one lobe fuller
+  'M0 0 C -2 -4, 1 -10, 8 -9.5 C 16 -9, 21 -3, 27 0 C 21 3, 16 9, 8 9.5 C 1 10, -2 4, 0 0 Z',     // young, narrower
 ];
-const VEIN = 'M1 0 C 9 -3, 17 -4, 25 -2';
-const SIDE_VEINS = 'M7 -1.5 c 2 -3, 4 -5, 7 -6 M13 -2.5 c 2 -3, 4 -5, 6 -6 M8 0.5 c 2 3, 4 5, 7 5 M14 -0.5 c 2 3, 4 4, 6 4';
+const PETIOLE = 4; // short leaf stalk between the stem and the notch
+const VEIN = 'M0 0 C 9 -0.8, 18 -0.6, 26 0';
+// side veins arch off the midrib toward the tip
+const SIDE_VEINS = 'M4 -0.8 C 7 -4, 11 -6, 15 -5.5 M11 -0.7 C 14 -2.6, 17 -3.2, 20 -2.8 M4 0.8 C 7 4, 11 6, 15 5.5 M11 0.7 C 14 2.6, 17 3.2, 20 2.8';
+// golden splashes of variegation, one either side of the midrib
+const VARIEGATION = 'M6 -3 C 9 -7.5, 14 -7.5, 16 -4 C 13 -5, 10 -2, 6 -3 Z M10 3 C 13 2, 16 3.6, 19 2 C 16 6, 12 6, 10 3 Z';
 const BUD = 'M0 0 C -3 -5, -1 -12, 0 -14 C 1 -12, 3 -5, 0 0 Z';
 const TENDRIL = 'M0 0 c 6 -8, 14 -10, 18 -4 c 3 5, -2 10, -6 8 c -3 -1, -3 -5, 0 -6';
 
@@ -100,10 +105,14 @@ function decorate(svg, stem, mirror, { density = 95, size = 1.35, tendrils = tru
       const shape = LEAVES[i % LEAVES.length];
       const rot = angle + up * (mirror ? -58 : 58) + Math.sin(i * 2.3) * 8;
       const leaf = el('g', { class: 'vine-leaf', transform: `rotate(${rot}) scale(${mirror ? -s : s}, ${s})` });
-      leaf.appendChild(el('path', { d: shape, class: 'vine-leaf-blade' }));
-      leaf.appendChild(el('path', { d: VEIN, class: 'vine-leaf-vein' }));
-      leaf.appendChild(el('path', { d: SIDE_VEINS, class: 'vine-leaf-vein side' }));
-      if (i % 4 === 1) leaf.appendChild(el('circle', { class: 'vine-dew', cx: 14, cy: -4, r: 1.6 })); // dewdrop
+      leaf.appendChild(el('path', { d: `M0 0 L ${PETIOLE} 0`, class: 'vine-leaf-petiole' }));
+      const blade = el('g', { transform: `translate(${PETIOLE} 0)` });
+      blade.appendChild(el('path', { d: shape, class: 'vine-leaf-blade' }));
+      if (i % 3 !== 2) blade.appendChild(el('path', { d: VARIEGATION, class: 'vine-leaf-variegation' })); // most leaves are marbled
+      blade.appendChild(el('path', { d: VEIN, class: 'vine-leaf-vein' }));
+      blade.appendChild(el('path', { d: SIDE_VEINS, class: 'vine-leaf-vein side' }));
+      if (i % 4 === 1) blade.appendChild(el('circle', { class: 'vine-dew', cx: 14, cy: -4, r: 1.6 })); // dewdrop
+      leaf.appendChild(blade);
       wrap.appendChild(leaf);
     }
     g.appendChild(wrap);
@@ -268,13 +277,13 @@ export default function VineDivider({ variant = 'top', id = variant, from, to })
       <svg className="vine-svg" preserveAspectRatio="none" height={H}>
         <defs>
           <linearGradient id={`vine-leaf-fill-${uid}`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#9fcf74" />
-            <stop offset="0.6" stopColor="#6fa551" />
-            <stop offset="1" stopColor="#3f6f33" />
+            <stop offset="0" stopColor="#93cf66" />
+            <stop offset="0.55" stopColor="#559a40" />
+            <stop offset="1" stopColor="#2f6a2c" />
           </linearGradient>
           <linearGradient id={`vine-leaf-fill-2-${uid}`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#c9d98a" />
-            <stop offset="1" stopColor="#7fa84a" />
+            <stop offset="0" stopColor="#d3e08a" />
+            <stop offset="1" stopColor="#7fae48" />
           </linearGradient>
           <radialGradient id={`vine-bloom-fill-${uid}`} cx="0.4" cy="0.35" r="0.8">
             <stop offset="0" stopColor="#ffd3dc" />

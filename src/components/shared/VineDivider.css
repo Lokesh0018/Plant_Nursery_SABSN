@@ -174,6 +174,18 @@
   stroke-width: 0.8; /* a touch heavier edge stands in for the removed per-leaf drop shadow */
 }
 .vine-growth g:nth-child(4n) .vine-leaf-blade { fill: var(--leaf-fill-2); } /* a few lighter leaves for variety */
+.vine-leaf-petiole {
+  fill: none;
+  stroke: #4a7a37;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+/* money plant marbling: soft golden splashes on the blade */
+.vine-leaf-variegation {
+  fill: #eee9a0;
+  opacity: 0.5;
+}
+.vine-growth g:nth-child(4n) .vine-leaf-variegation { fill: #f8f4cf; } /* paler on the lighter leaves */
 .vine-leaf-vein {
   fill: none;
   stroke: rgba(236, 245, 210, 0.7);
