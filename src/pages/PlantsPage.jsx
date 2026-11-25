@@ -8,6 +8,7 @@ import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
 import VisitBadge from '../components/shared/VisitBadge';
 import CATALOGUE_INDEX from 'virtual:plant-index';
+import { HEART_LIGHTS_VIEW, HEART_LIGHTS_MAX, HEART_LIGHTS_LEFT, HEART_LIGHTS_RIGHT } from '../data/heartStandLights';
 import './PlantsPage.css';
 import { routeFor } from '../data/routes';
 
@@ -35,6 +36,13 @@ const HEADER_PICKS = [
   { slug: 'ornamental-topiary-plants', label: 'Topiary', Icon: Shrub },
   { slug: 'fruit-plants', label: 'Fruit trees', Icon: Apple },
 ].map((p) => ({ ...p, count: CATALOGUE_INDEX.find((g) => g.slug === p.slug)?.count ?? 0 }));
+// fairy lights along both heart frames. A chase leaves the centre top, where the hearts meet, and runs out
+// over both lobes and down both sides at once: each bulb's delay is its distance from the centre.
+const CHASE_RUN = 2.4; // seconds for the light to travel the longest side
+const HEART_LIGHTS = [...HEART_LIGHTS_LEFT, ...HEART_LIGHTS_RIGHT].map(([x, y, dist]) => ({
+  x, y, delay: `${((dist / HEART_LIGHTS_MAX) * CHASE_RUN).toFixed(2)}s`,
+}));
+
 export default function PlantsPage() {
   const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get('search') || '');
   const [category, setCategory] = useState(() => {
@@ -158,18 +166,42 @@ export default function PlantsPage() {
           <li><strong>7</strong><span>Days a week</span></li>
         </ul>
       </div>
-      {/* a glasshouse arch with three potted plants on a ledge, and category shortcuts around it */}
+      {/* the heart-shaped plant stand, with category shortcuts around it */}
       <div ref={artRef} className="catalogue-header-art">
-        {/* a two-tier glasshouse stand: two plants on a back shelf, three in front */}
-        <div className="cha-arch" aria-hidden="true">
-          <span className="cha-glow" />
-          <span className="cha-shelf cha-shelf--back" />
-          <img className="cha-plant cha-back cha-back--1" src="/images/plants/header/plant6.webp" alt="" width="320" height="594" decoding="async" />
-          <img className="cha-plant cha-back cha-back--2" src="/images/plants/header/red-leaf.webp" alt="" width="320" height="316" decoding="async" />
-          <img className="cha-plant cha-front cha-front--1" src="/images/plants/header/plant2.webp" alt="" width="320" height="569" decoding="async" />
-          <img className="cha-plant cha-front cha-front--2" src="/images/plants/header/plant3.webp" alt="" width="320" height="483" decoding="async" />
-          <img className="cha-plant cha-front cha-front--3" src="/images/plants/header/plant5.webp" alt="" width="320" height="320" decoding="async" />
-          <span className="cha-ledge" />
+        {/* the illuminated heart-shaped plant stand, glowing warm from its fairy lights */}
+        <div className="cha-stand" aria-hidden="true">
+          <span className="cha-stand-glow" />
+          <span className="cha-stand-floor" />
+          {/* the photo and its twinkling bulbs move together */}
+          <div className="cha-stand-scene">
+            <img className="cha-stand-img" src="/images/plants/header/heart-stand.webp"
+              srcSet="/images/plants/header/heart-stand-480.webp 480w, /images/plants/header/heart-stand.webp 800w"
+              sizes="(max-width: 560px) 92vw, (max-width: 900px) 440px, 560px"
+              alt="" width="800" height="834" decoding="async" fetchPriority="high" />
+            {/* fairy lights along the heart frames: always softly lit, with a bright chase running out from the centre */}
+            <svg className="cha-lights" viewBox={`0 0 ${HEART_LIGHTS_VIEW[0]} ${HEART_LIGHTS_VIEW[1]}`} preserveAspectRatio="none">
+              <defs>
+                <radialGradient id="cha-halo">
+                  <stop offset="0" stopColor="#f4fbe0" />
+                  <stop offset="0.25" stopColor="#d6ec9a" stopOpacity="0.95" />
+                  <stop offset="0.6" stopColor="#9fd05a" stopOpacity="0.35" />
+                  <stop offset="1" stopColor="#9fd05a" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              {HEART_LIGHTS.map(({ x, y, delay }, i) => (
+                <g key={i} transform={`translate(${x} ${y})`}>
+                  {/* the bulb at rest: a small warm point with a faint halo */}
+                  <circle r="7" fill="url(#cha-halo)" opacity="0.4" />
+                  <circle r="2.3" fill="#e4f5b4" />
+                  {/* the chase: a larger, brighter flare that swells as the light passes */}
+                  <g className="cha-light-flare" style={{ animationDelay: delay }}>
+                    <circle r="13" fill="url(#cha-halo)" />
+                    <circle r="3" fill="#f8fdeb" />
+                  </g>
+                </g>
+              ))}
+            </svg>
+          </div>
         </div>
         <nav className="cha-picks" aria-label="Jump to a category">
           {HEADER_PICKS.map(({ slug, label, Icon, count }) => (

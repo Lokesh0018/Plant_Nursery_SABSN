@@ -118,13 +118,13 @@ export default function Meadow({ className = '', tufts = 56 }) {
           <stop offset="1" stopColor="#b2d97c" />
         </linearGradient>
         <linearGradient id="mw-carpet" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0" stopColor="#10301c" />
-          <stop offset="1" stopColor="#2f6237" />
+          <stop offset="0" stopColor="#10301c" stopOpacity="0.9" />
+          <stop offset="1" stopColor="#2f6237" stopOpacity="0.35" />
         </linearGradient>
         <linearGradient id="mw-soil" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#0b2416" stopOpacity="0" />
-          <stop offset="0.55" stopColor="#0a1f13" stopOpacity="0.85" />
-          <stop offset="1" stopColor="#081a10" />
+          <stop offset="0.55" stopColor="#0a1f13" stopOpacity="0.22" />
+          <stop offset="1" stopColor="#081a10" stopOpacity="0.4" />
         </linearGradient>
         <linearGradient id="mw-petal" x1="0" y1="1" x2="0" y2="0">
           <stop offset="0" stopColor="#efdbe6" />
@@ -217,13 +217,13 @@ export default function Meadow({ className = '', tufts = 56 }) {
         </g>
       </defs>
 
-      {/* far back: a dark rolling bank, then a dense carpet of fine blades */}
+      {/* far back: a faint rolling bank and a light carpet of fine blades, mostly see-through so the footer shows behind */}
       <path
         d={`M0 ${H} L0 66 C 120 56, 240 60, 360 64 C 480 68, 600 56, 720 58 C 840 60, 960 70, 1080 64 C 1200 58, 1320 60, 1440 66 L1440 ${H} Z`}
         fill="#0f2b1a"
-        opacity="0.85"
+        opacity="0.14"
       />
-      <path d={carpet} fill="url(#mw-carpet)" opacity="0.9" />
+      <path d={carpet} fill="url(#mw-carpet)" opacity="0.5" />
 
       <g transform={`translate(0 ${H})`}>
         {clumps.map((c, i) => (
@@ -283,7 +283,7 @@ export default function Meadow({ className = '', tufts = 56 }) {
         })}
       </g>
 
-      {/* soil line at the very base */}
+      {/* a soft shadow line at the very base */}
       <rect x="0" y={H - 14} width={W} height="14" fill="url(#mw-soil)" />
     </svg>
   );

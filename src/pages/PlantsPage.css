@@ -62,72 +62,57 @@
 .plants-page .catalogue-header-copy h1 em { color: var(--pp-lime); font-style: italic; }
 .plants-page .catalogue-header-copy > p:not(.indoor-kicker) { max-width: 620px; line-height: 1.7; text-wrap: balance; color: rgba(244, 236, 217, 0.82); }
 
-/* ---------- header art: a two-tier glasshouse stand, five plants at two depths ---------- */
+/* ---------- header art: the illuminated heart-shaped plant stand, with category pills around it ---------- */
 .catalogue-header-art { position: relative; justify-self: center; width: min(100%, max(480px, 62vh), 640px); padding: 0 2.5rem; }
-/* grounds the glasshouse: a soft contact shadow, and a faint lime pool of light on the "floor" */
-.catalogue-header-art::after {
-  content: ''; position: absolute; z-index: -1; left: 8%; right: 8%; bottom: -5%; height: 12%; pointer-events: none;
-  border-radius: 50%;
+/* the illuminated heart stand: a green pool of fairy-light glow behind it, a lime haze around it, and a
+   soft shadow where its wheels meet the floor */
+.cha-stand { position: relative; aspect-ratio: 800 / 834; isolation: isolate; }
+.cha-stand-glow {
+  position: absolute; z-index: -1; inset: -6% -10% 4%; border-radius: 50%; pointer-events: none;
   background:
-    radial-gradient(closest-side, rgba(4, 18, 10, 0.6), transparent),
-    radial-gradient(closest-side, rgba(201, 217, 138, 0.14), transparent) 50% 60% / 130% 160% no-repeat;
-  filter: blur(6px);
+    radial-gradient(closest-side at 50% 34%, rgba(201, 230, 138, 0.32), rgba(150, 205, 95, 0.12) 45%, transparent 72%),
+    radial-gradient(closest-side at 50% 55%, rgba(201, 217, 138, 0.22), transparent 80%);
+  animation: cha-twinkle 4.5s ease-in-out infinite;
 }
-.cha-arch {
+/* the lights breathe very gently, as fairy lights seem to */
+@keyframes cha-twinkle { 0%, 100% { opacity: 0.82; } 50% { opacity: 1; } }
+.cha-stand-floor {
+  position: absolute; z-index: -1; left: 12%; right: 12%; bottom: -2.5%; height: 9%; border-radius: 50%; pointer-events: none;
+  background:
+    radial-gradient(closest-side, rgba(4, 18, 10, 0.7), transparent),
+    radial-gradient(closest-side, rgba(170, 215, 110, 0.16), transparent) 50% 30% / 120% 150% no-repeat;
+  filter: blur(5px);
+}
+.cha-stand-scene {
   position: relative;
-  aspect-ratio: 1 / 1.08;
-  border-radius: 999px 999px 28px 28px;
-  border: 1px solid rgba(201, 217, 138, 0.32);
-  background:
-    /* a soft beam of sun across the glass, falling from the top right like the backdrop's rays */
-    linear-gradient(225deg, transparent 18%, rgba(255, 244, 210, 0.09) 26%, rgba(255, 244, 210, 0.03) 36%, transparent 44%),
-    /* sheen from the top right, where the backdrop photo's sun rays come from */
-    linear-gradient(245deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 28%, transparent 42%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02) 60%, rgba(201, 217, 138, 0.06)),
-    rgba(11, 36, 21, 0.35);
-  box-shadow: 0 30px 60px rgba(4, 18, 10, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-  isolation: isolate;
+  /* drifts a little against the cursor, so it sits a layer behind the pills */
+  translate: calc(var(--mx) * -8px) calc(var(--my) * -6px);
+  transition: translate 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
-/* glazing bars, like a glasshouse window */
-.cha-arch::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(201, 217, 138, 0.12) calc(50% - 0.5px), rgba(201, 217, 138, 0.12) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-    linear-gradient(180deg, transparent 30%, rgba(201, 217, 138, 0.1) 30%, rgba(201, 217, 138, 0.1) calc(30% + 1px), transparent calc(30% + 1px));
+.cha-stand-img {
+  display: block; width: 100%; height: auto;
+  filter: drop-shadow(0 22px 26px rgba(4, 18, 10, 0.5)) drop-shadow(0 0 18px rgba(170, 215, 110, 0.12));
 }
-.cha-glow { position: absolute; z-index: -1; left: 50%; top: 45%; width: 90%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(201, 217, 138, 0.38), transparent 65%); }
-.cha-plant { position: absolute; height: auto; transform-origin: 50% 100%; }
-/* back shelf: smaller and a touch dimmer, so it reads as further away */
-.cha-shelf--back {
-  position: absolute; z-index: 1; left: 12%; right: 12%; bottom: 40%; height: 9px; border-radius: 5px;
-  background: linear-gradient(180deg, #a98a63, #6f5436); box-shadow: 0 8px 14px rgba(4, 18, 10, 0.4);
+/* fairy lights along the heart frames: each bulb softly lit at rest, and a bright chase that leaves the
+   centre top (where the hearts meet) and runs outward over both lobes and down both sides together.
+   Every flare plays the same short swell; its delay (set per bulb from its distance along the frame) is
+   what makes the light travel. The cycle is the run plus a short dark pause before the next chase. */
+.cha-lights { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; mix-blend-mode: screen; }
+.cha-light-flare {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cha-chase 3.4s linear infinite;
 }
-.cha-back { z-index: 1; bottom: calc(40% + 7px); filter: brightness(0.82) saturate(0.95) drop-shadow(0 8px 10px rgba(4, 18, 10, 0.4)); }
-.cha-back--1 { left: 13%; width: 22%; }
-.cha-back--2 { right: 11%; width: 28%; }
-/* front ledge: the three larger plants */
-.cha-front { z-index: 2; bottom: calc(9% + 10px); filter: drop-shadow(0 14px 18px rgba(4, 18, 10, 0.45)); }
-.cha-front--1 { left: 5%; width: 25%; }
-.cha-front--2 { left: 50%; width: 36%; margin-left: -18%; z-index: 3; }
-.cha-front--3 { right: 2%; width: 34%; }
-/* the wooden ledge the front pots stand on */
-.cha-ledge {
-  position: absolute;
-  left: 3%;
-  right: 3%;
-  bottom: 9%;
-  height: 12px;
-  z-index: 4;
-  border-radius: 6px;
-  background: linear-gradient(180deg, #c9a77c, #8d6b46);
-  box-shadow: 0 10px 18px rgba(4, 18, 10, 0.45);
+@keyframes cha-chase {
+  0%   { opacity: 0; transform: scale(0.5); }
+  4%   { opacity: 1; transform: scale(1.15); }
+  16%  { opacity: 0.55; transform: scale(0.95); }
+  34%  { opacity: 0; transform: scale(0.7); }
+  100% { opacity: 0; transform: scale(0.5); }
 }
 
-/* cursor movement: only the category pills follow the cursor (eased so they glide); the glasshouse stays still */
+/* cursor movement: the category pills follow the cursor (eased so they glide); the stand drifts the other way */
 .catalogue-header-art { --mx: 0; --my: 0; }
 .cha-pick { translate: calc(var(--mx) * 20px) calc(var(--my) * 14px); }
 
@@ -142,14 +127,14 @@
 .catalogue-header-copy > :nth-child(5) { animation-delay: 0.34s; }
 .catalogue-header-copy > :nth-child(6) { animation-delay: 0.4s; }
 .catalogue-header-copy > :nth-child(7) { animation-delay: 0.46s; }
-.cha-arch { animation: ch-rise 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+.cha-stand { animation: ch-rise 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
 .cha-pick { animation: ch-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 .cha-pick--flowering-plants { animation-delay: 0.7s; }
 .cha-pick--indoor-plants { animation-delay: 0.8s; }
 .cha-pick--fruit-plants { animation-delay: 0.9s; }
 .cha-pick--ornamental-topiary-plants { animation-delay: 1s; }
 
-/* category shortcuts floating around the arch */
+/* category shortcuts floating around the stand */
 .cha-picks { position: absolute; inset: 0; pointer-events: none; }
 .cha-pick {
   position: absolute;
@@ -180,7 +165,7 @@
 .cha-pick-text { display: flex; flex-direction: column; line-height: 1.15; }
 .cha-pick-text strong { font-size: 0.82rem; font-weight: 700; color: #f7f6f0; }
 .cha-pick-text small { font-size: 0.72rem; color: rgba(244, 236, 217, 0.82); }
-/* four shortcuts framing the glasshouse: two high on the curve, two on the base */
+/* four shortcuts framing the stand: two by the heart's lobes, two by its base */
 .cha-pick--flowering-plants { top: 14%; left: 0; }
 .cha-pick--indoor-plants { top: 9%; right: 2%; }
 .cha-pick--ornamental-topiary-plants { bottom: 1%; right: 0; }
@@ -210,7 +195,9 @@
   .cha-pick > svg { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cha-arch, .cha-pick, .catalogue-header-copy > * { animation: none; }
+  .cha-stand, .cha-stand-glow, .cha-pick, .catalogue-header-copy > * { animation: none; }
+  /* lights steady: no chase, the resting glow stays */
+  .cha-light-flare { animation: none; opacity: 0; }
   .catalogue-header-art * { translate: none !important; transition: none; }
   .ch-btn, .ch-btn svg { transition: none; }
   .ch-btn:hover svg { transform: none; }
