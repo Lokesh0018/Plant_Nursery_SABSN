@@ -173,8 +173,8 @@ export default function Footer() {
                 <Phone size={14} aria-hidden="true" /> {p.label}
               </a>
             ))}
-            <a href="mailto:sabsnursery@gmail.com" className="social-link">
-              <Mail size={14} /> sabsnursery@gmail.com
+            <a href="mailto:sabsnnursery@gmail.com" className="social-link">
+              <Mail size={14} /> sabsnnursery@gmail.com
             </a>
           </div>
 

@@ -16,7 +16,7 @@ const Footer = lazy(() => import('../components/layout/Footer'));
 
 // the nursery's details, as given on the About page and in the footer
 const PHONE_1 = BUSINESS.phones[0];
-const EMAIL = 'sabsnursery@gmail.com';
+const EMAIL = 'sabsnnursery@gmail.com';
 const WA_NUMBER = '919849936169';
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hello SABSN, I would like to know more about your plants and services.')}`;
 

@@ -177,11 +177,11 @@ export default function AboutNursery() {
                 <span>+91 98499 36169</span>
               </a>
               <a
-                href="mailto:sabsnursery@gmail.com"
+                href="mailto:sabsnnursery@gmail.com"
                 className="about-contact-btn about-contact-btn--secondary"
               >
                 <Mail size={15} />
-                <span>sabsnursery@gmail.com</span>
+                <span>sabsnnursery@gmail.com</span>
               </a>
               <a href="/about/" className="about-contact-btn about-contact-btn--secondary">
                 <span>Read our full story</span>

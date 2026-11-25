@@ -48,19 +48,19 @@
   outline: 2px solid #c9d98a;
   outline-offset: 4px;
 }
-.nav-brand:hover img {
+.nav-brand:hover .nav-logo {
   box-shadow: 0 0 0 2px rgba(201, 217, 138, 0.7), 0 6px 16px rgba(0, 0, 0, 0.35) !important;
 }
 .navbar-container.scrolled .nav-right {
   padding-right: 0.15rem;
 }
-.navbar-container.scrolled .nav-brand-text span:last-child {
+.navbar-container.scrolled .nav-brand-text > .nav-brand-sub {
   display: none;
-}/* tagline hides in the compact pill */ /* Logo settles smaller once the bar is compact */ .navbar-container.scrolled .nav-brand img {
+}/* tagline hides in the compact pill */ /* Logo settles smaller once the bar is compact */ .navbar-container.scrolled .nav-brand .nav-logo {
   width: 36px !important;
   height: 36px !important;
 }
-.nav-brand img {
+.nav-brand .nav-logo {
   transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), height 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
 }
 
@@ -333,6 +333,17 @@
   box-shadow: 0 0 0 2px rgba(244, 236, 217, 0.35), 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 .nav-brand-text { display: flex; flex-direction: column; }
+.nav-brand-row { display: flex; align-items: center; gap: 0.35rem; }
+/* blessing image sits right after the name; decorative, so alt="" */
+.nav-blessing {
+  flex: none;
+  width: auto;
+  height: 32px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.navbar-container.scrolled .nav-blessing { height: 28px; }
+@media (prefers-reduced-motion: reduce) { .nav-blessing { transition: none; } }
 .nav-brand-name {
   font-family: var(--font-serif);
   font-size: 1.5rem;

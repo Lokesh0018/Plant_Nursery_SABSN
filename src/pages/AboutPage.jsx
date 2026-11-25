@@ -386,7 +386,7 @@ export default function AboutPage() {
             <ul className="ap-contact-list">
               <li><MapPin size={18} aria-hidden="true" /><span><a href="/plant-nursery-rajahmundry/">Jakkampudi Nagar, Kadiyam, East Godavari – 533125</a><br /><a href="/plant-nursery-visakhapatnam/">Madhurawada, Visakhapatnam – 530048</a></span></li>
               <li><Phone size={18} aria-hidden="true" /><span><a href="tel:+919849936169">98499 36169</a> / <a href="tel:+919490378689">94903 78689</a><br /><a href="tel:+919845118946">98451 18946</a> / <a href="tel:+918914599555">0891 459 9555</a></span></li>
-              <li><Mail size={18} aria-hidden="true" /><a href="mailto:sabsnursery@gmail.com">sabsnursery@gmail.com</a></li>
+              <li><Mail size={18} aria-hidden="true" /><a href="mailto:sabsnnursery@gmail.com">sabsnnursery@gmail.com</a></li>
             </ul>
             <div className="ap-actions">
               <a className="ap-btn ap-btn--light" href={WA_LINK} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} aria-hidden="true" />Enquire on WhatsApp</a>

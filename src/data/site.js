@@ -15,7 +15,7 @@ export const BUSINESS = {
     { label: '0891 459 9555', tel: '+918914599555' },
   ],
   whatsapp: '919849936169',
-  email: 'sabsnursery@gmail.com',
+  email: 'sabsnnursery@gmail.com',
   logo: '/images/brand/logo-256.webp',
   // hours as stated on the site today ("Open daily, 7 am – 6 pm"). Not yet confirmed per branch, so the
   // structured data leaves them out until the owner confirms them (see LOCATIONS[].openingHours).

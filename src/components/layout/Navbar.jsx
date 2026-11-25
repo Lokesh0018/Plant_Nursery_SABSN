@@ -138,7 +138,10 @@ export default function Navbar({ page = 'home' }) {
       >
         <img className="nav-logo" src="/images/brand/logo-256.webp" alt="Sri Ayyappa Bala Sai Nursery logo" width="44" height="44" />
         <div className="nav-brand-text">
-          <span className="nav-brand-name">SABSN</span>
+          <div className="nav-brand-row">
+            <span className="nav-brand-name">SABSN</span>
+            <img className="nav-blessing" src="/images/brand/sai-baba.webp" alt="" width="34" height="32" decoding="async" />
+          </div>
           <span className="nav-brand-sub">Sri Ayyappa Bala Sai Nursery</span>
         </div>
       </a>
