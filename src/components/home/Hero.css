@@ -365,3 +365,8 @@
 }
 .tree-layer img[data-hero-failed] { visibility: hidden; }
 
+
+/* GSAP loads on demand (src/lib/gsap.js): until it has set the entrance's start state, hold the scene and the
+   copy hidden so they never paint and then vanish. The loading screen covers this moment in practice. */
+.tree-hero.gsap-pending .tree-layer,
+.tree-hero.gsap-pending .tree-hero-content > * { opacity: 0; }

@@ -6,7 +6,7 @@ import WhatsAppButton from '../components/layout/WhatsAppButton';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
 import VisitBadge from '../components/shared/VisitBadge';
-import { GALLERY_GROUPS, galleryItems, gallerySrcSet } from '../data/gallery';
+import { GALLERY_GROUPS, galleryItems, gallerySrcSet, galleryImgSrc } from '../data/gallery';
 import './GalleryPage.css';
 import { routeFor } from '../data/routes';
 
@@ -65,7 +65,7 @@ function useWidth(ref) {
 // `sizes` says how wide the photo is drawn, so the browser picks the nearest of its 640 / 1280 / 2400 px versions
 function GalleryPhoto({ item, lazy = false, crop = false, sizes = '100vw' }) {
   if (item.cell !== undefined) return <span className="gp-sheet-photo" role="img" aria-label={item.alt} style={{ backgroundImage: `url(${item.src})`, backgroundPosition: `${(item.cell % 2) * 100}% ${Math.floor(item.cell / 2) * 100}%` }} />;
-  return <img src={item.src} srcSet={gallerySrcSet(item)} sizes={sizes} alt={item.alt} width={item.width} height={item.height} loading={lazy ? 'lazy' : undefined} decoding="async" style={crop && item.pos ? { objectPosition: item.pos } : undefined} />;
+  return <img src={galleryImgSrc(item)} srcSet={gallerySrcSet(item)} sizes={sizes} alt={item.alt} width={item.width} height={item.height} loading={lazy ? 'lazy' : undefined} decoding="async" style={crop && item.pos ? { objectPosition: item.pos } : undefined} />;
 }
 
 /* Full-screen viewer for one photo at a time: arrows, keyboard (left / right / Esc), swipe on touch,
@@ -208,7 +208,7 @@ export default function GalleryPage() {
         <div className="gp-collage" aria-hidden="true">
           {PRINTS.map((item, i) => (
             <figure key={item.id || item.src} className={`gp-print gp-print--${'abc'[i]}`}>
-              <img src={item.src} srcSet={gallerySrcSet(item)} sizes="(max-width: 900px) 60vw, 420px" alt="" width={item.width} height={item.height} decoding="async" fetchPriority={i === 0 ? 'high' : undefined} style={{ objectPosition: item.pos || 'center' }} />
+              <img src={galleryImgSrc(item)} srcSet={gallerySrcSet(item)} sizes="(max-width: 900px) 60vw, 420px" alt="" width={item.width} height={item.height} decoding="async" fetchPriority={i === 0 ? 'high' : undefined} style={{ objectPosition: item.pos || 'center' }} />
               <figcaption>{item.tag}</figcaption>
             </figure>
           ))}

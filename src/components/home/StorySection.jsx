@@ -1,12 +1,10 @@
-import React, { useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef } from 'react';
+import { useGsap } from '../../lib/gsap';
 import { Quote, Sparkles, Award, MapPin, Trees, Sprout, CheckCircle2, Leaf } from 'lucide-react';
 import VineOrnament from '../shared/VineOrnament';
 import useOffscreenPause from '../../hooks/useOffscreenPause';
 import './StorySection.css';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
   { value: '35+', label: 'Years of Heritage', sub: 'Est. in Kadiyam' },
@@ -25,8 +23,9 @@ export default function StorySection() {
     onChange: (visible) => { const t = glowTween.current; if (!t) return; if (visible) t.play(); else t.pause(); },
   });
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
+  // GSAP loads on demand (src/lib/gsap.js)
+  useGsap(containerRef, (gsap) => {
+    {
       // Ambient atmospheric glow breathing animation
       if (glowRef.current) {
         glowTween.current = gsap.to(glowRef.current, {
@@ -53,10 +52,8 @@ export default function StorySection() {
         });
       }
 
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+    }
+  });
 
   return (
     <section ref={containerRef} className="founder-section" id="founder">

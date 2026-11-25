@@ -1,39 +1,36 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGsap } from '../../lib/gsap';
 import './AboutHero.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /*
  * Compact landscape header for /about: one picture of the nursery lawn with the SABSN topiary standing
  * in it (lawn, topiary and its shadows baked together in public/images/about/). Wide screens load the 3:1
  * version, phones and narrow tablets the near-square one, so the topiary is never cropped.
  * No text over the picture; the page's heading is in the "Who we are" section directly below.
- * GSAP: the picture and navbar fade in, and the picture drifts slightly as the header scrolls away.
+ * GSAP (loaded on demand, src/lib/gsap.js): the picture fades in (held hidden by .gsap-pending until then) and
+ * drifts slightly as the header scrolls away. The navbar fades in too, but only if GSAP arrived straight away:
+ * the navbar is outside this header, so it can't be held hidden, and fading it out once it has shown would flicker.
  * Everything stays still under prefers-reduced-motion.
  */
 export default function AboutHero() {
   const rootRef = useRef(null);
 
-  useLayoutEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+  // when the header mounted, to tell whether GSAP arrived straight away (declared before useGsap, so it runs first)
+  const mountedAt = useRef(0);
+  useLayoutEffect(() => { mountedAt.current = performance.now(); }, []);
+  useGsap(rootRef, (gsap) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const nav = document.querySelector('.navbar-container');
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
+      .from('.ah-picture', { opacity: 0, duration: 1.4 }, 0);
+    if (nav && performance.now() - mountedAt.current < 200) tl.from(nav, { opacity: 0, duration: 1 }, 0.1);
 
-    const ctx = gsap.context(() => {
-      const nav = document.querySelector('.navbar-container');
-      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
-        .from('.ah-picture', { opacity: 0, duration: 1.4 }, 0);
-      if (nav) tl.from(nav, { opacity: 0, duration: 1 }, 0.1);
-
-      gsap.to('.ah-picture', {
-        yPercent: 8,
-        ease: 'none',
-        scrollTrigger: { trigger: rootRef.current, start: 'top top', end: 'bottom top', scrub: true },
-      });
-    }, rootRef);
-
-    return () => ctx.revert();
-  }, []);
+    gsap.to('.ah-picture', {
+      yPercent: 8,
+      ease: 'none',
+      scrollTrigger: { trigger: rootRef.current, start: 'top top', end: 'bottom top', scrub: true },
+    });
+  }, { pending: true });
 
   return (
     <header ref={rootRef} className="about-hero">

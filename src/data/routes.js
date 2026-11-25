@@ -37,6 +37,13 @@ export const ROUTES = [
     ogImage: '/images/gallery/palms-1280.webp',
     breadcrumb: 'Plants',
     priority: '0.8',
+    // the header's heart-stand photo is this page's largest first paint: fetch it with the HTML, not after the JS.
+    // Must match the <source type="image/avif"> in PlantsPage.jsx so the browser reuses the preloaded file.
+    preloadImage: {
+      type: 'image/avif',
+      srcset: '/images/plants/header/heart-stand-480.avif 480w, /images/plants/header/heart-stand.avif 800w',
+      sizes: '(max-width: 560px) 92vw, (max-width: 900px) 440px, 560px',
+    },
   },
   {
     path: '/services/',

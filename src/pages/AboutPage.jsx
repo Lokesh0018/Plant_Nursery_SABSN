@@ -1,6 +1,4 @@
-import React, { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import {
   ArrowRight, Sprout, Shovel, Scissors, Building2, Plane, Factory, Landmark, BadgeCheck, ShieldCheck,
   Phone, Mail, MapPin, MessageCircle, Leaf, Trees, Apple, TreePine, Flower2, IndianRupee, LandPlot, Users, Quote,
@@ -12,10 +10,9 @@ import WhatsAppButton from '../components/layout/WhatsAppButton';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
 import AboutHero from '../components/about/AboutHero';
+import { useGsap } from '../lib/gsap';
 import { CERTIFICATIONS } from '../data/certifications';
 import './AboutPage.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Footer = lazy(() => import('../components/layout/Footer'));
 
@@ -75,19 +72,19 @@ const PHASES = [
 
 const CLIENTS = [
   { icon: Building2, name: 'Renaatus', work: 'Plant supply, gardening and maintenance',
-    photo: '/images/clients/renaatus.webp', size: [678, 900], focus: '50% 40%', alt: 'Renaatus office building with landscaped planting at its base' },
+    photo: '/images/clients/renaatus-4k.webp', size: [2894, 3840], focus: '50% 40%', alt: 'Renaatus office building with landscaped planting at its base' },
   { icon: Plane, name: 'Airports Authority of India', work: 'Rajahmundry airport landscape support',
-    photo: '/images/gallery/airport-1280.webp', size: [1280, 960], focus: '60% 55%', alt: 'Rajahmundry airport terminal with landscaped lawns, palms and flowering shrubs' },
+    photo: '/images/clients/airport-4k.webp', size: [3840, 2880], focus: '60% 55%', alt: 'Rajahmundry airport terminal with landscaped lawns, palms and flowering shrubs' },
   { icon: Factory, name: 'Sri Sarvaraya Sugars Ltd.', work: 'Gopalapuram: plant and garden requirements',
-    photo: '/images/clients/sri-sarvaraya.webp', size: [600, 376], focus: '50% 50%', alt: 'Sri Sarvaraya Sugars building with a planted hedge and garden in front' },
+    photo: '/images/clients/sri-sarvaraya-4k.webp', size: [3840, 2407], focus: '50% 50%', alt: 'Sri Sarvaraya Sugars building with a planted hedge and garden in front' },
   { icon: Factory, name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Balabhadrapuram',
-    photo: '/images/clients/grasim.webp', size: [488, 600], focus: '40% 72%', alt: 'Grasim Industries plant entrance with its sign, trees and factory chimneys' },
+    photo: '/images/clients/grasim-4k.webp', size: [3122, 3840], focus: '40% 72%', alt: 'Grasim Industries plant entrance with its sign, trees and factory chimneys' },
   { icon: Building2, name: 'Tata', work: 'Plant supply and landscaping',
-    photo: '/images/clients/tata.webp', size: [790, 500], focus: '45% 50%', alt: 'Aerial view of a large vehicle yard with rows of parked trucks, a blue-roofed building and green verges' },
+    photo: '/images/clients/tata-4k.webp', size: [3840, 2432], focus: '45% 50%', alt: 'Aerial view of a large vehicle yard with rows of parked trucks, a blue-roofed building and green verges' },
   { icon: Factory, name: 'Aditya Birla Group', work: 'Plant supply and landscaping',
-    photo: '/images/clients/aditya-birla.webp', size: [630, 313], focus: '50% 60%', alt: 'An industrial campus with wide lawns, clipped hedges, palms and flower beds along a curving drive' },
+    photo: '/images/clients/aditya-birla-4k.webp', size: [3840, 1908], focus: '50% 60%', alt: 'An industrial campus with wide lawns, clipped hedges, palms and flower beds along a curving drive' },
   { icon: Factory, name: 'Coca-Cola', work: 'Plant supply and landscaping',
-    photo: '/images/clients/coca-cola.webp', size: [1200, 900], focus: '52% 45%', alt: 'A Coca-Cola bottling plant entrance sign on a grassy mound planted with palms and shrubs' },
+    photo: '/images/clients/coca-cola-4k.webp', size: [3840, 2880], focus: '52% 45%', alt: 'A Coca-Cola bottling plant entrance sign on a grassy mound planted with palms and shrubs' },
 ];
 
 const PALETTE = [
@@ -135,9 +132,10 @@ export default function AboutPage() {
   };
 
   // "Who we are": the heading block reveals line by line, the photo opens up as it scrolls into view
-  useLayoutEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const ctx = gsap.context(() => {
+  // (GSAP loads on demand, src/lib/gsap.js; .gsap-pending holds these hidden until it has set their start state)
+  useGsap(introRef, (gsap) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    {
       gsap.from('.ap-intro-text > *', { opacity: 0, y: 24, duration: 1, ease: 'power2.out', stagger: 0.12, delay: 0.5 });
       gsap.fromTo('.ap-intro-media',
         { opacity: 0, clipPath: 'inset(10% 8% 10% 8% round 28px)' },
@@ -145,9 +143,8 @@ export default function AboutPage() {
           scrollTrigger: { trigger: '.ap-intro-media', start: 'top 88%', once: true } });
       gsap.from('.ap-stats > li, .ap-motto', { opacity: 0, y: 20, duration: 0.7, ease: 'power2.out', stagger: 0.08,
         scrollTrigger: { trigger: '.ap-glance', start: 'top 90%', once: true } });
-    }, introRef);
-    return () => ctx.revert();
-  }, []);
+    }
+  }, { pending: true });
 
   return (
     <div className="about-page">

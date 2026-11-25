@@ -1,6 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { refreshScrollTriggers } from './lib/gsap';
 
 import Navbar from './components/layout/Navbar';
 import Hero from './components/home/Hero';
@@ -25,7 +24,7 @@ const Footer = lazy(() => import('./components/layout/Footer'));
 
 // Once a lazy section mounts, scroll-trigger positions of everything below it have moved.
 function RefreshTriggers() {
-  useEffect(() => { ScrollTrigger.refresh(); }, []);
+  useEffect(() => { refreshScrollTriggers(); }, []);
   return null;
 }
 
@@ -40,7 +39,6 @@ function LazySection({ height, color, children }) {
   );
 }
 
-gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -65,7 +63,7 @@ function App() {
 
   useEffect(() => {
     // Recalculate scroll positions once hero images have had a moment to lay out
-    const t = setTimeout(() => ScrollTrigger.refresh(), 300);
+    const t = setTimeout(refreshScrollTriggers, 300);
     return () => clearTimeout(t);
   }, []);
 

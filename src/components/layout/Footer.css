@@ -196,17 +196,22 @@
   z-index: 1;
   pointer-events: none;
 }
-.meadow-blade {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: meadow-sway var(--dur, 6s) ease-in-out infinite;
+/* the meadow's layers (Meadow.jsx) all fill the strip; the sway bands are separate elements so their skew
+   is composited on the GPU and never repaints the drawing */
+.meadow > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+.meadow-band {
+  transform-origin: 50% 100%; /* the roots stay put; the tips lean */
+  animation: meadow-band var(--dur, 6s) ease-in-out infinite;
   animation-delay: var(--d, 0s);
+  will-change: transform;
 }
-/* front blades carry a soft rim light so the tips read against the dark */
-@keyframes meadow-sway {
-  0%, 100% { transform: rotate(calc(var(--amp, 3deg) * -1)) skewX(-2.5deg); }
-  50%      { transform: rotate(var(--amp, 3deg)) skewX(2.5deg); }
-}/* a low lime glow sits right at the grass line, like the last light catching the tips */ .footer-meadow-glow {
+@keyframes meadow-band {
+  0%, 100% { transform: skewX(calc(var(--amp, 2.6deg) * -1)); }
+  50%      { transform: skewX(var(--amp, 2.6deg)); }
+}
+/* phones: still grass reads just as well at this size, and saves the GPU the ten moving layers */
+@media (max-width: 600px) { .meadow-band { animation: none; will-change: auto; } }
+/* a low lime glow sits right at the grass line, like the last light catching the tips */ .footer-meadow-glow {
   position: absolute;
   left: 0;
   right: 0;
@@ -460,10 +465,10 @@
   text-decoration: none;
   padding: 0.45rem 0.9rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  /* no backdrop blur: fireflies and falling leaves move behind these chips, so a blur would be redrawn
+     every frame; a slightly denser tint reads the same on the dark footer */
+  background: rgba(20, 52, 32, 0.72);
   border: 1px solid rgba(22, 54, 36, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
   border-color: rgba(201, 217, 138, 0.18);
@@ -531,7 +536,7 @@
   .footer-dapple,
   .footer-ground-mist,
   .footer-light-band,
-  .meadow-blade {
+  .meadow-band {
     animation: none !important;
   }
   .footer-fireflies i { opacity: 0.45; }

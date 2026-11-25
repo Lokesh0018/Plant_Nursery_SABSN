@@ -43,13 +43,21 @@ export const galleryItems = [
 ];
 
 // Every photo also exists at 640, 1280 and 2400 px wide (as WebP, next to the original, wherever the original
-// is wider), so tiles and thumbnails download a size near what they show instead of the 4K original.
+// is wider), so tiles and thumbnails download a size near what they show. 2400 px is the largest size ever served:
+// it covers a 92vw lightbox on a high-density laptop screen, and the 3840 px camera originals (up to 2.4 MB each)
+// are kept out of the deployed site (assets-src/gallery-originals). `src` stays the photo's identity (keys, lookups).
 const VARIANT_WIDTHS = [640, 1280, 2400];
+const MAX_WIDTH = 2400;
+const baseOf = (item) => item.src.replace(/\.[a-z]+$/i, '');
+// the file an <img> should load by default: the 2400 px version for photos wider than that
+export function galleryImgSrc(item) {
+  return item.cell === undefined && item.width > MAX_WIDTH ? `${baseOf(item)}-${MAX_WIDTH}.webp` : item.src;
+}
 export function gallerySrcSet(item) {
   if (item.cell !== undefined) return undefined;
-  const base = item.src.replace(/\.[a-z]+$/i, '');
-  return VARIANT_WIDTHS.filter((w) => w < item.width)
-    .map((w) => `${base}-${w}.webp ${w}w`)
-    .concat(`${item.src} ${item.width}w`)
-    .join(', ');
+  const base = baseOf(item);
+  const variants = VARIANT_WIDTHS.filter((w) => w < item.width).map((w) => `${base}-${w}.webp ${w}w`);
+  // the original only when it is no wider than the cap (otherwise the 2400 px version above is the largest)
+  if (item.width <= MAX_WIDTH) variants.push(`${item.src} ${item.width}w`);
+  return variants.join(', ');
 }

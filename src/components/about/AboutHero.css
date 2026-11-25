@@ -53,3 +53,6 @@
 @media (prefers-reduced-motion: reduce) {
   .ah-picture { will-change: auto; }
 }
+
+/* GSAP loads on demand (src/lib/gsap.js): hold the picture hidden until its fade-in has been set up */
+.about-hero.gsap-pending .ah-picture { opacity: 0; }

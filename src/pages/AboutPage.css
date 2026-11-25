@@ -565,3 +565,10 @@
   .ap-pillars li:hover { transform: none; }
   .ap-pillars li:hover .ap-pillar-atlas, .ap-supply > li:hover .ap-atlas, .ap-steps li:hover { transform: none; }
 }
+
+/* GSAP loads on demand (src/lib/gsap.js): hold the "Who we are" reveal targets hidden until it has set their
+   start state, so they never paint and then vanish */
+.ap-intro.gsap-pending .ap-intro-text > *,
+.ap-intro.gsap-pending .ap-intro-media,
+.ap-intro.gsap-pending .ap-stats > li,
+.ap-intro.gsap-pending .ap-motto { opacity: 0; }

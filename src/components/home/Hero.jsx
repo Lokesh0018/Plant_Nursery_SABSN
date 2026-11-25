@@ -1,13 +1,10 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef } from 'react';
+import { useGsap } from '../../lib/gsap';
 import { Sprout, ArrowRight, Leaf, Flower2, Apple, TreeDeciduous, Shrub } from 'lucide-react';
 import FallingLeaves from '../shared/FallingLeaves';
 import useOffscreenPause from '../../hooks/useOffscreenPause';
 import { subscribeScroll } from '../../lib/scrollStore';
 import './Hero.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /*
  * Layered parallax hero built from ref/hero.png.
@@ -38,12 +35,12 @@ export default function Hero() {
   // pollen and the ray/scene loops stop while the hero is scrolled out of view
   useOffscreenPause(sectionRef);
 
-  useLayoutEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const mobile = window.matchMedia('(max-width: 900px)').matches;
-    const k = mobile ? 0.5 : 1;
-
-    const ctx = gsap.context(() => {
+  // GSAP loads on demand (src/lib/gsap.js); until it has set the entrance's start state, the layers and copy
+  // are held hidden by .gsap-pending (Hero.css), so nothing shows and then vanishes
+  useGsap(sectionRef, (gsap) => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const mobile = window.matchMedia('(max-width: 900px)').matches;
+      const k = mobile ? 0.5 : 1;
       if (reduce) return; // static composition
 
       const layers = gsap.utils.toArray('.tree-layer');
@@ -159,10 +156,7 @@ export default function Hero() {
           unsubscribe();
         };
       }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { pending: true });
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);

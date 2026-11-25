@@ -130,6 +130,8 @@ export function headBlock(route, { noindex = false } = {}) {
     `<meta name="twitter:description" content="${esc(route.description)}" />`,
     `<meta name="twitter:image" content="${image}" />`,
     ...(noindex ? [] : structuredData(route).map(jsonScript)),
+    // a page's largest first-paint image, fetched alongside the HTML (a browser that can't decode `type` skips it)
+    ...(route.preloadImage ? [`<link rel="preload" as="image" type="${route.preloadImage.type}" imagesrcset="${route.preloadImage.srcset}" imagesizes="${route.preloadImage.sizes}" fetchpriority="high" />`] : []),
   ];
   return tags.map((t) => `    ${t}`).join('\n');
 }

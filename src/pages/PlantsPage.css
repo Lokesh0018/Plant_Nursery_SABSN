@@ -1,7 +1,7 @@
 /* PLANTS PAGE - the full catalogue at /plants
    A forest header framed by the home hero's own foliage (so the transparent navbar reads exactly as
    it does over the home hero), easing into the warm ivory (#F7F3EA) the home page uses for its light
-   sections. Cards, grid and modal are the home collection's own (Collection.css). */
+   sections. The catalogue cards, grid and plant dialog are styled in IndoorPlants.css and below. */
 
 .plants-page {
   --pp-forest: #163624;
@@ -89,6 +89,7 @@
   translate: calc(var(--mx) * -8px) calc(var(--my) * -6px);
   transition: translate 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.cha-stand-scene picture { display: block; }
 .cha-stand-img {
   display: block; width: 100%; height: auto;
   filter: drop-shadow(0 22px 26px rgba(4, 18, 10, 0.5)) drop-shadow(0 0 18px rgba(170, 215, 110, 0.12));
@@ -97,11 +98,14 @@
    centre top (where the hearts meet) and runs outward over both lobes and down both sides together.
    Every flare plays the same short swell; its delay (set per bulb from its distance along the frame) is
    what makes the light travel. The cycle is the run plus a short dark pause before the next chase. */
-.cha-lights { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; mix-blend-mode: screen; }
-.cha-light-flare {
+.cha-lights { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+/* one flare per bulb: a bright core in a soft halo, 26 of the 800 image units across (3.25% of the width) */
+.cha-flares { position: absolute; inset: 0; pointer-events: none; }
+.cha-flares i {
+  position: absolute; width: 3.25%; aspect-ratio: 1; margin: -1.625% 0 0 -1.625%; border-radius: 50%;
+  background: radial-gradient(circle, #f8fdeb 0 11%, #f4fbe0 12%, rgba(214, 236, 154, 0.95) 25%, rgba(159, 208, 90, 0.35) 60%, transparent 100%);
   opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
+  will-change: transform, opacity;
   animation: cha-chase 3.4s linear infinite;
 }
 @keyframes cha-chase {
@@ -143,12 +147,11 @@
   gap: 0.6rem;
   min-height: 44px;
   padding: 0.4rem 0.85rem 0.4rem 0.4rem;
-  /* dark frosted glass, like a tag hung on the glasshouse */
+  /* dark glass tag. No backdrop blur: the chips sit over the stand's animated chase lights, and a blur
+     there would be recomputed every frame; a denser fill gives the same read on the dark green */
   border: 1px solid rgba(201, 217, 138, 0.35);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(36, 74, 48, 0.72), rgba(14, 40, 24, 0.78));
-  backdrop-filter: blur(10px) saturate(1.2);
-  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  background: linear-gradient(180deg, rgba(34, 72, 46, 0.9), rgba(14, 40, 24, 0.94));
   color: #f4ecd9;
   font: inherit;
   text-align: left;
@@ -197,7 +200,7 @@
 @media (prefers-reduced-motion: reduce) {
   .cha-stand, .cha-stand-glow, .cha-pick, .catalogue-header-copy > * { animation: none; }
   /* lights steady: no chase, the resting glow stays */
-  .cha-light-flare { animation: none; opacity: 0; }
+  .cha-flares i { animation: none; opacity: 0; }
   .catalogue-header-art * { translate: none !important; transition: none; }
   .ch-btn, .ch-btn svg { transition: none; }
   .ch-btn:hover svg { transform: none; }

@@ -1,13 +1,15 @@
 # Netlify / Cloudflare Pages header rules. Hashed build assets are immutable; HTML stays fresh.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
-# every image lives under /images (photos, illustrations, brand) and the app icons under /icons
+# every image lives under /images (photos, illustrations, brand) and the app icons under /icons.
+# A year, immutable. RULE: never overwrite an image or font in place; a changed file gets a new name
+# (e.g. -v2, -v3) and its references are updated, so a cached copy can never go stale.
 /images/*
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000, immutable
 /icons/*
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000, immutable
 /fonts/*
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000, immutable
 /favicon.ico
   Cache-Control: public, max-age=2592000
 /site.webmanifest

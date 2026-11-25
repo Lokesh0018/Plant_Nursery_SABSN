@@ -39,8 +39,12 @@ const HEADER_PICKS = [
 // fairy lights along both heart frames. A chase leaves the centre top, where the hearts meet, and runs out
 // over both lobes and down both sides at once: each bulb's delay is its distance from the centre.
 const CHASE_RUN = 2.4; // seconds for the light to travel the longest side
+const [VIEW_W, VIEW_H] = HEART_LIGHTS_VIEW;
 const HEART_LIGHTS = [...HEART_LIGHTS_LEFT, ...HEART_LIGHTS_RIGHT].map(([x, y, dist]) => ({
-  x, y, delay: `${((dist / HEART_LIGHTS_MAX) * CHASE_RUN).toFixed(2)}s`,
+  x, y,
+  left: `${((x / VIEW_W) * 100).toFixed(2)}%`,
+  top: `${((y / VIEW_H) * 100).toFixed(2)}%`,
+  delay: `${((dist / HEART_LIGHTS_MAX) * CHASE_RUN).toFixed(2)}s`,
 }));
 
 export default function PlantsPage() {
@@ -174,12 +178,20 @@ export default function PlantsPage() {
           <span className="cha-stand-floor" />
           {/* the photo and its twinkling bulbs move together */}
           <div className="cha-stand-scene">
-            <img className="cha-stand-img" src="/images/plants/header/heart-stand.webp"
-              srcSet="/images/plants/header/heart-stand-480.webp 480w, /images/plants/header/heart-stand.webp 800w"
-              sizes="(max-width: 560px) 92vw, (max-width: 900px) 440px, 560px"
-              alt="" width="800" height="834" decoding="async" fetchPriority="high" />
-            {/* fairy lights along the heart frames: always softly lit, with a bright chase running out from the centre */}
-            <svg className="cha-lights" viewBox={`0 0 ${HEART_LIGHTS_VIEW[0]} ${HEART_LIGHTS_VIEW[1]}`} preserveAspectRatio="none">
+            {/* AVIF (about half the size) where supported, WebP otherwise; the AVIF set is also preloaded in the
+                page head (routes.js preloadImage), so keep the two in step */}
+            <picture>
+              <source type="image/avif" sizes="(max-width: 560px) 92vw, (max-width: 900px) 440px, 560px"
+                srcSet="/images/plants/header/heart-stand-480.avif 480w, /images/plants/header/heart-stand.avif 800w" />
+              <img className="cha-stand-img" src="/images/plants/header/heart-stand.webp"
+                srcSet="/images/plants/header/heart-stand-480.webp 480w, /images/plants/header/heart-stand.webp 800w"
+                sizes="(max-width: 560px) 92vw, (max-width: 900px) 440px, 560px"
+                alt="" width="800" height="834" decoding="async" fetchPriority="high" />
+            </picture>
+            {/* fairy lights along the heart frames. The resting bulbs never change, so they are one still SVG
+                (painted once). The chase flares are HTML elements animating only transform and opacity, which
+                the browser composites on the GPU instead of repainting an SVG every frame. */}
+            <svg className="cha-lights" viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} preserveAspectRatio="none">
               <defs>
                 <radialGradient id="cha-halo">
                   <stop offset="0" stopColor="#f4fbe0" />
@@ -188,19 +200,18 @@ export default function PlantsPage() {
                   <stop offset="1" stopColor="#9fd05a" stopOpacity="0" />
                 </radialGradient>
               </defs>
-              {HEART_LIGHTS.map(({ x, y, delay }, i) => (
+              {HEART_LIGHTS.map(({ x, y }, i) => (
                 <g key={i} transform={`translate(${x} ${y})`}>
-                  {/* the bulb at rest: a small warm point with a faint halo */}
                   <circle r="7" fill="url(#cha-halo)" opacity="0.4" />
                   <circle r="2.3" fill="#e4f5b4" />
-                  {/* the chase: a larger, brighter flare that swells as the light passes */}
-                  <g className="cha-light-flare" style={{ animationDelay: delay }}>
-                    <circle r="13" fill="url(#cha-halo)" />
-                    <circle r="3" fill="#f8fdeb" />
-                  </g>
                 </g>
               ))}
             </svg>
+            <span className="cha-flares">
+              {HEART_LIGHTS.map(({ left, top, delay }, i) => (
+                <i key={i} style={{ left, top, animationDelay: delay }} />
+              ))}
+            </span>
           </div>
         </div>
         <nav className="cha-picks" aria-label="Jump to a category">

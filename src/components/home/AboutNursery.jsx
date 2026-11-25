@@ -1,11 +1,9 @@
-import React, { useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef } from 'react';
+import { useGsap } from '../../lib/gsap';
 import { Sprout, Shovel, Trees, Flower2, PhoneCall, Mail, Sparkles, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 import { CERTIFICATIONS } from '../../data/certifications';
 import './AboutNursery.css';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
@@ -36,8 +34,9 @@ export default function AboutNursery() {
   const imageRef = useRef(null);
   const textColRef = useRef(null);
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
+  // GSAP loads on demand (src/lib/gsap.js)
+  useGsap(containerRef, (gsap) => {
+    {
       // Image Parallax
       if (imageRef.current) {
         gsap.to(imageRef.current, {
@@ -52,10 +51,8 @@ export default function AboutNursery() {
         });
       }
 
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+    }
+  });
 
   return (
     <section ref={containerRef} className="about-nursery-section" id="about">

@@ -49,8 +49,3 @@ export function subscribeScroll(fn) {
     }
   };
 }
-
-/** Last known values without subscribing. */
-export function getScroll() {
-  return state;
-}

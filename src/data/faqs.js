@@ -36,14 +36,3 @@ export const FAQS = [
     a: 'Yes. Customers are welcome to visit SABSN Nursery to explore available plant varieties and discuss their gardening or landscaping requirements. Contact the nursery beforehand to confirm visiting details.',
   },
 ];
-
-// schema.org FAQPage, for the <script type="application/ld+json"> in index.html
-export const faqJsonLd = () => ({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQS.map(({ q, a }) => ({
-    '@type': 'Question',
-    name: q,
-    acceptedAnswer: { '@type': 'Answer', text: a },
-  })),
-});
