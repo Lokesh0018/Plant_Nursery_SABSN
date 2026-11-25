@@ -42,10 +42,18 @@ function useSeenOnce() {
 
 // Organisations named in the company profile among the nursery's clients
 const CLIENTS = [
-  { name: 'Airports Authority of India', work: 'Rajahmundry airport landscape support' },
-  { name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Balabhadrapuram' },
-  { name: 'Sri Sarvaraya Sugars Ltd.', work: 'Plant and garden requirements, Gopalapuram' },
-  { name: 'Renaatus', work: 'Plant supply, gardening and maintenance' },
+  { name: 'Airports Authority of India', work: 'Rajahmundry airport landscape support',
+    logo: '/images/clients/logos/aai.svg', size: [382, 261] },
+  { name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Balabhadrapuram',
+    logo: '/images/clients/logos/grasim.webp', size: [307, 300] },
+  { name: 'Sri Sarvaraya Sugars Ltd.', work: 'Plant and garden requirements, Gopalapuram',
+    logo: '/images/clients/logos/sri-sarvaraya.webp', size: [1135, 96], wide: true },
+  { name: 'Renaatus', work: 'Plant supply, gardening and maintenance',
+    logo: '/images/clients/logos/renaatus.webp', size: [520, 96], wide: true },
+  { name: 'Tata', work: 'Plant supply and landscaping',
+    logo: '/images/clients/logos/tata.svg', size: [451, 414] },
+  { name: 'Aditya Birla Group', work: 'Plant supply and landscaping',
+    logo: '/images/clients/logos/aditya-birla.webp', size: [427, 240] },
 ];
 
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I’d like to discuss a landscaping / garden service.')}`;
@@ -222,10 +230,12 @@ export default function Services() {
             <h3 id="services-record-title" className="services-subtitle">Trusted by industry and the public sector</h3>
           </div>
           <ul className="services-clients">
-            {CLIENTS.map(({ name, work }, i) => (
+            {CLIENTS.map(({ name, work, logo, size, wide }, i) => (
               <li key={name} className="services-client" style={{ '--i': i }}>
-                <strong>{name}</strong>
-                <span>{work}</span>
+                <div className={`services-client-mark${wide ? ' services-client-mark--wide' : ''}`}>
+                  <img src={logo} alt={name} width={size[0]} height={size[1]} loading="lazy" decoding="async" />
+                </div>
+                <p className="services-client-work">{work}</p>
               </li>
             ))}
           </ul>
