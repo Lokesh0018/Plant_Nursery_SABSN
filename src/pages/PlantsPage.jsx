@@ -88,9 +88,6 @@ export default function PlantsPage() {
   }, []);
   useEffect(() => {
     document.title = routeFor('/plants/').title;
-    const search = e => { setQuery(e.detail || ''); setCategory('all'); document.getElementById('plants')?.scrollIntoView({ behavior: 'smooth' }); };
-    window.addEventListener('plants-search', search);
-    return () => window.removeEventListener('plants-search', search);
   }, []);
   const pickCategory = (slug) => {
     setQuery('');

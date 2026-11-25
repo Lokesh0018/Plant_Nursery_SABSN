@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import {
-  ArrowRight, Sprout, Shovel, Scissors, Building2, Plane, Factory, Landmark, BadgeCheck, ShieldCheck,
+  ArrowRight, Sprout, Shovel, Scissors, Building2, Plane, Factory, Landmark, BadgeCheck, ShieldCheck, Globe2,
   Phone, Mail, MapPin, MessageCircle, Leaf, Trees, Apple, TreePine, Flower2, IndianRupee, LandPlot, Users, Quote,
   Layers, Recycle, Amphora, BrickWall, LayoutGrid, Workflow, Info,
   ClipboardList, Palette, Calculator, HardHat, Truck, Droplets, Handshake,
@@ -21,6 +21,7 @@ const STATS = [
   { icon: IndianRupee, value: '₹3.9 Cr', label: 'Annual turnover' },
   { icon: LandPlot, value: '20 Acres', label: 'Combined nursery footprint' },
   { icon: Users, value: '50+', label: 'Full-time team' },
+  { icon: Globe2, value: 'Worldwide', label: 'Export to any country' },
 ];
 
 const MOTTO = ['Green Plants', 'Healthy Life', 'Happy Life'];
@@ -162,7 +163,8 @@ export default function AboutPage() {
             <p className="ap-lead">
               Sri Ayyappa Bala Sai Nursery is a complete nursery and landscape partner headquartered in Madhurawada, Visakhapatnam, with a second nursery in Kadiyam, near Rajahmundry. We supply
               indoor, outdoor and ornamental plants, and handle landscaping, garden establishment, planting and ongoing
-              maintenance for corporate, public-sector and private clients.
+              maintenance for corporate, public-sector and private clients. We also export plants all over the world,
+              packed and documented for safe arrival wherever you are.
             </p>
             <blockquote className="ap-mission">
               <span className="ap-mission-label"><Quote size={14} strokeWidth={2.4} aria-hidden="true" />Our mission</span>

@@ -236,6 +236,64 @@
     ]
   },
   {
+    "title": "Plants with Decorative Stands",
+    "slug": "plants-with-decorative-stands",
+    "names": [
+      "Circular Plant Stand with Lights",
+      "Heart-Shaped Plant Stand with Lights"
+    ],
+    "items": [
+      {
+        "id": "circular-plant-stand-lights",
+        "name": "Circular Plant Stand with Lights",
+        "botanical": "Mixed ornamental plant arrangement",
+        "description": "White circular six-position stand displaying flowering plants in colourful pots, with warm decorative lighting around the frame.",
+        "feature": "Flowering plants in colourful pots",
+        "placement": "Covered patios & display corners",
+        "note": "Illustrative arrangement with added decorative lighting. Enquire about available plants, stand dimensions and lighting options.",
+        "columns": 2,
+        "rows": 1,
+        "cell": 0,
+        "sheet": "/images/plants/catalogue/illuminated-plant-stands-v2.webp",
+        "imagePresentation": {
+          "growthForm": "mixed-plant-arrangement",
+          "maturity": "nursery-stock",
+          "displayStyle": "decorative-stand",
+          "allowNurseryPot": true,
+          "imageAspectRatio": "1:1",
+          "cellAspectRatio": 1,
+          "label": "Illustrative plant stand with decorative lighting",
+          "identityStatus": "illustrative-not-stock-verification",
+          "actualProductSize": "not-specified"
+        }
+      },
+      {
+        "id": "heart-plant-stand-lights",
+        "name": "Heart-Shaped Plant Stand with Lights",
+        "botanical": "Mixed ornamental plant arrangement",
+        "description": "White heart-shaped seven-position stand displaying foliage and flowering plants, with warm decorative lighting around the frame.",
+        "feature": "Mixed foliage & flowering plants",
+        "placement": "Covered patios & display corners",
+        "note": "Illustrative arrangement with added decorative lighting. Enquire about available plants, stand dimensions and lighting options.",
+        "columns": 2,
+        "rows": 1,
+        "cell": 1,
+        "sheet": "/images/plants/catalogue/illuminated-plant-stands-v2.webp",
+        "imagePresentation": {
+          "growthForm": "mixed-plant-arrangement",
+          "maturity": "nursery-stock",
+          "displayStyle": "decorative-stand",
+          "allowNurseryPot": true,
+          "imageAspectRatio": "1:1",
+          "cellAspectRatio": 1,
+          "label": "Illustrative plant stand with decorative lighting",
+          "identityStatus": "illustrative-not-stock-verification",
+          "actualProductSize": "not-specified"
+        }
+      }
+    ]
+  },
+  {
     "title": "Outdoor Plants",
     "slug": "outdoor-plants",
     "names": [

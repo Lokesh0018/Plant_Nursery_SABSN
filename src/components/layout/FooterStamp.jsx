@@ -116,7 +116,8 @@ const ROOT_HAIRS = Array.from({ length: 12 }, (_, i) => {
  * Footer finale, told inside the nursery stamp as the page reaches its bottom: a seed drops into a
  * mound of soil, its coat cracks open, roots reach down while a shoot climbs, the leaves unfurl, and
  * the stamp's rings draw themselves around the sapling before the lettered ring fades in and turns.
- * Scroll-linked over the last RANGE px of the page, forward and back. Under prefers-reduced-motion the
+ * Scroll-linked, forward and back: by the stamp's own position on screen, or over the last RANGE px of the
+ * page, whichever is further along. Under prefers-reduced-motion the
  * grown stamp is shown straight away.
  */
 export default function FooterStamp() {
@@ -198,9 +199,17 @@ export default function FooterStamp() {
     }
     render(0);
     let last = -1;
-    const tick = ({ y, max }) => {
+    const tick = ({ y, max, vh }) => {
       if (!inView.current) return; // skip the scroll maths while the stamp is off screen
-      const p = clamp((y - (max - RANGE)) / RANGE); // 0 -> 1 over the last RANGE px
+      // Two clocks, whichever is further along: the stamp's own place on screen (it starts as the stamp's
+      // centre enters the lower part of the screen and is grown by the time it reaches the middle), and the
+      // last RANGE px of the page (so it always finishes at the very bottom). On phones the stacked footer
+      // brings the stamp on screen long before the page ends, and the page clock alone left it empty there.
+      const r = el.getBoundingClientRect();
+      const centre = r.top + r.height / 2;
+      const byView = clamp((vh * 0.9 - centre) / (vh * 0.4));
+      const byPage = clamp((y - (max - RANGE)) / RANGE);
+      const p = Math.round(Math.max(byView, byPage) * 1000) / 1000;
       if (p === last) return;
       last = p;
       render(p);

@@ -1,7 +1,7 @@
 // Business details shared by the pages, the footer and the build-time SEO (vite.config.js). Plain data only:
 // this file is also imported by the build, so it must not import components, styles or images.
 
-export const SITE_URL = 'https://sabsn.com';
+export const SITE_URL = 'https://sabsn.shmtech.in';
 
 export const BUSINESS = {
   name: 'Sri Ayyappa Bala Sai Nursery',

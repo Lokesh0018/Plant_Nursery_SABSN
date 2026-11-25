@@ -134,10 +134,6 @@
     display: flex;
   }
 
-  .navbar-container.search-open .nav-search.open {
-    width: 130px !important;
-  }
-
   /* desktop links hide; the separate .mobile-menu sheet takes over */
   .nav-links {
     display: none;
@@ -323,7 +319,7 @@
   .mobile-menu-panel { clip-path: none; }
 }
 
-/* ---------- brand, links, search and buttons (formerly inline styles and mouse handlers in Navbar.jsx) ---------- */
+/* ---------- brand, links and buttons (formerly inline styles and mouse handlers in Navbar.jsx) ---------- */
 .nav-logo {
   flex: none;
   width: 44px;
@@ -386,47 +382,6 @@
 .active-nav-item > .nav-link { font-weight: 600; }
 .nav-link:focus-visible { outline: 2px solid #c9d98a; outline-offset: 6px; }
 
-/* search: a 27px icon that opens into a field */
-.nav-search-wrap { position: relative; display: flex; align-items: center; width: 27px; height: 27px; }
-.nav-search {
-  position: absolute;
-  right: 0;
-  display: flex;
-  align-items: center;
-  width: 27px;
-  padding: 4px;
-  overflow: hidden;
-  border-radius: 100px;
-  background: transparent;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.nav-search.open { width: 180px; padding: 0.4rem 0.8rem; background: rgba(244, 236, 217, 0.12); }
-.nav-search-btn {
-  display: flex;
-  align-items: center;
-  min-width: 19px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: #f4ecd9;
-  cursor: pointer;
-}
-.nav-search-btn:focus-visible { outline: 2px solid #c9d98a; outline-offset: 4px; border-radius: 50%; }
-.nav-search-input {
-  width: 0;
-  padding-left: 0;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #f4ecd9;
-  font-size: 0.85rem;
-  font-weight: 500;
-  opacity: 0;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.nav-search.open .nav-search-input { width: 100%; padding-left: 0.6rem; opacity: 1; }
-.nav-search-input::placeholder { color: rgba(244, 236, 217, 0.6); }
-
 /* Contact */
 .shop-now-btn {
   display: flex;
@@ -459,10 +414,7 @@
 .mobile-menu-btn.is-open { background: rgba(244, 236, 217, 0.12); }
 .mobile-menu-btn:focus-visible { outline: 2px solid #c9d98a; outline-offset: 2px; border-radius: 8px; }
 
-@media (max-width: 900px) {
-  .nav-search.open { width: 130px; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .nav-link, .nav-search, .nav-search-input, .shop-now-btn, .nav-indicator { transition: none; }
+  .nav-link, .shop-now-btn, .nav-indicator { transition: none; }
   .shop-now-btn:hover { transform: none; }
 }

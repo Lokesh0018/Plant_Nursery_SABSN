@@ -171,9 +171,6 @@ export default function PotsPage() {
   }, []);
   useEffect(() => {
     document.title = routeFor('/pots/').title;
-    const search = e => { setQuery(e.detail || ''); setCategory('all'); document.getElementById('pots-catalogue')?.scrollIntoView({ behavior: 'smooth' }); };
-    window.addEventListener('pots-search', search);
-    return () => window.removeEventListener('pots-search', search);
   }, []);
   const filtered = groups.filter(g => category === 'all' || category === g.slug).map(g => ({ ...g, items: g.items.filter(p => `${p.name} ${p.description} ${g.title} ${p.material}`.toLowerCase().includes(query.trim().toLowerCase())) })).filter(g => g.items.length);
   const count = filtered.reduce((sum, g) => sum + g.items.length, 0);

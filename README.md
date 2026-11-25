@@ -27,6 +27,5 @@ npm run lint      # oxlint
 - `src/styles/global.css`: design tokens (colors, fonts) and global rules.
 - `seo/build-seo.js` + `vite.config.js`: per-route `<head>` tags, structured data, sitemap and 404 at build time.
 - `public/`: static assets (WebP/AVIF images, fonts, icons, manifest, hosting headers).
-- `assets-src/`: source originals kept for re-exporting; **not** deployed (see its README).
+- `assets-src/`: full-size originals (gallery photos, the Caveat font, the heart-stand photo) kept for re-exporting; **not** deployed.
 
-See `PERFORMANCE_AUDIT.md` for the performance review and what has been done.

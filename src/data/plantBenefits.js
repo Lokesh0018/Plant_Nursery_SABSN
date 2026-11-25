@@ -90,6 +90,7 @@ const byName = {
 // general benefits for each catalogue category (used when a plant has no entry above)
 const byCategory = {
   'indoor-plants': ['Brings greenery to indoor spaces', 'Suited to indoor light', 'Easy care with regular light watering'],
+  'plants-with-decorative-stands': ['Several potted plants in one compact display', 'Decorative lighting makes it an evening feature', 'Pots lift out, so plants can be changed with the season'],
   'outdoor-plants': ['Adds structure and greenery to gardens', 'Suited to outdoor sun and heat', 'Low maintenance once established'],
   'flowering-plants': ['Seasonal colour for beds and borders', 'Attracts bees and butterflies', 'Brightens entrances and pathways'],
   'ornamental-topiary-plants': ['Living sculpture that stays green year-round', 'Instant focal point for entrances and formal gardens', 'Shape is kept with regular trimming'],
@@ -107,6 +108,8 @@ export function plantBenefits(name, categorySlug) {
 // few plants that clearly differ listed by name, plus the plant's form from the catalogue's growthForm field.
 const careByCategory = {
   'indoor-plants': { sun: 'Bright, indirect light', water: 'When the topsoil feels dry' },
+  // a stand holds a mix of potted plants, so the guidance is per pot rather than for one species
+  'plants-with-decorative-stands': { sun: 'Bright light with some morning sun', water: 'Each pot when its topsoil feels dry' },
   'outdoor-plants': { sun: 'Full sun to light shade', water: 'Regular until established' },
   'flowering-plants': { sun: 'Full sun for best flowers', water: 'Regular; let the topsoil dry' },
   'ornamental-topiary-plants': { sun: 'Full sun to partial shade', water: 'Regular, evenly moist soil' },
@@ -141,6 +144,7 @@ const FORM_LABELS = {
   'clumping-grass': 'Clumping grass',
   'large-tropical-herb': 'Large tropical plant',
   'fruiting-herb': 'Fruiting plant',
+  'mixed-plant-arrangement': 'Potted plants on a stand',
 };
 
 export function plantCare(plant, categorySlug) {

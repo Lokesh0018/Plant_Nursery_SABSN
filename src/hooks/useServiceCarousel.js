@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-// drift speed in cards per second, and how long a click / drag / hover holds it before drifting on
-const DRIFT = 0.32;
+// drift speed in cards per second (about one card every 1.8 s), and how long a click / drag / hover / touch
+// holds it before drifting on. It drifts on every screen, phones included; a finger on the stage holds it,
+// so a card never slides away under the thumb while it is being tapped or swiped.
+const DRIFT = 0.55;
 const HOLD_AFTER_MS = 2600;
-// Phones and touch screens: no idle drift. The card being read must not slide away under the thumb;
-// swiping, arrows and dots still move it (with the same easing).
-const NO_DRIFT_QUERY = '(max-width: 640px), (hover: none) and (pointer: coarse)';
 
 /**
  * A centred, endlessly looping card carousel that glides continuously while it is on screen.
@@ -24,12 +23,11 @@ export default function useServiceCarousel(count) {
   const cards = useRef([]);
   const [index, setIndex] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  const noDrift = useRef(window.matchMedia(NO_DRIFT_QUERY).matches);
 
   const pos = useRef(0);          // fractional position, in cards
   const target = useRef(null);    // card position being eased to, if any
   const holdUntil = useRef(0);    // drift held until this time
-  const held = useRef({ hover: false, focus: false, paused: false });
+  const held = useRef({ hover: false, focus: false, paused: false, press: false });
   const lastIndex = useRef(0);
   const visible = useRef(false);
   const wake = useRef(null);        // restarts the parked frame loop when the track comes back into view
@@ -85,15 +83,12 @@ export default function useServiceCarousel(count) {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const change = () => setReducedMotion(media.matches);
     media.addEventListener('change', change);
-    const driftMedia = window.matchMedia(NO_DRIFT_QUERY);
-    const driftChange = () => { noDrift.current = driftMedia.matches; };
-    driftMedia.addEventListener('change', driftChange);
     const observer = new IntersectionObserver(([entry]) => {
       visible.current = entry.isIntersecting;
       wake.current?.();
     }, { threshold: 0.25 });
     if (trackRef.current) observer.observe(trackRef.current);
-    return () => { media.removeEventListener('change', change); driftMedia.removeEventListener('change', driftChange); observer.disconnect(); };
+    return () => { media.removeEventListener('change', change); observer.disconnect(); };
   }, []);
 
   // the motion loop: eases toward a chosen card, otherwise drifts
@@ -123,7 +118,7 @@ export default function useServiceCarousel(count) {
         return;
       }
       const h = held.current;
-      if (noDrift.current || h.hover || h.focus || h.paused || now < holdUntil.current) return;
+      if (h.hover || h.focus || h.paused || h.press || now < holdUntil.current) return;
       pos.current = (pos.current + DRIFT * dt) % count;
       apply();
     };
@@ -154,6 +149,7 @@ export default function useServiceCarousel(count) {
   };
   const onPointerDown = (event) => {
     if (!event.isPrimary || event.button !== 0) return;
+    held.current.press = true; // hold the drift while a finger or button is down on the stage
     drag.current = { x: event.clientX, y: event.clientY, id: event.pointerId, start: pos.current, active: false };
     dragged.current = false;
   };
@@ -175,6 +171,7 @@ export default function useServiceCarousel(count) {
   const onPointerUp = (event) => {
     const d = drag.current;
     drag.current = null;
+    if (held.current.press) { held.current.press = false; hold(); }
     if (!d) return;
     if (d.active) goTo(((Math.round(pos.current) % count) + count) % count);
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
@@ -189,7 +186,7 @@ export default function useServiceCarousel(count) {
     trackRef, cardRef, index, reducedMotion, goTo, nudge, setPaused,
     interactionProps: {
       onKeyDown, onPointerDown, onPointerMove, onPointerUp, onClickCapture,
-      onPointerCancel: () => { drag.current = null; dragged.current = false; },
+      onPointerCancel: () => { drag.current = null; dragged.current = false; if (held.current.press) { held.current.press = false; hold(); } },
       // hover holds the drift only while the pointer is over a card, not the empty stage around the fan
       onMouseOver: (e) => {
         const onCard = !!e.target.closest('.svc-card');

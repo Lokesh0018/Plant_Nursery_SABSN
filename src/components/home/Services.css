@@ -606,8 +606,8 @@
 }
 @media (max-width: 640px) {
   /* Phones: a flat, swipeable row instead of the 3D fan. The centred card fills most of the width and the
-     next one peeks in at the edge (so it reads as swipeable); no tilt, no per-frame filter, no idle drift
-     (see useServiceCarousel). --spread is one card plus a small gap, measured for the 0.94 neighbour scale. */
+     next one peeks in at the edge (so it reads as swipeable); no tilt and no per-frame filter. It drifts
+     like the desktop fan, held while a finger is on it (see useServiceCarousel). --spread is one card plus a small gap, measured for the 0.94 neighbour scale. */
   .svc-stage {
     --card-w: min(82vw, 340px);
     --spread: calc(var(--card-w) * .97 + 12px);

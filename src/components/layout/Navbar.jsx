@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 import './Navbar.css';
 import { subscribeScroll } from '../../lib/scrollStore';
-import { products } from '../../data/products';
-import { pots } from '../../data/pots';
 
 // Section ids on the home page; from any other page a link reloads home and scrolls there
 function goToSection(page, id) {
@@ -31,10 +29,8 @@ export default function Navbar({ page = 'home' }) {
 
   // on the home page the active item follows the scroll; other pages light up their own item
   const [activeSection, setActiveSection] = useState(page === 'home' ? 'home' : page);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const navRef = React.useRef(null);
-  const searchInputRef = React.useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
 
   useEffect(() => {
@@ -120,7 +116,7 @@ export default function Navbar({ page = 'home' }) {
 
   return (
     <>
-    <nav className={`navbar-container ${isScrolled ? 'scrolled' : ''} on-dark ${isSearchOpen ? 'search-open' : ''}`}>
+    <nav className={`navbar-container ${isScrolled ? 'scrolled' : ''} on-dark`}>
 
       {/* Brand Logo: links back to the hero */}
       <a
@@ -171,66 +167,6 @@ export default function Navbar({ page = 'home' }) {
 
       {/* Right Controls */}
       <div className="nav-right">
-        {/* Animated Search Bar Wrapper */}
-        <div className="nav-search-wrap">
-          <div className={`nav-search ${isSearchOpen ? 'open' : ''}`}>
-            <button
-              type="button"
-              className="nav-search-btn"
-              aria-label="Search"
-              onClick={() => {
-                if (!isSearchOpen) {
-                  setIsSearchOpen(true);
-                  setTimeout(() => searchInputRef.current?.focus(), 100);
-                }
-              }}
-            >
-              <Search size={19} strokeWidth={1.8} />
-            </button>
-
-            <input
-              ref={searchInputRef}
-              type="text"
-              className="nav-search-input"
-              placeholder="Find plants..."
-              aria-label="Find plants"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && e.target.value.trim() !== '' && (page === 'plants' || page === 'pots')) {
-                  // the plants page filters its own grid
-                  window.dispatchEvent(new CustomEvent(page === 'pots' ? 'pots-search' : 'plants-search', { detail: e.target.value.trim() }));
-                  setIsSearchOpen(false);
-                  e.target.blur();
-                  e.target.value = '';
-                } else if (e.key === 'Enter' && e.target.value.trim() !== '') {
-                  const query = e.target.value.toLowerCase().trim();
-                  const allItems = [...products, ...pots];
-
-                  // Try to find exact match first, then partial match
-                  const match = allItems.find(item => item.name.toLowerCase() === query)
-                    || allItems.find(item => item.name.toLowerCase().includes(query));
-
-                  if (match) {
-                    const el = document.getElementById(`product-${match.id}`);
-                    if (el) {
-                      // Adjust scroll position slightly higher for navbar
-                      const y = el.getBoundingClientRect().top + window.scrollY - 100;
-                      window.scrollTo({ top: y, behavior: 'smooth' });
-                      setIsSearchOpen(false);
-                      e.target.blur();
-                      e.target.value = '';
-                    }
-                  }
-                }
-              }}
-              onBlur={(e) => {
-                if (e.target.value === '') {
-                  setIsSearchOpen(false);
-                }
-              }}
-            />
-          </div>
-        </div>
-
         <button
           type="button"
           className="shop-now-btn"

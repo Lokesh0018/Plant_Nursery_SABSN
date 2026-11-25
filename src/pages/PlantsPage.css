@@ -295,17 +295,6 @@
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: none; }
 }
-.product-rating {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin: -0.1rem 0 0.35rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--pp-ink);
-}
-.product-rating svg { color: #d9a420; }
-.product-rating span { font-weight: 400; color: var(--pp-muted); }
 
 .pp-empty {
   display: flex;
@@ -795,3 +784,11 @@
 /* shown for the moment the catalogue chunk takes to arrive; reserves space so the footer does not jump */
 .pp-catalogue-loading { min-height: 60vh; padding-top: 3rem; }
 
+.plants-page .indoor-photo .plant-frame--stand { background: #111e16; }
+.plants-page .indoor-photo .plant-frame--stand .plant-frame-cell,
+.plants-page .indoor-card:hover .plant-frame--stand .plant-frame-cell { transform: none; }
+.plants-page .indoor-dialog-photo .plant-frame--stand { background: #111e16; }
+.plants-page .indoor-dialog-photo .plant-frame--stand .plant-frame-cell {
+  position: relative; left: auto; top: auto; height: 100%; width: auto !important;
+  max-width: 100%; aspect-ratio: 1; transform: none;
+}
