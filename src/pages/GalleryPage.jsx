@@ -18,6 +18,50 @@ const countOf = (key) => (key === 'all' ? galleryItems.length : galleryItems.fil
 const PRINTS = ['/images/gallery/airport.webp', '/images/gallery/ficus.webp', '/images/gallery/palms.webp'].map((src) => galleryItems.find((g) => g.src === src)).filter(Boolean);
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I saw your gallery and would like to discuss a landscaping project.')}`;
 
+const ratioOf = (item) => item.width / item.height;
+
+/* Justified rows, chosen rather than greedily wrapped. Every row fills the width at one height (each
+   tile's width is its ratio times that height), and the breaks are picked so every row lands as close
+   as possible to the target height: no lone photo blown up across a whole row at the end. */
+function justifyRows(items, width, target, gap) {
+  const n = items.length;
+  const best = [0];
+  const from = [0];
+  for (let i = 1; i <= n; i += 1) {
+    best[i] = Infinity;
+    let sum = 0;
+    for (let j = i - 1; j >= 0; j -= 1) {
+      sum += ratioOf(items[j]);
+      const h = (width - gap * (i - j - 1)) / sum;
+      if (h < target * 0.45) break; // more photos would only make the row thinner
+      const cost = best[j] + Math.log(h / target) ** 2;
+      if (cost < best[i]) { best[i] = cost; from[i] = j; }
+    }
+  }
+  const rows = [];
+  for (let i = n; i > 0; i = from[i]) rows.unshift(items.slice(from[i], i));
+  return rows;
+}
+
+// row height to aim for at this container width; matches the gap in GalleryPage.css (clamp 12px..17.6px, 1.4vw)
+function rowMetrics(width) {
+  const vw = typeof window === 'undefined' ? 1440 : window.innerWidth;
+  return { target: width <= 600 ? 170 : width <= 900 ? 220 : 280, gap: Math.min(17.6, Math.max(12, vw * 0.014)) };
+}
+
+function useWidth(ref) {
+  const [width, setWidth] = useState(1200);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    setWidth(el.clientWidth);
+    const ro = new ResizeObserver(([entry]) => setWidth(Math.round(entry.contentRect.width)));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [ref]);
+  return width;
+}
+
 // `sizes` says how wide the photo is drawn, so the browser picks the nearest of its 640 / 1280 / 2400 px versions
 function GalleryPhoto({ item, lazy = false, crop = false, sizes = '100vw' }) {
   if (item.cell !== undefined) return <span className="gp-sheet-photo" role="img" aria-label={item.alt} style={{ backgroundImage: `url(${item.src})`, backgroundPosition: `${(item.cell % 2) * 100}% ${Math.floor(item.cell / 2) * 100}%` }} />;
@@ -113,6 +157,18 @@ export default function GalleryPage() {
   // position of each tile within `shown`
   const indexOf = useMemo(() => new Map(shown.map((item, i) => [item.id || item.src, i])), [shown]);
 
+  // every collection is laid out to the measured width of the photo column
+  const columnRef = useRef(null);
+  const width = useWidth(columnRef);
+  const layouts = useMemo(() => {
+    const { target, gap } = rowMetrics(width);
+    return new Map(groups.map((g) => [g.key, justifyRows(g.items, width, target, gap).map((row) => {
+      const h = (width - gap * (row.length - 1)) / row.reduce((s, it) => s + ratioOf(it), 0);
+      // a row that would come out far taller than the rest (a short collection) is held at a cap and centred
+      return { row, capped: h > target * 1.45 ? Math.round(target * 1.45) : null };
+    })]));
+  }, [groups, width]);
+
   return (
     <div className="gallery-page">
       <Navbar page="gallery" />
@@ -183,7 +239,7 @@ export default function GalleryPage() {
         </div>
 
         {/* re-keyed per filter so the collections settle in again */}
-        <div key={filter}>
+        <div key={filter} ref={columnRef}>
           {groups.map((group, gi) => (
             <Fragment key={group.key}>
               {/* a vine divider between collections */}
@@ -199,31 +255,29 @@ export default function GalleryPage() {
                 </header>
 
                 {/* justified rows: every photo keeps its own shape, and each row fills the width at one height */}
-                <ul className="gp-rows">
-                  {group.items.map((item, ii) => {
-                    const at = indexOf.get(item.id || item.src);
-                    // the first fixed-size photo starts a fresh row, so the closing portraits sit together
-                    const breakBefore = item.fixedRow && !group.items[ii - 1]?.fixedRow;
-                    return (
-                      <Fragment key={item.id || item.src}>
-                      {breakBefore && <li className="gp-row-break" role="presentation" />}
-                      <li className={`gp-tile${item.fit === 'contain' ? ' gp-tile--complete' : ''}${item.fixedRow ? ' gp-tile--fixed' : ''}`} style={{ '--i': at, '--r': (item.displayRatio || item.width / item.height).toFixed(3) }}>
-                        <button type="button" className="gp-tile-btn" onClick={() => setOpen(at)} aria-label={`Open photo: ${item.title}`}>
-                          <span className="gp-tile-media">
-                            <GalleryPhoto item={item} lazy crop sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 640px" />
-                            {/* tiles that crop a portrait say so, so it is clear the full photo opens on tap */}
-                            <span className={`gp-tile-zoom${item.fixedRow ? ' gp-tile-zoom--label' : ''}`} aria-hidden="true"><Expand size={16} />{item.fixedRow && 'Full photo'}</span>
-                            <span className="gp-tile-caption">
-                              <span className="gp-tag">{item.tag}</span>
-                              <span className="gp-tile-title">{item.title}</span>
-                            </span>
-                          </span>
-                        </button>
-                      </li>
-                      </Fragment>
-                    );
-                  })}
-                </ul>
+                <div className="gp-rows">
+                  {layouts.get(group.key).map(({ row, capped }) => (
+                    <ul key={row.map((it) => it.id || it.src).join('|')} className={`gp-row${capped ? ' gp-row--capped' : ''}`} style={capped ? { '--h': `${capped}px` } : undefined}>
+                      {row.map((item) => {
+                        const at = indexOf.get(item.id || item.src);
+                        return (
+                          <li key={item.id || item.src} className={`gp-tile${item.fit === 'contain' ? ' gp-tile--complete' : ''}`} style={{ '--i': at, '--r': ratioOf(item).toFixed(4) }}>
+                            <button type="button" className="gp-tile-btn" onClick={() => setOpen(at)} aria-label={`Open photo: ${item.title}`}>
+                              <span className="gp-tile-media">
+                                <GalleryPhoto item={item} lazy crop sizes="(max-width: 640px) 92vw, (max-width: 1100px) 60vw, 720px" />
+                                <span className="gp-tile-zoom" aria-hidden="true"><Expand size={16} /></span>
+                                <span className="gp-tile-caption">
+                                  <span className="gp-tag">{item.tag}</span>
+                                  <span className="gp-tile-title">{item.title}</span>
+                                </span>
+                              </span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ))}
+                </div>
               </section>
             </Fragment>
           ))}

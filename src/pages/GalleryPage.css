@@ -156,19 +156,17 @@
   border-radius: 999px; background: var(--gp-paper); font-size: 0.8rem; font-weight: 600; color: #2f5524;
 }
 
-/* justified rows: each tile grows in proportion to its width/height ratio, so a row shares one height */
-.gp-rows { --row: 270px; --gap: clamp(0.75rem, 1.4vw, 1.1rem); display: flex; flex-wrap: wrap; gap: var(--gap); margin: 0; padding: 0; list-style: none; }
-/* forces a new row; the empty line adds one extra row gap, which the tiles after it pull back up */
-.gp-row-break { flex-basis: 100%; height: 0; }
-.gp-row-break ~ .gp-tile--fixed { margin-top: calc(-1 * var(--gap)); }
+/* justified rows: GalleryPage.jsx picks the breaks; inside a row each tile's width is in proportion to its
+   width/height ratio (basis 0, grow = ratio), so every tile in the row comes out at the same height */
+.gp-rows { --gap: clamp(0.75rem, 1.4vw, 1.1rem); display: flex; flex-direction: column; gap: var(--gap); }
+.gp-row { display: flex; gap: var(--gap); margin: 0; padding: 0; list-style: none; }
 .gp-tile {
-  flex: var(--r) 1 calc(var(--r) * var(--row)); min-width: 0;
+  flex: var(--r) 1 0; min-width: 0;
   animation: gp-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; animation-delay: calc(var(--i, 0) * 50ms);
 }
-/* the closing row: its tiles share the full width equally at one fixed height (the bouquet portrait's
-   former height), cropping each photo from its `pos` point */
-.gp-tile.gp-tile--fixed { flex: 1 1 0; }
-.gp-tile--fixed .gp-tile-media { aspect-ratio: auto; height: calc(var(--row) * 1.05); }
+/* a row that would otherwise grow far taller than its neighbours keeps a fixed height and sits centred */
+.gp-row--capped { justify-content: center; }
+.gp-row--capped .gp-tile { flex: none; width: calc(var(--r) * var(--h)); max-width: 100%; }
 @keyframes gp-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 .gp-tile-btn { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; text-align: left; font: inherit; cursor: zoom-in; }
 .gp-tile-btn:focus-visible { outline: 2px solid var(--gp-leaf); outline-offset: 4px; border-radius: 20px; }
@@ -298,7 +296,6 @@
   .gp-filters::-webkit-scrollbar { display: none; }
   .gp-filter { flex: none; }
   .gp-group-head { flex-direction: column; align-items: flex-start; }
-  .gp-rows { --row: 150px; }
   .gp-tile-title { font-size: 1rem; }
   .gp-tile-caption { padding: 0.75rem 0.85rem 0.8rem; }
   .gp-lightbox-figure { padding: 4.5rem 1rem 6.5rem; }
@@ -379,10 +376,5 @@
   .gp-collage-stats li { align-items: center; padding: 0.5rem 1.15rem; }
   .gp-hero .gp-collage-stats strong { font-size: 1.5rem; }
 }
-/* the "Full photo" hint on tiles that crop a portrait: always shown (touch screens have no hover), quieter at rest */
-.gp-tile-zoom.gp-tile-zoom--label {
-  display: flex; align-items: center; width: auto; gap: 0.35rem; padding: 0 0.7rem 0 0.55rem; border-radius: 999px;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap;
-  opacity: 0.9; transform: none;
-}
+
 

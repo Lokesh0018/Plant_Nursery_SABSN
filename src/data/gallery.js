@@ -2,7 +2,6 @@
 // Most come from the nursery's company profile: its own stock, landscapes it maintains, and its
 // client meetings and visits (captions follow the profile's own wording). They are phone photos,
 // so each is shown at its native size. `pos` keeps faces in frame when a tile crops the photo.
-// `fixedRow` items start a row of their own and keep one size (the bouquet's portrait shape) instead of stretching to fill it.
 
 export const GALLERY_GROUPS = [
   { key: 'projects', label: 'Projects', title: 'Landscapes we look after', blurb: 'Public and private landscapes planted and maintained by the nursery.' },
@@ -37,11 +36,9 @@ export const galleryItems = [
     alt: 'A handshake between the nursery team and an official at an airport forecourt planted by the nursery.' },
   { cat: 'clients', src: '/images/gallery/sacna.webp', width: 1672, height: 941, tag: 'Association', title: 'Sir Arthur Cotton Nursery Farmers Association',
     alt: 'The Sir Arthur Cotton Nursery Farmers Association building, with an equestrian statue beside the gate and clipped hedges along its railings.' },
-  { cat: 'clients', src: '/images/gallery/presentation-bouquet.webp', width: 2849, height: 3840, displayRatio: 2849 / 3840, fixedRow: true, pos: 'center 30%', tag: 'Appreciation', title: 'Plant Presentation & Appreciation',
-    alt: 'A flower bouquet being presented to a guest during a visit.' },
-  { cat: 'clients', src: '/images/gallery/visit-client.webp', width: 2882, height: 3840, displayRatio: 2849 / 3840, fixedRow: true, pos: 'center 25%', tag: 'Client Visit', title: 'Client & Stakeholder Engagement',
+  { cat: 'clients', src: '/images/gallery/visit-client.webp', width: 2882, height: 3840, pos: 'center 25%', tag: 'Client Visit', title: 'Client & Stakeholder Engagement',
     alt: 'A member of the nursery team with a visiting client in traditional Gulf dress.' },
-  { cat: 'clients', src: '/images/gallery/team.webp', width: 2882, height: 3840, displayRatio: 2849 / 3840, fixedRow: true, pos: 'center 25%', tag: 'Our Team', title: 'Team & Stakeholder Interaction',
+  { cat: 'clients', src: '/images/gallery/team.webp', width: 2882, height: 3840, pos: 'center 25%', tag: 'Our Team', title: 'Team & Stakeholder Interaction',
     alt: 'Three members of the nursery team standing together in an office.' },
 ];
 
