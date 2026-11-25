@@ -79,8 +79,14 @@ const CLIENTS = [
     photo: '/images/gallery/airport-1280.webp', size: [1280, 960], focus: '60% 55%', alt: 'Rajahmundry airport terminal with landscaped lawns, palms and flowering shrubs' },
   { icon: Factory, name: 'Sri Sarvaraya Sugars Ltd.', work: 'Gopalapuram: plant and garden requirements',
     photo: '/images/clients/sri-sarvaraya.webp', size: [600, 376], focus: '50% 50%', alt: 'Sri Sarvaraya Sugars building with a planted hedge and garden in front' },
-  { icon: Factory, name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Baladrapuram',
+  { icon: Factory, name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Balabhadrapuram',
     photo: '/images/clients/grasim.webp', size: [488, 600], focus: '40% 72%', alt: 'Grasim Industries plant entrance with its sign, trees and factory chimneys' },
+  { icon: Building2, name: 'Tata', work: 'Plant supply and landscaping',
+    photo: '/images/clients/tata.webp', size: [790, 500], focus: '45% 50%', alt: 'Aerial view of a large vehicle yard with rows of parked trucks, a blue-roofed building and green verges' },
+  { icon: Factory, name: 'Aditya Birla Group', work: 'Plant supply and landscaping',
+    photo: '/images/clients/aditya-birla.webp', size: [630, 313], focus: '50% 60%', alt: 'An industrial campus with wide lawns, clipped hedges, palms and flower beds along a curving drive' },
+  { icon: Factory, name: 'Coca-Cola', work: 'Plant supply and landscaping',
+    photo: '/images/clients/coca-cola.webp', size: [1200, 900], focus: '52% 45%', alt: 'A Coca-Cola bottling plant entrance sign on a grassy mound planted with palms and shrubs' },
 ];
 
 const PALETTE = [

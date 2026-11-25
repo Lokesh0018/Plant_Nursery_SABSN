@@ -41,20 +41,28 @@ function useSeenOnce() {
 }
 
 // Organisations named in the company profile among the nursery's clients
+// `k` nudges a logo's optical weight (heavy type reads larger than its box). Sri Sarvaraya comes last: on
+// two-column screens the seventh card runs full width, which its long single-line wordmark needs most.
 const CLIENTS = [
   { name: 'Airports Authority of India', work: 'Rajahmundry airport landscape support',
-    logo: '/images/clients/logos/aai.svg', size: [382, 261] },
+    logo: '/images/clients/logos/aai.svg', size: [382, 261], k: 1.12 },
   { name: 'Grasim Industries Ltd.', work: 'Chemical Division, Caustic Plant, Balabhadrapuram',
     logo: '/images/clients/logos/grasim.webp', size: [307, 300] },
-  { name: 'Sri Sarvaraya Sugars Ltd.', work: 'Plant and garden requirements, Gopalapuram',
-    logo: '/images/clients/logos/sri-sarvaraya.webp', size: [1135, 96], wide: true },
   { name: 'Renaatus', work: 'Plant supply, gardening and maintenance',
-    logo: '/images/clients/logos/renaatus.webp', size: [520, 96], wide: true },
+    logo: '/images/clients/logos/renaatus.webp', size: [520, 96], k: 0.82 },
   { name: 'Tata', work: 'Plant supply and landscaping',
     logo: '/images/clients/logos/tata.svg', size: [451, 414] },
   { name: 'Aditya Birla Group', work: 'Plant supply and landscaping',
     logo: '/images/clients/logos/aditya-birla.webp', size: [427, 240] },
+  { name: 'Coca-Cola', work: 'Plant supply and landscaping',
+    logo: '/images/clients/logos/coca-cola.webp', size: [491, 160], k: 0.9 },
+  { name: 'Sri Sarvaraya Sugars Ltd.', work: 'Plant and garden requirements, Gopalapuram',
+    logo: '/images/clients/logos/sri-sarvaraya.webp', size: [1135, 96], k: 1.25 },
 ];
+
+// every logo gets the same visual area rather than the same height: height = sqrt(area / ratio)
+const LOGO_AREA = 9000;
+const logoHeight = ([w, h], k = 1) => Math.round(Math.sqrt(LOGO_AREA / (w / h)) * k);
 
 const WA_LINK = `https://wa.me/919849936169?text=${encodeURIComponent('Hello SABSN, I’d like to discuss a landscaping / garden service.')}`;
 
@@ -225,24 +233,27 @@ export default function Services() {
         </div>
 
         <div ref={recordRef} className={`services-record${recordIn ? ' is-in' : ''}`} aria-labelledby="services-record-title">
-          <div className="services-process-head">
-            <p className="services-eyebrow">Track record</p>
-            <h3 id="services-record-title" className="services-subtitle">Trusted by industry and the public sector</h3>
+          {/* bento: the heading is the first tile, so heading + 7 clients fill a 4 x 2 grid exactly */}
+          <div className="services-record-grid">
+            <header className="services-record-intro">
+              <p className="services-record-eyebrow">Track record</p>
+              <h3 id="services-record-title" className="services-record-title">Trusted by industry and the public sector</h3>
+              <p className="services-record-badge">
+                <BadgeCheck size={18} strokeWidth={2} aria-hidden="true" />
+                <span>Registered Class V Contractor<small>Public Health Division, Rajahmundry</small></span>
+              </p>
+            </header>
+            <ul className="services-clients">
+              {CLIENTS.map(({ name, work, logo, size, k }, i) => (
+                <li key={name} className="services-client" style={{ '--i': i + 1 }}>
+                  <div className="services-client-mark">
+                    <img src={logo} alt={name} width={size[0]} height={size[1]} loading="lazy" decoding="async" style={{ '--lh': `${logoHeight(size, k)}px` }} />
+                  </div>
+                  <p className="services-client-work">{work}</p>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="services-clients">
-            {CLIENTS.map(({ name, work, logo, size, wide }, i) => (
-              <li key={name} className="services-client" style={{ '--i': i }}>
-                <div className={`services-client-mark${wide ? ' services-client-mark--wide' : ''}`}>
-                  <img src={logo} alt={name} width={size[0]} height={size[1]} loading="lazy" decoding="async" />
-                </div>
-                <p className="services-client-work">{work}</p>
-              </li>
-            ))}
-          </ul>
-          <p className="services-registration">
-            <BadgeCheck size={17} strokeWidth={2} aria-hidden="true" />
-            Registered Class V Contractor, Public Health Division, Rajahmundry
-          </p>
         </div>
       </div>
     </section>

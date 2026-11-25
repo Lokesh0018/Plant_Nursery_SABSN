@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 
 /**
- * Botanical top edge for the footer: a waving stem with leaves, buds, berries and tiny blossoms,
- * in the same shapes as the vine dividers. Sizes, angles and spacing vary along the stem so it
- * reads as grown rather than stamped. Static SVG, no animation, so it costs nothing on scroll.
+ * Botanical top edge for the footer: a waving stem with leaves, buds, berries and tiny blossoms.
+ * Sizes, angles and spacing vary along the stem so it reads as grown rather than stamped.
+ * Static SVG, no animation, so it costs nothing on scroll.
  */
 const W = 1440;
 const H = 44;
