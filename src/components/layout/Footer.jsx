@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail, MessageCircle, Clock, ArrowUpRight } from 'lucide-
 import FallingLeaves from '../shared/FallingLeaves';
 import FooterStamp from './FooterStamp';
 import Meadow from './Meadow';
-import FooterEdge from './FooterEdge';
+import VineDivider from '../shared/VineDivider';
 import useOffscreenPause from '../../hooks/useOffscreenPause';
 import { LOCATIONS, formatAddress } from '../../data/locations';
 import { BUSINESS } from '../../data/site';
@@ -57,9 +57,10 @@ export default function Footer() {
 
   return (
     <div className="footer-shell">
-    {/* botanical top edge: a leafy vine straddling the seam. It sits outside the footer so the
-        footer's overflow clipping cannot cut off the leaves that reach up over the contact section */}
-    <FooterEdge />
+    {/* botanical top edge: the site's golden trumpet creeper (the same vine as the section dividers),
+        straddling the seam. It sits outside the footer so the footer's overflow clipping cannot cut off
+        the leaves that reach up over the section above */}
+    <VineDivider variant="footer" id="footer-edge" />
     <footer ref={footerRef} className="premium-footer">
       {/* Theme atmosphere: forest ground like the hero, lime light, corner leaves, ghost watermark */}
       <div className="footer-atmosphere" aria-hidden="true">
@@ -119,13 +120,6 @@ export default function Footer() {
               Sri Ayyappa Bala Sai Nursery — indoor, outdoor and ornamental plants, landscaping, planting and garden maintenance. Green Plants · Healthy Life · Happy Life.
             </p>
             <ul className="footer-meta">
-              {/* both nurseries, from src/data/locations.js, each linking to its own page */}
-              {LOCATIONS.map((loc) => (
-                <li key={loc.key} className="footer-branch">
-                  <MapPin size={14} aria-hidden="true" />
-                  <a href={loc.path} className="footer-branch-link"><strong>{loc.cardTitle}</strong>{formatAddress(loc, { country: false })}</a>
-                </li>
-              ))}
               <li className="footer-hours"><Clock size={14} aria-hidden="true" /> Open daily, 7 am to 6 pm</li>
             </ul>
           </div>
@@ -158,6 +152,22 @@ export default function Footer() {
             <FooterStamp />
           </div>
         </div>
+
+        {/* both nurseries side by side, from src/data/locations.js, each card linking to its own page */}
+        <ul className="footer-branches footer-reveal" aria-label="Our nurseries">
+          {LOCATIONS.map((loc) => (
+            <li key={loc.key}>
+              <a href={loc.path} className="footer-branch-card">
+                <span className="footer-branch-pin"><MapPin size={18} strokeWidth={2} aria-hidden="true" /></span>
+                <span className="footer-branch-body">
+                  <strong>{loc.cardTitle}</strong>
+                  <span className="footer-branch-addr">{formatAddress(loc, { country: false })}</span>
+                  <span className="footer-branch-more">View nursery <ArrowUpRight size={13} strokeWidth={2.2} aria-hidden="true" /></span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
 
         <div className="footer-divider footer-reveal" />
 

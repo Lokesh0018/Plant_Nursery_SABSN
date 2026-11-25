@@ -10,24 +10,9 @@
   padding: clamp(0.75rem, 1.5vh, 1rem) 5vw 92px;
   overflow: hidden;
   isolation: isolate;
-}/* top edge: the leafy vine (FooterEdge) sits across the seam, its stem on the footer's top line.
-   It lives in .footer-shell (not inside the clipped footer) so the leaves above the seam are never
-   cut. The height tracks the width so the viewBox's aspect ratio (1440 x 112) is kept and "slice"
-   only ever trims the sides, never the leaf tips; the stem (58 of the 112 view units down) sits on
-   the seam */
+}/* top edge: the site's divider vine (VineDivider, variant "footer") sits across the seam. It lives in
+   .footer-shell, not inside the clipped footer, so the leaves above the seam are never cut */
 .footer-shell { position: relative; }
-.footer-edge {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: clamp(84px, 7.78vw, 160px);
-  transform: translateY(-51.8%);
-  z-index: 4; /* above the contact section, which is stacked at 3 */
-  pointer-events: none;
-  overflow: visible;
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25)); /* static element: one-time raster cost */
-}
 /* ---------- atmosphere ---------- */ .footer-atmosphere {
   position: absolute;
   inset: 0;
@@ -565,38 +550,55 @@
 }
 
 /* the two nursery addresses in the brand column, each a link to its location page */
-.footer-branch { align-items: flex-start !important; }
-.footer-branch svg { flex: none; margin-top: 0.2rem; }
-.footer-branch-link { display: flex; flex-direction: column; gap: 0.1rem; color: inherit; text-decoration: none; line-height: 1.45; }
-.footer-branch-link strong { font-weight: 600; color: #f4ecd9; }
-.footer-branch-link:hover strong { color: #c9d98a; text-decoration: underline; text-underline-offset: 3px; }
-.footer-branch-link:focus-visible { outline: 2px solid #c9d98a; outline-offset: 3px; border-radius: 4px; }
+/* ---------- the two nurseries: equal cards side by side under the link columns ---------- */
+.footer-branches {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem;
+  margin: 0.5rem 0 1.75rem; padding: 0; list-style: none;
+}
+.footer-branches li { display: flex; }
+.footer-branch-card {
+  position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 1rem; width: 100%;
+  padding: 1.15rem 1.3rem 1.2rem; border-radius: 20px; text-decoration: none; color: rgba(237, 242, 227, 0.8);
+  background: linear-gradient(150deg, rgba(237, 242, 227, 0.08), rgba(237, 242, 227, 0.03));
+  border: 1px solid rgba(201, 217, 138, 0.18);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* a soft lime light in the card's corner */
+.footer-branch-card::after {
+  content: ''; position: absolute; right: -40px; top: -60px; width: 160px; height: 160px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(201, 217, 138, 0.14), transparent 70%);
+}
+.footer-branch-pin {
+  flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%;
+  background: #c9d98a; color: #163624; box-shadow: 0 0 0 5px rgba(201, 217, 138, 0.14);
+}
+.footer-branch-body { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.footer-branch-body strong { font-family: var(--font-serif); font-size: 1.08rem; font-weight: 500; line-height: 1.3; color: #f4ecd9; }
+.footer-branch-addr { font-size: 0.86rem; line-height: 1.55; overflow-wrap: anywhere; }
+.footer-branch-more {
+  display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.35rem;
+  color: #c9d98a; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em;
+}
+.footer-branch-more svg { transition: transform 0.2s ease; }
+.footer-branch-card:hover { border-color: rgba(201, 217, 138, 0.4); background-color: rgba(237, 242, 227, 0.04); transform: translateY(-2px); }
+.footer-branch-card:hover .footer-branch-more svg { transform: translate(1px, -1px); }
+.footer-branch-card:focus-visible { outline: 2px solid #c9d98a; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .footer-branch-card, .footer-branch-more svg { transition: none; }
+  .footer-branch-card:hover { transform: none; }
+}
+@media (max-width: 640px) {
+  .footer-branches { grid-template-columns: 1fr; gap: 0.7rem; margin-bottom: 1.5rem; text-align: left; }
+  .footer-branch-card { padding: 1rem; gap: 0.85rem; }
+  .footer-branch-pin { width: 36px; height: 36px; }
+}
 
-
-/* phones: the brand column is centred, which left the multi-line addresses ragged beside their pins.
-   Give each branch (and the hours) its own left-aligned card in one even-width stack instead. */
+/* phones: the brand column is centred; the hours sit in a small card under the description */
 @media (max-width: 600px) {
-  .footer-meta {
-    width: 100%;
-    max-width: 22rem;
-    margin: 1.25rem auto 0;
-    gap: 0.6rem;
-    text-align: left;
-  }
+  .footer-meta { width: 100%; max-width: 22rem; margin: 1.25rem auto 0; }
   .footer-meta li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.85rem 1rem;
-    border-radius: 14px;
-    background: rgba(237, 242, 227, 0.05);
-    border: 1px solid rgba(201, 217, 138, 0.18);
-    font-size: 0.9rem;
-    line-height: 1.5;
+    display: flex; justify-content: center; align-items: center; gap: 0.6rem; padding: 0.75rem 1rem; border-radius: 14px;
+    background: rgba(237, 242, 227, 0.05); border: 1px solid rgba(201, 217, 138, 0.18); font-size: 0.9rem; font-weight: 500;
   }
-  .footer-meta li svg { width: 16px; height: 16px; }
-  .footer-branch svg { margin-top: 0.15rem; }
-  .footer-branch-link { min-width: 0; overflow-wrap: anywhere; }
-  .footer-branch-link strong { font-size: 0.95rem; }
-  .footer-meta .footer-hours { justify-content: center; font-weight: 500; }
 }

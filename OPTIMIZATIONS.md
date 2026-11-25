@@ -167,6 +167,7 @@ The loader waits for fonts, every eager hero image and the load event. On slow n
 
 - ✔ Lenis removed: native scrolling, no inertia lag, one less chunk.
 - ✔ Vine dividers grow once on entry (timed, ~1.6 s) instead of scrubbing on every scroll frame; their shadow is applied only after growth.
+- ✔ Vine dividers (and the vine on the footer's top edge) are now one canvas each, painted from a sheet of rendered leaves, buds and flowers (`src/components/shared/vine/`, 94 KB, fetched after the page has loaded and cached with the hashed assets). No SVG nodes, no filter and no GSAP: a band repaints for about two seconds while it grows and is idle otherwise. Only the home page and `/about` still load the GSAP chunk.
 - ✔ `backdrop-filter` dropped from near-opaque chips over moving images (About badge and service cards, founder seal, gallery and care tags); parallax layers carry `will-change: transform`.
 - Move the simple image parallaxes off ScrollTrigger (or to CSS scroll-driven animations).
 - Loader: wait on fonts + largest hero layers only, let the load event be informational.

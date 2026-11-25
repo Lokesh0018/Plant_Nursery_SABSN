@@ -1,12 +1,5 @@
 /* Divider vines: hero -> about (top), plants -> services (bottom), care -> pots (care), pots -> gallery (pots), gallery -> contact (contact) */
 
-.vine-divider--top {
-  --leaf-fill: url(#vine-leaf-fill-top);
-  --leaf-fill-2: url(#vine-leaf-fill-2-top);
-  --bloom-fill: url(#vine-bloom-fill-top);
-  --berry-fill: url(#vine-berry-fill-top);
-  --bud-fill: url(#vine-bud-fill-top);
-}
 /* between the hero and the about section:
    the hero's bottom fade lands on solid site sage (#9BB896) and About opens on cream (#f3ecde).
    Both seam rows are single flat tones, so the band is a plain eased ramp between them (held flat
@@ -18,20 +11,6 @@
     linear-gradient(180deg, #9bb896 0%, #a0bb9a 10%, #c9d6b9 48%, #eeebdc 88%, #f3ecde 100%);
   margin-top: -1px;
   margin-bottom: -1px;
-}
-.vine-divider--bottom {
-  --leaf-fill: url(#vine-leaf-fill-bottom);
-  --leaf-fill-2: url(#vine-leaf-fill-2-bottom);
-  --bloom-fill: url(#vine-bloom-fill-bottom);
-  --berry-fill: url(#vine-berry-fill-bottom);
-  --bud-fill: url(#vine-bud-fill-bottom);
-}
-.vine-divider--pots {
-  --leaf-fill: url(#vine-leaf-fill-pots);
-  --leaf-fill-2: url(#vine-leaf-fill-2-pots);
-  --bloom-fill: url(#vine-bloom-fill-pots);
-  --berry-fill: url(#vine-berry-fill-pots);
-  --bud-fill: url(#vine-bud-fill-pots);
 }
 /* between the pots and the gallery: both are the flat warm ivory (#F7F3EA), so the band holds
    that tone with a faint lime light in the middle that touches neither seam */
@@ -52,13 +31,6 @@
   margin-bottom: -1px;
 }
 
-.vine-divider--care {
-  --leaf-fill: url(#vine-leaf-fill-care);
-  --leaf-fill-2: url(#vine-leaf-fill-2-care);
-  --bloom-fill: url(#vine-bloom-fill-care);
-  --berry-fill: url(#vine-berry-fill-care);
-  --bud-fill: url(#vine-bud-fill-care);
-}
 /* between the care protocol and the pots:
    the care section ends on a pale linen (#e9eadd) and the pots grid is a flat warm ivory (#F7F3EA);
    the band is an eased ramp between the two exact tones, with no glow touching either seam */
@@ -69,13 +41,6 @@
   margin-bottom: -1px;
 }
 
-.vine-divider--contact {
-  --leaf-fill: url(#vine-leaf-fill-contact);
-  --leaf-fill-2: url(#vine-leaf-fill-2-contact);
-  --bloom-fill: url(#vine-bloom-fill-contact);
-  --berry-fill: url(#vine-berry-fill-contact);
-  --bud-fill: url(#vine-bud-fill-contact);
-}
 /* between the gallery and the contact form:
    the archive is a flat warm ivory (#F7F3EA) and the contact section opens on the light sage token
    (#b4cdb0), easing in slowly from there. The band ramps between the two exact tones with both
@@ -117,6 +82,22 @@
   margin-bottom: -1px; /* no sub-pixel hairline between the band and the plants section */
 }
 
+/* on top of the footer: no band of its own, just the vines laid across the seam between the last
+   section and the forest footer. The stems run at 55% of the band's height, so pulling it up by 55%
+   puts them exactly on the seam; it stacks above both the section above (3) and the footer (3) */
+.vine-divider.vine-divider--footer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  margin: 0;
+  background: none;
+  overflow: visible;
+  pointer-events: none;
+  transform: translateY(-55%);
+}
+
 /* The hero's lip shadow sits on this band and would also fall downward onto the plants
    section. Stack the plants section above the band so the shadow only shows on the hero. */
 .vine-divider + * {
@@ -125,150 +106,22 @@
 }
 
 
-.vine-svg {
+/* The vines are painted on this canvas from rendered drawings of the plant (vine/paint.js). Each leaf,
+   bud and flower carries its own soft contact shadow and the stems paint theirs, so no filter is needed */
+.vine-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  overflow: visible;
-}
-/* one soft forest shadow under the whole vine (not per leaf) so it sits on the page. Applied only
-   once the growth animation has finished, so the filter is rasterised once instead of per frame */
-.vine-divider.is-grown .vine-svg {
-  filter: drop-shadow(0 3px 3px rgba(22, 54, 36, 0.18));
 }
 
-/* stems: a dark body with a thin pale highlight running along the top edge */
-.vine-stem {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.vine-stem.main {
-  stroke: #4a7a37;
-  stroke-width: 4.2;
-}
-.vine-stem.sub {
-  stroke: #7fa84a;
-  stroke-width: 2.2;
-  opacity: 0.95;
-}
-.vine-stem.wisp {
-  stroke: #9bbf6a;
-  stroke-width: 1.3;
-  opacity: 0.9;
-}
-.vine-stem-highlight {
-  fill: none;
-  stroke: rgba(236, 245, 210, 0.75);
-  stroke-width: 1.1;
-  stroke-linecap: round;
-  transform: translateY(-1.1px);
-  pointer-events: none;
-}
-
-/* leaves: gradient blade, dark edge, pale midrib */
-.vine-leaf-blade {
-  fill: var(--leaf-fill);
-  stroke: #2f5a28;
-  stroke-width: 0.8; /* a touch heavier edge stands in for the removed per-leaf drop shadow */
-}
-.vine-growth g:nth-child(4n) .vine-leaf-blade { fill: var(--leaf-fill-2); } /* a few lighter leaves for variety */
-.vine-leaf-petiole {
-  fill: none;
-  stroke: #4a7a37;
-  stroke-width: 1.1;
-  stroke-linecap: round;
-}
-/* money plant marbling: soft golden splashes on the blade */
-.vine-leaf-variegation {
-  fill: #eee9a0;
-  opacity: 0.5;
-}
-.vine-growth g:nth-child(4n) .vine-leaf-variegation { fill: #f8f4cf; } /* paler on the lighter leaves */
-.vine-leaf-vein {
-  fill: none;
-  stroke: rgba(236, 245, 210, 0.7);
-  stroke-width: 0.6;
-  stroke-linecap: round;
-}
-.vine-leaf-vein.side {
-  stroke: rgba(236, 245, 210, 0.45);
-  stroke-width: 0.4;
-}
-.vine-dew {
-  fill: rgba(255, 255, 255, 0.85);
-  stroke: rgba(255, 255, 255, 0.4);
-  stroke-width: 1;
-}
-
-/* small white blossoms and closed buds */
-.blossom-petal {
-  fill: #fff7f0;
-  stroke: #e3b8a0;
-  stroke-width: 0.35;
-}
-.blossom-eye { fill: #f1c94a; }
-.vine-bud-body {
-  fill: var(--bud-fill);
-  stroke: #5a8a3a;
-  stroke-width: 0.5;
-}
-.vine-bud-sepal {
-  fill: none;
-  stroke: #4a7a37;
-  stroke-width: 0.6;
-  stroke-linecap: round;
-}
-
-.vine-tendril {
-  fill: none;
-  stroke: #6a994e;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-}
-
-.vine-berries circle {
-  fill: var(--berry-fill);
-  stroke: #7a2742;
-  stroke-width: 0.4;
-}
-.vine-berry-stalk {
-  fill: none;
-  stroke: #6a994e;
-  stroke-width: 1.2;
-  stroke-linecap: round;
-}
-
-.vine-bloom .petal {
-  fill: var(--bloom-fill);
-  stroke: #c9607a;
-  stroke-width: 0.5;
-}
-.vine-bloom .bud {
-  fill: #f1e6b9;
-  stroke: #b58b2a;
-  stroke-width: 0.8;
-}
-
-@media (max-width: 1200px) {
-  .vine-stem.sub, .vine-stem.wisp { display: none; } /* tablets and phones: one stem per side */
-}
-/* Tablets and phones. The JS draws at the band's real height (no vertical squash), uses fewer, gentler waves,
-   and builds smaller, better-spaced leaves; the CSS slims the band and the strokes to match. */
+/* Tablets and phones. The vines are planted at the band's real height, with one stem per side below
+   1200px, fewer, gentler bends, and smaller, closer-set leaves and flowers; the CSS only slims the band. */
 @media (max-width: 900px) {
   .vine-divider { height: 104px; }
-  .vine-stem.main { stroke-width: 3.4; }
-  .vine-stem-highlight { stroke-width: 0.9; }
-  .vine-tendril { stroke-width: 1.3; }
 }
 @media (max-width: 600px) {
   .vine-divider { height: 92px; }
-  .vine-stem.main { stroke-width: 2.8; }
-  .vine-stem-highlight { stroke-width: 0.8; transform: translateY(-0.8px); }
-  .vine-leaf-blade { stroke-width: 0.7; }
-  /* a lighter shadow reads better at this scale */
-  .vine-divider.is-grown .vine-svg { filter: drop-shadow(0 2px 2px rgba(22, 54, 36, 0.16)); }
   /* the lime glow on the ramp and top bands narrows with the screen, so it still fades out before the edges */
   .vine-divider.vine-divider--ramp {
     background:
