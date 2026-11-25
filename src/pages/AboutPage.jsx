@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } f
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-  ArrowRight, Sprout, Shovel, Scissors, Building2, Plane, Factory, Landmark, BadgeCheck,
+  ArrowRight, Sprout, Shovel, Scissors, Building2, Plane, Factory, Landmark, BadgeCheck, ShieldCheck,
   Phone, Mail, MapPin, MessageCircle, Leaf, Trees, Apple, TreePine, Flower2, IndianRupee, LandPlot, Users, Quote,
   Layers, Recycle, Amphora, BrickWall, LayoutGrid, Workflow, Info,
   ClipboardList, Palette, Calculator, HardHat, Truck, Droplets, Handshake,
@@ -12,6 +12,7 @@ import WhatsAppButton from '../components/layout/WhatsAppButton';
 import VineOrnament from '../components/shared/VineOrnament';
 import VineDivider from '../components/shared/VineDivider';
 import AboutHero from '../components/about/AboutHero';
+import { CERTIFICATIONS } from '../data/certifications';
 import './AboutPage.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -349,6 +350,27 @@ export default function AboutPage() {
               <figcaption><Landmark size={15} aria-hidden="true" />{CLIENTS[client].name}</figcaption>
             </figure>
           </div>
+
+          {/* certifications: the two ISO management-system standards, as badge cards beside a short heading */}
+          <div className="ap-certs" aria-labelledby="ap-certs-title">
+            <div className="ap-certs-intro">
+              <span className="ap-certs-label"><ShieldCheck size={15} strokeWidth={2.2} aria-hidden="true" />Certifications</span>
+              <h3 id="ap-certs-title">Certified to <em>international standards.</em></h3>
+              <p>Our quality and environmental management follow these ISO standards.</p>
+            </div>
+            <ul className="ap-certs-list">
+              {CERTIFICATIONS.map(({ code, year, title, text, badge }) => (
+                <li key={code}>
+                  <span className="ap-cert-badge"><img src={badge} alt={`ISO ${code}:${year} certified badge`} width="480" height="480" loading="lazy" decoding="async" /></span>
+                  <div>
+                    <p className="ap-cert-code">ISO {code}<span>:{year}</span></p>
+                    <strong>{title}</strong>
+                    <small>{text}</small>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         <VineDivider variant="ramp" id="about-5" from="#f3ead9" to="#eef3e4" />
@@ -391,8 +413,8 @@ export default function AboutPage() {
             <p className="ap-role">Managing Partner</p>
             <ul className="ap-contact-list">
               <li><MapPin size={18} aria-hidden="true" /><span><a href="/plant-nursery-rajahmundry/">Jakkampudi Nagar, Kadiyam, East Godavari – 533125</a><br /><a href="/plant-nursery-visakhapatnam/">Madhurawada, Visakhapatnam – 530048</a></span></li>
-              <li><Phone size={18} aria-hidden="true" /><span><a href="tel:+919849936169">98499 36169</a> / <a href="tel:+919490378689">94903 78689</a><br /><a href="tel:+919845118946">98451 18946</a> / <a href="tel:+918914599555">0891 459 9555</a></span></li>
-              <li><Mail size={18} aria-hidden="true" /><a href="mailto:sabsnnursery@gmail.com">sabsnnursery@gmail.com</a></li>
+              <li><Phone size={18} aria-hidden="true" /><span><a href="tel:+919849936169">98499 36169</a> / <a href="tel:+919490378689">94903 78689</a></span></li>
+              <li><Mail size={18} aria-hidden="true" /><span><a href="mailto:sabsnnursery@gmail.com">sabsnnursery@gmail.com</a><br /><a href="mailto:sabsnursery@gmail.com">sabsnursery@gmail.com</a></span></li>
             </ul>
             <div className="ap-actions">
               <a className="ap-btn ap-btn--light" href={WA_LINK} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} aria-hidden="true" />Enquire on WhatsApp</a>

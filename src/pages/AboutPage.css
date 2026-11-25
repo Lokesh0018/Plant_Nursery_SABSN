@@ -325,6 +325,99 @@
 .ap-registration-label { display: block; margin-bottom: 0.25rem; color: var(--ap-lime); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
 .ap-registration strong { color: #f7f6f0; font-weight: 600; }
 
+/* ================= certifications (inside the track record section) =================
+   A deep-forest plaque: the heading on the left, and each standard as a framed certificate card
+   (cream paper, double hairline frame) with its seal in a medallion ringed by a slowly turning dashed line. */
+.ap-certs {
+  position: relative; overflow: hidden; isolation: isolate; display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  align-items: center; gap: 2rem clamp(2rem, 4vw, 3.5rem); margin-top: clamp(2.5rem, 5vw, 3.5rem); padding: clamp(1.6rem, 3.4vw, 2.75rem);
+  border-radius: 30px; color: rgba(244, 236, 217, 0.82);
+  background:
+    radial-gradient(55% 80% at 0% 0%, rgba(127, 168, 74, 0.3), transparent 65%),
+    radial-gradient(45% 70% at 100% 100%, rgba(201, 217, 138, 0.12), transparent 70%),
+    linear-gradient(155deg, #1f4d31 0%, #163624 50%, #0f2a1b 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 30px 60px -30px rgba(16, 41, 27, 0.7);
+}
+/* growth-ring contours behind the heading, and a faint ISO watermark behind the cards */
+.ap-certs::before {
+  content: ''; position: absolute; z-index: -1; left: -120px; bottom: -160px; width: 420px; height: 420px; border-radius: 50%;
+  background: repeating-radial-gradient(circle, transparent 0 17px, rgba(201, 217, 138, 0.09) 17px 18px);
+}
+.ap-certs::after {
+  content: 'ISO'; position: absolute; z-index: -1; right: -0.05em; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-serif); font-size: clamp(9rem, 20vw, 17rem); font-weight: 700; line-height: 1; letter-spacing: -0.04em;
+  color: rgba(201, 217, 138, 0.05); pointer-events: none;
+}
+.ap-certs-label {
+  display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.42rem 0.85rem; border-radius: 999px;
+  border: 1px solid rgba(201, 217, 138, 0.3); background: rgba(201, 217, 138, 0.1);
+  color: var(--ap-lime); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.ap-certs-intro h3 { margin: 1rem 0 0.75rem; font-family: var(--font-serif); font-size: clamp(1.7rem, 2.8vw, 2.35rem); font-weight: 400; line-height: 1.12; color: #f7f1e3; }
+.ap-certs-intro h3 em { color: var(--ap-lime); }
+.ap-certs-intro p { margin: 0; max-width: 32ch; font-size: 0.95rem; line-height: 1.65; }
+
+.ap-certs-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.9rem, 1.8vw, 1.4rem); margin: 0; padding: 0; list-style: none; }
+.ap-certs-list li {
+  position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 1.9rem 1.4rem 1.6rem; border-radius: 22px; color: var(--ap-muted);
+  background: radial-gradient(90% 60% at 50% 0%, #ffffff, transparent 70%), linear-gradient(180deg, #fffdf7, #f6efdf);
+  /* certificate frame: a cream margin, then a fine leaf hairline */
+  box-shadow: inset 0 0 0 7px #fffdf7, inset 0 0 0 8px rgba(75, 120, 55, 0.28), 0 18px 36px -18px rgba(0, 0, 0, 0.55);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+/* the seal: white medallion, lime halo, and a dashed ring that turns slowly */
+.ap-cert-badge {
+  position: relative; display: grid; place-items: center; width: 112px; height: 112px; margin-bottom: 1.15rem; border-radius: 50%; background: #fff;
+  box-shadow: 0 0 0 1px rgba(22, 54, 36, 0.08), 0 0 0 8px rgba(201, 217, 138, 0.35), 0 14px 26px -10px rgba(16, 41, 27, 0.45);
+}
+.ap-cert-badge::before {
+  content: ''; position: absolute; inset: -15px; border-radius: 50%; border: 1.5px dashed rgba(75, 120, 55, 0.45);
+  animation: ap-cert-turn 40s linear infinite;
+}
+@keyframes ap-cert-turn { to { transform: rotate(360deg); } }
+.ap-cert-badge img { display: block; width: 100px; height: 100px; object-fit: contain; }
+.ap-cert-code { margin: 0; font-family: var(--font-serif); font-size: 1.65rem; line-height: 1.1; color: var(--ap-forest); }
+.ap-cert-code span { color: var(--ap-leaf); font-size: 1.1rem; }
+/* a short rule with a leaf dot between the code and the scope */
+.ap-certs-list strong {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-top: 0.6rem;
+  color: var(--ap-accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.ap-certs-list strong::before, .ap-certs-list strong::after { content: ''; width: 18px; height: 1px; background: rgba(75, 120, 55, 0.45); }
+.ap-certs-list small { display: block; max-width: 28ch; margin: 0.6rem auto 0; font-size: 0.84rem; line-height: 1.55; }
+@media (hover: hover) and (pointer: fine) {
+  .ap-certs-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: inset 0 0 0 7px #fffdf7, inset 0 0 0 8px rgba(75, 120, 55, 0.4), 0 28px 48px -20px rgba(0, 0, 0, 0.6);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ap-cert-badge::before { animation: none; }
+  .ap-certs-list li { transition: none; }
+}
+@media (max-width: 1100px) {
+  .ap-certs { grid-template-columns: 1fr; }
+  .ap-certs-intro p { max-width: 52ch; }
+}
+@media (max-width: 640px) {
+  .ap-certs { border-radius: 24px; }
+  .ap-certs::after { top: auto; bottom: -0.15em; transform: none; }
+  .ap-certs-list { gap: 0.7rem; }
+  .ap-certs-list li { padding: 1.4rem 0.75rem 1.2rem; border-radius: 18px; box-shadow: inset 0 0 0 5px #fffdf7, inset 0 0 0 6px rgba(75, 120, 55, 0.28), 0 14px 28px -16px rgba(0, 0, 0, 0.55); }
+  .ap-cert-badge { width: 80px; height: 80px; margin-bottom: 0.95rem; box-shadow: 0 0 0 1px rgba(22, 54, 36, 0.08), 0 0 0 6px rgba(201, 217, 138, 0.35), 0 10px 20px -8px rgba(16, 41, 27, 0.45); }
+  .ap-cert-badge::before { inset: -11px; }
+  .ap-cert-badge img { width: 70px; height: 70px; }
+  .ap-cert-code { font-size: 1.25rem; }
+  .ap-cert-code span { font-size: 0.9rem; }
+  .ap-certs-list strong { gap: 0.4rem; font-size: 0.6rem; letter-spacing: 0.12em; }
+  .ap-certs-list strong::before, .ap-certs-list strong::after { display: none; } /* the scope wraps to two lines here */
+  .ap-certs-list small { font-size: 0.76rem; }
+}
+@media (max-width: 380px) {
+  .ap-certs-list { grid-template-columns: 1fr; }
+}
+
 /* ================= palette ================= */
 /* header: title left, planning note right */
 .ap-head--split { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); align-items: end; gap: 1.5rem 3rem; max-width: none; }

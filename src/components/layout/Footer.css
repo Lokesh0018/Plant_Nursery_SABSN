@@ -446,6 +446,19 @@
   color: var(--color-text-muted);
 }
 
+/* copyright with the developer credit beneath it */
+.footer-legal { display: flex; flex-direction: column; gap: 0.35rem; }
+.footer-legal p { margin: 0; }
+.footer-credit { font-size: 0.78rem; color: rgba(237, 242, 227, 0.62); }
+.footer-credit a {
+  display: inline-flex; align-items: center; gap: 0.2rem; color: #c9d98a; font-weight: 600; text-decoration: none;
+  border-bottom: 1px solid rgba(201, 217, 138, 0.35); transition: color 0.2s ease, border-color 0.2s ease;
+}
+.footer-credit a:hover { color: #e4efb4; border-color: currentColor; }
+.footer-credit a:focus-visible { outline: 2px solid #c9d98a; outline-offset: 3px; border-radius: 2px; }
+.footer-credit svg { transition: transform 0.2s ease; }
+.footer-credit a:hover svg { transform: translate(1px, -1px); }
+
 .footer-socials {
   display: flex;
   flex-wrap: wrap;
@@ -510,27 +523,6 @@
     height: 104px;
   }
 }
-/* back to top */ .footer-top-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid rgba(22, 54, 36, 0.14);
-  background: linear-gradient(145deg, #254d33 0%, #163624 60%, #0d2a18 100%);
-  color: #c9d98a;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  box-shadow: 0 8px 18px rgba(22, 54, 36, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.footer-top-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 0 6px rgba(201, 217, 138, 0.15);
-}
-.footer-top-btn:focus-visible {
-  outline: 2px solid #c9d98a;
-  outline-offset: 3px;
-}
 /* Brand row: round logo beside the wordmark */ .footer-brand-row {
   display: flex;
   align-items: center;
@@ -554,18 +546,8 @@
 .footer-brand-desc, .footer-link, .footer-copyright {
   color: rgba(237, 242, 227, 0.86);
 }
-.footer-top-btn {
-  background: linear-gradient(145deg, #c9d98a 0%, #a9d47a 100%);
-  color: #0d2a18;
-  border-color: rgba(201, 217, 138, 0.6);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-}
 @media (prefers-reduced-motion: reduce) {
   .footer-link,
-  .footer-top-btn {
-    transition: none !important;
-    transform: none !important;
-  }
   .footer-glow,
   .footer-fireflies i,
   .footer-dapple,

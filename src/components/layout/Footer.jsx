@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { MapPin, Phone, Mail, MessageCircle, ArrowUp, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle, Clock, ArrowUpRight } from 'lucide-react';
 import FallingLeaves from '../shared/FallingLeaves';
 import FooterStamp from './FooterStamp';
 import Meadow from './Meadow';
@@ -162,7 +162,15 @@ export default function Footer() {
         <div className="footer-divider footer-reveal" />
 
         <div className="footer-bottom footer-reveal">
-          <p className="footer-copyright">&copy; {YEAR} Sri Ayyappa Bala Sai Nursery. All rights reserved.</p>
+          <div className="footer-legal">
+            <p className="footer-copyright">&copy; {YEAR} Sri Ayyappa Bala Sai Nursery. All rights reserved.</p>
+            <p className="footer-credit">
+              Developed by{' '}
+              <a href="https://shmtechnologies.com" target="_blank" rel="noopener">
+                SHM Technologies<ArrowUpRight size={13} strokeWidth={2.2} aria-hidden="true" />
+              </a>
+            </p>
+          </div>
 
           <div className="footer-socials">
             <a href="https://wa.me/919849936169" target="_blank" rel="noopener noreferrer" className="social-link">
@@ -176,16 +184,11 @@ export default function Footer() {
             <a href="mailto:sabsnnursery@gmail.com" className="social-link">
               <Mail size={14} /> sabsnnursery@gmail.com
             </a>
+            <a href="mailto:sabsnursery@gmail.com" className="social-link">
+              <Mail size={14} /> sabsnursery@gmail.com
+            </a>
           </div>
 
-          <button
-            type="button"
-            className="footer-top-btn"
-            aria-label="Back to top"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            <ArrowUp size={16} />
-          </button>
         </div>
 
       </div>

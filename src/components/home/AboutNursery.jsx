@@ -1,7 +1,8 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sprout, Shovel, Trees, Flower2, PhoneCall, Mail, Sparkles, MapPin, ArrowRight } from 'lucide-react';
+import { Sprout, Shovel, Trees, Flower2, PhoneCall, Mail, Sparkles, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
+import { CERTIFICATIONS } from '../../data/certifications';
 import './AboutNursery.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -126,6 +127,24 @@ export default function AboutNursery() {
               <span className="about-tag-item">Avenue Trees</span>
               <span className="about-tag-dot">•</span>
               <span className="about-tag-item">Lawn Turf</span>
+            </div>
+
+            {/* Certified standards: both ISO seals as mini certificate cards under the photo */}
+            <div className="about-standards">
+              <p className="about-standards-label"><ShieldCheck size={15} strokeWidth={2.2} aria-hidden="true" /><span>Certified standards</span></p>
+              <ul className="about-standards-list">
+                {CERTIFICATIONS.map(({ code, year, title, badge }) => (
+                  <li key={code}>
+                    <span className="about-standards-seal">
+                      <img src={badge} alt={`ISO ${code}:${year} certified badge`} width="480" height="480" loading="lazy" decoding="async" />
+                    </span>
+                    <span className="about-standards-text">
+                      <strong>ISO {code}<span>:{year}</span></strong>
+                      <small>{title}</small>
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 

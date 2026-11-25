@@ -55,7 +55,7 @@ export const LOCATIONS = [
     // the owner's original Google Maps Street View link, kept for reference; navigation uses the coordinates
     referenceMapUrl: 'https://www.google.com/maps/place/17%C2%B048%2758.0%22N+83%C2%B021%2718.9%22E/@17.8163184,83.3552226,63a,75y,181.41h,104.82t/data=!3m7!1e0',
     mapsQuery: null,
-    telephone: '+918914599555',         // the Visakhapatnam (0891) landline on the headquarters signboard
+    telephone: '+919849936169',         // main nursery contact line
     openingHours: null,
     // real photographs of this branch only (the first leads the branch card and the home-page card)
     photos: [

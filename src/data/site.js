@@ -11,11 +11,10 @@ export const BUSINESS = {
   phones: [
     { label: '+91 98499 36169', tel: '+919849936169' },
     { label: '+91 94903 78689', tel: '+919490378689' },
-    { label: '+91 98451 18946', tel: '+919845118946' },
-    { label: '0891 459 9555', tel: '+918914599555' },
   ],
   whatsapp: '919849936169',
   email: 'sabsnnursery@gmail.com',
+  emails: ['sabsnnursery@gmail.com', 'sabsnursery@gmail.com'],
   logo: '/images/brand/logo-256.webp',
   // hours as stated on the site today ("Open daily, 7 am – 6 pm"). Not yet confirmed per branch, so the
   // structured data leaves them out until the owner confirms them (see LOCATIONS[].openingHours).

@@ -17,6 +17,7 @@ const Footer = lazy(() => import('../components/layout/Footer'));
 // the nursery's details, as given on the About page and in the footer
 const PHONE_1 = BUSINESS.phones[0];
 const EMAIL = 'sabsnnursery@gmail.com';
+const EMAIL_2 = 'sabsnursery@gmail.com';
 const WA_NUMBER = '919849936169';
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hello SABSN, I would like to know more about your plants and services.')}`;
 
@@ -196,6 +197,7 @@ export default function ContactPage() {
               <h3>Email</h3>
               <p>For project briefs, plant lists and quotations.</p>
               <a className="cp-card-mail" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+              <a className="cp-card-mail" href={`mailto:${EMAIL_2}`}>{EMAIL_2}</a>
             </li>
             <li className="cp-card">
               <span className="cp-card-icon" aria-hidden="true"><MapPin size={20} strokeWidth={2} /></span>
