@@ -478,34 +478,27 @@
   border-color: rgba(201, 217, 138, 0.45);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 18px -8px rgba(0, 0, 0, 0.5);
 }
-/* ---------- footer finale: seed rolls in and becomes the nursery stamp ---------- */ .footer-stamp-anchor {
-  display: inline-block;
-  line-height: 0;
-}
+/* ---------- footer finale: a seed grows into a sapling inside the nursery stamp (FooterStamp.jsx) ---------- */
 .footer-stamp-spot {
   position: relative;
   display: inline-block;
-  width: 112px;
-  height: 112px;
+  width: 148px;
+  height: 148px;
   flex: none;
-  will-change: transform;
+  line-height: 0;
 }
-.footer-stamp-layer, .footer-stamp-face {
-  position: absolute;
-  inset: 0;
+.footer-stamp-face {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
-  transform-origin: 50% 50%;
-  will-change: transform, opacity;
+  overflow: visible; /* the seed drops in from just above the stamp */
 }
-/* no filters here: both layers transform every frame during the finale */
-/* the lettered ring turns slowly via an SVG animateTransform pinned to the stamp centre;
-   a CSS rotation here would pivot on the text's own bounding box and drift off-centre */
+/* the lettered ring turns via an SVG animateTransform pinned to the stamp centre;
+   a CSS rotation would pivot on the text's own bounding box and drift off-centre */
 @media (max-width: 600px) {
   .footer-stamp-spot {
-    width: 104px;
-    height: 104px;
+    width: 128px;
+    height: 128px;
   }
 }
 /* Brand row: round logo beside the wordmark */ .footer-brand-row {
